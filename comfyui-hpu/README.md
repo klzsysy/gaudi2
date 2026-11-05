@@ -1,0 +1,33 @@
+# Gaudi2 HPU 适配交接入口
+
+更新时间：2026-11-05（Asia/Shanghai）。每次结束工作前更新本文件和 `PROGRESS.md`；阶段通过后分别提交适配仓库的代码/测试及本调查仓库的文档。不要把启动成功写成模型验证成功。
+
+**文档归属：用户明确要求所有过程和个人环境信息仅保存在 `/Users/sonny/work/github/klzsysy/gaudi2`，不得进入 ComfyUI-Gaudi 仓库或其提交历史。**
+
+## 目标与基线
+
+- 分支：`codex/gaudi2-hpu`，起点 `fb2b26fd`（用户 fork 的 master，已含 Krea2 / QwenImage21）。
+- 本地：`/Users/sonny/work/github/klzsysy/ComfyUI-Gaudi`。
+- 服务器：`ssh sonny@192.168.10.21`；独立目录 `/home/sonny/ComfyUI-Gaudi`。
+- **禁止修改服务器 `/home/sonny/ComfyUI`，包括 venv、配置、输出和模型。** 可只读复用模型，通过独立 `extra_model_paths.yaml` 配置。
+- Habana 基础运行时：`/opt/gaudi-install/venv-1.24.2-481-ubuntu2204`；禁止用 pip 替换其 torch，测试依赖另建环境。
+- 单卡 Gaudi2 96 GiB，驱动 1.24.2，Python 3.10，torch `2.13.0a0+git2469d18`；实际 bridge 默认 eager（`PT_HPU_LAZY_MODE=0`）。
+- 既有调查在相邻 `gaudi2/GAUDI2_COMFYUI_HPU_ASSESSMENT.md`、`GAUDI2_COMFYUI_OPENSOURCE_SURVEY.md`。调查是线索，API 与算子能力以服务器实测为准。
+
+## 执行计划与验收
+
+1. **阶段一：设备后端。** 原生 HPU 探测、设备枚举/名称、内存、同步、bf16 精度、安全关闭 CUDA 专用机制；独立环境启动 HTTP 服务，`/system_stats` 返回 HPU；通过真实 HPU matmul、attention、模型加载/卸载 smoke test；检查 CPU 路径。通过后 commit。
+2. **阶段二：Krea2。** 核对权重和官方模板，优先已有权重；验证文本编码→采样→VAE→保存完整原生工作流。记录 seed、尺寸、步数、耗时、内存、图片、数值检查及已知 CPU fallback；至少重复一次并验证卸载。通过后 commit。
+3. **阶段三：Qwen-Image-2.1 Turbo。** 获取匹配的原生模型、文本编码器、VAE；先小尺寸验证，再 Turbo 8 步完整生图；记录与阶段二相同的证据。通过后 commit。
+
+先建立 eager + bf16 正确性基线，再考虑 fused attention、量化、compile/HPU Graph 性能。保持现有节点和模型加载接口；不通过全局 CUDA monkeypatch 隐藏设备类型。
+
+## 接续工作流程
+
+1. 读 `AGENTS.md`、本文件、`PROGRESS.md`，检查 git status/log。
+2. 检查服务器进程、`hl-smi`、剩余磁盘，再启动任务；不要争用已有 HPU 作业。
+3. 仅同步此 fork 到独立目录，不对原 `~/ComfyUI` 执行 rsync/install/git/输出操作。
+4. 失败先记录完整日志位置、最小复现、版本和结论，再做最小修改。未验证的猜测明确标注。
+5. shell 中有 `HF_ENDPOINT`、`HF_TOKEN` 和 `http_proxy_enable`；仅在需要下载时使用，禁止把令牌/代理凭据写入文档或输出。
+
+官方 API 参考：https://docs.habana.ai/en/latest/PyTorch/Reference/Python_Packages.html
