@@ -14,6 +14,13 @@
 - 单卡 Gaudi2 96 GiB，驱动 1.24.2，Python 3.10，torch `2.13.0a0+git2469d18`；实际 bridge 默认 eager（`PT_HPU_LAZY_MODE=0`）。
 - 既有调查在相邻 `gaudi2/GAUDI2_COMFYUI_HPU_ASSESSMENT.md`、`GAUDI2_COMFYUI_OPENSOURCE_SURVEY.md`。调查是线索，API 与算子能力以服务器实测为准。
 
+## 当前状态
+
+- 阶段一完成：`8326476f`。
+- 阶段二完成：`fc1c891f`；HPU/bf16 完整生图，512/1024 和卸载重载已验证。
+- 阶段三进行中：下载 Qwen-Image-2.1 Turbo 官方组件；未宣称通过。
+- 详细数值错误、修复与证据见 `PROGRESS.md`。
+
 ## 执行计划与验收
 
 1. **阶段一：设备后端。** 原生 HPU 探测、设备枚举/名称、内存、同步、bf16 精度、安全关闭 CUDA 专用机制；独立环境启动 HTTP 服务，`/system_stats` 返回 HPU；通过真实 HPU matmul、attention、模型加载/卸载 smoke test；检查 CPU 路径。通过后 commit。
