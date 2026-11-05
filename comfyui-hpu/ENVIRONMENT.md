@@ -30,3 +30,34 @@ ssh -N -L 8189:127.0.0.1:8189 sonny@192.168.10.21
 ```
 
 浏览器打开 `http://127.0.0.1:8189`。独立 smoke 与服务必须串行占用 HPU。
+
+## 模型路径与工作流
+
+服务器独立 checkout 的 `extra_model_paths.yaml` 只读引用已有 Krea2 组件：
+
+```yaml
+existing_readonly:
+  base_path: /home/sonny/ComfyUI
+  diffusion_models: models/diffusion_models
+  text_encoders: models/text_encoders
+  vae: models/vae
+```
+
+Qwen 2.1 Turbo 的新权重在独立 checkout 自己的 `models/{diffusion_models,text_encoders,vae}`，文件和固定 revision 见 PROGRESS.md。加载不需要 HF 访问或令牌；只有重新下载才需要已有 shell 代理/环境。
+
+服务运行后，在服务器独立 checkout 执行：
+
+```bash
+.venv/bin/python -m scripts.gaudi.submit scripts/gaudi/krea2-api.json --result test-results/krea2.json
+.venv/bin/python -m scripts.gaudi.submit scripts/gaudi/qwen-image21-turbo-api.json --result test-results/qwen21.json
+```
+
+两份 JSON 是 API 工作流，使用原生节点，不需要自定义节点。额外 1024/重载变体保存在本调查仓库 `workflows/`。图片写入独立 `output/gaudi/`。
+
+新增回归测试（停止服务后运行）：
+
+```bash
+.venv/bin/python -m pytest tests-unit/comfy_test/model_management_test.py tests-unit/comfy_test/hpu_quant_test.py tests-unit/comfy_test/hpu_vae_test.py -q
+```
+
+服务器目录通过 tar/scp 同步源码，**没有 `.git` 元数据**；本地代码仓库才是版本来源。同步时仅从已审查代码提交打包，例如 `git archive codex/gaudi2-hpu | ssh sonny@192.168.10.21 'tar -xf - -C ~/ComfyUI-Gaudi'`，不要复制本调查仓库、过程文档、令牌或配置。修改后重启服务，先等待旧进程彻底退出。当前验证版本为 `6db162dd`。

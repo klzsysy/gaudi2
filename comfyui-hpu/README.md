@@ -18,8 +18,11 @@
 
 - 阶段一完成：`8326476f`。
 - 阶段二完成：`fc1c891f`；HPU/bf16 完整生图，512/1024 和卸载重载已验证。
-- 阶段三进行中：下载 Qwen-Image-2.1 Turbo 官方组件；未宣称通过。
+- 阶段三完成：`6db162dd`；Turbo 固定 8 步，512/1024、长短提示词、卸载重载已验证。
 - 详细数值错误、修复与证据见 `PROGRESS.md`。
+- 验证为 eager + bf16 正确性基线，不是性能优化或所有模型/自定义节点支持声明。14 项回归通过，两个目标模型的文本/DiT/VAE 都使用 HPU；RoPE 频率表沿用已有 CPU float64 路径，不能宣称无任何 CPU 计算。
+- 代码分支工作树干净，三个阶段均本地 commit，未 push。
+- 成功图片：`results/krea2-hpu-1024.png`、`results/qwen21-turbo-1024.png`；`*-failed`、`*-first` 及故障排查图片保留为失败证据。
 
 ## 执行计划与验收
 
@@ -31,7 +34,7 @@
 
 ## 接续工作流程
 
-1. 读 `AGENTS.md`、本文件、`PROGRESS.md`，检查 git status/log。
+1. 读本调查仓库 `AGENTS.md`、本文件、`PROGRESS.md`，再读代码仓库 `AGENTS.md` 并检查两个仓库 git status/log。
 2. 检查服务器进程、`hl-smi`、剩余磁盘，再启动任务；不要争用已有 HPU 作业。
 3. 仅同步此 fork 到独立目录，不对原 `~/ComfyUI` 执行 rsync/install/git/输出操作。
 4. 失败先记录完整日志位置、最小复现、版本和结论，再做最小修改。未验证的猜测明确标注。
