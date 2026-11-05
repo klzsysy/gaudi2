@@ -104,3 +104,39 @@
 - 继承的 torchvision 0.16.2 版本声明冲突/图像扩展 warning 尚存，不影响已验证模型；不得为消除 warning 替换 Habana torch。
 - 尚未验证：图像编辑、LoRA、批量/多卡、其他 VAE/模型、custom nodes、lazy/torch.compile/HPU Graph、超大分辨率、完整 CPU/CUDA/ROCm 等实体设备回归。不要扩大已验证范围。
 - 后续如需优化：先固定输入并用同步后端到端计时记录吞吐与峰值显存，再考虑 fused attention、FP8 全范围解码临时内存、HPU Graph；保留本次正确输出做回归。
+
+## 第四阶段进行中：MOSS-Image SFT
+
+用户选定：`diffusion_models/moss_image_sft_bf16.safetensors`、`text_encoders/qwen3.5_9b_int8_convrot.safetensors`、`vae/flux2-vae.safetensors`。在原适配分支继续，完成后 commit。
+
+- 官方资源仓库 `Comfy-Org/MOSS-Image`，revision `2929efe3cdd506c0a430bcfca70a9a8d805cc095`。新模型 10164655808 bytes，文本编码器 9748121532 bytes；完整 SHA256 存服务器 `test-results/moss-resources.json`。
+- 已找到原目录 VAE，**复用而不下载**：`/home/sonny/ComfyUI/models/vae/flux2-vae.safetensors`，336213556 bytes，SHA256 `d64f3a68e1cc4f9f4e29b6e0da38a0204fe9a49f2d4053f0ec1fa1ca02f9c4b5`。其封装大小/哈希与 MOSS 仓库文件不同，需核对结构并通过实际 VAE 验证，不以文件名推断字节完全相同。
+- 官方已安装模板：image_moss_image_t2i.json；原生 CLIPLoader 类型 moss_image，EmptyFlux2LatentImage，25 步 er_sde/simple，cfg2.5；使用用户选择的 bf16/int8/完整 VAE 替换模板默认量化/小 VAE，关闭可选 prompt enhancer 与 skip-layer guidance 建立基线。
+- 用户再次明确：**下载必须优先使用服务器已有 HF_ENDPOINT、HF_TOKEN；不要默认覆盖 HF_ENDPOINT 为官方站点。** 初次下载误沿用上阶段官方站点+代理配置，现停止并按已有环境续传。HF_TOKEN 由 huggingface_hub 自动读取，不打印或记录值。只有明确失败证据才考虑备用来源。
+
+### 第四阶段资源与预检完成
+
+- 使用已有 HF_ENDPOINT/HF_TOKEN 的下载已完成，两个新权重 SHA256 均匹配官方 LFS 元数据。没有下载完整 VAE；只读取官方 safetensors header 做结构核对。
+- 旧 VAE 是 Diffusers 命名；经原有 `convert_vae_state_dict` 和 quant_conv/post_quant_conv 前缀归一化后，251 个张量的名称/shape/dtype 与官方文件全部一致。完整字节哈希不同，不宣称权重 payload 已逐字节比较。
+- 实际 HPU bf16 VAEEncode→VAEDecode 成功，0.45 s；图片 `results/moss-vae-roundtrip.png`，结构核对 `results/moss-vae-reuse.json`。
+- Qwen3.5 `torch_chunk_gated_delta_rule` 在长度 17、65、128 与 CPU 参考对照通过，输出有限，最大绝对差分别 0.0004883、0.0009766、0.0009766；包括 recurrent state 比对。探针 `probes/moss_delta.py`，日志 `results/moss-delta.log`。
+- 正在执行 MOSS SFT 512²、seed42、25步 er_sde/simple、cfg2.5 的完整原生工作流。此时尚未宣称阶段四通过。
+
+## 第四阶段完成：MOSS-Image SFT（2026-11-05）
+
+代码提交：`21e98390`（`codex/gaudi2-hpu`），新增通用原生 API 工作流 `scripts/gaudi/moss-image-sft-api.json`。既有 HPU 适配足够运行选定组合，本阶段**没有新增核心代码补丁**，没有重复运行与此次仅新增工作流无关的整套单测。
+
+| 验证 | 配置 | 服务端端到端耗时 | 结果 |
+|---|---|---|---|
+| 首次生图 | 512², seed42, 红茶壶短提示词 | 23.70 s | 正常 RGB 图片，文本/DiT/VAE HPU bf16 |
+| 大尺寸长提示词 | 1024², seed43, 蓝茶壶/茶杯/点心/窗光 | 34.11 s | 画面与提示吻合，无黑图/异常纹理 |
+| 卸载后重载 | 512², seed44, 绿茶壶 | 24.28 s | 日志确认三个组件重新加载，正常生图 |
+
+- 都使用 **25 步 er_sde、simple、cfg2.5**。首次生图前做过独立 VAE roundtrip，因此首次时间不是所有组件冷启动基准；1024 运行保留模型加载缓存。未宣称严格性能或跨设备等价性基准。
+- 现有 Flux2 VAE 复用成功，roundtrip PSNR 43.23 dB（8-bit RGB）。未下载 VAE 权重 payload，原 `/home/sonny/ComfyUI` 没有改动。
+- 512/1024/重载图片像素范围均 0–255，标准差分别 67.14、72.39、64.14。图片逐张目视检查正常，服务日志没有非有限值警告。
+- 卸载后 InUse 从 22767054080 bytes 最终下降到 2686190976 bytes。释放异步进行，中途可看到约 11 GB。早期探针用“低于 2 GiB”作为成功阈值导致误报；该阈值不适用于本次暖机后的常驻占用。以释放前后差值、稳定后读数和下一次加载日志为依据。尚未对剩余约 2.50 GiB 的运行时占用做归因或长时间泄漏测试。
+- 第一轮下载误覆盖了 HF_ENDPOINT；按用户纠正停止后，以已有 HF_ENDPOINT/HF_TOKEN 完成两个新权重并校验 SHA256。SDK 为不同下载路径创建了独立临时文件，不能声称所有旧分块都被续用；验证完成后已清理旧站点遗留的 4844421120 bytes 不完整临时文件。后续偏好已写入本仓库 AGENTS.md 和 ENVIRONMENT.md。
+- 资源清单 `results/moss-resources.json`；复用判断 `moss-vae-reuse.json`；下载校验 `moss-download-configured.log`；测试 history `moss-first.json`、`moss-1024.json`、`moss-reload.json`；完整服务日志 `moss-server.log`；内存 `moss-unload-memory.json`。
+- 成功图片：`results/moss-sft-512.png`、`results/moss-sft-1024.png`、`results/moss-sft-reload.png`。长提示词/重载/VAE 单独工作流在 `workflows/moss-*.json`，预检脚本在 `probes/moss_delta.py`。
+- 当前四阶段代码均已本地提交，未 push；服务保持运行且已释放模型。验证范围为选定的 SFT 文生图组合，不包括 MOSS Base、编辑/控制 LoRA、SLG、prompt enhancer 或其它量化变体。

@@ -19,16 +19,19 @@
 - 阶段一完成：`8326476f`。
 - 阶段二完成：`fc1c891f`；HPU/bf16 完整生图，512/1024 和卸载重载已验证。
 - 阶段三完成：`6db162dd`；Turbo 固定 8 步，512/1024、长短提示词、卸载重载已验证。
+- 第四阶段完成：`21e98390`；MOSS-Image SFT bf16 + Qwen3.5 9B int8 ConvRot，复用已有 Flux2 VAE，512/1024 和重载验证通过，无新增核心补丁。
 - 详细数值错误、修复与证据见 `PROGRESS.md`。
-- 验证为 eager + bf16 正确性基线，不是性能优化或所有模型/自定义节点支持声明。14 项回归通过，两个目标模型的文本/DiT/VAE 都使用 HPU；RoPE 频率表沿用已有 CPU float64 路径，不能宣称无任何 CPU 计算。
-- 代码分支工作树干净，三个阶段均本地 commit，未 push。
-- 成功图片：`results/krea2-hpu-1024.png`、`results/qwen21-turbo-1024.png`；`*-failed`、`*-first` 及故障排查图片保留为失败证据。
+- 验证为 eager + bf16 正确性基线，不是性能优化或所有模型/自定义节点支持声明。14 项回归通过，三个目标模型的文本/DiT/VAE 都使用 HPU；RoPE 频率表沿用已有 CPU float64 路径，不能宣称无任何 CPU 计算。
+- 代码分支工作树干净，四个阶段均本地 commit，未 push。
+- 成功图片：`results/krea2-hpu-1024.png`、`results/qwen21-turbo-1024.png`、`results/moss-sft-1024.png`；`*-failed`、`*-first` 及故障排查图片保留为失败证据。
 
 ## 执行计划与验收
 
 1. **阶段一：设备后端。** 原生 HPU 探测、设备枚举/名称、内存、同步、bf16 精度、安全关闭 CUDA 专用机制；独立环境启动 HTTP 服务，`/system_stats` 返回 HPU；通过真实 HPU matmul、attention、模型加载/卸载 smoke test；检查 CPU 路径。通过后 commit。
 2. **阶段二：Krea2。** 核对权重和官方模板，优先已有权重；验证文本编码→采样→VAE→保存完整原生工作流。记录 seed、尺寸、步数、耗时、内存、图片、数值检查及已知 CPU fallback；至少重复一次并验证卸载。通过后 commit。
 3. **阶段三：Qwen-Image-2.1 Turbo。** 获取匹配的原生模型、文本编码器、VAE；先小尺寸验证，再 Turbo 8 步完整生图；记录与阶段二相同的证据。通过后 commit。
+
+4. **阶段四：MOSS-Image SFT。** 使用用户选定组件、复用现有 VAE；对照官方模板验证 512/1024、长短提示词和卸载重载，记录数值、图片及版本，通过后 commit。
 
 先建立 eager + bf16 正确性基线，再考虑 fused attention、量化、compile/HPU Graph 性能。保持现有节点和模型加载接口；不通过全局 CUDA monkeypatch 隐藏设备类型。
 
