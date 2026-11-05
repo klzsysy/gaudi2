@@ -33,7 +33,7 @@ ssh -N -L 8189:127.0.0.1:8189 sonny@192.168.10.21
 
 ## 用户试用启停（2026-11-05 部署）
 
-当前部署提交 `3bda1351`（前三模型推理代码基于阶段四 `21e98390`），监听服务器局域网地址，可直接打开 http://192.168.10.21:8189 。
+当前部署提交 `0139b1da`（修复 MOSS TextGenerate 提示词扩写；启停脚本仍为 `3bda1351`），监听服务器局域网地址，可直接打开 http://192.168.10.21:8189 。
 
 ```bash
 ssh sonny@192.168.10.21
@@ -72,9 +72,9 @@ Qwen 2.1 Turbo 的新权重在独立 checkout 自己的 `models/{diffusion_model
 服务运行后，在服务器独立 checkout 执行：
 
 ```bash
-.venv/bin/python -m scripts.gaudi.submit scripts/gaudi/krea2-api.json --result test-results/krea2.json
-.venv/bin/python -m scripts.gaudi.submit scripts/gaudi/qwen-image21-turbo-api.json --result test-results/qwen21.json
-.venv/bin/python -m scripts.gaudi.submit scripts/gaudi/moss-image-sft-api.json --result test-results/moss.json
+.venv/bin/python -m scripts.gaudi.submit scripts/gaudi/krea2-api.json --url http://192.168.10.21:8189 --result test-results/krea2.json
+.venv/bin/python -m scripts.gaudi.submit scripts/gaudi/qwen-image21-turbo-api.json --url http://192.168.10.21:8189 --result test-results/qwen21.json
+.venv/bin/python -m scripts.gaudi.submit scripts/gaudi/moss-image-sft-api.json --url http://192.168.10.21:8189 --result test-results/moss.json
 ```
 
 三份 JSON 是 API 工作流，使用原生节点，不需要自定义节点。额外 1024/重载变体保存在本调查仓库 `workflows/`。图片写入独立 `output/gaudi/`。
@@ -82,9 +82,9 @@ Qwen 2.1 Turbo 的新权重在独立 checkout 自己的 `models/{diffusion_model
 新增回归测试（停止服务后运行）：
 
 ```bash
-.venv/bin/python -m pytest tests-unit/comfy_test/model_management_test.py tests-unit/comfy_test/hpu_quant_test.py tests-unit/comfy_test/hpu_vae_test.py -q
+.venv/bin/python -m pytest tests-unit/comfy_test/model_management_test.py tests-unit/comfy_test/hpu_quant_test.py tests-unit/comfy_test/hpu_vae_test.py tests-unit/comfy_test/hpu_textgen_test.py -q
 ```
 
-服务器目录通过 tar/scp 同步源码，**没有 `.git` 元数据**；本地代码仓库才是版本来源。同步时仅从已审查代码提交打包，例如 `git archive codex/gaudi2-hpu | ssh sonny@192.168.10.21 'tar -xf - -C ~/ComfyUI-Gaudi'`，不要复制本调查仓库、过程文档、令牌或配置。修改后重启服务，先等待旧进程彻底退出。当前部署版本为 `3bda1351`。
+服务器目录通过 tar/scp 同步源码，**没有 `.git` 元数据**；本地代码仓库才是版本来源。同步时仅从已审查代码提交打包，例如 `git archive codex/gaudi2-hpu | ssh sonny@192.168.10.21 'tar -xf - -C ~/ComfyUI-Gaudi'`，不要复制本调查仓库、过程文档、令牌或配置。修改后重启服务，先等待旧进程彻底退出。当前部署版本为 `0139b1da`。
 
-MOSS SFT 与 Qwen3.5 9B 的新权重位于独立 models；Flux2 VAE 通过上述只读路径复用。MOSS 固定验证参数是 25 步 er_sde/simple、cfg2.5；没有启用可选 prompt enhancer、SLG 或编辑 LoRA。
+MOSS SFT 与 Qwen3.5 9B 的新权重位于独立 models；Flux2 VAE 通过上述只读路径复用。MOSS 固定验证参数是 25 步 er_sde/simple、cfg2.5；基础 API 工作流没有启用可选 prompt enhancer、SLG 或编辑 LoRA。用户试用后已补测官方模板的 TextGenerate 扩写（MTP auto、sampling on）：原始 1024² 工作流成功，证据 workflows/moss-user-textgen.json 和 results/moss-user-textgen-fix1.json。扩写仍明显慢于直接文本编码，详细耗时见 PROGRESS.md；SLG/编辑 LoRA 仍未验证。

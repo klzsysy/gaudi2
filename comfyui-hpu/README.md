@@ -16,14 +16,14 @@
 
 ## 当前状态
 
-- 用户试用部署完成：`3bda1351`，访问 http://192.168.10.21:8189 ，根目录 `start-hpu.sh` / `stop-hpu.sh` 管理服务；详见 ENVIRONMENT.md。
+- 用户试用部署已修复 MOSS 扩写：`0139b1da`，访问 http://192.168.10.21:8189 ，根目录 `start-hpu.sh` / `stop-hpu.sh` 管理服务；详见 ENVIRONMENT.md。
 
 - 阶段一完成：`8326476f`。
 - 阶段二完成：`fc1c891f`；HPU/bf16 完整生图，512/1024 和卸载重载已验证。
 - 阶段三完成：`6db162dd`；Turbo 固定 8 步，512/1024、长短提示词、卸载重载已验证。
-- 第四阶段完成：`21e98390`；MOSS-Image SFT bf16 + Qwen3.5 9B int8 ConvRot，复用已有 Flux2 VAE，512/1024 和重载验证通过，无新增核心补丁。
+- 第四阶段完成：`21e98390`；MOSS-Image SFT bf16 + Qwen3.5 9B int8 ConvRot，复用已有 Flux2 VAE，512/1024 和重载验证通过，基础出图无新增核心补丁；用户试用后补测并修复 TextGenerate 的 HPU token 采样，详见 PROGRESS.md。
 - 详细数值错误、修复与证据见 `PROGRESS.md`。
-- 验证为 eager + bf16 正确性基线，不是性能优化或所有模型/自定义节点支持声明。14 项回归通过，三个目标模型的文本/DiT/VAE 都使用 HPU；RoPE 频率表沿用已有 CPU float64 路径，不能宣称无任何 CPU 计算。
+- 验证为 eager + bf16 正确性基线，不是性能优化或所有模型/自定义节点支持声明。26 项回归通过，三个目标模型的文本/DiT/VAE 都使用 HPU；RoPE 频率表沿用已有 CPU float64 路径，不能宣称无任何 CPU 计算。
 - 代码分支工作树干净，四个阶段均本地 commit，未 push。
 - 成功图片：`results/krea2-hpu-1024.png`、`results/qwen21-turbo-1024.png`、`results/moss-sft-1024.png`；`*-failed`、`*-first` 及故障排查图片保留为失败证据。
 

@@ -151,3 +151,26 @@
 - 已实测：后台就绪、从当前电脑访问 LAN /system_stats（HPU GAUDI2）、重复启动不产生第二进程、正常停止、重复停止、过期 PID 清理、伪造为其他 sleep 进程的 PID 不会误杀、端口占用在启动 HPU 进程前被拒绝。
 - 最终以新脚本重新启动，供用户试用。代码与部署记录仅本地提交，未 push；未创建开机自启服务。
 - 最终确认：新脚本启动 PID 289333，局域网首页 HTTP 200，/system_stats 返回 hpu:0 GAUDI2，UNETLoader 与 VAELoader 下拉资源均包含三个已验证模型组合；证据 results/deployment-system-stats.json。
+
+## 用户试用问题：MOSS 提示词扩写（2026-11-05，已修复并部署）
+
+- 用户在官方 MOSS 模板启用 TextGenerate 提示词扩写，`mtp=auto`、sampling on、top_k=64、top_p=0.95、min_p=0.05、temperature=0.7、max_length=4096。在 Qwen3.5 `_generate_mtp` 首个 `nt_buf[0].item()` 同步时触发 synStatus 26。
+- 之前第四阶段只测了关闭 enhancer 的基础文生图。该结果真实但覆盖范围不足，不能推广为官方模板默认扩写路径可用；本轮补齐用户实际工作流，不能以关闭扩写作为修复验收。
+- 已通过 `/history` 保存失败请求 `5007afb6-2c25-447d-b36d-5db621adf12d` 和相关 history：`results/moss-textgen-user-failure.json`；原始展开后的 API 图：`workflows/moss-user-textgen.json`。用户图含 ResolutionSelector、TextGenerate、PreviewAny、ComfySwitchNode，分辨率 1 MP 正方形，25 步 er_sde/simple、cfg2.5、SLG 关闭。
+- 队列空闲后停止独立服务 PID 289333；原 ComfyUI 未动。纯随机 logits 即可在 `BaseGenerate.sample_token` 复现，无需权重、MTP 或完整 transformer。
+- 开启临时诊断 `ENABLE_CONSOLE=true LOG_LEVEL_ALL=3` 得到底层错误：`gather_elements_fwd_i32` 收到 int64 数据，`GLUE_INCOMPATIBLE_DATA_TYPE`。触发点是 top-k 采样后的 `top_indices.gather(1, next_token)`，不是 `.item()` 本身，也不是缺 GC_KERNEL_PATH。
+- 最小候选修复位于 `comfy/text_encoders/llama.py::BaseGenerate.sample_token`：仅 HPU 将词表索引转 int32 后 gather，再转回 torch.long；采样、模型计算、返回值仍在 HPU，不关闭 MTP、不移动文本模型到 CPU。词表索引 248320 范围可由 int32 精确表示。
+- 独立采样/索引探针证据 `results/moss-sampling-probe.log`（旧路径失败）、`results/moss-gather-probe.log`（候选路径成功）。随后按真实用户完整工作流重跑，验收见下节。
+
+### 原始工作流通过与补充测试
+
+- 代码修复提交 `0139b1da`，只修改 shared `BaseGenerate.sample_token` 的 HPU top-k 索引读取并新增测试。API、工作流参数和模型权重均未改变。采样随机数仍使用原 HPU generator；未引入 CPU 采样。
+- 原样重放用户失败 API 图（包括完整 system prompt、实际 prompt、seed、max_length=4096、mtp=auto、sampling on、三个模型文件、25 步与 1024² 分辨率），请求 `87a58349-b722-40c5-b8ba-ba14afe7a4f9` 成功。扩写约 251 tokens 后正常结束，得到可读、符合原提示的英文段落，随后正常完成出图。
+- 端到端 350.39 s（服务日志）；其中文本生成进度条约 305 s。此轮开启诊断日志，仅用于正确性验证，不作为性能基准；不能宣传为扩写高性能支持。尚未做专门的自回归性能优化。
+- 图片 `results/moss-user-textgen-fixed.png`：1024×1024，白色气球袖大衣、夜间剧院、MOSS 灯牌、湿地反光正确，已目视检查。完整 history `results/moss-user-textgen-fix1.json` 含扩写文本和图片路径；`results/moss-textgen-fixed-server.log` 是诊断服务日志中 ComfyUI 事件和 token 进度的筛选摘录；完整原始日志仍在服务器 logs/hpu.log。
+- 单卡停止服务后运行回归：**26 passed**。原有 14 项，加 CPU/HPU × bf16/fp32 × top_k=0/1/64 的 12 项采样测试；检查高位词表编号、batch 维度、设备/torch.long 返回类型、相同设备固定 seed 可重现及 top_k=1 精确结果。不要求 CPU/HPU 随机序列相同。
+- 已将已提交代码通过 git archive 部署，恢复不带诊断环境变量的根目录启动脚本，进程 PID 302801。重启后的短提示词扩写与完整出图也已通过，mtp=off，覆盖另一生成入口。
+
+- 重启后的补测：提示为红茶壶，短 system prompt，max_length=256、mtp=off、sampling on、seed42，512²、25 步。生成约 80 tokens 的完整英文段落（进度条最后显示 79/256），随后正常出图，服务端端到端 125.09 s；说明关闭诊断日志后自回归生成仍偏慢，后续性能优化应另设基准。证据 `results/moss-textgen-reload.json`、`moss-textgen-reload.png`，可复现图 `workflows/moss-textgen-reload.json`。
+- 最终状态：PID 302801、http://192.168.10.21:8189 在线且队列为空；`PT_HPU_LAZY_MODE=0`，临时 `ENABLE_CONSOLE` / `LOG_LEVEL_ALL` 均未设置；版本文件为 `0139b1da33fa72e78f07bd1e951a254e7bec0262`。系统状态保存在 `results/moss-textgen-deployment.json`。没有强制释放用户服务模型，当前暖机占用约 19.3 GiB。
+- 原始 `~/ComfyUI` 未修改；代码仓库只提交产品修复与测试，所有复现图、日志和调查记录均只在 gaudi2；未 push。本仓库用户原有暂存的调查文档保持不动。
