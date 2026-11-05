@@ -1,0 +1,65 @@
+--- a/diffusers/models/transformers/transformer_qwenimage21.py
++++ b/diffusers/models/transformers/transformer_qwenimage21.py
+@@ -107,8 +107,10 @@
+     """
+     if use_real:
+         cos, sin = freqs_cis  # [S, D]
+-        cos = cos[None, None]
+-        sin = sin[None, None]
++        # Qwen Image attention stores tensors as [batch, sequence, heads, dim].
++        # Broadcast the [sequence, dim] phase tables over batch and heads.
++        cos = cos[:, None]
++        sin = sin[:, None]
+         cos, sin = cos.to(x.device), sin.to(x.device)
+ 
+         if use_real_unbind_dim == -1:
+@@ -345,8 +347,10 @@
+     key = attn.norm_k(key).to(value.dtype)
+ 
+     if rotary_emb is not None:
+-        query = apply_rotary_emb_qwen(query, rotary_emb, use_real=False)
+-        key = apply_rotary_emb_qwen(key, rotary_emb, use_real=False)
++        # Gaudi HPU does not support complex tensors. Qwen Image 2.1 RoPE is
++        # supplied as real (cos, sin) tensors by QwenImage21Rope below.
++        query = apply_rotary_emb_qwen(query, rotary_emb, use_real=True)
++        key = apply_rotary_emb_qwen(key, rotary_emb, use_real=True)
+ 
+     if layer_cache is not None:
+         if kv_cache_mode == "extract" and cache_write_slice is not None:
+@@ -677,7 +681,9 @@
+     def forward(
+         self, img_shapes: list[tuple[int, int, int]], image_pad_mask: torch.Tensor, device: torch.device
+     ) -> torch.Tensor:
+-        self.freqs = [freq.to(device) for freq in self.freqs]
++        # Convert phase tables to real tensors before moving them to HPU;
++        # ComplexFloat tensors are unsupported by the Gaudi backend.
++        freqs = [(freq.real.to(device), freq.imag.to(device)) for freq in self.freqs]
+ 
+         frame_index, height_index, width_index = [], [], []
+         image_height_index, image_width_index = [], []
+@@ -707,7 +713,16 @@
+         height_index[image_pad_mask] = torch.tensor(image_height_index, dtype=torch.long, device=device)
+         width_index[image_pad_mask] = torch.tensor(image_width_index, dtype=torch.long, device=device)
+ 
+-        return torch.cat([self.freqs[0][frame_index], self.freqs[1][height_index], self.freqs[2][width_index]], dim=-1)
++        cos = torch.cat(
++            [freqs[0][0][frame_index], freqs[1][0][height_index], freqs[2][0][width_index]], dim=-1
++        )
++        sin = torch.cat(
++            [freqs[0][1][frame_index], freqs[1][1][height_index], freqs[2][1][width_index]], dim=-1
++        )
++        # Each complex phase applies to a pair of real channels; duplicate each
++        # phase across that pair for apply_rotary_emb_qwen(use_real=True).
++        # Keep these real tensors on HPU because ComplexFloat is unsupported.
++        return cos.repeat_interleave(2, dim=-1), sin.repeat_interleave(2, dim=-1)
+ 
+ 
+ class QwenImage21Transformer2DModel(
+@@ -955,7 +970,7 @@
+             # needed.
+             joint_hidden_states = joint_hidden_states[:, prefix_len:]
+-            rotary_emb = rotary_emb[prefix_len:]
++            rotary_emb = (rotary_emb[0][prefix_len:], rotary_emb[1][prefix_len:])
+             modulation_mask = modulation_mask[prefix_len:]
+             attention_mask = None if joint_key_valid is None else joint_key_valid[:, None, None, :]
+             cache_write_slice = None
