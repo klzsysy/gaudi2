@@ -31,6 +31,26 @@ ssh -N -L 8189:127.0.0.1:8189 sonny@192.168.10.21
 
 浏览器打开 `http://127.0.0.1:8189`。独立 smoke 与服务必须串行占用 HPU。
 
+## 用户试用启停（2026-11-05 部署）
+
+当前部署提交 `3bda1351`（前三模型推理代码基于阶段四 `21e98390`），监听服务器局域网地址，可直接打开 http://192.168.10.21:8189 。
+
+```bash
+ssh sonny@192.168.10.21
+cd ~/ComfyUI-Gaudi
+./start-hpu.sh   # 后台启动，等待页面就绪；已启动时直接返回
+./stop-hpu.sh    # 停止该目录管理的服务，等待 HPU 进程退出
+```
+
+```bash
+tail -f ~/ComfyUI-Gaudi/logs/hpu.log
+cat ~/ComfyUI-Gaudi/.run/deployed-version
+```
+
+`start-hpu.sh` 读取服务器 `.gaudi.env` 的监听地址/端口；该文件不进入代码仓库。配置副本在本调查仓库 `deployment/gaudi.env`。`scripts/gaudi/start.sh` 仍是原有前台开发入口；用户日常使用根目录脚本即可，避免绕过 PID 管理再启动第二个 HPU 进程。没有配置开机自启。停止时会终止该服务正在进行的任务。
+
+三个已验证工作流位于 `scripts/gaudi/*-api.json`，模型、VAE 路径保持既有独立/只读配置。
+
 ## 模型下载优先级
 
 模型下载先使用服务器 shell 已有的 `HF_ENDPOINT` 和 `HF_TOKEN`，不要显式覆盖端点。`huggingface_hub` 可自动读取；需要显式传参时从 `os.environ` 取值而不是写入脚本。先检查已有文件，尤其是 VAE，避免重复下载。代理或备用站点仅在必要时使用并记录失败证据。
@@ -65,6 +85,6 @@ Qwen 2.1 Turbo 的新权重在独立 checkout 自己的 `models/{diffusion_model
 .venv/bin/python -m pytest tests-unit/comfy_test/model_management_test.py tests-unit/comfy_test/hpu_quant_test.py tests-unit/comfy_test/hpu_vae_test.py -q
 ```
 
-服务器目录通过 tar/scp 同步源码，**没有 `.git` 元数据**；本地代码仓库才是版本来源。同步时仅从已审查代码提交打包，例如 `git archive codex/gaudi2-hpu | ssh sonny@192.168.10.21 'tar -xf - -C ~/ComfyUI-Gaudi'`，不要复制本调查仓库、过程文档、令牌或配置。修改后重启服务，先等待旧进程彻底退出。当前验证版本为 `21e98390`。
+服务器目录通过 tar/scp 同步源码，**没有 `.git` 元数据**；本地代码仓库才是版本来源。同步时仅从已审查代码提交打包，例如 `git archive codex/gaudi2-hpu | ssh sonny@192.168.10.21 'tar -xf - -C ~/ComfyUI-Gaudi'`，不要复制本调查仓库、过程文档、令牌或配置。修改后重启服务，先等待旧进程彻底退出。当前部署版本为 `3bda1351`。
 
 MOSS SFT 与 Qwen3.5 9B 的新权重位于独立 models；Flux2 VAE 通过上述只读路径复用。MOSS 固定验证参数是 25 步 er_sde/simple、cfg2.5；没有启用可选 prompt enhancer、SLG 或编辑 LoRA。

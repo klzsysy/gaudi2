@@ -140,3 +140,14 @@
 - 资源清单 `results/moss-resources.json`；复用判断 `moss-vae-reuse.json`；下载校验 `moss-download-configured.log`；测试 history `moss-first.json`、`moss-1024.json`、`moss-reload.json`；完整服务日志 `moss-server.log`；内存 `moss-unload-memory.json`。
 - 成功图片：`results/moss-sft-512.png`、`results/moss-sft-1024.png`、`results/moss-sft-reload.png`。长提示词/重载/VAE 单独工作流在 `workflows/moss-*.json`，预检脚本在 `probes/moss_delta.py`。
 - 当前四阶段代码均已本地提交，未 push；服务保持运行且已释放模型。验证范围为选定的 SFT 文生图组合，不包括 MOSS Base、编辑/控制 LoRA、SLG、prompt enhancer 或其它量化变体。
+
+## 用户试用部署（2026-11-05）
+
+- 用户授权部署当前验证版并提供启停脚本。部署核心为第四阶段 `21e98390`，管理脚本提交 `3bda1351`；源码没有新的推理变更。
+- 独立部署位置仍为 `/home/sonny/ComfyUI-Gaudi`，原 `/home/sonny/ComfyUI` 未改动。先确认队列为空，再停止此前实验进程；以代码仓库 `git archive HEAD` 同步已提交版本，保留独立 venv、models、output 和 extra_model_paths.yaml。
+- `start-hpu.sh` 后台启动、等待 HTTP 就绪、记录 PID 和日志；同目录/同 main.py 进程校验、flock 避免重复管理、端口占用预检。`stop-hpu.sh` 仅对匹配本目录的已记录 main.py 进程发送 SIGTERM，并等待退出；不会批量 pkill 或停止其他目录的服务。
+- 服务器 `.gaudi.env` 设置 `COMFYUI_LISTEN=192.168.10.21`、`COMFYUI_PORT=8189`，因此用户可直接访问局域网 URL，不再需要 SSH tunnel。代码脚本默认仍只绑定 127.0.0.1；服务器地址仅保存在本调查仓库 deployment/gaudi.env 和服务器忽略的本地配置中。
+- PID `.run/hpu.pid`，版本 `.run/deployed-version`，日志 `logs/hpu.log`，都不进入代码 Git。脚本继承当前 shell 环境，不覆盖 HF_ENDPOINT/HF_TOKEN，不把凭据写入配置。
+- 已实测：后台就绪、从当前电脑访问 LAN /system_stats（HPU GAUDI2）、重复启动不产生第二进程、正常停止、重复停止、过期 PID 清理、伪造为其他 sleep 进程的 PID 不会误杀、端口占用在启动 HPU 进程前被拒绝。
+- 最终以新脚本重新启动，供用户试用。代码与部署记录仅本地提交，未 push；未创建开机自启服务。
+- 最终确认：新脚本启动 PID 289333，局域网首页 HTTP 200，/system_stats 返回 hpu:0 GAUDI2，UNETLoader 与 VAELoader 下拉资源均包含三个已验证模型组合；证据 results/deployment-system-stats.json。
