@@ -174,3 +174,24 @@
 - 重启后的补测：提示为红茶壶，短 system prompt，max_length=256、mtp=off、sampling on、seed42，512²、25 步。生成约 80 tokens 的完整英文段落（进度条最后显示 79/256），随后正常出图，服务端端到端 125.09 s；说明关闭诊断日志后自回归生成仍偏慢，后续性能优化应另设基准。证据 `results/moss-textgen-reload.json`、`moss-textgen-reload.png`，可复现图 `workflows/moss-textgen-reload.json`。
 - 最终状态：PID 302801、http://192.168.10.21:8189 在线且队列为空；`PT_HPU_LAZY_MODE=0`，临时 `ENABLE_CONSOLE` / `LOG_LEVEL_ALL` 均未设置；版本文件为 `0139b1da33fa72e78f07bd1e951a254e7bec0262`。系统状态保存在 `results/moss-textgen-deployment.json`。没有强制释放用户服务模型，当前暖机占用约 19.3 GiB。
 - 原始 `~/ComfyUI` 未修改；代码仓库只提交产品修复与测试，所有复现图、日志和调查记录均只在 gaudi2；未 push。本仓库用户原有暂存的调查文档保持不动。
+
+## MOSS 扩写性能问题（2026-11-06，主要 CPU 回退问题已修复并部署）
+
+- 用户反馈约 1.28 秒/token，hl-smi 利用率为 0%。连续 12 次实际采样显示 0%～26% 交替，功耗约 83～159W；模型不是完全没有在 HPU 运行，但存在很长空闲间隙。证据 `results/moss-performance-live-samples.json`。等待用户任务完成、队列空闲后停止 PID 302801 做独立诊断，没有中断其正在生成的结果。
+- 新建 `probes/moss_performance.py`，加载实际 Qwen3.5 9B INT8 ConvRot，固定短提示词/seed42/sampling on/mtp off，2-token 暖机后采样 8 tokens。输出头是 MixedPrecisionOps.Linear，`_full_precision_mm=True`，权重已在 HPU。
+- 原版 8 tokens 10.19 s；CPU profiler 中 `aten::_int_mm` 7 次合计约 7.2 s，包含大量 `_copy_from`。Habana `_get_fallback_op_count()` 确认 `aten::_int_mm` CPU fallback 共 8 次（含暖机）。调用栈定位 `BaseGenerate.logits` 直接 `F.linear`，绕过 Linear.forward 的 `_full_precision_mm`；涉及 [1,4096] × [4096,248320]，约 1 GB 的 INT8 词表矩阵每步走 CPU fallback。MTP 的 verify_logits 也直接使用 F.linear，存在同类问题。
+- 候选修复：存在独立 lm_head 时调用该层本身，复用原有量化/精度/权重 patch 策略；普通 logits 和 Qwen3.5 MTP verify 两处改动。共享 embedding 的原逻辑保持原状。没有开启不支持的 INT8 compute，也没有引入跨执行权重缓存。
+- 修复后同样 8 tokens 4.47 s，token ID 逐个相同，CPU fallback 计数为空。剩余 `_copy_from` 大头是单个 token 标量回读时等待设备完成；不能把 profiler 所有 copy 时间都解释为主机数据搬运。ConvRot 权重仍逐次解量化，后续可进一步优化，但不应在定位前盲目缓存或更改模型数学。
+- CPU Qwen3.5 解码回归 **42 passed, 1 skipped**：新增 3 个量化 lm_head 测试，覆盖普通/auto MTP/tree2s1，禁用 INT8 matmul 后应与显式反量化权重输出一致；原有 greedy、sampled、tree、KV 等测试均通过。唯一 skip 要求实体 CUDA DynamicVRAM。随后验证了真实 HPU MTP 的 fallback 计数、完整默认工作流和利用率，结果如下。
+- Profiler 导出接口有继承不兼容：外层 `prof.export_chrome_trace()` 向 Habana wrapper 多传一个参数，TypeError；改用 `prof.profiler.export_chrome_trace(path)` 已导出。原始 trace 各约 146MB 留在独立服务器 test-results，不复制到 Git；性能表和摘要进入本仓库。
+
+### 性能修复验收与最终部署
+
+- 代码提交 `0690d18f`，仅 llama.py、qwen35.py 的 lm_head 调用及 qwen35_decode_test.py 的 3 项回归测试；复用层本身处理精度/量化/patch，不引入 HPU 私有缓存或额外模型副本。共享 embedding 作为输出头的其它模型仍保持原路径，未宣称这次修复覆盖所有模型。
+- 真实 HPU MTP auto：2-token 暖机后固定生成 32 tokens，10.412 s（约 3.07 token/s），`fallback_counts {}`。日志 `results/moss-head-fixed-mtp.log`；前一普通生成 profile 的 8 tokens 从 10.1917 s → 4.4680 s（2.28 倍），8 个 token ID 完全一致。前后均是相同模型、输入、seed 与脚本参数；CPU profiler 有开销，不能当纯生成吞吐。
+- 用户本轮已完成的请求 `1c14ab46-05a1-47ab-9e89-53348da828b3` 保存于 `results/moss-performance-user-history.json`，耗时 337.013 s。使用其完全相同的展开 API 图（包括 seed=133401810542576）重放，见 `workflows/moss-performance-full.json`；修复版完成 **134.586 s**（约 2.50 倍端到端提速）。旧请求已有模型缓存，新服务为重启后的加载；不是多轮严格性能基准。
+- 新完整扩写最后进度为 307/4096、约 89 s、3.44 token/s，较旧输出更长；max_length=4096 是上限，实际遇到结束 token 即停。新输出仍是语义正确的完整英文段落，1024² 图片中的白大衣/MOSS 剧院/湿地反光正常，目视检查通过。结果 `moss-performance-fixed-full.json`、`moss-performance-fixed.png`；服务日志 `moss-performance-fixed-server.log`。
+- 连续采样 90 次，其中有本次扩写进度的 84 次用于统计：HPU 利用率 min 0%、max 57%、mean 21.96%，9 次为 0%。证据 `moss-performance-fixed-utilization.json`。与修复前 12 次采样的 0～26% 比较只能说明活跃程度改善，不能当严格配对的利用率基准；也不能宣称利用率不再为 0% 或已充分利用 HPU。
+- 量化权重仍按现有逻辑临时解量化为计算精度，eager Python 调度也仍存在；进一步提升吞吐需要独立的设备时间线/算子优化评测。本轮仅完成已实证的输出头 CPU fallback 修复，未实施盲目切 lazy、全模型 BF16 常驻缓存或改变 ConvRot 数学的方案。
+- 已通过 git archive 部署已提交版本并用正常根目录脚本启动，PID 325542，版本文件为 `0690d18f` 对应完整 SHA；最终队列为空，http://192.168.10.21:8189 可用。系统状态 `moss-performance-deployment.json`，汇总 `moss-performance-summary.json`。
+- 代码、文档分别本地提交，未 push；原始 ~/ComfyUI 未改动，用户原有暂存的 GAUDI2_COMFYUI_OPENSOURCE_SURVEY.md 未夹带。

@@ -33,7 +33,7 @@ ssh -N -L 8189:127.0.0.1:8189 sonny@192.168.10.21
 
 ## 用户试用启停（2026-11-05 部署）
 
-当前部署提交 `0139b1da`（修复 MOSS TextGenerate 提示词扩写；启停脚本仍为 `3bda1351`），监听服务器局域网地址，可直接打开 http://192.168.10.21:8189 。
+当前部署提交 `0690d18f`（修复 MOSS TextGenerate 的采样错误与输出头 CPU 回退；启停脚本仍为 `3bda1351`），监听服务器局域网地址，可直接打开 http://192.168.10.21:8189 。
 
 ```bash
 ssh sonny@192.168.10.21
@@ -85,6 +85,15 @@ Qwen 2.1 Turbo 的新权重在独立 checkout 自己的 `models/{diffusion_model
 .venv/bin/python -m pytest tests-unit/comfy_test/model_management_test.py tests-unit/comfy_test/hpu_quant_test.py tests-unit/comfy_test/hpu_vae_test.py tests-unit/comfy_test/hpu_textgen_test.py -q
 ```
 
-服务器目录通过 tar/scp 同步源码，**没有 `.git` 元数据**；本地代码仓库才是版本来源。同步时仅从已审查代码提交打包，例如 `git archive codex/gaudi2-hpu | ssh sonny@192.168.10.21 'tar -xf - -C ~/ComfyUI-Gaudi'`，不要复制本调查仓库、过程文档、令牌或配置。修改后重启服务，先等待旧进程彻底退出。当前部署版本为 `0139b1da`。
+服务器目录通过 tar/scp 同步源码，**没有 `.git` 元数据**；本地代码仓库才是版本来源。同步时仅从已审查代码提交打包，例如 `git archive codex/gaudi2-hpu | ssh sonny@192.168.10.21 'tar -xf - -C ~/ComfyUI-Gaudi'`，不要复制本调查仓库、过程文档、令牌或配置。修改后重启服务，先等待旧进程彻底退出。当前部署版本为 `0690d18f`。
 
 MOSS SFT 与 Qwen3.5 9B 的新权重位于独立 models；Flux2 VAE 通过上述只读路径复用。MOSS 固定验证参数是 25 步 er_sde/simple、cfg2.5；基础 API 工作流没有启用可选 prompt enhancer、SLG 或编辑 LoRA。用户试用后已补测官方模板的 TextGenerate 扩写（MTP auto、sampling on）：原始 1024² 工作流成功，证据 workflows/moss-user-textgen.json 和 results/moss-user-textgen-fix1.json。扩写仍明显慢于直接文本编码，详细耗时见 PROGRESS.md；SLG/编辑 LoRA 仍未验证。
+
+
+## MOSS 文本生成性能修复（2026-11-06）
+
+`0690d18f` 让普通生成和 MTP 校验调用 lm_head 层本身，遵守已设置的 BF16 计算策略。旧版直接 F.linear 跳过策略，约 1 GB INT8 词表矩阵每步触发 CPU fallback；修复后真实 HPU 普通/MTP 短序列的 fallback 计数均为空。默认 mtp=auto 可继续使用，不需要改工作流或换模型。
+
+同一完整 1024² 请求的实际端到端从 337.013 s 降至 134.586 s；新扩写约 307 tokens / 89 s，末尾进度约 3.44 token/s。文本和图片会因输出头计算路径修正而与旧版有所不同。采样时 HPU 利用率仍有短暂 0%，84 个扩写阶段样本平均约 22%、最高 57%；当前没有达到硬件极限吞吐。
+
+诊断脚本、结果和过程只在本调查仓库 probes/moss_performance.py、results/moss-performance-*。完整 CPU profiler trace 各约 146 MB 留在独立服务器 test-results/moss-{baseline,head-fixed}-trace.json，没有加入代码仓库或本调查 Git。

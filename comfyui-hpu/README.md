@@ -1,6 +1,6 @@
 # Gaudi2 HPU 适配交接入口
 
-更新时间：2026-11-05（Asia/Shanghai）。每次结束工作前更新本文件和 `PROGRESS.md`；阶段通过后分别提交适配仓库的代码/测试及本调查仓库的文档。不要把启动成功写成模型验证成功。
+更新时间：2026-11-06（Asia/Shanghai）。每次结束工作前更新本文件和 `PROGRESS.md`；阶段通过后分别提交适配仓库的代码/测试及本调查仓库的文档。不要把启动成功写成模型验证成功。
 
 **文档归属：用户明确要求所有过程和个人环境信息仅保存在 `/Users/sonny/work/github/klzsysy/gaudi2`，不得进入 ComfyUI-Gaudi 仓库或其提交历史。**
 
@@ -16,12 +16,13 @@
 
 ## 当前状态
 
-- 用户试用部署已修复 MOSS 扩写：`0139b1da`，访问 http://192.168.10.21:8189 ，根目录 `start-hpu.sh` / `stop-hpu.sh` 管理服务；详见 ENVIRONMENT.md。
+- 用户试用部署已修复 MOSS 扩写及输出头 CPU 回退：`0690d18f`，访问 http://192.168.10.21:8189 ，根目录 `start-hpu.sh` / `stop-hpu.sh` 管理服务；详见 ENVIRONMENT.md。
 
 - 阶段一完成：`8326476f`。
 - 阶段二完成：`fc1c891f`；HPU/bf16 完整生图，512/1024 和卸载重载已验证。
 - 阶段三完成：`6db162dd`；Turbo 固定 8 步，512/1024、长短提示词、卸载重载已验证。
 - 第四阶段完成：`21e98390`；MOSS-Image SFT bf16 + Qwen3.5 9B int8 ConvRot，复用已有 Flux2 VAE，512/1024 和重载验证通过，基础出图无新增核心补丁；用户试用后补测并修复 TextGenerate 的 HPU token 采样，详见 PROGRESS.md。
+- MOSS 扩写性能修复：输出头遵守层自身精度策略，实测 HPU 不再回退 INT8 matmul 到 CPU；同一完整请求从 337 秒降至 135 秒。42 项解码回归通过（另 1 项 CUDA 测试跳过）。这不是全面性能优化完成的声明。
 - 详细数值错误、修复与证据见 `PROGRESS.md`。
 - 验证为 eager + bf16 正确性基线，不是性能优化或所有模型/自定义节点支持声明。26 项回归通过，三个目标模型的文本/DiT/VAE 都使用 HPU；RoPE 频率表沿用已有 CPU float64 路径，不能宣称无任何 CPU 计算。
 - 代码分支工作树干净，四个阶段均本地 commit，未 push。
