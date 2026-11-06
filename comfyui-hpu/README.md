@@ -26,7 +26,7 @@
 - 详细数值错误、修复与证据见 `PROGRESS.md`。
 - 验证为 eager + bf16 正确性基线，不是性能优化或所有模型/自定义节点支持声明。26 项回归通过，三个目标模型的文本/DiT/VAE 都使用 HPU；RoPE 频率表沿用已有 CPU float64 路径，不能宣称无任何 CPU 计算。
 - 代码分支工作树干净，四个阶段均本地 commit，未 push。
-- 成功图片：`results/krea2-hpu-1024.png`、`results/qwen21-turbo-1024.png`、`results/moss-sft-1024.png`；`*-failed`、`*-first` 及故障排查图片保留为失败证据。
+- 成功图片：`results/krea2-hpu-1024.png`、`results/qwen21-turbo-1024.png`、`results/moss-sft-1024.png`；`*-failed`、`*-first` 及故障排查图片保留为失败证据。**`comfyui-hpu/results/` 已不在 git 中跟踪**（历史提交里的这些产物已从 git 历史清除，见 `.gitignore`），产物只保存在服务器部署目录与本地备份。
 
 ## 执行计划与验收
 
