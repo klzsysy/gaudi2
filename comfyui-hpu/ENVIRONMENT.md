@@ -4,7 +4,7 @@
 
 当前内核为 `5.15.0-202-generic`；Habana `1.24.2-481` 已为 `186` 和 `202` 两个内核安装。重启前必须检查目标内核对应的 DKMS installed 状态，不能仅凭 `lspci` 或 `lsmod` 判断驱动可用。驱动重装时可能只编译正在运行的内核，遗漏已经安装但尚未启动的新内核。修复和检查命令见 [驱动恢复记录](DRIVER_RECOVERY_2026-11-06.md)。
 
-本轮恢复驱动后未启动 ComfyUI 服务；需要运行下文的 `./start-hpu.sh`。未新增开机自启。
+本轮已完成真实重启验证：重启后 `hl-smi`、两个内核的 DKMS 检查和 BF16 HPU matmul 均通过；随后已运行下文的 `./start-hpu.sh` 恢复 ComfyUI-Gaudi。仍未新增开机自启。
 
 已修复服务器 `/home/sonny/gaudi2/gaudi2-single-card-driver/scripts/install-gaudi2.sh`：安装模式覆盖当前内核和 `/boot` 中的全部内核镜像，缺 headers 或某个内核驱动校验失败时拒绝报成功。以后重启前可运行 `sudo bash /home/sonny/gaudi2/gaudi2-single-card-driver/scripts/install-gaudi2.sh --verify-only --skip-pytorch`；这项检查不重建驱动、不运行 HPU 计算。脚本依赖同仓库新增的 `scripts/lib/gaudi-dkms.sh`，同步时需一起携带。细节和备份见恢复记录。
 
@@ -59,7 +59,6 @@ cat ~/ComfyUI-Gaudi/.run/deployed-version
 
 `start-hpu.sh` 读取服务器 `.gaudi.env` 的监听地址/端口；该文件不进入代码仓库。配置副本在本调查仓库 `deployment/gaudi.env`。`scripts/gaudi/start.sh` 仍是原有前台开发入口；用户日常使用根目录脚本即可，避免绕过 PID 管理再启动第二个 HPU 进程。没有配置开机自启。停止时会终止该服务正在进行的任务。
 
-三个已验证工作流位于 `scripts/gaudi/*-api.json`，模型、VAE 路径保持既有独立/只读配置。
 
 ## 模型下载优先级
 
@@ -67,17 +66,25 @@ cat ~/ComfyUI-Gaudi/.run/deployed-version
 
 ## 模型路径与工作流
 
-服务器独立 checkout 的 `extra_model_paths.yaml` 只读引用已有 Krea2 组件：
+服务器两个 checkout 的 `extra_model_paths.yaml` 都引用同一共享模型仓库：
 
 ```yaml
-existing_readonly:
-  base_path: /home/sonny/ComfyUI
-  diffusion_models: models/diffusion_models
-  text_encoders: models/text_encoders
+shared_models:
+  base_path: /home/sonny/ComfyUI-Models
+  checkpoints: models/checkpoints
+  configs: models/configs
+  clip: models/clip
+  diffusion_models: |
+    models/diffusion_models
+    models/unet
+  loras: models/loras
+  text_encoders: |
+    models/text_encoders
+    models/clip
   vae: models/vae
 ```
 
-Qwen 2.1 Turbo 的新权重在独立 checkout 自己的 `models/{diffusion_models,text_encoders,vae}`，文件和固定 revision 见 PROGRESS.md。加载不需要 HF 访问或令牌；只有重新下载才需要已有 shell 代理/环境。
+共享目录按原有一级分类保存全部模型；checkout 的 `models/<分类>` 是兼容 symlink，旧式直接路径仍可用。Qwen 2.1 Turbo、MOSS、Qwen3.5/Qwen3VL 和 VAE 都已在共享目录中，文件和固定 revision 见 PROGRESS.md。加载不需要 HF 访问或令牌；只有重新下载才需要已有 shell 代理/环境。迁移和原配置备份见 MODEL_STORAGE_PLAN_2026-11-06.md。
 
 服务运行后，在服务器独立 checkout 执行：
 
@@ -97,7 +104,7 @@ Qwen 2.1 Turbo 的新权重在独立 checkout 自己的 `models/{diffusion_model
 
 服务器目录通过 tar/scp 同步源码，**没有 `.git` 元数据**；本地代码仓库才是版本来源。同步时仅从已审查代码提交打包，例如 `git archive codex/gaudi2-hpu | ssh sonny@192.168.10.21 'tar -xf - -C ~/ComfyUI-Gaudi'`，不要复制本调查仓库、过程文档、令牌或配置。修改后重启服务，先等待旧进程彻底退出。当前部署版本为 `0690d18f`。
 
-MOSS SFT 与 Qwen3.5 9B 的新权重位于独立 models；Flux2 VAE 通过上述只读路径复用。MOSS 固定验证参数是 25 步 er_sde/simple、cfg2.5；基础 API 工作流没有启用可选 prompt enhancer、SLG 或编辑 LoRA。用户试用后已补测官方模板的 TextGenerate 扩写（MTP auto、sampling on）：原始 1024² 工作流成功，证据 workflows/moss-user-textgen.json 和 results/moss-user-textgen-fix1.json。扩写仍明显慢于直接文本编码，详细耗时见 PROGRESS.md；SLG/编辑 LoRA 仍未验证。
+MOSS SFT 与 Qwen3.5 9B 的权重、Flux2 VAE 和其它模型现在都位于共享 models；MOSS 固定验证参数是 25 步 er_sde/simple、cfg2.5；基础 API 工作流没有启用可选 prompt enhancer、SLG 或编辑 LoRA。用户试用后已补测官方模板的 TextGenerate 扩写（MTP auto、sampling on）：原始 1024² 工作流成功，证据 workflows/moss-user-textgen.json 和 results/moss-user-textgen-fix1.json。扩写仍明显慢于直接文本编码，详细耗时见 PROGRESS.md；SLG/编辑 LoRA 仍未验证。
 
 
 ## MOSS 文本生成性能修复（2026-11-06）

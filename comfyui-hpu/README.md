@@ -16,7 +16,7 @@
 
 ## 当前状态
 
-- 2026-11-06 重启故障已修复：新内核 `5.15.0-202` 缺 Habana DKMS 模块，已补装 1.24.2 并在线恢复；`hl-smi` / Operational / BF16 matmul 通过。未运行模型或重启验证，ComfyUI 服务本轮未启动。详见 [驱动恢复记录](DRIVER_RECOVERY_2026-11-06.md)。
+- 2026-11-06 重启故障已修复并完成真实重启验证：新内核 `5.15.0-202` 的 Habana DKMS 模块与旧内核 `5.15.0-186` 均通过检查；重启后 `hl-smi` / Operational / BF16 matmul 通过，ComfyUI-Gaudi 已恢复并由 `/system_stats` 确认 `hpu:0 GAUDI2`。详见 [驱动恢复记录](DRIVER_RECOVERY_2026-11-06.md) 和 [重启验证记录](PROGRESS.md)。
 - 已修复服务器驱动安装脚本只覆盖 `uname -r` 的遗漏：检查并处理全部可启动内核，19 项模拟回归及实际双内核只读检查通过。原文件已备份；驱动仓库提交 `8d291ee`（含 H13SSL-N 硬件与安装前验证文档），未 push。补丁及回退位置见上述恢复记录。
 - 用户试用部署已修复 MOSS 扩写及输出头 CPU 回退：`0690d18f`，访问 http://192.168.10.21:8189 ，根目录 `start-hpu.sh` / `stop-hpu.sh` 管理服务；详见 ENVIRONMENT.md。
 
@@ -25,11 +25,15 @@
 - 阶段三完成：`6db162dd`；Turbo 固定 8 步，512/1024、长短提示词、卸载重载已验证。
 - 第四阶段完成：`21e98390`；MOSS-Image SFT bf16 + Qwen3.5 9B int8 ConvRot，复用已有 Flux2 VAE，512/1024 和重载验证通过，基础出图无新增核心补丁；用户试用后补测并修复 TextGenerate 的 HPU token 采样，详见 PROGRESS.md。
 - MOSS 扩写性能修复：输出头遵守层自身精度策略，实测 HPU 不再回退 INT8 matmul 到 CPU；同一完整请求从 337 秒降至 135 秒。42 项解码回归通过（另 1 项 CUDA 测试跳过）。这不是全面性能优化完成的声明。
+- 已建立 MOSS-Image HPU 性能调查计划：先冻结 1024² 用户基线 143.34 s，分离 TextGenerate/DiT/VAE，校准 HBM 与 GEMM 上限，再用重复实验和 roofline 指标归因；本轮只完成环境采集，没有启动新的性能测试。详见 [MOSS HPU 性能优化计划](MOSS_HPU_PERFORMANCE_PLAN_2026-11-06.md)。
+- 已补充 Gaudi2 架构到 MOSS 的硬件映射和观测工具盘点：`hl-smi`、HPU profiler、`synprof_parser`、`habana_perf_tool`、`torch.profiler` HPU activity 和 fallback 计数器已具备或有运行证据；完整硬件时间线和可视化端仍待空卡验证，详见同一计划文档。
+- 2026-11-06 服务器发生断电，MOSS 性能计划暂停。恢复后先做驱动、HPU、模型和服务健康检查，再继续 P1；断电前未执行新的性能测试或性能改动。
 - 详细数值错误、修复与证据见 `PROGRESS.md`。
 - 验证为 eager + bf16 正确性基线，不是性能优化或所有模型/自定义节点支持声明。26 项回归通过，三个目标模型的文本/DiT/VAE 都使用 HPU；RoPE 频率表沿用已有 CPU float64 路径，不能宣称无任何 CPU 计算。
 - 代码分支工作树干净，四个阶段均本地 commit，未 push。
 - 成功图片：`results/krea2-hpu-1024.png`、`results/qwen21-turbo-1024.png`、`results/moss-sft-1024.png`；`*-failed`、`*-first` 及故障排查图片保留为失败证据。**`comfyui-hpu/results/` 已不在 git 中跟踪**（历史提交里的这些产物已从 git 历史清除，见 `.gitignore`），产物只保存在服务器部署目录与本地备份。
-
+- 模型集中存储已完成：原两套模型已合并到 `/home/sonny/ComfyUI-Models/models`，两份 `extra_model_paths.yaml` 共同引用，checkout 内保留分类 symlink。Gaudi 版已实际加载 Qwen 2.1 Turbo 并出图；原版未启动。迁移、备份和验证证据见 [模型集中存储方案](MODEL_STORAGE_PLAN_2026-11-06.md)。
+- ComfyUI-Manager 调查：`--enable-manager` 实际加载成功；启动日志的 `PyTorch is not installed` 是缺少 torchaudio 的误报，禁止为此安装 torchaudio；服务器的参数改动尚未进入代码仓库。
 ## 执行计划与验收
 
 1. **阶段一：设备后端。** 原生 HPU 探测、设备枚举/名称、内存、同步、bf16 精度、安全关闭 CUDA 专用机制；独立环境启动 HTTP 服务，`/system_stats` 返回 HPU；通过真实 HPU matmul、attention、模型加载/卸载 smoke test；检查 CPU 路径。通过后 commit。

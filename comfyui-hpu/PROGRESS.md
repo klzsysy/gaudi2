@@ -1,5 +1,28 @@
 # 执行记录
 
+## 2026-11-06：服务器断电，暂停性能计划
+
+- 用户反馈服务器 `192.168.10.21` 已断电，本轮任务暂停；不再尝试 SSH、启动服务、运行微基准或 profiler。
+- 断电前最后一次只读状态：内核 `5.15.0-202-generic`，Gaudi2 HL-225、驱动 `1.24.2-52a555d`，ComfyUI-Gaudi PID 5202，服务监听 `192.168.10.21:8189`，队列为空；`hl-smi` 约使用 22480/98304 MiB、功耗 83 W、温度 43–51°C，AIP 利用率 0%。
+- 断电前确认的工具：`hl-smi`、`hl-prof-config`、`/opt/habanalabs/bin/synprof_configuration`、`synprof_parser`、`habana_perf_tool`、Habana `torch.profiler` HPU activity 和 `habana_frameworks.torch.utils.debug` fallback 计数接口；尚未在 MOSS 图上采集新的 HPU 硬件 trace。
+- 断电前未执行任何新性能测试、未改服务器代码、未修改原始 `/home/sonny/ComfyUI`，也没有改变模型或运行配置。服务器恢复后必须先重新做驱动/设备/服务健康检查，再决定是否继续 P1。
+- 计划与架构/工具信息见 [MOSS HPU 性能优化计划](MOSS_HPU_PERFORMANCE_PLAN_2026-11-06.md)。
+
+## 2026-11-06：MOSS HPU 性能优化计划与环境冻结
+
+- 按用户要求先不改代码、不启动新性能测试；只读采集独立 `/home/sonny/ComfyUI-Gaudi`、HL-225、驱动、PyTorch/ComfyUI 版本、当前进程参数、模型文件和用户目标工作流。
+- 用户给出的目标基线为 MOSS 1024×1024、25 步、端到端 143.34 s。当前采集确认服务为 eager、队列为空，但 PID 5202 正持有单卡，因此没有启动会抢占 HPU 的微基准或 profiler。
+- 已建立 B0 用户端到端、B1 无扩写、B2 文本单独、B3 DiT/VAE 分段、B4 尺寸/步数/缓存控制组，以及 HBM/GEMM 上限、HPU 状态、fallback、阶段耗时和质量验收契约。
+- 计划文档：[MOSS HPU 性能优化计划](MOSS_HPU_PERFORMANCE_PLAN_2026-11-06.md)。其中明确区分 143.34 s 用户基线与此前 134.586 s 的非严格重放结果；后续先完成严格 warm/cold 重复基线，再进入单变量优化。
+- 只读盘点补充了 Gaudi2 的 MME/TPC/HBM/SRAM/PCIe/RoCE 架构，以及本机工具状态：`hl-smi`、`hl-prof-config`/`synprof_parser`、`habana_perf_tool`、HPU `torch.profiler` activity 和 fallback 调试接口已具备；`torch-tb-profiler`/Perfetto 尚未确认，完整设备时间线尚未采集。
+
+## 2026-11-06：重启后驱动与 ComfyUI-Gaudi 验证
+
+- 按用户授权执行服务器重启。重启前确认 Gaudi 队列为空，运行 `--verify-only --skip-pytorch` 检查 `5.15.0-202`/`5.15.0-186` 两个内核，并优雅停止 PID 35778；没有中断生成任务。
+- 服务器重启后约 2 分钟 SSH 恢复，运行内核为 `5.15.0-202-generic`。`hl-smi` 显示 HL-225 Operational、驱动 `1.24.2-52a555d`；重启后再次执行双内核 DKMS 检查通过。
+- 独立 Habana Python 环境 BF16 HPU matmul 通过，最大误差 0；迁移后的 13 个工作流文件仍在新版目录。
+- 使用 `~/ComfyUI-Gaudi/start-hpu.sh` 恢复服务，当前 PID 2995；`/system_stats` 返回 `hpu:0 GAUDI2`、总 HPU 内存 `101601996800` bytes。服务未配置开机自启，后续仍需手动启动。
+
 ## 2026-11-06：驱动 README 补充硬件验证并提交
 
 - 按用户要求，在驱动仓库 README 的 Validated setup 新增 Supermicro H13SSL-N rev 1.01 / BIOS 3.8、AMD ES 100-000000897-03（32C/64T）、4×24 GB DDR5-4800、Gaudi2 HL-225 / Gen4 x16、Ubuntu 22.04.5、Habana 1.24.2 / Python 3.10 配置；保留原 GIGABYTE 平台结果。
