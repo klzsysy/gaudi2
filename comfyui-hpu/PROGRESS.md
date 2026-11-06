@@ -195,3 +195,14 @@
 - 量化权重仍按现有逻辑临时解量化为计算精度，eager Python 调度也仍存在；进一步提升吞吐需要独立的设备时间线/算子优化评测。本轮仅完成已实证的输出头 CPU fallback 修复，未实施盲目切 lazy、全模型 BF16 常驻缓存或改变 ConvRot 数学的方案。
 - 已通过 git archive 部署已提交版本并用正常根目录脚本启动，PID 325542，版本文件为 `0690d18f` 对应完整 SHA；最终队列为空，http://192.168.10.21:8189 可用。系统状态 `moss-performance-deployment.json`，汇总 `moss-performance-summary.json`。
 - 代码、文档分别本地提交，未 push；原始 ~/ComfyUI 未改动，用户原有暂存的 GAUDI2_COMFYUI_OPENSOURCE_SURVEY.md 未夹带。
+
+## 2026-11-06：清理 git 历史中的测试产物（comfyui-hpu/results）
+
+- 现象：上一个提交（`b6c0ed0`）删除了 `comfyui-hpu/results/` 内容，但仓库没变小，克隆/拉取仍然慢。
+- 原因：删除提交只清空当前树，历史各提交仍完整保存 81 个产物文件（约 15 MiB，其中 PNG 约 12 MiB）；另外本地 `.git` 里有 9.9 MiB 的 `tmp_pack_*` 残留（中断的 fetch 留下的临时包，git 不会自动回收）。
+- 处理：用 `git filter-repo --invert-paths --path comfyui-hpu/results/` 从全部历史移除该目录；11 个提交压成 10 个，只删产物、内容变空的 `remote test results` 提交被丢弃；已 `gc` 清除不可达对象和残留临时包。
+- 结果：`.git` 27 MiB → 244 KiB（打包 15.9 MiB → 约 54 KiB）；重新克隆 4.3 s、`.git` 168 KiB，`results/` 不再出现在工作树或历史中。
+- 防复发：新增 `.gitignore` 忽略 `comfyui-hpu/results/`；README 注明产物不进 git，只留在服务器部署目录和本地备份。
+- 已 force-push 重写后的 `feat/comfyui-hpu`（`b6c0ed0` → `e07a582`）。其它已有克隆必须 `git fetch origin && git reset --hard origin/feat/comfyui-hpu`，不要再 merge 旧历史，否则旧对象会被重新带回。
+- GitHub 服务端 API 的 `size` 仍显示约 15 MB，那是 force-push 后暂未回收的不可达对象；新克隆不会传输它们，等 GitHub 自动 gc 或联系支持才会降下来。
+- 清理前备份（本机临时目录，可能被系统清空）：`/tmp/gaudi2-cleanup-backup/`，含全历史 bundle 和 `results-export/` 产物原件。
