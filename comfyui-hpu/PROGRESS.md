@@ -1,5 +1,31 @@
 # 执行记录
 
+## 2026-11-06：驱动 README 补充硬件验证并提交
+
+- 按用户要求，在驱动仓库 README 的 Validated setup 新增 Supermicro H13SSL-N rev 1.01 / BIOS 3.8、AMD ES 100-000000897-03（32C/64T）、4×24 GB DDR5-4800、Gaudi2 HL-225 / Gen4 x16、Ubuntu 22.04.5、Habana 1.24.2 / Python 3.10 配置；保留原 GIGABYTE 平台结果。
+- Before installation 新增本机已验证列：IOMMU identity、NIC 参数、两个内核 headers/DKMS、运行库与 Python 版本；未测量的供电/接线及未复测的完整重启明确标注。未再次运行模型。
+- 驱动仓库提交 `8d291ee568e84291a7eee48b2515e345f076ebbb`：`Fix DKMS coverage for all bootable kernels`。包括本轮脚本修复、19 项回归测试与 README，共四个文件，未 push；原有未跟踪文件未提交。
+- 最终补丁已同步到 `patches/install-gaudi2-all-boot-kernels.patch`。本调查仓库同时保存前两轮驱动恢复、修复与当前硬件核对记录；用户原有 `gaudi2-hardware.md` 保持未跟踪状态。
+
+## 2026-11-06：修复驱动安装脚本的多内核遗漏
+
+- 用户指定服务器驱动仓库 `scripts/install-gaudi2.sh`，基线 `ecbc579`。阶段 4/5 只使用 `uname -r`，健康驱动复用也绕过其它内核，因此脚本确实无法防止本次重启故障。
+- 已在原路径修复：当前内核 + 有效 `/boot/vmlinuz-*` 镜像逐个检查/构建/安装/验证并刷新 initramfs；安装前先检查 headers；当前活动模块的复用与其它内核构建解耦。
+- 新 helper 校验精确 DKMS 版本、五个非空模块、vermagic、DKMS 路径、Gaudi2 alias 和主模块补丁字符串，失败非零退出；不扫描已删除内核的残留 modules 目录。
+- 19 项模拟命令回归通过。实际已部署入口执行 `--verify-only --skip-pytorch` 退出 0，`186`/`202` 两内核通过，Operational/运行库链接正常。语法检查和 diff 检查通过。没有重新运行完整安装或重启，没有加载模型。
+- 原文件 tar 备份位于服务器 `/home/sonny/gaudi2/installer-backup.5PMyzd/`；可审查补丁为本仓库 `comfyui-hpu/patches/install-gaudi2-all-boot-kernels.patch`。代码尚未 commit/push；原有未跟踪的 Qwen 脚本/图片/文档未动。
+- 详细设计边界、测试、回滚见 [驱动恢复记录](DRIVER_RECOVERY_2026-11-06.md)。原 ComfyUI 和独立 ComfyUI-Gaudi 产品代码、Python 环境均未改动。
+
+## 2026-11-06：重启后驱动失效，已在线恢复
+
+- 现象：PCI `1da3:1020` 可见，`hl-smi` 无设备。实际已启动 `5.15.0-202`，Habana DKMS 仅安装在旧 `5.15.0-186`，加载的内核自带驱动没有 Gaudi2 alias。
+- 日志确认新内核于 11 月 5 日 09:21 安装，Habana 驱动同日 14:35 重装；厂商 postinst 的 dkms build/install 未指定目标内核，遗漏已安装但尚未启动的 `202`。
+- 已为 `202` 成功编译/安装现有 `1.24.2-481`，卸载未绑定的内核自带模块，按 compat/cn/en/ib/主模块顺序加载，约 32 秒后固件和设备初始化完成。
+- `hl-smi` 识别 HL-225 96 GiB，驱动 `1.24.2-52a555d`；sysfs 为 Operational；原 Habana Python 小型 BF16 HPU matmul 与 CPU 参考一致。未加载或验证生成模型。
+- 备份并刷新当前 initramfs；原镜像没有 Habana .ko，并非旧模块藏在 initramfs 的问题。原有 modules-load、单卡 NIC 配置和 DKMS 自动安装 hook 保留。旧 `186` 驱动仍 installed。
+- 无需重启；没有修改原 ComfyUI、venv、模型或 ComfyUI-Gaudi 产品代码；未启动 ComfyUI 服务，未新增自启或锁定内核。完整重启链路尚未实测。
+- 详细证据、修复命令、备份位置和防复发步骤见 [DRIVER_RECOVERY_2026-11-06.md](DRIVER_RECOVERY_2026-11-06.md)。
+
 ## 2026-11-05：阶段一完成，阶段二待执行
 
 - 已创建 `codex/gaudi2-hpu`，工作树起始干净。上游基线 `fb2b26fd`。

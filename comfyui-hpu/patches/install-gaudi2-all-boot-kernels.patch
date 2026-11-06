@@ -1,0 +1,571 @@
+diff --git a/README.md b/README.md
+index eec8452..0306197 100644
+--- a/README.md
++++ b/README.md
+@@ -5,8 +5,8 @@
+ **Bring an Intel Gaudi2 OAM module online through a PCIe adapter on Ubuntu.**
+ 
+ [![Hardware: Gaudi2 HL-225](https://img.shields.io/badge/Gaudi2-HL--225-0071C5?style=flat-square)](#validated-setup)
+-[![Gaudi software: 1.24.1](https://img.shields.io/badge/Gaudi_Software-1.24.1-4B5563?style=flat-square)](#validated-setup)
+-[![PyTorch: Intel build 2.11](https://img.shields.io/badge/PyTorch-Intel_2.11-EE4C2C?style=flat-square)](#validated-setup)
++[![Gaudi software: 1.24.1 / 1.24.2](https://img.shields.io/badge/Gaudi_Software-1.24.1%20%2F%201.24.2-4B5563?style=flat-square)](#validated-setup)
++[![PyTorch: Intel build 2.11 / 2.13](https://img.shields.io/badge/PyTorch-Intel_2.11%20%2F%202.13-EE4C2C?style=flat-square)](#validated-setup)
+ 
+ [Quick start](#quick-start) · [Five-part fix](#the-five-part-fix) · [Troubleshooting](#troubleshooting) · [Documentation](#documentation) · [Limitations](#limitations)
+ 
+@@ -23,7 +23,11 @@ A practical record of **hardware installation, driver patches, PyTorch setup, an
+ 
+ ## Validated setup
+ 
+-The project's final solution records successful computation and reboot verification on **GIGABYTE MU70-SU0-NV-XX + Xeon E5-2696 v3 + Gaudi2 HL-225**. These are existing project results, not new tests performed for this documentation update.
++Two host configurations have been checked. Their software versions and validation scope are listed separately.
++
++### GIGABYTE MU70-SU0-NV-XX / Xeon E5-2696 v3
++
++The project's original final solution records successful computation and reboot verification on this platform.
+ 
+ | Component / check | Recorded result |
+ |:---|:---|
+@@ -39,6 +43,35 @@ The project's final solution records successful computation and reboot verificat
+ 
+ The [final solution](./完整解决方案.md) supersedes interim failure conclusions in the historical investigation logs.
+ 
++### Supermicro H13SSL-N / AMD engineering sample
++
++Hardware and driver state checked on **2026-11-06** using DMI, `lscpu`,
++`lspci`, DKMS and `hl-smi`. The CPU identifies itself as an engineering sample;
++a retail CPU model has not been inferred from its identifier.
++
++| Component / check | Observed result |
++|:---|:---|
++| Motherboard / BIOS | **Supermicro H13SSL-N**, board revision `1.01`; AMI BIOS `3.8`, dated `2026-01-06` |
++| CPU | **AMD Eng Sample: `100-000000897-03`**; one socket, 32 cores / 64 threads |
++| System RAM | **96 GB**, four 24 GB DDR5 registered DIMMs, configured at **4800 MT/s**; about 94 GiB visible to Linux |
++| Accelerator | One **Gaudi2 HL-225**, PCI ID `1da3:1020` rev 01; `hl-smi` reports **98304 MiB** device memory |
++| PCIe link | **Gen4 x16**, negotiated at **16 GT/s x16** |
++| Operating system | **Ubuntu 22.04.5 LTS**, x86_64 |
++| Kernel | Originally validated on `5.15.0-186-generic`; currently running `5.15.0-202-generic` |
++| Gaudi software / loaded driver | **`1.24.2-481`** / `1.24.2-52a555d` |
++| Habana PyTorch / plugin / Python | `2.13.0a0+git2469d18` / `1.24.2.481` / Python `3.10.12` |
++| IOMMU / module option | `iommu=pt`, device domain **`identity`**; `nic_ports_ext_mask=0` |
++| Driver / networking devices | **Operational**, `hl-smi` works; `hbl_0` and all three Habana auxiliary devices present |
++| DKMS / headers | Patched modules and headers verified for **both `186` and `202` kernels** |
++| Compute after driver recovery | HPU available, one `GAUDI2`; BF16 **4×4 matmul** matched the CPU reference exactly on kernel `202` |
++| Earlier application validation | On kernel `186`, a separate ComfyUI HPU adaptation completed Krea2, Qwen-Image-2.1-Turbo and MOSS-Image SFT generation at 512² / 1024²; this does not establish stock ComfyUI compatibility |
++| Reboot scope | Reboot into `202` exposed missing DKMS modules; online recovery and checks passed. **A further reboot after the fix has not been tested.** |
++
++This host confirmed that a healthy driver on the running kernel does not prove
++that another installed kernel is ready to boot. The installer now checks all
++bootable kernel images; see [Kernel updates and reboot readiness](#kernel-updates-and-reboot-readiness).
++
++
+ ## Choose your entry point
+ 
+ | Situation | Start here |
+@@ -51,18 +84,24 @@ The [final solution](./完整解决方案.md) supersedes interim failure conclus
+ 
+ ## Before installation
+ 
+-This is a **community adaptation for a specific hardware combination**. The installer changes kernel boot arguments, patches DKMS source, installs software, writes module parameters, and holds selected packages. Arrange console access or a recovery path before changing a host.
++This is a **community adaptation for the hardware combinations above**. The installer changes kernel boot arguments, patches DKMS source, installs software, writes module parameters, and holds selected packages. Arrange console access or a recovery path before changing a host.
+ 
+-| Requirement | What to check |
+-|:---|:---|
+-| Hardware | Gaudi2 OAM module and a compatible OAM-to-PCIe adapter |
+-| Slot | A CPU-connected PCIe x16 slot; the tested link negotiated Gen3 x8 |
+-| Power | The documented adapter setup uses **48 V / 54 V auxiliary power**, not an ordinary 12 V PCIe power lead |
+-| Operating system | Ubuntu; the recorded working setup uses 24.04.4 |
+-| Access / tools | `sudo`, `gcc`, `make`, `dkms`, `curl`, `dpkg-deb`, and Python 3.12 for the pinned wheels |
+-| IOMMU | `iommu=pt` in the active boot command line; device group type `identity` |
+-| Module options | `nic_ports_ext_mask=0`; **do not add `card_type=0`** |
+-| Python packages | Install the Habana PyTorch wheels last so upstream CPU wheels do not replace them |
++| Requirement | What to check | H13SSL-N validation (2026-11-06) |
++|:---|:---|:---|
++| Hardware | Gaudi2 OAM module and a compatible OAM-to-PCIe adapter | HL-225 enumerated as `1da3:1020` and reached Operational state |
++| Slot | A CPU-connected PCIe x16 slot; check the actual negotiated link | **Gen4 x16 / 16 GT/s**, compared with Gen3 x8 on the original GIGABYTE host |
++| Power | The documented adapter setup uses **48 V / 54 V auxiliary power**, not an ordinary 12 V PCIe power lead | Supply voltage and adapter wiring were not measured by these software checks |
++| Operating system | Ubuntu **22.04 or 24.04** | **22.04.5 LTS**; original platform uses 24.04.4 |
++| Access / tools | `sudo`, `gcc`, `make`, `dkms`, `curl`, `gpg`, `dpkg-deb`, `strings`, and the matching kernel headers | Installer preflight passed; headers present for `5.15.0-186` and `5.15.0-202` |
++| Bootable kernels | Check every installed `/boot/vmlinuz-*` target, including kernels not yet running | Both kernels have the patched `1.24.2-481` DKMS driver; only checking `uname -r` previously missed `202` |
++| IOMMU | `iommu=pt` in the active boot command line; device group type `identity` | Both verified; HPU computation passed with this configuration |
++| Module options | `nic_ports_ext_mask=0`; **do not add `card_type=0`** | Active `nic_ports_ext_mask` is **0**; RDMA and auxiliary devices are present |
++| Secure Boot | Confirm that the platform accepts the installed kernel modules | **Disabled** on this host; Secure Boot with enrolled signing keys was not tested |
++| Python packages | Use the matching Habana runtime in an isolated venv: Python **3.10 for Ubuntu 22.04**, **3.12 for Ubuntu 24.04**. Prevent pip from replacing Habana PyTorch | Python **3.10.12**, Habana torch **2.13.0a0**, plugin **1.24.2.481**; do not replace this torch to resolve unrelated package pins |
++
++Run `sudo ./scripts/install-gaudi2.sh --verify-only --skip-pytorch` after a kernel
++update or driver reinstall and before rebooting. It validates the installed
++modules for every target kernel; it does not substitute for a real reboot test.
+ 
+ ## Quick start
+ 
+@@ -77,15 +116,41 @@ cd gaudi2-single-card-driver
+ sudo ./scripts/install-gaudi2.sh
+ ```
+ 
+-The installer checks the environment, verifies/configures `iommu=pt`, installs Gaudi 1.24.1, applies three source patches, rebuilds DKMS, writes module options, installs PyTorch, and runs compute validation. If it adds a boot argument, reboot and rerun the installer to continue.
++The installer checks the environment, verifies/configures `iommu=pt`, installs Gaudi 1.24.2, applies three source patches, rebuilds DKMS, writes module options, installs PyTorch, and runs compute validation. If it adds a boot argument, reboot and rerun the installer to continue.
+ 
+ | Option | Actual scope |
+ |:---|:---|
+-| `--skip-pytorch` | Skip the PyTorch installation stage |
+-| `--verify-only` | Skip driver installation, source patches, and DKMS rebuild; still performs runtime setup, writes helper scripts/log directories, and runs compute checks |
+-| `--check-iommu` | Check the boot argument and IOMMU domain; exits before later installation stages; may attempt a runtime domain change |
++| `--skip-pytorch` | Skip PyTorch installation and HPU compute tests; still validate the driver and runtime libraries |
++| `--verify-only` | Validate installed drivers for all bootable kernels and runtime health without installation or configuration changes; runs compute checks unless combined with `--skip-pytorch` |
++| `--check-iommu` | Check the boot argument and IOMMU domain; exit before later installation stages |
++
++Use `--verify-only --skip-pytorch` for inspection without HPU compute tests.
+ 
+-**`--verify-only` is not a read-only audit.** For routine inspection after installation, use the installed health-check command below.
++### Kernel updates and reboot readiness
++
++The installer checks the running kernel and every kernel image present as
++`/boot/vmlinuz-*`. It requires their headers before changing driver packages,
++builds missing or invalid patched Habana modules for each kernel, and refreshes
++each initramfs. Stale `/lib/modules` directories without boot images are ignored.
++A healthy running driver does not skip checks for a newly installed kernel.
++
++After a kernel update or driver reinstall, check reboot readiness with:
++
++```bash
++sudo ./scripts/install-gaudi2.sh --verify-only --skip-pytorch
++```
++
++This checks each target kernel without rebuilding or running HPU compute tests.
++Missing DKMS installations, auxiliary modules, Gaudi2 aliases or patch markers
++cause a nonzero exit. Install the requested headers and rerun the installer if
++this check fails. It does not reboot the host or validate a complete boot cycle.
++
++The DKMS regression tests use temporary files and mock system commands; no root
++access, package installation or hardware is required:
++
++```bash
++bash tests/test-gaudi-dkms.sh
++```
+ 
+ ### Check and use the device
+ 
+@@ -230,7 +295,7 @@ The README is in English. The detailed installation and investigation records be
+ 
+ | Script | Purpose |
+ |:---|:---|
+-| [`install-gaudi2.sh`](scripts/install-gaudi2.sh) | Main Gaudi 1.24.1 deployment entry point |
++| [`install-gaudi2.sh`](scripts/install-gaudi2.sh) | Main Gaudi 1.24.2 deployment entry point |
+ | [`install-gaudi2-1.18.0-legacy.sh`](scripts/install-gaudi2-1.18.0-legacy.sh) | Legacy installation and rollback reference |
+ | [`patch-gaudi.py`](scripts/patch-gaudi.py) | Re-runnable source-patch helper |
+ | [`patch-hr-pgt.py`](scripts/patch-hr-pgt.py) / [`patch-nic-skip.py`](scripts/patch-nic-skip.py) | Diagnostic isolation patches |
+diff --git a/scripts/install-gaudi2.sh b/scripts/install-gaudi2.sh
+index 3a1ff67..6f0bc76 100755
+--- a/scripts/install-gaudi2.sh
++++ b/scripts/install-gaudi2.sh
+@@ -72,14 +72,9 @@ unload_driver() {
+     done
+ }
+ 
+-module_strings() {
+-    case "$1" in
+-        *.zst) zstd -dc "$1" | strings ;;
+-        *.xz)  xz -dc "$1" | strings ;;
+-        *.gz)  gzip -dc "$1" | strings ;;
+-        *)     strings "$1" ;;
+-    esac
+-}
++SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd) || exit 1
++# shellcheck source=scripts/lib/gaudi-dkms.sh
++. "$SCRIPT_DIR/lib/gaudi-dkms.sh" || die "无法读取 DKMS 辅助脚本"
+ 
+ SUDO=""
+ [ "$(id -u)" != "0" ] && SUDO="sudo"
+@@ -307,6 +302,17 @@ if [ "$CHECK_IOMMU_ONLY" = 1 ]; then
+     echo; ok "IOMMU 检查完成"; exit 0
+ fi
+ 
++# 检查所有可启动内核；厂商 postinst 默认只为 uname -r 构建驱动。
++KVER=$(uname -r)
++DVER="${GAUDI_VER}-${GAUDI_REV}"
++KERNEL_LIST=$(gaudi_kernel_targets "$KVER" /boot) || die "无法枚举目标内核"
++mapfile -t GAUDI_KERNELS <<< "$KERNEL_LIST"
++info "目标内核: ${GAUDI_KERNELS[*]}"
++if [ "$VERIFY_ONLY" = 0 ]; then
++    gaudi_check_kernel_headers /lib/modules "${GAUDI_KERNELS[@]}" \
++        || die "请补齐所有目标内核的 headers 后重试；尚未卸载或重装驱动"
++fi
++
+ # ==============================================================================
+ # 阶段 2:安装 Gaudi 1.24.1 软件栈
+ # ==============================================================================
+@@ -509,8 +515,6 @@ fi
+ # ==============================================================================
+ hdr "阶段 4/10 · DKMS 编译(★ 必须 build --force,否则产生 0 字节模块)"
+ 
+-KVER=$(uname -r)
+-DVER="${GAUDI_VER}-${GAUDI_REV}"
+ GAUDI_REUSE_DRIVER=0
+ 
+ # 只有活动模块、磁盘模块和源码都含目标补丁且设备健康时，才复用当前驱动。
+@@ -535,54 +539,16 @@ if [ "$VERIFY_ONLY" = 0 ] && [ "$GAUDI_PKGS_MATCH" = 1 ] \
+         && [ "$ACTIVE_PARAM" = 0 ] \
+         && [ -n "$CURRENT_RDMA" ] \
+         && [ "$CURRENT_AUX" -ge 3 ] \
+-        && [ "$CURRENT_MARKERS" -ge 2 ]; then
++        && [ "$CURRENT_MARKERS" -ge 2 ] \
++        && gaudi_kernel_driver_ready "$KVER" "$DVER"; then
+         GAUDI_REUSE_DRIVER=1
+         ok "当前目标版本驱动、补丁、模块参数和设备状态均正常，将复用已加载模块"
+     fi
+ fi
+ 
+-if [ "$VERIFY_ONLY" = 1 ]; then
+-    info "--verify-only:跳过编译"
+-elif [ "$GAUDI_REUSE_DRIVER" = 1 ]; then
+-    ok "跳过 DKMS 重建，复用当前已加载的目标版本驱动"
+-else
+-    info "卸载旧 DKMS 树..."
+-    $SUDO dkms remove "habanalabs/$DVER" -k "$KVER" --force >/dev/null 2>&1 || true
+-
+-    info "编译中(约 30-60 秒)..."
+-    if ! $SUDO dkms build "habanalabs/$DVER" -k "$KVER" --force 2>&1 | tail -8 | sed 's/^/       /'; then
+-        die "DKMS 编译失败。常见原因:
+-       1. 补丁破坏了源码(检查 $CN 的 { } 配平)
+-       2. 内核头文件缺失: sudo apt install linux-headers-$KVER
+-       3. 旧内核的 MIN/MAX 宏冲突(1.24.1 已修复)"
+-    fi
+-    ok "编译完成"
+-
+-    info "安装模块..."
+-    $SUDO dkms install "habanalabs/$DVER" -k "$KVER" --force \
+-        || die "DKMS 安装失败"
+-fi
+-
+-# --- ★ 关键检查:模块不能是 0 字节 ---
+-KO=$(modinfo -k "$KVER" -n habanalabs 2>/dev/null)
+-if [ -f "$KO" ]; then
+-    SZ=$(stat -c%s "$KO")
+-    if [ "$SZ" -lt 10000 ]; then
+-        bad "模块只有 $SZ 字节 —— 是空的!"
+-        die "说明 dkms install 之前没有真正编译。请手动执行:
+-       sudo dkms remove habanalabs/$DVER -k $KVER --force
+-       sudo dkms build  habanalabs/$DVER -k $KVER --force   ← 必须
+-       sudo dkms install habanalabs/$DVER -k $KVER"
+-    fi
+-    ok "模块大小正常:$((SZ/1024)) KB"
+-    # --- 补丁是否编入 ---
+-    MARKERS=$(module_strings "$KO") || die "无法读取模块 $KO"
+-    PATCHED=$(printf '%s\n' "$MARKERS" | grep -c 'PATCHED')
+-    [ "$PATCHED" -ge 2 ] && ok "补丁已编入模块(PATCHED 标记 $PATCHED 处)" \
+-        || die "模块里找不到两处 PATCHED 标记"
+-else
+-    die "找不到编译出的模块"
+-fi
++# 活动驱动健康只决定是否重载，不能跳过其它内核的磁盘驱动检查。
++gaudi_ensure_kernel_drivers "$DVER" "$VERIFY_ONLY" "${GAUDI_KERNELS[@]}" \
++    || die "目标内核驱动尚未全部就绪，请修复上述错误后再重启"
+ 
+ # ==============================================================================
+ # 阶段 5:模块参数 + 开机自动加载
+@@ -608,8 +574,8 @@ if [ "$VERIFY_ONLY" = 0 ]; then
+         | $SUDO tee "$ML" >/dev/null
+     ok "已配置开机自动加载: $ML"
+     # 包安装期间生成的 initramfs 可能包含尚未打补丁的模块。
+-    $SUDO update-initramfs -u -k "$KVER" || die "更新 initramfs 失败"
+-    ok "已同步补丁模块及参数到 initramfs"
++    gaudi_update_kernel_initramfs "${GAUDI_KERNELS[@]}" || die "更新目标内核 initramfs 失败"
++    ok "已同步所有目标内核的补丁模块及参数到 initramfs"
+ fi
+ 
+ # --- 加载驱动 ---
+@@ -942,6 +908,8 @@ cat <<EOF
+ 
+   ⚠️  注意事项:
+     · iommu=pt 是核心修复,不要从 GRUB 里删掉!
++    · 已检查可启动内核: ${GAUDI_KERNELS[*]}
++    · 更新内核或重装驱动后,重启前运行 --verify-only --skip-pytorch 检查各内核
+     · 已 apt-mark hold 相关包,不要 apt upgrade 它们
+     · 镜像/备份:见 Gaudi2-1.24.1-完整解决方案.md §7
+ 
+diff --git a/scripts/lib/gaudi-dkms.sh b/scripts/lib/gaudi-dkms.sh
+new file mode 100644
+index 0000000..7925fd0
+--- /dev/null
++++ b/scripts/lib/gaudi-dkms.sh
+@@ -0,0 +1,87 @@
++#!/bin/bash
++# Shared by the installer and the DKMS regression tests. No system changes on source.
++
++module_strings() {
++    case "$1" in
++        *.zst) zstd -dc "$1" | strings ;;
++        *.xz)  xz -dc "$1" | strings ;;
++        *.gz)  gzip -dc "$1" | strings ;;
++        *)     strings "$1" ;;
++    esac
++}
++
++gaudi_kernel_targets() {
++    local running_kernel=$1 boot_dir=$2 image kernel
++    printf '%s\n' "$running_kernel"
++    # /lib/modules may contain stale directories after kernel removal.
++    for image in "$boot_dir"/vmlinuz-*; do
++        [ -f "$image" ] || continue
++        kernel=${image##*/vmlinuz-}
++        [ "$kernel" = "$running_kernel" ] || printf '%s\n' "$kernel"
++    done
++}
++
++gaudi_check_kernel_headers() {
++    local modules_dir=$1 kernel
++    shift
++    for kernel in "$@"; do
++        if [ ! -f "$modules_dir/$kernel/build/Makefile" ]; then
++            bad "内核 $kernel 缺少 headers，请先安装: sudo apt install linux-headers-$kernel"
++            return 1
++        fi
++    done
++}
++
++gaudi_kernel_driver_ready() {
++    local kernel=$1 version=$2 status module ko vermagic markers aliases
++    status=$(dkms status -m habanalabs -v "$version" -k "$kernel" 2>/dev/null) || return 1
++    [[ "$status" == *": installed"* ]] || return 1
++    for module in habanalabs_compat habanalabs_cn habanalabs_en habanalabs_ib habanalabs; do
++        ko=$(modinfo -k "$kernel" -n "$module" 2>/dev/null) || return 1
++        case "$ko" in
++            */updates/dkms/*) ;;
++            *) return 1 ;;
++        esac
++        [ -s "$ko" ] || return 1
++        vermagic=$(modinfo -k "$kernel" -F vermagic "$module" 2>/dev/null) || return 1
++        [ "${vermagic%% *}" = "$kernel" ] || return 1
++    done
++    # ko is now the main module; stock/unpatched modules must not pass.
++    [ "$(stat -c%s "$ko")" -ge 10000 ] || return 1
++    aliases=$(modinfo -k "$kernel" -F alias habanalabs 2>/dev/null) || return 1
++    [[ "$aliases" == *"pci:v00001DA3d00001020"* ]] || return 1
++    markers=$(module_strings "$ko") || return 1
++    [[ "$markers" == *"PATCHED-ignore-bad-serdes"* ]] || return 1
++    [[ "$markers" == *"PATCHED: FW link_mask=0"* ]] || return 1
++}
++
++gaudi_ensure_kernel_drivers() {
++    local version=$1 verify_only=$2 kernel
++    shift 2
++    for kernel in "$@"; do
++        if gaudi_kernel_driver_ready "$kernel" "$version"; then
++            ok "内核 $kernel 的目标 DKMS 模块和补丁已就绪，跳过重建"
++            continue
++        fi
++        if [ "$verify_only" = 1 ]; then
++            bad "内核 $kernel 缺少完整的已打补丁 Habana $version 驱动；请先运行安装模式再重启"
++            return 1
++        fi
++        info "为内核 $kernel 编译 Habana $version ..."
++        # Always build before install; rebuild only the kernel that failed validation.
++        $SUDO dkms build "habanalabs/$version" -k "$kernel" --force || return 1
++        $SUDO dkms install "habanalabs/$version" -k "$kernel" --force || return 1
++        $SUDO depmod -a "$kernel" || return 1
++        if ! gaudi_kernel_driver_ready "$kernel" "$version"; then
++            bad "内核 $kernel 安装后校验失败，请检查 DKMS 日志和 modinfo -k $kernel habanalabs"
++            return 1
++        fi
++    done
++}
++
++gaudi_update_kernel_initramfs() {
++    local kernel
++    for kernel in "$@"; do
++        $SUDO update-initramfs -u -k "$kernel" || return 1
++    done
++}
+diff --git a/tests/test-gaudi-dkms.sh b/tests/test-gaudi-dkms.sh
+new file mode 100644
+index 0000000..cea9d9e
+--- /dev/null
++++ b/tests/test-gaudi-dkms.sh
+@@ -0,0 +1,187 @@
++#!/bin/bash
++# Linux regression tests: no sudo, package installation or accelerator needed.
++set -euo pipefail
++TEST_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
++. "$TEST_DIR/../scripts/lib/gaudi-dkms.sh"
++
++cases=(targets healthy_current_missing_next all_ready verify_missing verify_ready
++       build_failure install_failure post_install_failure headers missing_aux
++       empty_module stock_module wrong_vermagic missing_alias missing_patch
++       wrong_version status_failure initramfs_all initramfs_failure)
++if [ "$#" = 0 ]; then
++    for test_case in "${cases[@]}"; do
++        if bash "$0" "$test_case"; then
++            printf 'PASS %s\n' "$test_case"
++        else
++            printf 'FAIL %s\n' "$test_case" >&2
++            exit 1
++        fi
++    done
++    printf '%s tests passed\n' "${#cases[@]}"
++    exit 0
++fi
++
++tmp=$(mktemp -d)
++trap 'rm -rf "$tmp"' EXIT
++calls="$tmp/calls"
++: > "$calls"
++SUDO=""
++old=5.15.0-186-generic
++next=5.15.0-202-generic
++version=1.24.2-481
++ok() { :; }
++info() { :; }
++bad() { printf '%s\n' "$*" >&2; }
++
++make_ready() {
++    local kernel=$1 module dir
++    dir="$tmp/lib/modules/$kernel/updates/dkms"
++    mkdir -p "$dir"
++    for module in habanalabs_compat habanalabs_cn habanalabs_en habanalabs_ib habanalabs; do
++        printf 'module\n' > "$dir/$module.ko"
++    done
++    dd if=/dev/zero of="$dir/habanalabs.ko" bs=12000 count=1 2>/dev/null
++    printf '\nPATCHED-ignore-bad-serdes\nPATCHED: FW link_mask=0\n' >> "$dir/habanalabs.ko"
++    printf '%s\n' "$version" > "$tmp/$kernel.installed"
++}
++
++dkms() {
++    local action=$1 kernel
++    if [ "$action" = status ]; then
++        [ "${STATUS_FAIL:-0}" = 0 ] || return 1
++        kernel=$7
++        if [ -f "$tmp/$kernel.installed" ] && [ "$(cat "$tmp/$kernel.installed")" = "$5" ]; then
++            printf 'habanalabs/%s, %s, x86_64: installed (Original modules exist)\n' "$5" "$kernel"
++        fi
++        return 0
++    fi
++    kernel=$4
++    printf 'dkms %s %s\n' "$action" "$kernel" >> "$calls"
++    case "$action" in
++        build)
++            [ "${BUILD_FAIL:-0}" = 0 ] || return 1
++            touch "$tmp/$kernel.built"
++            ;;
++        install)
++            [ "${INSTALL_FAIL:-0}" = 0 ] || return 1
++            [ -f "$tmp/$kernel.built" ] || return 1
++            make_ready "$kernel"
++            if [ "${BROKEN_INSTALL:-0}" = 1 ]; then
++                : > "$tmp/lib/modules/$kernel/updates/dkms/habanalabs_ib.ko"
++            fi
++            ;;
++        *) echo "Unexpected dkms mutation: $*" >&2; return 1 ;;
++    esac
++}
++
++modinfo() {
++    local kernel=$2 field=$3 module=${!#}
++    if [ "$field" = -n ]; then
++        if [ "${STOCK_MODULE:-0}" = 1 ]; then
++            printf '%s/lib/modules/%s/kernel/drivers/misc/%s.ko\n' "$tmp" "$kernel" "$module"
++        else
++            printf '%s/lib/modules/%s/updates/dkms/%s.ko\n' "$tmp" "$kernel" "$module"
++        fi
++    elif [ "$4" = vermagic ]; then
++        printf '%s SMP mod_unload modversions\n' "${VERMAGIC:-$kernel}"
++    elif [ "$4" = alias ]; then
++        [ "${NO_ALIAS:-0}" = 1 ] || printf 'pci:v00001DA3d00001020sv*sd*bc*sc*i*\n'
++        return 0
++    else
++        return 1
++    fi
++}
++
++depmod() { printf 'depmod %s\n' "$2" >> "$calls"; }
++update-initramfs() {
++    printf 'initramfs %s\n' "$3" >> "$calls"
++    [ "${INITRAMFS_FAIL:-}" != "$3" ]
++}
++
++expect_not_ready() {
++    if gaudi_kernel_driver_ready "$old" "$version"; then
++        echo 'Invalid driver was accepted' >&2
++        exit 1
++    fi
++    [ ! -s "$calls" ]
++}
++
++case "$1" in
++    targets)
++        mkdir -p "$tmp/boot" "$tmp/lib/modules/stale"
++        touch "$tmp/boot/vmlinuz-$old" "$tmp/boot/vmlinuz-$next" "$tmp/boot/initrd.img-unused"
++        ln -s "vmlinuz-$next" "$tmp/boot/vmlinuz"
++        ln -s gone "$tmp/boot/vmlinuz-missing"
++        expected=$(printf '%s\n%s' "$old" "$next")
++        [ "$(gaudi_kernel_targets "$old" "$tmp/boot")" = "$expected" ]
++        [ "$(gaudi_kernel_targets "$old" "$tmp/absent")" = "$old" ]
++        ;;
++    healthy_current_missing_next)
++        make_ready "$old"
++        gaudi_ensure_kernel_drivers "$version" 0 "$old" "$next"
++        expected=$(printf 'dkms build %s\ndkms install %s\ndepmod %s' "$next" "$next" "$next")
++        [ "$(cat "$calls")" = "$expected" ]
++        gaudi_kernel_driver_ready "$old" "$version"
++        gaudi_kernel_driver_ready "$next" "$version"
++        ;;
++    all_ready|verify_ready)
++        make_ready "$old"
++        make_ready "$next"
++        mode=0
++        [ "$1" != verify_ready ] || mode=1
++        gaudi_ensure_kernel_drivers "$version" "$mode" "$old" "$next"
++        [ ! -s "$calls" ]
++        ;;
++    verify_missing)
++        make_ready "$old"
++        if gaudi_ensure_kernel_drivers "$version" 1 "$old" "$next"; then exit 1; fi
++        [ ! -s "$calls" ]
++        ;;
++    build_failure)
++        BUILD_FAIL=1
++        if gaudi_ensure_kernel_drivers "$version" 0 "$old" "$next"; then exit 1; fi
++        [ "$(cat "$calls")" = "dkms build $old" ]
++        ;;
++    install_failure)
++        INSTALL_FAIL=1
++        if gaudi_ensure_kernel_drivers "$version" 0 "$old" "$next"; then exit 1; fi
++        [ "$(cat "$calls")" = "$(printf 'dkms build %s\ndkms install %s' "$old" "$old")" ]
++        ;;
++    post_install_failure)
++        BROKEN_INSTALL=1
++        if gaudi_ensure_kernel_drivers "$version" 0 "$old" "$next"; then exit 1; fi
++        [ ! -f "$tmp/$next.installed" ]
++        ;;
++    headers)
++        mkdir -p "$tmp/modules/$old/build" "$tmp/modules/$next/build"
++        touch "$tmp/modules/$old/build/Makefile"
++        if gaudi_check_kernel_headers "$tmp/modules" "$old" "$next"; then exit 1; fi
++        [ ! -s "$calls" ]
++        touch "$tmp/modules/$next/build/Makefile"
++        gaudi_check_kernel_headers "$tmp/modules" "$old" "$next"
++        ;;
++    missing_aux|empty_module|stock_module|wrong_vermagic|missing_alias|missing_patch|wrong_version|status_failure)
++        make_ready "$old"
++        case "$1" in
++            missing_aux) rm "$tmp/lib/modules/$old/updates/dkms/habanalabs_ib.ko" ;;
++            empty_module) : > "$tmp/lib/modules/$old/updates/dkms/habanalabs.ko" ;;
++            stock_module) STOCK_MODULE=1 ;;
++            wrong_vermagic) VERMAGIC=$next ;;
++            missing_alias) NO_ALIAS=1 ;;
++            missing_patch) dd if=/dev/zero of="$tmp/lib/modules/$old/updates/dkms/habanalabs.ko" bs=12000 count=1 2>/dev/null ;;
++            wrong_version) printf '1.24.1-482\n' > "$tmp/$old.installed" ;;
++            status_failure) STATUS_FAIL=1 ;;
++        esac
++        expect_not_ready
++        ;;
++    initramfs_all)
++        gaudi_update_kernel_initramfs "$old" "$next"
++        [ "$(cat "$calls")" = "$(printf 'initramfs %s\ninitramfs %s' "$old" "$next")" ]
++        ;;
++    initramfs_failure)
++        INITRAMFS_FAIL=$old
++        if gaudi_update_kernel_initramfs "$old" "$next"; then exit 1; fi
++        [ "$(cat "$calls")" = "initramfs $old" ]
++        ;;
++    *) exit 1 ;;
++esac
