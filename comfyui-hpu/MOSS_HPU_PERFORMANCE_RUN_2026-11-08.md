@@ -44,6 +44,23 @@ Perfetto 原生程序位于 `/home/sonny/.local/share/perfetto/prebuilts/trace_p
 
 这些是具体 shape/实现下的有效值，不是模型 MFU/MBU。尚未分别校准 HBM 纯读/纯写、实际 ConvRot 路径或原生 FP8/INT8。原始数据 `results/performance-2026-11-08/calibration.json`，该目录被 gitignore；完整副本留在服务器同名目录。
 
+## FP8 / INT8 能力与理论上限
+
+按用户建议补测 `probes/hpu_low_precision.py`。测试在停止 8189 服务、HBM 约 768 MiB、空卡状态下进行；4096×4096×4096，3 次暖机、5 组同步计时，每组 20 次。结果保存在服务器 `results/performance-2026-11-08/low-precision/low-precision-isolated.json`，小 JSON 也备份到本机同名目录。
+
+| 路径 | 实测 | 公开理论上限 | 达到理论值 | fallback | 结论 |
+| --- | ---: | ---: | ---: | --- | --- |
+| BF16 `torch.mm` | 275.76 TFLOP/s | 432 TFLOP/s | 63.8% | `{}` | 原生 HPU MME 基线 |
+| FP8 E4M3 `torch.mm` | 525.88 TFLOP/s | 865 TFLOP/s | 60.8% | `{}` | 原生 HPU FP8 路径可测 |
+| FP8 E5M2 `torch.mm` | 519.63 TFLOP/s | 865 TFLOP/s | 60.1% | `{}` | 原生 HPU FP8 路径可测 |
+| INT8 `torch._int_mm` | 3.17 TFLOP/s | 未公开可套用的 INT8 MME 峰值 | 不计算 | `aten::_int_mm: 103` | CPU fallback/桥接路径，不是 HPU INT8 峰值 |
+
+运行时支持 E4M3/E5M2 的 float8 storage/`torch.mm`；E4M3FNUZ/E5M2FNUZ allocation 失败。`torch.ops.hpu` 暴露 `fp8_gemm_v2` schema，包含 scale、transpose 和输出 dtype 参数；没有在缺少模型量化布局/scale contract 时手工调用它作为性能结果。Transformer Engine 模块可 import，但本轮没有把未经 MOSS 校准的 TE 层改造成产品路径。
+
+理论值的来源是 Intel 的 Gaudi2 对照规格：BF16 MME 432 TFLOP/s、FP8 MME 865 TFLOP/s、HBM 2.46 TB/s、48 MB SRAM；Gaudi 文档确认 Gaudi2 支持 FP8 E4M3/E5M2。公开资料没有给出可直接套用的 Gaudi2 INT8 MME dense peak，因此不能以 BF16 或 FP8 倍数推算 INT8 峰值。[Gaudi FP8 inference](https://docs.habana.ai/en/latest/PyTorch/Inference_on_PyTorch/Quantization/Inference_Using_FP8.html)；Intel 的 [Gaudi3 white paper](https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf) 里的 Gaudi2 comparison table 给出上述峰值。
+
+按公开峰值计算的 compute roofline arithmetic intensity 约为 BF16 `432/2.46 = 175.6 FLOP/byte`、FP8 `865/2.46 = 351.6 FLOP/byte`。这是 roofline 分界，不是 MOSS 每层实际强度；实际 ConvRot INT8 权重的读写、scale 和反量化字节必须从模型路径/trace 单独计算。当前 FP8 GEMM 约 60%、BF16 约 64% 的峰值，说明该 eager shape benchmark 还有调度、实现和时钟余量，但不能直接推断 MOSS 可获得同等比例提升。
+
 只读解析 safetensors header：DiT 有 5,082,308,608 个 BF16 存储元素及 16 个 F32；文本文件有 9,567,236,096 个 I8、85,864,432 个 BF16、2,240,624 个 F32 和量化 U8 元数据；VAE 有 84,046,371 个 F32 元素和一个 I64。这里是存储元素统计，量化 scale/元数据不等于可训练参数。lm_head 和 embedding 均为 `[248320,4096]`，单份 I8 payload 1,017,118,720 bytes。完整 dtype/shape 摘要为 `model-static.json`。
 
 ## 计划 review 与首轮基线

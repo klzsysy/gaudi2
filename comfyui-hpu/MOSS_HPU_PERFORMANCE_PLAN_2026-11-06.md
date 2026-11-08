@@ -13,13 +13,13 @@
 3. **冻结两个 seed。** KSampler seed 与 TextGenerate 的 `sampling_mode.seed` 分开记录，不能只固定扩散 seed。当前保存的 `moss-user-textgen.json` 与旧性能重放图扩散 seed 不同；P1 以用户图为冻结来源，同时保存 JSON SHA256。随机生成的 token 数/内容可能变化，必须同时给 token/s 和实际 token ID，不能只比较总秒数。
 4. **分离正常计时与诊断计时。** 首先使用无 profiler 的 wall time；同步分段、逐步同步、shape/memory profile、硬件 trace 都标为诊断运行，并用同配置无采集对照估计扰动。同步段总和覆盖率 ≥95% 只评价该诊断请求；其时间不能替换正常 B0 延迟。
 5. **字节和 FLOPs 不冒充硬件计数。** 静态逻辑流量与实际 HBM 事务分别报告；`utilization.memory` 不是 bytes/s，不允许积分推算真实字节。没有经过校准的硬件计数器时，MBU/MFU 只报明确假设下的估算/边界，不能作为 P1 阻塞条件。CPU copy 的等待时间不能等同 PCIe 搬运时间。
-6. **GEMM 与带宽校准必须可执行。** 当前产品路径不支持原生 INT8/FP8 compute；先测 BF16 GEMM 与实际 ConvRot 解量化后路径。FP8/INT8 原生微基准仅做能力探测，不支持就记录，不改 torch/驱动。copy 计读+写字节，工作集大于 48 MB SRAM；校准范围和实现决定可比性。
+6. **GEMM 与带宽校准必须可执行。** 产品默认设备策略仍不把 INT8/FP8 声明为通用 compute；独立探针已验证本机原生 FP8 E4M3/E5M2 `torch.mm`，并验证 INT8 `torch._int_mm` 会 fallback。FP8/INT8 原生微基准仅做能力探测，不改 torch/驱动。copy 计读+写字节，工作集大于 48 MB SRAM；校准范围和实现决定可比性。Gaudi2 公开 BF16/FP8 理论值分别为 432/865 TFLOP/s；没有公开 INT8 MME 峰值，不做倍数推导。
 7. **使用实际后端和计数来源。** TextGenerate 是 ComfyUI 原生 Qwen3.5，不是 vLLM。MTP 接受率若没有直接计数，记为未测；进度条递增数不能冒充草稿/验证次数。阶段事件用 wall-clock + monotonic 成对时间戳与 hl-smi CSV 对齐。
 8. **工具可调用不等于观测能力已通过。** TensorBoard/HPU 插件、Perfetto Python 包已在 Habana 基础环境；不重复 pip 安装。补装 sysstat 和当前内核 linux-tools；验证设备 activity、trace 导出、解析和查看。`synprof_parser` 需要进程级 `LD_LIBRARY_PATH=/opt/habanalabs/habana_plugins:/usr/lib/habanalabs`。perf 使用单次 sudo，保留系统 `perf_event_paranoid=4`。hl-smi 本机 `power.limit=550000` 按 mW 归一化为 550 W，不能与 `power.draw` 的 W 直接比较。
 
 首轮冻结文件为 `workflows/moss-user-textgen.json`，SHA256 `c283f15bcae32cceebd51c9a8863400f421f46354be32b3c52c4a16743be7bd6`，实际 KSampler seed=`649029532689846`、TextGenerate seed=`0`。它与 11-06 计划只读采集到的 seed=`438829726369282` 不同，也与旧性能重放 seed=`133401810542576` 不同。因此本轮是新建的可复现 B0，不能据此计算相对用户 143.34 s 的严格提速率。
 
-执行证据与工具复现见 [本轮记录](MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md)。先完成工具 smoke 与首轮计算基线，再按 B2/B4 控制矩阵推进；P2/P3 必须等待相应证据。
+执行证据与工具复现见 [本轮记录](MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md)。先完成工具 smoke、低精度能力探针与首轮计算基线，再按 B2/B4 控制矩阵推进；P2/P3 必须等待相应证据。
 
 ## 1. 目标与边界
 

@@ -10,6 +10,7 @@
 - BF16 大 GEMM 约 260.40 TFLOP/s，copy 读+写有效带宽 1949.35 GB/s；只是具体 eager 微基准，不是模型 MFU/MBU。真实用户 prompt 的 8-token 无 profiler/profile 为 4.1018/5.2150 s，ID 相同、fallback 空；930 MiB CPU+HPU trace 已在服务器导出并通过 Perfetto SQL。厂商高层摘要在带 step 的 MOSS trace 上仍报 MMEEvents 不可用，作为工具兼容性限制保留。
 - 切换文本 probe 时曾过早获取设备，首次 acquire failed；保留日志并在旧进程退出、hl-smi 空卡后重试成功。调查服务与旁采样均已停止，正常服务恢复 PID **90386**、8189、`hpu:0 GAUDI2`、空队列。未改基础 torch、模型或推理代码。
 - P1 尚未全部完成：B2/B4 完整控制矩阵、跨进程 cold 与更完整设备归因待继续。完整工具版本、路径、失败证据、结果和下一步见 [本轮记录](MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md)；原始产物在服务器和本机忽略的 `results/performance-2026-11-08/`，不入 Git。
+- 应用户建议补测低精度：独立空卡探针确认 FP8 E4M3/E5M2 `torch.mm` 原生 HPU，无 fallback，4096³ 分别 525.88/519.63 TFLOP/s；BF16 同探针 275.76 TFLOP/s。公开理论峰值 865/432 TFLOP/s，实测约 60.8/60.1/63.8%。INT8 `torch._int_mm` 仅 3.17 TFLOP/s 且 `aten::_int_mm` fallback 103 次，不能称 HPU INT8 性能；公开规格也没有可套用的 INT8 MME 峰值。E4M3FNUZ/E5M2FNUZ 不支持；FP8 custom op schema 存在但未在缺少 scale/layout contract 时硬测。服务已恢复 PID 92985。详见本轮记录低精度章节和 `probes/hpu_low_precision.py`。
 
 ## 2026-11-06：服务器断电，暂停性能计划
 
@@ -255,14 +256,3 @@
 - 量化权重仍按现有逻辑临时解量化为计算精度，eager Python 调度也仍存在；进一步提升吞吐需要独立的设备时间线/算子优化评测。本轮仅完成已实证的输出头 CPU fallback 修复，未实施盲目切 lazy、全模型 BF16 常驻缓存或改变 ConvRot 数学的方案。
 - 已通过 git archive 部署已提交版本并用正常根目录脚本启动，PID 325542，版本文件为 `0690d18f` 对应完整 SHA；最终队列为空，http://192.168.10.21:8189 可用。系统状态 `moss-performance-deployment.json`，汇总 `moss-performance-summary.json`。
 - 代码、文档分别本地提交，未 push；原始 ~/ComfyUI 未改动，用户原有暂存的 GAUDI2_COMFYUI_OPENSOURCE_SURVEY.md 未夹带。
-
-## 2026-11-06：清理 git 历史中的测试产物（comfyui-hpu/results）
-
-- 现象：上一个提交（`b6c0ed0`）删除了 `comfyui-hpu/results/` 内容，但仓库没变小，克隆/拉取仍然慢。
-- 原因：删除提交只清空当前树，历史各提交仍完整保存 81 个产物文件（约 15 MiB，其中 PNG 约 12 MiB）；另外本地 `.git` 里有 9.9 MiB 的 `tmp_pack_*` 残留（中断的 fetch 留下的临时包，git 不会自动回收）。
-- 处理：用 `git filter-repo --invert-paths --path comfyui-hpu/results/` 从全部历史移除该目录；11 个提交压成 10 个，只删产物、内容变空的 `remote test results` 提交被丢弃；已 `gc` 清除不可达对象和残留临时包。
-- 结果：`.git` 27 MiB → 244 KiB（打包 15.9 MiB → 约 54 KiB）；重新克隆 4.3 s、`.git` 168 KiB，`results/` 不再出现在工作树或历史中。
-- 防复发：新增 `.gitignore` 忽略 `comfyui-hpu/results/`；README 注明产物不进 git，只留在服务器部署目录和本地备份。
-- 已 force-push 重写后的 `feat/comfyui-hpu`（`b6c0ed0` → `e07a582`）。其它已有克隆必须 `git fetch origin && git reset --hard origin/feat/comfyui-hpu`，不要再 merge 旧历史，否则旧对象会被重新带回。
-- GitHub 服务端 API 的 `size` 仍显示约 15 MB，那是 force-push 后暂未回收的不可达对象；新克隆不会传输它们，等 GitHub 自动 gc 或联系支持才会降下来。
-- 清理前备份（本机临时目录，可能被系统清空）：`/tmp/gaudi2-cleanup-backup/`，含全历史 bundle 和 `results-export/` 产物原件。
