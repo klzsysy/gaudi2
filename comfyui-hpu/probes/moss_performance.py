@@ -15,6 +15,28 @@ args.use_pytorch_cross_attention = True
 
 import comfy.sd
 import habana_frameworks.torch.utils.debug as hpu_debug
+if os.environ.get("MOSS_FORCE_DEVICE_EMBED") == "1":
+    comfy.ops.vbar_above_watermark = lambda _module: False
+    print("FORCE_DEVICE_EMBED enabled", flush=True)
+
+dequant_stats = {"calls": 0, "seconds": 0.0, "by_shape": {}}
+if os.environ.get("MOSS_TRACE_DEQUANT") == "1":
+    from comfy.quant_ops import QuantizedTensor
+    original_dequantize = QuantizedTensor.dequantize
+
+    def traced_dequantize(self, *args, **kwargs):
+        start = time.perf_counter()
+        result = original_dequantize(self, *args, **kwargs)
+        elapsed = time.perf_counter() - start
+        dequant_stats["calls"] += 1
+        dequant_stats["seconds"] += elapsed
+        key = f"{tuple(self.shape)}:{self.dtype}"
+        item = dequant_stats["by_shape"].setdefault(key, {"calls": 0, "seconds": 0.0})
+        item["calls"] += 1
+        item["seconds"] += elapsed
+        return result
+
+    QuantizedTensor.dequantize = traced_dequantize
 
 torch.set_grad_enabled(False)
 torch.set_num_threads(16)
@@ -41,6 +63,35 @@ for name, module in clip.cond_stage_model.named_modules():
     if name.endswith(("lm_head", "embed_tokens")):
         print("HEAD", name, type(module), type(module.weight), module.weight.device,
               getattr(module, "_full_precision_mm", None), module.comfy_cast_weights, flush=True)
+embed_probe = getattr(clip.cond_stage_model, "model", None)
+if embed_probe is not None:
+    embed_probe = getattr(embed_probe, "embed_tokens", None)
+if embed_probe is not None:
+    print("EMBED_PROBE", {"has_v": hasattr(embed_probe, "_v"),
+                           "weight_device": str(embed_probe.weight.device),
+                           "weight_dtype": str(embed_probe.weight.dtype),
+                           "host_rows_capable": hasattr(embed_probe, "host_rows"),
+                           "vbar_above_watermark": comfy.ops.vbar_above_watermark(embed_probe)}, flush=True)
+
+
+def cache_lm_head_for_probe():
+    """Investigation-only: hold one BF16 lm_head decode for one process."""
+    for name, module in clip.cond_stage_model.named_modules():
+        if not name.endswith("lm_head") or not hasattr(module, "weight"):
+            continue
+        weight = module.weight
+        if not hasattr(weight, "dequantize"):
+            print("HEAD_CACHE_SKIP", name, "weight is not quantized", flush=True)
+            return
+        start = time.perf_counter()
+        cached = weight.dequantize()
+        torch.hpu.synchronize()
+        module.weight = torch.nn.Parameter(cached, requires_grad=False)
+        print("HEAD_CACHE", name, {"seconds": time.perf_counter() - start,
+                                   "dtype": str(cached.dtype), "shape": list(cached.shape),
+                                   "bytes": cached.numel() * cached.element_size()}, flush=True)
+        return
+    print("HEAD_CACHE_SKIP no lm_head", flush=True)
 
 original_mm = torch._int_mm
 def traced_mm(a, b):
@@ -63,6 +114,8 @@ def generate(length):
     return result
 
 generate(2)
+if os.environ.get("MOSS_CACHE_LM_HEAD") == "1":
+    cache_lm_head_for_probe()
 if os.environ.get("MOSS_BENCHMARK") == "1":
     result = generate(32)
 else:
@@ -80,4 +133,6 @@ else:
     print("profiler_overhead_ratio", result["seconds"] / control["seconds"], flush=True)
     print("profile_control_ids_equal", result["ids"] == control["ids"], flush=True)
 print("fallback_counts", hpu_debug._get_fallback_op_count(), flush=True)
+if os.environ.get("MOSS_TRACE_DEQUANT") == "1":
+    print("dequant_stats", json.dumps(dequant_stats), flush=True)
 (result_dir / f"moss-{mode}-timing.json").write_text(json.dumps(result, indent=2))

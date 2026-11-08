@@ -93,6 +93,15 @@ B1 同步诊断：文本编码 2.034 s、KSampler 38.006 s、VAE 0.136 s、PNG 0
 
 P1 仍在进行中：尚欠完整 B2 模式/长度控制矩阵、B4 的尺寸/步数及跨进程 cold 控制、实际模型 bytes/FLOPs 的可检验估算和更完整设备归因；本轮不宣称 P1 全部完成或 P3 优化收益。
 
+## 2026-11-08：P2/P3 首轮优化候选与停止
+
+按“先预测、单变量、重复验证、低于噪音则停止”的规则，正式测试了两个调查候选，均未进入产品代码：
+
+1. **一次性缓存 lm_head 的 BF16 解量化权重。** 探针在 2-token 暖机后，把 `[248320,4096]` 的 INT8 ConvRot lm_head 解量化为约 2.03 GiB BF16，并在同一进程后续生成中复用。MTP off、32 token 的一次对照从 16.963 s 降到 15.920 s，token ID 完全一致、fallback `{}`；但实际产品使用的 MTP auto 从 10.068 s 变为 10.622 s，方向相反。额外显存约 2.03 GiB，收益没有在目标 MTP 路径复现，候选拒绝。
+2. **强制 embedding 不走 host row 路径。** 只把 `vbar_above_watermark` 在调查进程中固定为 false；MTP auto 8-token 两次无 profiler 对照约 4.052 s 与 3.929 s，差异约 3%，低于当前短 probe 噪音，且 profiler 总体仍约 3.9 s。没有作为产品配置或代码改变。
+
+MTP auto 8-token HPU trace 的主要 host 侧线索仍是 `aten::_copy_from`，约 2.14 s/8-token profile；ConvRot dequant kernel 约 0.21 s，fallback 为空。当前证据更像频繁 host/device 控制与同步开销，需要新的 device/host 时间线关联才能安全改动；缓存权重或强行改变 embedding 驻留都没有稳定收益。因而本轮在此停止性能改动，保留探针和失败/回退证据，恢复正常服务 PID **109952**。后续只有在新 trace 能把 `_copy_from` 归因到具体调用并给出单变量预测时再继续。
+
 ## 2026-11-08：复核外部 827 TFLOP/s FP8 数据
 
 用户提供的图片与公开 benchmark 记录可以对应上：Gaudi2 FP8 E4M3 **827 TFLOP/s**，理论 865，95.6%；矩阵形状是 **M×N×K = 6144×11264×5120**，软件版本 `2.6.0+hpu_1.21.2-76`，并注明 `PT_HPU_LAZY_MODE=1`。该数字是 MAMF（短时 boost burst），公开表的 MSMF 栏为空，不能当持续吞吐。
