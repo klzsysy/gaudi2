@@ -102,6 +102,16 @@ P1 仍在进行中：尚欠完整 B2 模式/长度控制矩阵、B4 的尺寸/�
 
 MTP auto 8-token HPU trace 的主要 host 侧线索仍是 `aten::_copy_from`，约 2.14 s/8-token profile；ConvRot dequant kernel 约 0.21 s，fallback 为空。当前证据更像频繁 host/device 控制与同步开销，需要新的 device/host 时间线关联才能安全改动；缓存权重或强行改变 embedding 驻留都没有稳定收益。因而本轮在此停止性能改动，保留探针和失败/回退证据，恢复正常服务 PID **109952**。后续只有在新 trace 能把 `_copy_from` 归因到具体调用并给出单变量预测时再继续。
 
+## 2026-11-08：复核 CLIP INT8 dtype 与低 HPU 利用率
+
+用户日志中的 `CLIP/text encoder ... dtype: torch.bfloat16` 与权重文件名 `qwen3.5_9b_int8_convrot.safetensors` 并不矛盾。该字段来自 `load_clip` 的计算 dtype；模型模块实际仍保留 `comfy_kitchen.tensor.base.QuantizedTensor`（由探针打印的 `weight` 类型确认）。当前产品代码在 `comfy/sd1_clip.py` 对带量化元数据的文本编码器调用 `mixed_precision_ops(..., full_precision_mm=True)`，`MixedPrecisionOps.Linear.forward_comfy_cast_weights` 因此对每个线性层把量化权重解量化为 BF16 后执行 `F.linear`。所以它是“INT8 存储、BF16 计算”的安全路径，不是误把模型加载成普通 BF16 文件。
+
+为验证是否可直接打开量化 matmul，在独立探针中仅把该开关强制改为 `False`，没有改产品仓库、模型或服务配置。结果：首个 2-token 请求从基准约 1.47 s 变为 12.54 s；调用栈明确进入 `comfy_kitchen...fast_int8_mm -> torch._int_mm`，该版本的 `torch._int_mm` 在 HPU 上发生 CPU fallback，随后生成明显变慢，HPU 利用率采样为 0%。因此当前 Habana 1.24.2/torch 组合不能把这个开关作为优化。
+
+低负载的直接证据来自同一 eager、MTP auto、固定短 prompt 的 32-token 旁采样：10.10 s，`hl-smi utilization.aip` 26 个样本平均 **12.65%**、最高 **47%**。这符合 Qwen3.5 自回归扩写的执行形态：每次只生成一个很小的 token/GEMV 工作单元，CPU 负责采样/树路径控制并把少量 token 结果通过 `.tolist()` 拉回；每一步还会触发量化权重的解量化与临时张量搬运。已有 HPU trace 中 `aten::_copy_from` 在 8-token profile 自身约 2.14 s，ConvRot dequantize 约 0.21 s，fallback 计数为空。DiT 阶段的 25 步约 33 s 也与该阶段不同，当前 135 s 级端到端时间主要由 TextGenerate 扩写的约 97 s 决定。
+
+本轮结论：`dtype=bfloat16` 是当前实现的明确计算策略；直接切换 native INT8 会更慢且落 CPU；低 HPU 负载主要是小批量自回归、host/device 控制同步和重复解量化的组合，而不是 HPU 没有被加载。下一步若继续，必须先在 device/host 时间线上把 `_copy_from` 分成采样结果回传、权重解量化和缓存/预取三类，再分别评估批量 speculative verify、常驻权重或原生 INT8 kernel 版本升级；在此之前不提交猜测性的产品改动。
+
 ## 2026-11-08：复核外部 827 TFLOP/s FP8 数据
 
 用户提供的图片与公开 benchmark 记录可以对应上：Gaudi2 FP8 E4M3 **827 TFLOP/s**，理论 865，95.6%；矩阵形状是 **M×N×K = 6144×11264×5120**，软件版本 `2.6.0+hpu_1.21.2-76`，并注明 `PT_HPU_LAZY_MODE=1`。该数字是 MAMF（短时 boost burst），公开表的 MSMF 栏为空，不能当持续吞吐。

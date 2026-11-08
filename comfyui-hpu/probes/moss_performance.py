@@ -15,6 +15,14 @@ args.use_pytorch_cross_attention = True
 
 import comfy.sd
 import habana_frameworks.torch.utils.debug as hpu_debug
+if os.environ.get("MOSS_NATIVE_QUANT") == "1":
+    _mixed_precision_ops = comfy.ops.mixed_precision_ops
+    def _native_mixed_precision_ops(quant_config={}, compute_dtype=torch.bfloat16,
+                                    full_precision_mm=False, disabled=[]):
+        print("NATIVE_QUANT requested", {"requested_full_precision_mm": full_precision_mm}, flush=True)
+        return _mixed_precision_ops(quant_config, compute_dtype, full_precision_mm=False, disabled=disabled)
+    comfy.ops.mixed_precision_ops = _native_mixed_precision_ops
+    print("NATIVE_QUANT enabled: full_precision_mm=False", flush=True)
 if os.environ.get("MOSS_FORCE_DEVICE_EMBED") == "1":
     comfy.ops.vbar_above_watermark = lambda _module: False
     print("FORCE_DEVICE_EMBED enabled", flush=True)
@@ -41,7 +49,8 @@ if os.environ.get("MOSS_TRACE_DEQUANT") == "1":
 torch.set_grad_enabled(False)
 torch.set_num_threads(16)
 mode = os.environ.get("MOSS_PROFILE", "baseline")
-mtp = os.environ.get("MOSS_MTP", "off") == "auto"
+mtp_name = os.environ.get("MOSS_MTP", "off")
+mtp = True if mtp_name == "on" else (mtp_name if mtp_name in {"2", "3", "4", "5", "tree2s1", "tree2s2", "tree3s1", "tree4s1m8"} else mtp_name == "auto")
 result_dir = Path(os.environ.get("MOSS_RESULT_DIR", "test-results"))
 result_dir.mkdir(parents=True, exist_ok=True)
 clip = comfy.sd.load_clip(
@@ -125,10 +134,13 @@ else:
     if os.environ.get("MOSS_HPU_PROFILE") == "1":
         activities.append(torch.profiler.ProfilerActivity.HPU)
     with torch.profiler.profile(activities=activities, record_shapes=True,
+                                with_stack=os.environ.get("MOSS_STACK") == "1",
                                 schedule=torch.profiler.schedule(wait=0, warmup=0, active=1, repeat=1)) as prof:
         result = generate(8)
         prof.step()
     print(prof.key_averages().table(sort_by="self_cpu_time_total", row_limit=40), flush=True)
+    if os.environ.get("MOSS_STACK") == "1":
+        print(prof.key_averages(group_by_stack_n=5).table(sort_by="self_cpu_time_total", row_limit=80), flush=True)
     prof.profiler.export_chrome_trace(str(result_dir / f"moss-{mode}-trace.json"))
     print("profiler_overhead_ratio", result["seconds"] / control["seconds"], flush=True)
     print("profile_control_ids_equal", result["ids"] == control["ids"], flush=True)
