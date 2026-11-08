@@ -11,6 +11,7 @@
 - 切换文本 probe 时曾过早获取设备，首次 acquire failed；保留日志并在旧进程退出、hl-smi 空卡后重试成功。调查服务与旁采样均已停止，正常服务恢复 PID **90386**、8189、`hpu:0 GAUDI2`、空队列。未改基础 torch、模型或推理代码。
 - P1 尚未全部完成：B2/B4 完整控制矩阵、跨进程 cold 与更完整设备归因待继续。完整工具版本、路径、失败证据、结果和下一步见 [本轮记录](MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md)；原始产物在服务器和本机忽略的 `results/performance-2026-11-08/`，不入 Git。
 - 应用户建议补测低精度：独立空卡探针确认 FP8 E4M3/E5M2 `torch.mm` 原生 HPU，无 fallback，4096³ 分别 525.88/519.63 TFLOP/s；BF16 同探针 275.76 TFLOP/s。公开理论峰值 865/432 TFLOP/s，实测约 60.8/60.1/63.8%。INT8 `torch._int_mm` 仅 3.17 TFLOP/s 且 `aten::_int_mm` fallback 103 次，不能称 HPU INT8 性能；公开规格也没有可套用的 INT8 MME 峰值。E4M3FNUZ/E5M2FNUZ 不支持；FP8 custom op schema 存在但未在缺少 scale/layout contract 时硬测。服务已恢复 PID 92985。详见本轮记录低精度章节和 `probes/hpu_low_precision.py`。
+- 复核用户提供的外部 FP8 图：827 TFLOP/s 对应 MAMF、形状 6144×11264×5120、`PT_HPU_LAZY_MODE=1`、`2.6.0+hpu_1.21.2-76`，且使用 `torch._scaled_mm`、BF16 输出、cache/output reset 和 device event。我们此前的 eager 4096³ `torch.mm` FP8 输出 FP8、host wall time 测量，定义不同；同形状当前 eager `torch.mm` 为 564.11 TFLOP/s。当前 1.24.2 对 `_scaled_mm` 复核出现 synStatus 26，因此外部 headline 暂不能在本机复现。详细差异已写入性能记录；后续硬件上限采用兼容的 MAMF/MSMF 方法，MOSS 基线仍使用实际 eager 路径。
 
 ## 2026-11-06：服务器断电，暂停性能计划
 

@@ -267,6 +267,8 @@ images/s = 1 / T_end_to_end
 
 11-08 已完成工具补齐、BF16 GEMM/copy 校准、B0 cold+5 warm、B1 transition+5 warm、同步 B1 诊断与真实 MOSS 短设备 trace。B0 warm median=137.282 s，B1=40.183 s，B1 同步段覆盖率 99.963%；原始证据与限制见本轮记录。**P1 尚未全部完成**：B2/B4 完整控制矩阵及更完整静态属性/设备归因继续待做；用户服务已恢复。
 
+外部 FP8 headline 复核后，硬件峰值基准新增约束：必须记录 M×N×K、输入/输出 dtype、`torch.mm`/`torch._scaled_mm`/厂商 custom op、eager/lazy、`mark_step`、device event、cache/output reset、MAMF/MSMF 及功耗/时钟。当前 `hpu_low_precision.py` 的 4096³ `torch.mm` 结果继续作为能力探针；`hpu_fp8_shape_benchmark.py` 的 6144×11264×5120 eager 对照为 564.11 TFLOP/s。它不替代 Gaudi MAMF/MSMF 复现，lazy 模式已拒绝运行以避免未消费图产生假吞吐。
+
 出口：能把 B0/B1 的总时间拆成 TextGenerate、DiT 每步、VAE、加载/保存，并能解释至少 95% 的端到端时间；关键指标有交叉验证。
 
 ### P2：瓶颈归因

@@ -93,6 +93,18 @@ B1 同步诊断：文本编码 2.034 s、KSampler 38.006 s、VAE 0.136 s、PNG 0
 
 P1 仍在进行中：尚欠完整 B2 模式/长度控制矩阵、B4 的尺寸/步数及跨进程 cold 控制、实际模型 bytes/FLOPs 的可检验估算和更完整设备归因；本轮不宣称 P1 全部完成或 P3 优化收益。
 
+## 2026-11-08：复核外部 827 TFLOP/s FP8 数据
+
+用户提供的图片与公开 benchmark 记录可以对应上：Gaudi2 FP8 E4M3 **827 TFLOP/s**，理论 865，95.6%；矩阵形状是 **M×N×K = 6144×11264×5120**，软件版本 `2.6.0+hpu_1.21.2-76`，并注明 `PT_HPU_LAZY_MODE=1`。该数字是 MAMF（短时 boost burst），公开表的 MSMF 栏为空，不能当持续吞吐。
+
+我们的首轮低精度探针是当前 `2.13.0a0+git2469d18` / Habana `1.24.2-481`、`PT_HPU_LAZY_MODE=0`、4096³、通用 `torch.mm(FP8, FP8)`，输出 dtype 也是 FP8；因此不能与该 827 数字直接比较。按对方矩阵形状在当前 eager 栈重测 `torch.mm` 得 **564.11 TFLOP/s**（约 65.2% 理论），说明矩阵形状有影响，但仍没有复现外部 headline。
+
+外部 benchmark 的 FP8 代码路径是 `torch._scaled_mm(A, B, scale, scale, out=C)`：输入来自随机数据转换为 FP8，输出 `C` 是 BF16；每轮先写 256 MiB cache buffer、重写输出矩阵，然后用 HPU device event 计时。它还会扫描候选形状、区分 MAMF/MSMF，并采集功耗/时钟。我们的首轮脚本用 host wall time、每次分配输出，没有 cache flush/output rewrite、没有 device event 或 boost clock 验证，测量目标不同。
+
+当前 Habana 1.24.2 栈对 `torch._scaled_mm` 的 1024² 和外部 6144×11264×5120 形状均出现 `synStatus 26 / Current graph is nullptr`；FP8 storage allocation 与普通 `torch.mm` 可用，但这条 scaled FP8 API 未通过。因此不能用当前结果断言硬件只有 520–560 TFLOP/s，也不能盲目把外部 827 当作 MOSS 可达到的吞吐。lazy 模式下若没有正确 `mark_step`、输出消费和 device event，host wall time 会得到虚假的 PFLOP/s；临时复现脚本已拒绝 lazy 模式，避免误用。
+
+结论：此前结果的主要问题是 benchmark 定义不一致，包含矩阵形状、PyTorch/Habana 版本、eager/lazy、`torch.mm` 与 `_scaled_mm` kernel、输出 dtype、cache/output 处理、MAMF 与持续吞吐、host 与 device 计时等差异。MOSS 当前性能基线仍应保持 eager 与实际模型路径；硬件峰值基准另建兼容的 Gaudi MAMF/MSMF 复现。外部方法说明见 [benchmark 结果表](https://github.com/stas00/ml-engineering/blob/master/compute/accelerator/README.md#maximum-achievable-and-sustainable-matmul-flops-comparison-table)、[计时定义](https://github.com/stas00/ml-engineering/blob/master/compute/accelerator/benchmarks/README.md#how-mamf-and-msmf-are-defined) 和 [FP8 实现](https://github.com/stas00/ml-engineering/blob/master/compute/accelerator/benchmarks/mamf-finder.py)。
+
 ## 真实 MOSS HPU trace 与最终状态
 
 `moss_performance.py` 新增可选真实工作流输入、结果目录、CPU+HPU activity、step 标记和同参数无 profiler 对照。独立 probe 使用 16 个 CPU threads，与服务默认线程配置分开，不能把它的 8-token 吞吐直接代替完整 B0。
