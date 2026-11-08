@@ -21,6 +21,7 @@
 - 低精度能力探针已补测：FP8 E4M3/E5M2 原生 HPU `torch.mm` 约 525.88/519.63 TFLOP/s，BF16 同 shape 275.76 TFLOP/s；对应公开 MME 理论值 865/865/432 TFLOP/s。INT8 `torch._int_mm` 发生 `aten::_int_mm` fallback，3.17 TFLOP/s 不作为 HPU 峰值；Gaudi2 公开资料没有可套用的 INT8 MME 峰值。详见 [本轮记录](MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md)。
 - 已正式开始 P2/P3。lm_head 解量化缓存和强制 HPU embedding 两个候选均未通过 MTP auto 的重复收益门槛，已停止本轮性能改动；trace 线索集中在 `aten::_copy_from`，需新调用归因后再继续。产品代码、部署配置和模型未改，服务已恢复（PID `109952`）。
 - 复核 CLIP 日志：`dtype: torch.bfloat16` 是量化文本编码器的计算 dtype，权重仍为 INT8 `QuantizedTensor`；强制 native INT8 会命中 `torch._int_mm` CPU fallback。MTP auto 32-token 旁采样 HPU AIP 平均 12.65%，低负载主要来自小批量自回归和 host/device 控制同步，详见本轮记录。
+- 2026-11-09 FP8 文本编码器转换验证：从现有 INT8 权重解量化生成独立 E4M3FN 文件；全模型和仅 lm_head FP8 都比 INT8→BF16 慢，未进入生产。当前 Habana/comfy-kitchen 栈不支持该路径作为优化。
 - 2026-11-06 重启故障已修复并完成真实重启验证：新内核 `5.15.0-202` 的 Habana DKMS 模块与旧内核 `5.15.0-186` 均通过检查；重启后 `hl-smi` / Operational / BF16 matmul 通过，ComfyUI-Gaudi 已恢复并由 `/system_stats` 确认 `hpu:0 GAUDI2`。详见 [驱动恢复记录](DRIVER_RECOVERY_2026-11-06.md) 和 [重启验证记录](PROGRESS.md)。
 - 已修复服务器驱动安装脚本只覆盖 `uname -r` 的遗漏：检查并处理全部可启动内核，19 项模拟回归及实际双内核只读检查通过。原文件已备份；驱动仓库提交 `8d291ee`（含 H13SSL-N 硬件与安装前验证文档），未 push。补丁及回退位置见上述恢复记录。
 - 用户试用部署已修复 MOSS 扩写及输出头 CPU 回退：`0690d18f`，访问 http://192.168.10.21:8189 ，根目录 `start-hpu.sh` / `stop-hpu.sh` 管理服务；详见 ENVIRONMENT.md。

@@ -134,6 +134,19 @@ MTP auto 8-token HPU trace 的主要 host 侧线索仍是 `aten::_copy_from`，�
 
 结论：该库**没有可直接拿来替换当前 INT8 ConvRot GEMM 的 kernel**；它对本项目的帮助主要是 FP8 lm_head 和减少自回归 host/device 空隙的设计参考。最值得单独验证的候选是把 MOSS 的 lm_head 从当前 INT8→BF16 路径改成一次性 BF16→FP8 vocabulary projection，但这不是无风险开关，需等服务器恢复后做固定 token、top-1/图像质量、AIP 利用率和端到端 A/B。
 
+## 2026-11-09：FP8 文本编码器转换与 A/B 结果
+
+按用户授权开始实际验证。MOSS 仓库的 BF16 文件通过现有 `HF_ENDPOINT`/代理下载时，Xet 单块长时间重试，未改变端点；为避免继续占用带宽，停止下载并清理临时文件。随后使用现有 `qwen3.5_9b_int8_convrot.safetensors` 在 HPU 模块中解量化，再生成独立的 FP8 E4M3FN 文件，保持原 MOSS key layout 和 `comfy_quant` 元数据。该 FP8 文件代表“当前 INT8 权重先解量化、再 FP8”的计算路径，不等价于从原始 BF16 checkpoint 重新校准。
+
+结果：
+
+- **全模型 FP8**：561 个量化模块转换，文件可被 ComfyUI 识别并装载 HPU；但 MTP auto 的 2-token warmup 为 **16.23 s**，明显慢于原 INT8→BF16 的约 1.47–1.87 s。FP8 主体层在当前 eager/comfy-kitchen 路径没有形成有效的原生快速路径。
+- **仅 lm_head FP8、主体保持 INT8**：独立 hybrid 文件可装载 HPU；2-token warmup **4.71 s**，仍高于原路径。32-token 运行在第 17–27 token 间约 **1.1–1.3 s/token**，而原 MTP auto 32-token 旁测约 **10.10 s 总计**（约 0.32 s/token）。没有继续跑完以避免无收益地占用设备。
+- **全局强制 `full_precision_mm=False`**：不可作为 FP8 方案开关，因为它也会影响仍为 INT8 的主体层；调用栈再次进入 `torch._int_mm` CPU fallback，2-token 约 **17.42 s**。
+- FP8 文件初版误将 167 个 1-D norm weight 也量化，导致 HPU `add_stub` 错误；已修正为 1-D norm BF16，并完成重新加载验证。该错误说明转换器必须严格按 2-D 线性权重处理，不能按所有 `weight` 名称处理。
+
+结论：在当前 Habana 1.24.2 / torch 2.13.0a0 / comfy-kitchen 版本组合下，**自制 FP8 文本编码器没有性能收益，反而显著变慢**。原因不是 FP8 文件无法加载，而是文本编码器仍使用 `full_precision_mm=True` 的安全量化路径；全局切换会把 INT8 主体送入 CPU fallback。FP8 实验文件只保留在服务器调查目录，没有替换生产模型，也没有产品代码改动。当前最佳路径仍是 INT8 存储→BF16 HPU 计算；后续只有在支持 FP8 原生 Linear 的新 comfy-kitchen/ Habana 版本上再复测。
+
 ## 2026-11-08：复核外部 827 TFLOP/s FP8 数据
 
 用户提供的图片与公开 benchmark 记录可以对应上：Gaudi2 FP8 E4M3 **827 TFLOP/s**，理论 865，95.6%；矩阵形状是 **M×N×K = 6144×11264×5120**，软件版本 `2.6.0+hpu_1.21.2-76`，并注明 `PT_HPU_LAZY_MODE=1`。该数字是 MAMF（短时 boost burst），公开表的 MSMF 栏为空，不能当持续吞吐。

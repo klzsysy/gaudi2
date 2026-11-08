@@ -54,7 +54,7 @@ mtp = True if mtp_name == "on" else (mtp_name if mtp_name in {"2", "3", "4", "5"
 result_dir = Path(os.environ.get("MOSS_RESULT_DIR", "test-results"))
 result_dir.mkdir(parents=True, exist_ok=True)
 clip = comfy.sd.load_clip(
-    ["models/text_encoders/qwen3.5_9b_int8_convrot.safetensors"],
+    [os.environ.get("MOSS_CLIP_FILE", "models/text_encoders/qwen3.5_9b_int8_convrot.safetensors")],
     clip_type=comfy.sd.CLIPType.MOSS_IMAGE,
 )
 prompt = "A red ceramic teapot on a wooden table beside a window."

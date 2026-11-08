@@ -14,6 +14,7 @@
 - 复核用户提供的外部 FP8 图：827 TFLOP/s 对应 MAMF、形状 6144×11264×5120、`PT_HPU_LAZY_MODE=1`、`2.6.0+hpu_1.21.2-76`，且使用 `torch._scaled_mm`、BF16 输出、cache/output reset 和 device event。我们此前的 eager 4096³ `torch.mm` FP8 输出 FP8、host wall time 测量，定义不同；同形状当前 eager `torch.mm` 为 564.11 TFLOP/s。当前 1.24.2 对 `_scaled_mm` 复核出现 synStatus 26，因此外部 headline 暂不能在本机复现。详细差异已写入性能记录；后续硬件上限采用兼容的 MAMF/MSMF 方法，MOSS 基线仍使用实际 eager 路径。
 - 正式开始 P2/P3 后做了两个低风险候选实验：lm_head BF16 解量化缓存对 MTP off 32-token 一次样本 16.963→15.920 s，但 MTP auto 10.068→10.622 s，拒绝；强制 embedding 留在 HPU 的 MTP auto 8-token 对照差异约 3%，低于噪音，拒绝。HPU trace 主要线索为 `aten::_copy_from` 约 2.14 s/8-token profile，ConvRot dequant 约 0.21 s，fallback 空。没有修改产品代码或部署配置；本轮优化在没有稳定收益的情况下停止，服务已恢复 PID 109952。后续需先建立 `_copy_from` 的调用归因，再考虑继续。
 - 2026-11-08 复核用户对 CLIP dtype/低负载的疑问：`dtype: torch.bfloat16` 是计算 dtype；Qwen3.5 权重仍为 `QuantizedTensor`，当前 `full_precision_mm=True` 会按层解量化到 BF16 再做线性计算。调查探针强开 native INT8 后进入 `torch._int_mm` CPU fallback，2-token 从约 1.47 s 变 12.54 s，不能作为优化。MTP auto 32-token 旁采样 AIP 平均 12.65%、最高 47%；低负载来自小批量自回归、`.tolist()` 控制同步和重复解量化/搬运。详见 [本轮记录](MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md) 的 dtype 与低负载章节。
+- 2026-11-09 按推荐方向生成独立 FP8 E4M3FN 文本模型：从现有 INT8 ConvRot 模块在 HPU 解量化后转换，避免 BF16 下载在 Xet 单块重试；全模型 FP8 2-token 16.23 s，仅 lm_head FP8 2-token 4.71 s，均慢于 INT8→BF16。全局 `full_precision_mm=False` 还会把主体 INT8 层送入 `torch._int_mm` CPU fallback。FP8 文件未替换生产模型；当前栈下该方向拒绝，详见性能记录。
 
 ## 2026-11-06：服务器断电，暂停性能计划
 
