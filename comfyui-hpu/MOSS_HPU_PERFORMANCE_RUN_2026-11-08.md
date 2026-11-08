@@ -123,6 +123,17 @@ MTP auto 8-token HPU trace 的主要 host 侧线索仍是 `aten::_copy_from`，�
 
 因此对本项目应使用更准确的表述：**Gaudi2 有 INT8 硬件/TPC 能力，但当前 Habana 1.24.2 PyTorch 栈没有可用于该 Qwen3.5 ConvRot 权重的原生 INT8 `torch._int_mm`/`linear` HPU 路径。** 我们的实测与此一致：打开量化 matmul 后调用 `torch._int_mm`，发生 HPU fallback；保持 `full_precision_mm=True` 才能走 HPU BF16 解量化计算。服务器维护期间无法补做版本探针，待设备恢复后再核对实际注册的 `torch.ops.hpu`/bridge 版本。
 
+## 2026-11-08：审查 `JChen-318/gaudi2-single-card-vllm`
+
+已审查仓库 README、`native/`、`vllm-gaudi/` 和优化说明。该项目的定位是单卡 Gaudi2 vLLM：Qwen FP8、DFlash2/MTP、GDN 和 host/device overlap；README 明确写的是 FP8 Qwen 和自定义 GDN/采样内核，并非 INT8 ConvRot kernel。
+
+- `native/` 中的 TPC 内核是 GDN recurrence、拒绝采样、TPC shim，以及 Qwen4Exp NVFP4 MoE；没有通用 INT8 GEMM/INT8 Linear，也没有 ConvRot 权重解码 kernel。
+- 该仓库确实有一个可借鉴的 `hpu_lm_head_fp8.py`：把 BF16 `lm_head` 一次性按输出通道量化为 FP8，再调用 `apply_fp8_linear_hpu`。它针对的是 **BF16 lm_head → FP8**，不是已有 INT8 ConvRot 权重的直接替代；需要重新校准、验证 token/top-1 一致性，并且 MOSS 的 `[248320,4096]` head 与示例 `[248K,5120]` 不同。
+- 对当前 MOSS 最有价值的是方法：FP8 vocabulary projection、两级 top-k/top-p、speculative decode、lookahead submission、增量准备和编译区域复用。README 报告的 FP8 vocabulary projection 约将单轮权重投影从 1.13 ms 降至 0.59 ms，但这是另一个 Qwen3.8-27B FP8/DFlash2 服务，不能直接外推到 MOSS。
+- 不能直接拷贝运行：仓库测试的是 SDK 1.24.1、torch 2.11.0a0/`habana-torch-plugin 1.24.1.482`，本机此前是 Habana 1.24.2-481、torch 2.13.0a0；它的 vLLM custom op、TPC ABI、模型权重布局和 ComfyUI `QuantizedTensor` 接口都不同。任何移植都必须在独立探针中编译、做数值对照和 fallback 检查，不能替换生产 `GC_KERNEL_PATH`。
+
+结论：该库**没有可直接拿来替换当前 INT8 ConvRot GEMM 的 kernel**；它对本项目的帮助主要是 FP8 lm_head 和减少自回归 host/device 空隙的设计参考。最值得单独验证的候选是把 MOSS 的 lm_head 从当前 INT8→BF16 路径改成一次性 BF16→FP8 vocabulary projection，但这不是无风险开关，需等服务器恢复后做固定 token、top-1/图像质量、AIP 利用率和端到端 A/B。
+
 ## 2026-11-08：复核外部 827 TFLOP/s FP8 数据
 
 用户提供的图片与公开 benchmark 记录可以对应上：Gaudi2 FP8 E4M3 **827 TFLOP/s**，理论 865，95.6%；矩阵形状是 **M×N×K = 6144×11264×5120**，软件版本 `2.6.0+hpu_1.21.2-76`，并注明 `PT_HPU_LAZY_MODE=1`。该数字是 MAMF（短时 boost burst），公开表的 MSMF 栏为空，不能当持续吞吐。
