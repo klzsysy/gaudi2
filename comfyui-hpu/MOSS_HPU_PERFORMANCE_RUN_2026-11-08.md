@@ -112,6 +112,17 @@ MTP auto 8-token HPU trace 的主要 host 侧线索仍是 `aten::_copy_from`，�
 
 本轮结论：`dtype=bfloat16` 是当前实现的明确计算策略；直接切换 native INT8 会更慢且落 CPU；低 HPU 负载主要是小批量自回归、host/device 控制同步和重复解量化的组合，而不是 HPU 没有被加载。下一步若继续，必须先在 device/host 时间线上把 `_copy_from` 分成采样结果回传、权重解量化和缓存/预取三类，再分别评估批量 speculative verify、常驻权重或原生 INT8 kernel 版本升级；在此之前不提交猜测性的产品改动。
 
+## 2026-11-08：官方资料复核 INT8 支持边界
+
+“Gaudi2 完全没有 INT8 kernel”这个说法过于绝对，需区分硬件指令、PyTorch dtype 和量化 GEMM 接口：
+
+- Intel Gaudi TPC 文档明确列出 INT8 SIMD 运算能力；这说明硬件可以执行 INT8 向量运算，但不等于 PyTorch `linear/mm` 已暴露 INT8 MME kernel。
+- Habana 1.24.2 官方 PyTorch Support Matrix 将 `Int8` 数据类型列为 **Yes（Limited ops support）**，但将 `Int8/16/32 quantization` 列为 **No**，并将 QInt8 类型列为 **No**。
+- 官方 PyTorch Operators 表的整数 dtype 部分将 `torch.mm` 和 `torch.matmul` 的 INT8 支持列为 **No**；浮点表中 `mm` 支持 FP32/BF16/FP16/FP8，`linear` 的 FP8 列为 No。
+- 官方 1.24.2 量化文档主线是 FP8、UINT4、NF4，没有提供通用 INT8 `linear/mm` 推理接口。
+
+因此对本项目应使用更准确的表述：**Gaudi2 有 INT8 硬件/TPC 能力，但当前 Habana 1.24.2 PyTorch 栈没有可用于该 Qwen3.5 ConvRot 权重的原生 INT8 `torch._int_mm`/`linear` HPU 路径。** 我们的实测与此一致：打开量化 matmul 后调用 `torch._int_mm`，发生 HPU fallback；保持 `full_precision_mm=True` 才能走 HPU BF16 解量化计算。服务器维护期间无法补做版本探针，待设备恢复后再核对实际注册的 `torch.ops.hpu`/bridge 版本。
+
 ## 2026-11-08：复核外部 827 TFLOP/s FP8 数据
 
 用户提供的图片与公开 benchmark 记录可以对应上：Gaudi2 FP8 E4M3 **827 TFLOP/s**，理论 865，95.6%；矩阵形状是 **M×N×K = 6144×11264×5120**，软件版本 `2.6.0+hpu_1.21.2-76`，并注明 `PT_HPU_LAZY_MODE=1`。该数字是 MAMF（短时 boost burst），公开表的 MSMF 栏为空，不能当持续吞吐。
