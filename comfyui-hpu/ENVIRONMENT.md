@@ -12,6 +12,8 @@
 
 以下在服务器独立 checkout `~/ComfyUI-Gaudi` 中执行；不要在原 `~/ComfyUI` 中运行安装命令。
 
+2026-11-08 可观测性补充：主机已安装 sysstat 12.5.2 和当前内核 linux-tools，perf 需单次 sudo，未降低 `perf_event_paranoid=4`。TensorBoard 2.21.0、Habana torch_tb_profiler 0.4.0、Perfetto 0.59.1 已由基础环境提供，未重新 pip 安装。synprof_parser 调用需进程级 `LD_LIBRARY_PATH=/opt/habanalabs/habana_plugins:/usr/lib/habanalabs`；Perfetto 原生程序已缓存于 `~/.local/share/perfetto/prebuilts/`。完整验证及 eager 高层摘要限制见 [本轮记录](MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md)。性能调查 launcher/结果放在 `/home/sonny/gaudi2/comfyui-hpu`，不能同步到产品代码仓库。
+
 ```bash
 /opt/gaudi-install/venv-1.24.2-481-ubuntu2204/bin/python -m venv .venv
 printf '%s\n' /opt/gaudi-install/venv-1.24.2-481-ubuntu2204/lib/python3.10/site-packages > .venv/lib/python3.10/site-packages/gaudi-base.pth

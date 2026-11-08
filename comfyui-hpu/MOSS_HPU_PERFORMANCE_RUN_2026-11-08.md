@@ -1,0 +1,97 @@
+# MOSS HPU 性能计划恢复与可观测性验证
+
+时间：2026-11-08（Asia/Shanghai）。所有调查脚本和过程文档在本仓库；服务器调查副本及产物位于 `/home/sonny/gaudi2/comfyui-hpu/`。产品 checkout 只作为执行目录，未改产品源码；原始 `/home/sonny/ComfyUI` 未操作。
+
+## 恢复检查
+
+- SSH 正常，内核 `5.15.0-202-generic`；Habana `1.24.2-481` 在 `186` 和 `202` 两个内核均 DKMS installed；设备 sysfs 为 Operational。
+- 原独立服务 PID 2103，版本 `0690d18f4b0157a14387a12afcf833eec924bb9e`，8189 队列为空，`/system_stats` 返回 `hpu:0 GAUDI2`。
+- 三个共享模型文件大小与既有记录一致；未重新下载模型。home 剩余约 1.1 TiB，根分区剩余 69 GiB。
+- 队列空闲后通过 `stop-hpu.sh` 停止该独立服务，再串行执行 HPU probe。HPU BF16 matmul 对 CPU FP32 参考通过。
+
+## 工具安装与验证
+
+安装命令：`sudo -n env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends sysstat linux-tools-5.15.0-202-generic`。
+
+新增 5 个包、无升级/移除：sysstat `12.5.2-2ubuntu0.2`、linux-tools `5.15.0-202.212`、对应 generic 包、linux-tools-common `5.15.0-203.213`、libslang2。`perf version` 输出 `5.15.222`，实际二进制来自匹配当前内核的 tools。安装自动启用的 sysstat timers/service 已 disable/stop，按需旁采样。
+
+| 工具 | 实测结果 |
+| --- | --- |
+| pidstat / iostat / sar | 均为 12.5.2；pidstat、iostat 已用于基线旁采样 |
+| perf | 普通用户因 `perf_event_paranoid=4` 被拒绝；单次 `sudo perf stat -e task-clock,cycles,instructions -- true` 成功；未改 sysctl |
+| synprof_parser | 初次缺 `libhw_trace.so`；修正进程级动态库路径后，help 与真实 .hltv → JSON 离线解析均成功 |
+| TensorBoard / Habana torch_tb_profiler | 基础环境已含 2.21.0 / 0.4.0，未 pip 重装；临时 loopback 6006 服务启动且 `pytorch_profiler.enabled=true` |
+| Perfetto | 基础环境已含 Python 包 0.59.1；首次缺原生 trace_processor，直连 Google storage 约 130 s 超时，随后通过已有 `http_proxy_enable` 下载成功；fixture SQL 与真实 HPU trace SQL 均通过 |
+| torch.profiler CPU + HPU | BF16 smoke 导出成功，实际含 78 个 kernel 事件（含多个 engine/lane 事件），示例 `gemm`、`relu_fwd_bf16`；fallback `{}` |
+
+Perfetto 原生程序位于 `/home/sonny/.local/share/perfetto/prebuilts/trace_processor_shell-2434129a3af4dc9e`，可通过 `TraceProcessorConfig(bin_path=...)` 或 `habana_perf_tool --binary ...` 指定。torch trace 导出沿用已有 wrapper 兼容调用 `prof.profiler.export_chrome_trace(path)`。
+
+**高层摘要限制：** TensorBoard 的 Habana 插件和 `habana_perf_tool` 对短 eager smoke 出现 `ProfilerStep#`/bridge forward track 缺失导致的 SQL/KeyError。随后 MOSS trace 已有真实 `ProfilerStep#0`，工具仍因 MMEEvents 数据不可用抛出 `DataNotAvailableError`。UI 插件 enabled 不代表 HPU 总览分析通过；不修改厂商包或切换 lazy 来掩盖。当前验收路径为原始设备 trace + Perfetto SQL；厂商高层自动摘要列为兼容性限制。
+
+另用独立 `raw-profiler-config.json`（Gaudi2、multi-enq 1–4）及进程级 `HABANA_PROFILE=1`、`HABANA_PROF_CONFIG=<该文件>` 采集 4 次 BF16 matmul/relu，原生进程退出 0。得到约 98 KB 的 `raw/raw-smoke_89572.hltv`；`synprof_parser <文件> --json --gaudi2 --outdir <raw-parsed>` 退出 0，生成含 1024 个事件的 JSON。parser 有 `Unknown unit for STM #0` warning；没有将其写成完全无 warning。一次 `hl-prof-config --help` 的 `-short-help` 子进程在输出后未退出，已清理本轮遗留 help 进程；实际配置命令和采集/转换均成功。
+
+## eager 校准
+
+`probes/hpu_observability.py`：3 次暖机、5 组同步边界计时；copy 每组 20 次、GEMM 每组 10 次。copy 的两个 buffer 各 256 MiB，工作集超过 48 MB SRAM；有效字节按读+写计算，包含 eager dispatch 开销。
+
+| 项目 | median 实测 |
+| --- | ---: |
+| copy，读+写合计 | 1949.35 GB/s |
+| BF16 GEMM M=N=K=4096 | 260.40 TFLOP/s |
+| BF16 GEMM M=1,N=K=4096 | 0.464 TFLOP/s |
+| BF16 GEMM M=16,N=K=4096 | 7.72 TFLOP/s |
+| BF16 lm_head 形状 M=1,N=248320,K=4096 | 2.144 TFLOP/s |
+
+这些是具体 shape/实现下的有效值，不是模型 MFU/MBU。尚未分别校准 HBM 纯读/纯写、实际 ConvRot 路径或原生 FP8/INT8。原始数据 `results/performance-2026-11-08/calibration.json`，该目录被 gitignore；完整副本留在服务器同名目录。
+
+只读解析 safetensors header：DiT 有 5,082,308,608 个 BF16 存储元素及 16 个 F32；文本文件有 9,567,236,096 个 I8、85,864,432 个 BF16、2,240,624 个 F32 和量化 U8 元数据；VAE 有 84,046,371 个 F32 元素和一个 I64。这里是存储元素统计，量化 scale/元数据不等于可训练参数。lm_head 和 embedding 均为 `[248320,4096]`，单份 I8 payload 1,017,118,720 bytes。完整 dtype/shape 摘要为 `model-static.json`。
+
+## 计划 review 与首轮基线
+
+review 修正已进入 [原计划](MOSS_HPU_PERFORMANCE_PLAN_2026-11-06.md)：节点缓存、cold/warm 数量、两个 seed、正常计时与诊断同步分组、逻辑字节与 HBM 事务区分、原生后端计数、工具能力验收。
+
+本轮冻结 `workflows/moss-user-textgen.json`，SHA256 `c283f15bcae32cceebd51c9a8863400f421f46354be32b3c52c4a16743be7bd6`；扩散 seed `649029532689846`，文本 seed `0`。这与 143.34 s 那次计划采集的 seed 不同，本轮建立新基线，不计算旧值相对提速。
+
+调查 launcher 在 loopback 8190 启动，保持原运行参数；仅在内存中替换计算节点 fingerprint，保留 loader 缓存。正常计时无 profiler、无逐步同步；诊断请求另开同步阶段和逐步观测。每条事件同时写 wall_ns 和 mono_ns，hl-smi/pidstat/iostat 同机旁采样。baseline client 检查每次确实执行 TextGenerate（B0）、CLIPTextEncode、KSampler、VAEDecode，并保存 API、history、token ID/实际 caption、PNG 和像素统计。
+
+已完成 B0 1 cold + 5 warm；B1 固定首轮 caption、1 transition + 5 warm；另有同步 B1 诊断。B1 transition 不是独立进程 cold，不计入 cold 结论。所有 13 个请求成功、fallback 累计计数始终 `{}`，每次所需计算节点执行断言通过；warm 未重新执行 loader。
+
+| Case | 样本 | 请求内 median | min–max | p10 / p90 |
+| --- | ---: | ---: | ---: | ---: |
+| B0 process cold | 1 | 145.521 s | — | — |
+| B0 warm | 5 | 137.282 s | 135.893–137.526 s | 136.178 / 137.451 s |
+| B1 transition | 1 | 40.305 s | — | — |
+| B1 warm | 5 | 40.183 s | 39.690–40.314 s | 39.873 / 40.278 s |
+| B1 synchronized diagnostic | 1 | 40.313 s | — | — |
+
+请求内时间从 PromptExecutor 入口到末尾 HPU 同步；客户端含提交/轮询约多 0.3 s，history/服务日志另有交叉验证。process cold 没有清文件系统页缓存；本轮未设置磁盘 recipe cache 环境变量。5 个 warm 样本的分位数仅作描述，不能当尾延迟置信估计。
+
+B0 warm 的节点计时中位数（无显式逐节点同步）为 TextGenerate 96.966 s、正负文本编码合计 2.013 s、KSampler 37.960 s、VAE 0.132 s、PNG 0.117 s。B0 的 6 次生成均为 327 tokens，ID 留在事件文件；文本可读，MOSS 灯牌、白色大衣、剧院和湿地反光目视通过。文本节点约占 70.6% 的请求时间，是下一步详细归因的优先段，而非已经确定的硬件瓶颈标签。
+
+B1 同步诊断：文本编码 2.034 s、KSampler 38.006 s、VAE 0.136 s、PNG 0.122 s；节点之和解释 99.963% 的请求时间。逐步同步间隔 median 1.5212 s、min/max 1.5055/1.5308 s；诊断请求比 B1 warm median 高 0.32%，仅作本轮扰动参考。latent `[1,128,64,64]` 与 VAE 输出 `[1,1024,1024,3]` finite 检查均通过，VAE 范围 0–1。所有 PNG 与首轮图的像素 MAE 为 0–0.1226/255，最大单像素差最高 11/255；不要求逐像素相同。
+
+主机采样：前两次 warm 的 TextGenerate 平均 AIP 约 24.0%/25.9%、功耗 158.4/169.5 W；KSampler 平均 AIP 44.7%/46.9%、功耗 282.7/283.7 W。单段 10 s `sudo perf stat -p` 采集通过。这些不是 HBM 带宽或 MFU，不能据此断言算力/带宽受限。
+
+切换文本 probe 时首次在旧调查服务完全释放设备之前初始化，出现 `Device acquire failed`；失败日志保留为 `moss-text-hpu-acquire-failed.log`。随后验证旧 PID 消失、hl-smi Compute Processes 为空、HBM 回到约 768 MiB，再串行重试。这是切换次序错误，不是恢复后的驱动故障。
+
+P1 仍在进行中：尚欠完整 B2 模式/长度控制矩阵、B4 的尺寸/步数及跨进程 cold 控制、实际模型 bytes/FLOPs 的可检验估算和更完整设备归因；本轮不宣称 P1 全部完成或 P3 优化收益。
+
+## 真实 MOSS HPU trace 与最终状态
+
+`moss_performance.py` 新增可选真实工作流输入、结果目录、CPU+HPU activity、step 标记和同参数无 profiler 对照。独立 probe 使用 16 个 CPU threads，与服务默认线程配置分开，不能把它的 8-token 吞吐直接代替完整 B0。
+
+- 真实用户 system/user prompt，文本 seed=0、MTP auto、sampling on；2-token 暖机后，8-token 无 profiler 对照 4.1018 s，profile 内生成 5.2150 s（含 prefill），约增加 27.1%；8 个 token ID 相同，fallback `{}`。
+- `moss-p1-user-hpu-trace.json` 约 930 MiB，保留在服务器，不复制到 Git。最终停止/整理/导出花费数分钟，不能只报告生成段 5.215 s 而隐去 profiler 全流程开销。
+- Perfetto SQL 成功读出 414,226 个 cpu_op 事件、1,030,554 个 kernel 类事件、`ProfilerStep#0` 5.216 s；其中有 MME/TPC 多 engine/lane 和嵌套/重叠事件，**不等于一百万次 kernel launch**。各事件 duration 不能直接相加当 wall time。
+- kernel 标签包含 `memcpy_f32`、`mult_fwd_f32`、`cast_i8_to_f32`、`cast_f32_to_bf16`、`MMEH_WB1_MON_TS_BIT1` 等。这是后续定位 ConvRot 解码、prefill/GDN 和 host gap 的线索，不能只凭名称认定主机 PCIe copy 或已确定瓶颈。
+- 后续采集应拆分 prefill 和稳态 decode，缩短范围并默认关闭 shape 记录；先用本次 trace 建立事件去重/区间并集和关联方法，再扩大采集。
+
+本轮结束已停止调查服务和 hl-smi/pidstat/iostat 旁采样，正常 `start-hpu.sh` 恢复日常服务：PID **90386**，http://192.168.10.21:8189 可用，队列为空，`/system_stats` 为 `hpu:0 GAUDI2`，部署版本仍为 `0690d18f`。原始 ComfyUI、基础 torch、模型与推理代码均未修改。
+
+产物完整保存在服务器 `/home/sonny/gaudi2/comfyui-hpu/results/performance-2026-11-08/`；除大型 trace 外的 API/history、PNG、事件、摘要、工具日志已备份到本机同名 `results/`。本仓库只提交调查脚本与文档。优先下一步为 B2 的同 prompt 固定 token、MTP off/auto 与 sampling/greedy 控制，以及 B4；P2/P3 依赖这些证据继续推进。
+
+## 参考
+
+- [Gaudi PyTorch profiling](https://docs.habana.ai/en/latest/Profiling/Profiling_with_PyTorch.html)：厂商高层插件、CPU/HPU activity、memory profile。
+- [Gaudi profiling workflow](https://docs.habana.ai/en/latest/Profiling/Profiling_Workflow.html)：分层定位与低层硬件 profiler。
+- [Perfetto Python API](https://perfetto.dev/docs/analysis/trace-processor-python)：离线 SQL 分析及自定义原生程序路径。

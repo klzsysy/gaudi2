@@ -1,5 +1,16 @@
 # 执行记录
 
+## 2026-11-08：恢复性能计划，补齐可观测性并建立首轮严格基线
+
+- 恢复后健康检查通过：`5.15.0-202-generic`、双内核 Habana DKMS installed、Operational、共享模型文件与独立服务 `0690d18f` 正常。队列为空后停止独立服务，串行执行 HPU 调查；原始 `/home/sonny/ComfyUI` 未操作。
+- 新增 sysstat 与当前内核 linux-tools（5 个包，无升级/移除）；`pidstat/iostat/sar/perf` 可用。perf 保留 paranoid=4、使用单次 sudo。基础环境已有 TensorBoard/HPU 插件/Perfetto Python；补齐 native trace_processor，初次直连约 130 s 超时后使用已有代理成功。synprof_parser 修正进程级动态库路径；真实 .hltv 采集和离线转换通过。
+- review 修正节点缓存造成假 warm、cold/warm 样本数、文本/扩散两个 seed、profiler/同步扰动、逻辑字节与 HBM 事务区分及原生 TextGenerate 计数来源。冻结保存的用户 API 图 SHA256；其 seed 与旧 143.34 s 记录不同，不计算旧值相对收益。
+- B0 1 process cold + 5 warm、B1 1 transition + 5 warm、同步 B1 诊断均通过，共 13 请求；关键计算节点每次执行，warm 保留 loader。B0 warm median **137.282 s**（135.893–137.526），B1 **40.183 s**（39.690–40.314）。6 次 B0 均为 327 tokens 且 ID 一致，fallback 全为空，1024² 图片正常。
+- 同步 B1 40.313 s，分段覆盖 **99.963%**；KSampler 38.006 s、步间隔 median 1.5212 s，VAE 0.136 s；latent/图像浮点 finite 检查通过。正常 B0 节点计时中位数为扩写 96.966 s、KSampler 37.960 s，后续优先归因扩写。
+- BF16 大 GEMM 约 260.40 TFLOP/s，copy 读+写有效带宽 1949.35 GB/s；只是具体 eager 微基准，不是模型 MFU/MBU。真实用户 prompt 的 8-token 无 profiler/profile 为 4.1018/5.2150 s，ID 相同、fallback 空；930 MiB CPU+HPU trace 已在服务器导出并通过 Perfetto SQL。厂商高层摘要在带 step 的 MOSS trace 上仍报 MMEEvents 不可用，作为工具兼容性限制保留。
+- 切换文本 probe 时曾过早获取设备，首次 acquire failed；保留日志并在旧进程退出、hl-smi 空卡后重试成功。调查服务与旁采样均已停止，正常服务恢复 PID **90386**、8189、`hpu:0 GAUDI2`、空队列。未改基础 torch、模型或推理代码。
+- P1 尚未全部完成：B2/B4 完整控制矩阵、跨进程 cold 与更完整设备归因待继续。完整工具版本、路径、失败证据、结果和下一步见 [本轮记录](MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md)；原始产物在服务器和本机忽略的 `results/performance-2026-11-08/`，不入 Git。
+
 ## 2026-11-06：服务器断电，暂停性能计划
 
 - 用户反馈服务器 `192.168.10.21` 已断电，本轮任务暂停；不再尝试 SSH、启动服务、运行微基准或 profiler。

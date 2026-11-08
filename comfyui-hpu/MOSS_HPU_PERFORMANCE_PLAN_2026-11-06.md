@@ -1,8 +1,25 @@
 # MOSS-Image HPU 性能优化计划
 
-更新时间：2026-11-06（Asia/Shanghai）
+更新时间：2026-11-08（Asia/Shanghai）
 
-本文是 MOSS-Image 在单卡 Gaudi2 HPU 上的性能调查和优化计划。当前阶段只建立环境事实、观测契约和可复现实验，不修改服务器代码，不改变模型参数，不启动新的性能测试。所有后续结论都应回填本文或 `PROGRESS.md`；产品代码、测试和过程记录继续分属各自仓库。
+本文是 MOSS-Image 在单卡 Gaudi2 HPU 上的性能调查和优化计划。2026-11-08 用户授权服务器恢复后继续推进：先补齐可观测性、review 本计划，通过后开始 P1；无需重复请求停止空闲独立服务的许可。所有后续结论都应回填本文或 `PROGRESS.md`；产品代码、测试和过程记录继续分属各自仓库。
+
+## 2026-11-08 执行前 review
+
+方向通过，正式采样前修正以下测量问题：
+
+1. **节点缓存会跳过真实计算。** 相同输入重复 `/prompt` 不能直接算 warm run。`--cache-none` 同时丢弃 loader 结果，可能把每次加载混入 warm。首轮使用调查仓库的独立 launcher，仅令 TextGenerate、CLIPTextEncode、KSampler、VAEDecode 的输入 fingerprint 随请求变化，保留原 loader 结果；不修改产品文件。记录每次真实执行的节点，并用加载事件验证模型常驻。`--cache-none` 留作全图重算控制组，默认缓存服务请求另列。
+2. **冷启动与 warm 样本数分开。** 每组至少 1 次进程冷启动 + 5 次真实 warm 计算；文件系统页缓存和磁盘 recipe cache 状态单独记录。5 个样本的 p10/p90 仅作描述，不能当高置信尾延迟估计。跨进程重复 cold 留作后续控制组。
+3. **冻结两个 seed。** KSampler seed 与 TextGenerate 的 `sampling_mode.seed` 分开记录，不能只固定扩散 seed。当前保存的 `moss-user-textgen.json` 与旧性能重放图扩散 seed 不同；P1 以用户图为冻结来源，同时保存 JSON SHA256。随机生成的 token 数/内容可能变化，必须同时给 token/s 和实际 token ID，不能只比较总秒数。
+4. **分离正常计时与诊断计时。** 首先使用无 profiler 的 wall time；同步分段、逐步同步、shape/memory profile、硬件 trace 都标为诊断运行，并用同配置无采集对照估计扰动。同步段总和覆盖率 ≥95% 只评价该诊断请求；其时间不能替换正常 B0 延迟。
+5. **字节和 FLOPs 不冒充硬件计数。** 静态逻辑流量与实际 HBM 事务分别报告；`utilization.memory` 不是 bytes/s，不允许积分推算真实字节。没有经过校准的硬件计数器时，MBU/MFU 只报明确假设下的估算/边界，不能作为 P1 阻塞条件。CPU copy 的等待时间不能等同 PCIe 搬运时间。
+6. **GEMM 与带宽校准必须可执行。** 当前产品路径不支持原生 INT8/FP8 compute；先测 BF16 GEMM 与实际 ConvRot 解量化后路径。FP8/INT8 原生微基准仅做能力探测，不支持就记录，不改 torch/驱动。copy 计读+写字节，工作集大于 48 MB SRAM；校准范围和实现决定可比性。
+7. **使用实际后端和计数来源。** TextGenerate 是 ComfyUI 原生 Qwen3.5，不是 vLLM。MTP 接受率若没有直接计数，记为未测；进度条递增数不能冒充草稿/验证次数。阶段事件用 wall-clock + monotonic 成对时间戳与 hl-smi CSV 对齐。
+8. **工具可调用不等于观测能力已通过。** TensorBoard/HPU 插件、Perfetto Python 包已在 Habana 基础环境；不重复 pip 安装。补装 sysstat 和当前内核 linux-tools；验证设备 activity、trace 导出、解析和查看。`synprof_parser` 需要进程级 `LD_LIBRARY_PATH=/opt/habanalabs/habana_plugins:/usr/lib/habanalabs`。perf 使用单次 sudo，保留系统 `perf_event_paranoid=4`。hl-smi 本机 `power.limit=550000` 按 mW 归一化为 550 W，不能与 `power.draw` 的 W 直接比较。
+
+首轮冻结文件为 `workflows/moss-user-textgen.json`，SHA256 `c283f15bcae32cceebd51c9a8863400f421f46354be32b3c52c4a16743be7bd6`，实际 KSampler seed=`649029532689846`、TextGenerate seed=`0`。它与 11-06 计划只读采集到的 seed=`438829726369282` 不同，也与旧性能重放 seed=`133401810542576` 不同。因此本轮是新建的可复现 B0，不能据此计算相对用户 143.34 s 的严格提速率。
+
+执行证据与工具复现见 [本轮记录](MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md)。先完成工具 smoke 与首轮计算基线，再按 B2/B4 控制矩阵推进；P2/P3 必须等待相应证据。
 
 ## 1. 目标与边界
 
@@ -73,7 +90,7 @@ Prompt executed in 143.34 seconds
 - prompt enhancer 开启：`mtp=auto`、sampling on、temperature 0.7、top_k 64、top_p 0.95、min_p 0.05、`max_length=4096`、thinking off；
 - SLG 关闭；固定原始 prompt、system prompt、negative prompt、seed（当前采集到的工作流 seed 为 `438829726369282`，若与用户基线不同必须以用户记录为准）。
 
-B0 至少跑 5 次，分成首次冷启动、同一进程 warm run 两组；记录 median、p10/p90、min/max，而不是只报最好一次。首轮不改参数，图片必须有限、可读且语义符合提示。
+B0 至少 1 次进程 cold + 5 次真实 warm 计算，节点结果缓存控制见执行前 review；记录 median、p10/p90、min/max。首轮不改模型/采样参数，图片必须有限、可读且语义符合提示。
 
 ### B1：无扩写的图像路径基线
 
@@ -118,7 +135,7 @@ B0 至少跑 5 次，分成首次冷启动、同一进程 warm run 两组；记�
 - HBM 读、写、copy 带宽：用已知字节数校准实际有效带宽。
 - BF16、FP8、INT8 GEMM：使用与 MOSS/Qwen 实际矩阵形状相近的 M/N/K，另保留大矩阵峰值和小矩阵启动下限。
 - 单 kernel/单图启动下限：测出小算子在本机 eager 模式下的最短时间。
-- 功耗、温度、AIP 利用率、时钟：`hl-smi --query-aip=timestamp,utilization.aip,utilization.memory,memory.used,power.draw,power.limit,temperature.aip,clocks.current.soc --format=csv,noheader,nounits --loop=1s`；这是硬件状态时间序列。
+- 功耗、温度、AIP 利用率、时钟：`hl-smi --query-aip=timestamp,utilization.aip,utilization.memory,memory.used,power.draw,power.limit,temperature.aip,clocks.current.soc --format=csv,noheader,nounits --loop=1`；本机实测语法，1 s 状态时间序列，power.limit 原始 mW 需归一化。
 - 记录 PCIe 链路、驱动、固件和内核，防止换机或重启后把硬件变化误当优化收益。
 
 计划使用的 roofline 关系为：
@@ -147,13 +164,13 @@ images/s = 1 / T_end_to_end
 | 层次 | 指标 | 主要路径 | 交叉验证 |
 | --- | --- | --- | --- |
 | 请求 | queue wait、load、text、DiT、VAE、save、端到端 | history、服务日志、API 客户端单调时钟 | 日志时间戳与客户端时间 |
-| TextGenerate | 输入/输出 token、token/s、MTP 接受数、草稿长度、采样参数 | vLLM/ComfyUI 节点计数与日志 | 固定 token 数的独立 probe |
+| TextGenerate | 输入/输出 token、token/s、MTP 接受数、草稿长度、采样参数 | ComfyUI/Qwen3.5 原生生成计数与日志 | 固定 token 数的独立 probe |
 | HPU 状态 | AIP/HBM 利用率、显存、功耗、温度、时钟 | `hl-smi` CSV 1 s 采样 | `/system_stats`、阶段边界显存 |
 | 算子 | fallback 数、CPU 等待、kernel 序列、设备耗时 | Habana fallback 计数、torch/Habana profiler | CPU profiler、阶段 wall time |
-| 模型 | 每步 bytes、FLOPs、MBU/MFU、步耗时 | 静态解析 + profiler | HBM 计数器/带宽积分 |
+| 模型 | 每步逻辑 bytes/FLOPs、估算 MBU/MFU、步耗时 | 静态解析 + profiler | 经校准的硬件计数器；缺失时明确标注估算 |
 | 主机 | CPU 使用率、RAM、I/O、进程线程数 | `/proc`、`pidstat`/系统工具 | 服务日志和客户端时间 |
 
-至少两条独立路径验证每个关键量：例如每步耗时用设备时间线与 median ITL 对照，每步字节用 profiler 计数与 HBM 活跃度积分对照，fallback 用计数器与 CPU profile 对照。
+关键时间用至少两条独立路径交叉验证：请求 history 与客户端时钟、同步阶段 wall time 与设备 trace；fallback 用计数器与 CPU profile。DiT 步耗时与自回归 ITL 分别统计。实际每步字节仅在硬件计数器含义、范围和校准明确后报告；HBM 活跃度不作字节积分。
 
 ### 4.4 Gaudi2 架构与 MOSS 的映射
 
@@ -179,29 +196,30 @@ images/s = 1 / T_end_to_end
 
 ### 4.5 可观测性工具盘点
 
-本机已做只读能力检查，结论如下：
+11-06 只读盘点已于 11-08 补齐安装与实机 smoke，当前结论如下：
 
 | 工具/接口 | 当前状态 | 能回答的问题 | 限制和后续动作 |
 | --- | --- | --- | --- |
 | `hl-smi` | **已具备，查询成功** | HBM 使用量、AIP/HBM 利用率、功耗上限/读数、温度、时钟、ECC、固件 | 不能给每个 kernel 的 bytes/FLOPs；用 1 s CSV 旁采样，作为状态旁证 |
 | `torch.hpu.memory_stats()` | **已具备** | 阶段边界显存、分配/缓存变化 | 不是 HBM 带宽计数器；需与 `hl-smi` 对齐 |
-| `torch.profiler` HPU activity | **运行时声明支持**，`supported_activities()` 返回 CPU + HPU | host API、HPU activity、shape、memory profile、Chrome/TensorBoard trace | 现有 MOSS probe 只采 CPU activity；下一阶段需在空卡上验证 HPU trace 的完整性和开销 |
+| `torch.profiler` HPU activity | **11-08 smoke 实采通过**，CPU + HPU，含 gemm/relu device kernel | host API、HPU activity、shape、memory profile、trace | MOSS 代表图与采集开销继续验证；导出需用当前 Habana wrapper 的内层接口 |
 | Habana profiler：`hl-prof-config` / `synprof_configuration` | **已安装** | Gaudi host API、MME/TPC 硬件时间线、synLaunch、recipe、memory reuse | 需要停止用户服务、配置 `HABANA_PROFILE`；trace 应保存到服务器并控制采样范围 |
-| `synprof_parser` | **已安装** | 离线解析 `.hltv` 为 JSON/CSV 等 | 需要对应 Gaudi2 profile 配置和 trace；不能直接替代采集 |
-| `habana_perf_tool` | **已安装** | 解析 profiler JSON，生成性能摘要/建议 | 服务器未发现 Perfetto/TensorBoard UI；可先导出 JSON，再在本地查看或使用独立工具 |
+| `synprof_parser` | **11-08 实际 .hltv → JSON 通过** | 离线解析 `.hltv` 为 JSON/CSV 等 | 修正进程级动态库路径；1024 事件 smoke 有 STM warning，详见本轮记录 |
+| `habana_perf_tool` | **已安装，高层摘要存在兼容性限制** | 解析 profiler JSON，生成性能摘要/建议 | smoke 缺 step；真实 MOSS 带 step 后仍因 MMEEvents 不可用失败。当前以 Perfetto SQL 分析原始 trace |
 | `habana_frameworks.torch.utils.debug` | **已有使用证据** | `_get_fallback_op_count()` 检查 CPU fallback | 这是调试接口，不是完整设备时间线；每个 case 都需记录调用结果 |
 | `PT_HPU_METRICS_FILE` | **运行库代码存在，尚未启用** | 编译/运行指标、重复编译等运行时线索 | 需单独 probe 验证格式、开销和与 profiler 的关系；不在用户服务上直接打开 |
 | `HABANA_LOGS` / `LOG_LEVEL_*` | **可用但当前未开启诊断级别** | bridge、Synapse、graph compiler、profiler 的错误和警告 | 只在最小复现和短 profile 中开启，避免日志扰动性能 |
 | ComfyUI `/system_stats`、`/queue`、`/history`、`logs/hpu.log` | **已具备** | 请求、队列、模型加载、端到端和工作流复现 | 目前缺少可靠的 Text/DiT/VAE 阶段事件；B1–B3 需由客户端和受控 probe 补齐 |
-| `/proc`、`free`、`vmstat`、`htop` | **已具备** | CPU、RAM、线程、I/O 等主机侧背景噪音 | `perf`、`pidstat`、`iostat`、`sar` 当前未发现；首轮用 `/proc`/`vmstat`，不急于改基础环境 |
+| `/proc`、`free`、`vmstat`、`htop`、`pidstat`、`iostat`、`sar`、`perf` | **已具备；11-08 补装 sysstat/linux-tools** | CPU、RAM、线程、I/O、CPU PMU | perf 使用单次 sudo；不改全局权限，sysstat 定时采集已关闭 |
 | `nsys` | **存在于 `/usr/local/cuda-13.0/bin/nsys`，默认 PATH 未包含**；不列为主工具 | NVIDIA/CUDA 生态的 host trace | 当前没有 Gaudi 适配证据；不能用它替代 Habana profiler |
-| TensorBoard `torch-tb-profiler` | **尚未确认安装** | 官方高层 HPU profile 总览、MME/TPC kernel view、memory view | 官方文档推荐，但先独立确认依赖和版本，不能覆盖 Habana 基础 torch |
+| TensorBoard `torch-tb-profiler` | **基础环境已有；11-08 临时 UI/插件启动通过** | 官方高层 HPU profile 总览、MME/TPC kernel view、memory view | 短 eager trace 的高层摘要失败，详见本轮记录；未替换基础 torch 或厂商插件 |
+| Perfetto Python + native trace_processor | **11-08 完整验证通过** | 原始 device trace 的离线 SQL 分析 | 首次 native 下载直连超时，使用已有代理完成；fixture 与真实 HPU trace SQL 通过 |
 
 因此，工具链不是“完全缺失”：低开销状态监控、HPU profiler、离线 parser、HPU activity profiler 和 fallback 计数器都已在环境中或有运行证据。当前真正的缺口是：
 
-1. 还没有在 MOSS 图上采集过完整 Gaudi HPU 硬件时间线；
-2. 还没有确认 `torch-tb-profiler`/Perfetto 的可视化端是否在本地可用；
-3. 还没有把 `hl-smi`、ComfyUI 阶段事件和 profiler 的同一时钟对齐；
+1. 已采集真实 MOSS 8-token CPU+HPU trace，尚需拆分 prefill/decode 并扩展 DiT/VAE 的代表设备时间线；
+2. TensorBoard/Perf Tool 自动摘要在真实 MOSS trace 上仍缺可识别的 MME 数据；Perfetto 原始 trace 分析已通过；
+3. 已建立 `hl-smi` 与 ComfyUI 阶段事件的同机 wall/monotonic 对齐，待用完整请求和 profiler 范围验证；
 4. 当前服务参数禁用了 dynamic VRAM、pinned memory 和 async offload，适合先做可重复基线，但不能直接代表其它执行配置的硬件上限。
 
 官方 profiling 入口：[PyTorch profiling](https://docs.habana.ai/en/latest/Profiling/Profiling_with_PyTorch.html)、[Gaudi profiling workflow](https://docs.habana.ai/en/latest/Profiling/Profiling_Workflow.html)、[Gaudi profiler 入门](https://docs.habana.ai/en/latest/Profiling/Intel_Gaudi_Profiling/Getting_Started_with_Profiler.html)。
@@ -245,7 +263,9 @@ images/s = 1 / T_end_to_end
 
 ### P1：严格观测基线
 
-当前状态：服务器已断电，P1 暂停。恢复后先检查 SSH、内核/DKMS、`hl-smi` Operational、HPU 设备初始化、共享模型、服务版本和端口，再由用户确认是否暂时停止独立 ComfyUI-Gaudi 服务。完成 B0–B4、硬件微基准和观测 JSON；没有性能优化代码。
+当前状态：2026-11-08 服务器恢复，用户已授权按工具补齐 → review → 正式开始的顺序继续。先检查 SSH、内核/DKMS、`hl-smi` Operational、共享模型、服务版本和端口；队列为空后串行停止独立服务，验证 HPU 初始化和工具 smoke。完成 B0–B4、硬件微基准和观测 JSON；没有性能优化代码。每轮测试结束恢复正常用户服务。
+
+11-08 已完成工具补齐、BF16 GEMM/copy 校准、B0 cold+5 warm、B1 transition+5 warm、同步 B1 诊断与真实 MOSS 短设备 trace。B0 warm median=137.282 s，B1=40.183 s，B1 同步段覆盖率 99.963%；原始证据与限制见本轮记录。**P1 尚未全部完成**：B2/B4 完整控制矩阵及更完整静态属性/设备归因继续待做；用户服务已恢复。
 
 出口：能把 B0/B1 的总时间拆成 TextGenerate、DiT 每步、VAE、加载/保存，并能解释至少 95% 的端到端时间；关键指标有交叉验证。
 
