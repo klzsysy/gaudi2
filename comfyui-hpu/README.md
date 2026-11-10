@@ -1,6 +1,6 @@
 # Gaudi2 HPU 适配交接入口
 
-更新时间：2026-11-09（Asia/Shanghai）。本文件只保留当前状态和交接要点；验证细节见 `PROGRESS.md`，性能调查见 `MOSS_HPU_PERFORMANCE_PLAN_2026-11-06.md` 与 `MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md`。
+更新时间：2026-11-10（Asia/Shanghai）。本文件只保留当前状态和交接要点；验证细节见 `PROGRESS.md`，最新阶段耗时与后续优先级见 [36.648 秒工作流拆解](MOSS_WORKFLOW_BREAKDOWN_2026-11-10.md)。
 
 **文档归属：**所有过程、失败/成功证据和个人环境信息只保存在本调查仓库，不进入 `/home/sonny/ComfyUI` 或 `ComfyUI-Gaudi` 产品仓库。
 
@@ -22,6 +22,7 @@
 
 ## 当前性能结论
 
+- **36.648 秒实际请求拆解**：扩写 14.950 s（40.79%）、正负编码 1.754 s、DiT/采样 19.667 s（53.66%）、VAE/图片输出 0.256 s、其它 0.021 s。使用同一次请求，可相加；与各阶段独立中位数区分。文本 KV attention/tree merge 在当前 HPU 路径使用 FP32 torch 参考实现并处理完整缓存容量，是下一优先验证点，具体占比未测。此次仅复算旧日志/审查代码，详见 [阶段拆解与计划](MOSS_WORKFLOW_BREAKDOWN_2026-11-10.md)。
 - **本轮执行优化已落地 `05d2a0a5`**：MOSS 投影/FFN 分区编译 + 厂商静态 recipe，固定 caption 的 DiT median **28.225 → 19.456 s（-31.07%）**；普通 BF16 Qwen3.5 短步 MLP 编译，固定 32-token teacher 轨迹 median **4.876 → 4.223 s（-13.38%）**。完整 BF16 用户图五次 warm median **52.591 → 36.648 s**，自然结束 token 数不同，不能当作同轨迹 A/B。详见 [block/文本执行优化记录](MOSS_BLOCK_OPTIMIZATION_2026-11-09.md)。
 - 九组真实 block 的 FP64 对照未见系统性精度恶化；固定 seed 的画面和扩写细节仍会改变。量化/自定义 operations 不启用新增 MLP 编译，原 INT8 图通过；forward hooks、CPU、训练、禁用编译及模型重载路径保留。最终 AIP 平均：整图 **37.93%**、扩写 **16.79%**、DiT **57.23%**，峰值 68%，仍未达到 80%。
 - **BF16 DiT attention 优化已落地 `f739cb93`**：固定 caption、1024²/25 步、各 1 cold + 5 warm，DiT median **37.916 → 28.217 s（-25.58%）**，扩写关闭的整图 **40.093 → 30.258 s**，allocator 峰值 **44.35 → 40.11 GiB**；图像 MAE 0.12055/255，与基线重复波动相当。完整 BF16 扩写图 warm median **52.591 s**，自然结束 token 数变化，不与旧 60.063 s 当作严格同轨迹 A/B。详见 [DiT 优化记录](MOSS_DIT_OPTIMIZATION_2026-11-09.md)。
