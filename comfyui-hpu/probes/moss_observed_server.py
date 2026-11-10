@@ -30,6 +30,8 @@ if os.environ.get("MOSS_DECODE_REGIONS"):
 
 out = Path(os.environ["MOSS_EVENTS"])
 diagnostic = False
+recompute = True
+detail = False
 current = contextvars.ContextVar("stage", default={})
 
 
@@ -42,19 +44,22 @@ def event(kind, **fields):
 # Keep loader results/model objects; force the actual computation on every request.
 changed = execution.IsChangedCache.get
 async def get_changed(self, node_id):
-    if self.dynprompt.get_node(node_id)["class_type"] in {"TextGenerate", "CLIPTextEncode", "KSampler", "VAEDecode"}:
+    if recompute and self.dynprompt.get_node(node_id)["class_type"] in {"TextGenerate", "CLIPTextEncode", "KSampler", "VAEDecode"}:
         return self.prompt_id
     return await changed(self, node_id)
 execution.IsChangedCache.get = get_changed
 
 execute = execution.PromptExecutor.execute_async
 async def execute_request(self, prompt, prompt_id, *args, **kwargs):
-    global diagnostic
+    global diagnostic, recompute, detail
     extra = args[0] if args else kwargs.get("extra_data", {})
     diagnostic = extra.get("moss_diagnostic", False)
+    recompute = extra.get("moss_recompute", True)
+    detail = extra.get("moss_breakdown", False)
     token = current.set({"prompt_id": prompt_id})
     event("request_start", diagnostic_sync=diagnostic,
-          cache_control="invalidate compute nodes; retain loader outputs")
+          cache_control="invalidate compute nodes; retain loader outputs" if recompute else "normal node cache",
+          detailed_sync=detail)
     try:
         return await execute(self, prompt, prompt_id, *args, **kwargs)
     finally:
@@ -109,5 +114,9 @@ def update_progress(self, value, total=None, preview=None):
     event("progress", value=value, total=total if total is not None else self.total)
     return update(self, value, total, preview)
 comfy.utils.ProgressBar.update_absolute = update_progress
+
+if os.environ.get("MOSS_PIPELINE_DETAIL") == "1":
+    import moss_pipeline_detail
+    moss_pipeline_detail.install(event, lambda: detail)
 
 runpy.run_path(str(root / "main.py"), run_name="__main__")

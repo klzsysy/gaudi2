@@ -22,6 +22,7 @@
 
 ## 当前性能结论
 
+- **最新节点测量（当前 UI 文本 seed=1）**：各五次 warm，完整重算 **30.786 s**、文本缓存 **19.900 s**；完整代表请求扩写 9.093、正负编码 1.817、DiT/采样 19.611、VAE/图片输出 0.246 s。单独诊断中，DiT 42 层主干约占采样节点 89.6%，RoPE/text_embedder 重复 50 次合计 1.34 s。下一步优先 DiT 的执行内条件预计算及主干归因；详见 [pipeline 节点统计](MOSS_PIPELINE_TIMING_2026-11-10.md)。本轮只测量，日常服务与原工作流缓存已恢复。
 - **当前部署 `441d459d`** 在 `3fec1143` 性能优化基础上修复浏览器断连触发的 SIGPIPE/Synapse fatal。代码本来已同步；`Host malloc failed` 是运行时失效后的连带报错。恢复 Python SIGPIPE 策略后，8 次中断下载、显式信号注入和用户原 1024² pending 图重放通过；详见 [故障恢复记录](HPU_SIGPIPE_RECOVERY_2026-11-10.md)。
 - **最新产品 `3fec1143`**：HPU KV attention/tree merge 区域编译 + 普通 BF16 Qwen3.5 短步完整 attention 编译；另修复 HPU 在 MTP 分支提交时同 storage 视图复制可能不更新目标行的问题。完整用户图 1 cold+5 warm，median **29.925 s**，相对此前 36.648 s 约少 18.34%；自然结束 tokens 不同，不是同轨迹 A/B。正式产品固定 32-token teacher 对照 **4.312 → 3.002 s**，top-1 32/32、平均 KL 0.0002996。详见 [本轮记录](MOSS_KV_OPTIMIZATION_2026-11-10.md)。
 - 最终 33 项 KV/attention 专项、42 项 Qwen decode 回归通过，1 项 CUDA 专属跳过；512/768、MTP auto/off、卸载重载、原 INT8 图通过，fallback 为空。卸载后 allocator InUse 约 **93.98 MiB**。当前全图/文本/DiT AIP 平均 **45.22%/22.20%/57.04%**，仍未达到 80%。新 median 请求中 DiT/采样 **19.665 s**、文本 **8.165 s**，下一重点转向 DiT 剩余开销，文本侧继续查 prefill/GDN/调度。
