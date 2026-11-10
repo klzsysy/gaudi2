@@ -1,5 +1,6 @@
 """Run cold + five warm full workflows per mode, preserving loader caches."""
 import json
+import hashlib
 import os
 from pathlib import Path
 import subprocess
@@ -14,6 +15,8 @@ python = str(root / '.venv/bin/python')
 for mode in os.environ.get('MOSS_CASES', 'compiled,original').split(','):
     target = directory / ('full-' + mode)
     target.mkdir(exist_ok=True)
+    (target / 'experiment-options.json').write_text(json.dumps({name: os.environ.get(name) for name in ('MOSS_KV_MODE', 'MOSS_DECODE_REGIONS', 'MOSS_DISABLE_ATTENTION_REGION', 'MOSS_CLIP_FILE')}, indent=2))
+    (target / 'source-sha256.json').write_text(json.dumps({str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in [*Path('comfy/text_encoders').glob('hpu_*.py'), Path('comfy/text_encoders/llama.py'), Path('comfy/text_encoders/qwen35.py'), Path('comfy/ldm/moss_image/model.py'), Path('comfy/ops.py')]}, indent=2))
     workflow = json.loads((probes / 'moss-user-textgen-bf16.json').read_text())
     if os.environ.get('MOSS_CLIP_FILE'):
         workflow['18:2']['inputs']['clip_name'] = os.environ['MOSS_CLIP_FILE']
@@ -39,6 +42,8 @@ for mode in os.environ.get('MOSS_CASES', 'compiled,original').split(','):
                 raise TimeoutError('server startup')
             telemetry = subprocess.Popen(['hl-smi', '--query-aip=timestamp,utilization.aip,utilization.memory,memory.used,power.draw', '--format=csv,nounits', '-l', '100ms'], stdout=telemetry_log)
             subprocess.run([python, str(probes / 'moss_baseline.py'), str(target)], env=dict(env, MOSS_B0_RUNS=os.environ.get('MOSS_B0_RUNS', '6'), MOSS_B1_RUNS='0'), stdout=client_log, stderr=subprocess.STDOUT, check=True)
+            if os.environ.get('MOSS_KV_ACCEPTANCE') == '1':
+                subprocess.run([python, str(probes / 'moss_kv_acceptance.py'), str(target)], env=env, stdout=client_log, stderr=subprocess.STDOUT, check=True)
             print(mode, (target / 'baseline-summary.json').read_text(), flush=True)
         finally:
             if telemetry is not None:

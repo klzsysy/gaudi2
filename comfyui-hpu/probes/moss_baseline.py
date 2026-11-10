@@ -23,7 +23,8 @@ def api(path, data=None):
     req = urllib.request.Request(url + path, data=None if data is None else json.dumps(data).encode(),
                                  headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=30) as response:
-        return json.load(response)
+        payload = response.read()
+        return json.loads(payload) if payload else None
 
 
 def run(label, graph, diagnostic=False):
@@ -77,31 +78,36 @@ def run(label, graph, diagnostic=False):
     return record
 
 
-assert api("/queue") == {"queue_running": [], "queue_pending": []}
-b0_runs = int(os.environ.get('MOSS_B0_RUNS', '6'))
-for index in range(b0_runs):
-    diagnostic = os.environ.get('MOSS_DIAGNOSTIC_LAST') == '1' and index == b0_runs - 1
-    record = run("b0-" + ("cold" if index == 0 else f"warm-{index}"), source, diagnostic=diagnostic)
-    if index == 0:
-        caption = record["caption"]
-        (directory / "fixed-caption.txt").write_text(caption)
+def main():
+    assert api("/queue") == {"queue_running": [], "queue_pending": []}
+    b0_runs = int(os.environ.get('MOSS_B0_RUNS', '6'))
+    for index in range(b0_runs):
+        diagnostic = os.environ.get('MOSS_DIAGNOSTIC_LAST') == '1' and index == b0_runs - 1
+        record = run("b0-" + ("cold" if index == 0 else f"warm-{index}"), source, diagnostic=diagnostic)
+        if index == 0:
+            caption = record["caption"]
+            (directory / "fixed-caption.txt").write_text(caption)
 
-b1 = copy.deepcopy(source)
-b1["18:16"]["inputs"]["switch"] = False
-b1["18:17"]["inputs"]["value"] = caption
-b1_runs = int(os.environ.get('MOSS_B1_RUNS', '6'))
-for index in range(b1_runs):
-    run("b1-" + ("transition" if index == 0 else f"warm-{index}"), b1)
-if b1_runs:
-    run("b1-diagnostic", b1, diagnostic=True)
-records = [json.loads(x) for x in (directory / "runs.jsonl").read_text().splitlines()]
-summary = {}
-for case in ["b0", "b1"]:
-    values = [x["request_seconds"] for x in records if x["label"].startswith(case + "-warm") and not x["diagnostic"]]
-    if not values:
-        continue
-    summary[case] = {"warm_samples": len(values), "median_seconds": statistics.median(values),
-                     "min_seconds": min(values), "max_seconds": max(values),
-                     "p10_seconds": float(np.percentile(values, 10)), "p90_seconds": float(np.percentile(values, 90))}
-(directory / "baseline-summary.json").write_text(json.dumps(summary, indent=2))
-print(json.dumps(summary), flush=True)
+    b1 = copy.deepcopy(source)
+    b1["18:16"]["inputs"]["switch"] = False
+    b1["18:17"]["inputs"]["value"] = caption
+    b1_runs = int(os.environ.get('MOSS_B1_RUNS', '6'))
+    for index in range(b1_runs):
+        run("b1-" + ("transition" if index == 0 else f"warm-{index}"), b1)
+    if b1_runs:
+        run("b1-diagnostic", b1, diagnostic=True)
+    records = [json.loads(x) for x in (directory / "runs.jsonl").read_text().splitlines()]
+    summary = {}
+    for case in ["b0", "b1"]:
+        values = [x["request_seconds"] for x in records if x["label"].startswith(case + "-warm") and not x["diagnostic"]]
+        if not values:
+            continue
+        summary[case] = {"warm_samples": len(values), "median_seconds": statistics.median(values),
+                         "min_seconds": min(values), "max_seconds": max(values),
+                         "p10_seconds": float(np.percentile(values, 10)), "p90_seconds": float(np.percentile(values, 90))}
+    (directory / "baseline-summary.json").write_text(json.dumps(summary, indent=2))
+    print(json.dumps(summary), flush=True)
+
+
+if __name__ == "__main__":
+    main()

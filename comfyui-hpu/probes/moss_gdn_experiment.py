@@ -4,6 +4,7 @@ Run from the independent product checkout with this directory on PYTHONPATH.
 All switches affect this investigation process only.
 """
 import functools
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -79,6 +80,9 @@ if os.environ.get('MOSS_DISABLE_DENSE_MLP') == '1':
 torch.hpu.synchronize()
 metadata = {'mode': mode, 'diagnostic': diagnostic, 'capture': capture, 'model': clip_file,
             'text_region': os.environ.get('MOSS_TEXT_REGION', 'product'),
+            'kv_mode': os.environ.get('MOSS_KV_MODE', 'product'), 'decode_regions': os.environ.get('MOSS_DECODE_REGIONS', ''),
+            'disable_attention_region': os.environ.get('MOSS_DISABLE_ATTENTION_REGION') == '1',
+            'source_sha256': {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in Path('comfy/text_encoders').glob('*.py') if p.name in {'llama.py', 'qwen35.py', 'hpu_kv_attention.py', 'hpu_mlp.py', 'hpu_gated_delta.py'}},
             'mlp_compile_modules': sum(bool(getattr(module, 'hpu_compile_mlp', False)) for module in clip.cond_stage_model.modules()),
             'load_seconds': time.perf_counter() - started, 'torch': torch.__version__,
             'memory_loaded': torch.hpu.memory_stats()}
@@ -115,7 +119,9 @@ try:
         teacher_logits.clear()
         start_ns = time.time_ns()
         start = time.perf_counter()
-        ids = clip.generate(tokens, max_length=length, do_sample=True, temperature=0.7, top_k=64, top_p=0.95, min_p=0.05, seed=0, mtp=os.environ.get('MOSS_MTP', 'auto') != 'off')
+        mtp_mode = os.environ.get('MOSS_MTP', 'auto')
+        mtp = False if mtp_mode == 'off' else True if mtp_mode == 'auto' else mtp_mode
+        ids = clip.generate(tokens, max_length=length, do_sample=True, temperature=0.7, top_k=64, top_p=0.95, min_p=0.05, seed=0, mtp=mtp)
         torch.hpu.synchronize()
         record = {'index': index, 'warm': index > 0, 'seconds': time.perf_counter() - start,
                   'start_ns': start_ns, 'end_ns': time.time_ns(), 'ids': ids, 'text': clip.decode(ids),

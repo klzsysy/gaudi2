@@ -18,6 +18,16 @@ import comfy.utils
 import torch
 import habana_frameworks.torch.utils.debug as debug
 
+if os.environ.get("MOSS_KV_MODE"):
+    from moss_kv_candidate import install
+    install(os.environ["MOSS_KV_MODE"])
+if os.environ.get("MOSS_DISABLE_ATTENTION_REGION") == "1":
+    from comfy.text_encoders.qwen35 import GatedAttention
+    GatedAttention.forward = GatedAttention._forward
+if os.environ.get("MOSS_DECODE_REGIONS"):
+    import moss_decode_regions
+    moss_decode_regions.install()
+
 out = Path(os.environ["MOSS_EVENTS"])
 diagnostic = False
 current = contextvars.ContextVar("stage", default={})
