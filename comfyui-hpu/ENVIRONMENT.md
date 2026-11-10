@@ -62,7 +62,13 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为 `0690d18f`，监听 `http://192.168.10.21:8189`；根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+当前部署提交为 `05d2a0a5`，监听 `http://192.168.10.21:8189`；根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+
+Qwen3.5 HPU decode 默认对 deferred conv/GDN 使用区域编译；启动参数 `--disable-comfy-compiler` 可关闭。首次 shape 编译有开销，舍入差异可能改变采样 caption；验收细节见 `MOSS_GDN_COMPILE_2026-11-09.md`。已有 INT8 和派生 BF16 文本模型均通过完整工作流。
+
+MOSS BF16 HPU attention 也默认使用区域编译，序列长度自动适配；同一 `--disable-comfy-compiler` 参数可关闭。CPU、训练及自定义 attention override 走原路径。只涉及 MOSS attention，没有全局替换 SDPA；不同分辨率、加权提示词和卸载重载已通过，详见 `MOSS_DIT_OPTIMIZATION_2026-11-09.md`。
+
+后续已将 MOSS 编译范围扩至投影/FFN，保留调制与残差原执行方式，并在这两个区域按实际 shape 使用厂商静态 recipe。Qwen3.5 普通 BF16 文本模型在使用 KV cache、每步不超过 8 tokens 时编译 MLP；量化或自定义 operations 保留原路径。模块/子模块/全局 forward hooks 存在时保留 eager 调用。上述优化均可用 `--disable-comfy-compiler` 关闭，细节见 `MOSS_BLOCK_OPTIMIZATION_2026-11-09.md`。固定 seed 的文本和图片细节可能变化。
 
 ## 共享模型路径
 
@@ -99,4 +105,4 @@ shared_models:
   --url http://192.168.10.21:8189 --result test-results/moss.json
 ```
 
-已验证的 MOSS 基础工作流为 25 步 `er_sde/simple`、cfg2.5；基础图关闭 prompt enhancer、SLG 和编辑 LoRA。官方 TextGenerate 扩写图也已验证，但自回归仍明显慢于直接文本编码。编辑/控制 LoRA、SLG、批量/多卡、lazy/compile/HPU Graph、超大分辨率和其它 custom nodes 未验证。
+已验证的 MOSS 基础工作流为 25 步 `er_sde/simple`、cfg2.5；基础图关闭 prompt enhancer、SLG 和编辑 LoRA。官方 TextGenerate 扩写图也已验证，但自回归仍明显慢于直接文本编码。编辑/控制 LoRA、SLG、完整批量/多卡、lazy/通用全模型编译/HPU Graph、超大分辨率和其它 custom nodes 未验证。

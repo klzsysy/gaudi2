@@ -1,0 +1,122 @@
+--- a/comfy/ops.py
++++ b/comfy/ops.py
+@@ -29,6 +29,7 @@
+ import comfy.pinned_memory
+ import comfy.rmsnorm
+ import comfy.utils
++import comfy.hpu_attention
+ 
+ import comfy_aimdo.model_vbar
+ import comfy_aimdo.torch
+@@ -60,6 +61,10 @@
+     if kwargs.get("enable_gqa", False) and attn_mask is not None:
+         k, v = repeat_kv_for_gqa(k, v, q.shape[-3], -3)
+         kwargs["enable_gqa"] = False
++    dropout_p = args[1] if len(args) > 1 else kwargs.get("dropout_p", 0.0)
++    if q.device.type == "hpu" and q.dtype == torch.bfloat16 and q.ndim == 4 and dropout_p == 0.0 and not comfy.model_management.args.disable_comfy_compiler and not comfy.model_management.in_training:
++        # Habana 1.24.2 dynamic recipes can crash when reusing strided Q/K/V views.
++        return comfy.hpu_attention.compiled_attention()(q.contiguous(), k.contiguous(), v.contiguous(), *args, **kwargs)
+     return torch.nn.functional.scaled_dot_product_attention(q, k, v, *args, **kwargs)
+ 
+ 
+--- /dev/null
++++ b/comfy/hpu_attention.py
+@@ -0,0 +1,17 @@
++"""Compile SDPA while keeping the head geometry static on HPU."""
++from functools import lru_cache
++
++import torch
++
++
++def _attention(q, k, v, attn_mask=None, dropout_p=0.0, is_causal=False, scale=None, enable_gqa=False):
++    # Dynamic head dimensions produce unsupported symbolic scales in the HPU backend.
++    for tensor in (q, k, v):
++        torch._dynamo.mark_static(tensor, 1)
++        torch._dynamo.mark_static(tensor, 3)
++    return torch.nn.functional.scaled_dot_product_attention(q, k, v, attn_mask=attn_mask, dropout_p=dropout_p, is_causal=is_causal, scale=scale, enable_gqa=enable_gqa)
++
++
++@lru_cache(maxsize=1)
++def compiled_attention():
++    return torch.compile(_attention, backend="hpu_backend", dynamic=True)
+--- /dev/null
++++ b/tests-unit/comfy_test/hpu_attention_test.py
+@@ -0,0 +1,78 @@
++import pytest
++import torch
++
++import comfy.hpu_attention
++import comfy.model_management
++import comfy.ops
++from comfy.cli_args import args
++
++
++@pytest.fixture
++def hpu_compiler(monkeypatch):
++    if not hasattr(torch, "hpu") or not torch.hpu.is_available():
++        pytest.skip("HPU required")
++    monkeypatch.setattr(args, "disable_comfy_compiler", False)
++    monkeypatch.setattr(comfy.model_management, "in_training", False)
++    torch._dynamo.reset()
++    yield
++    torch._dynamo.reset()
++
++
++@pytest.mark.parametrize("dtype", [torch.bfloat16, torch.float32])
++@pytest.mark.parametrize("mask_kind,gqa,causal", [(None, False, False), (None, False, True), ("bool", False, False), ("bias", False, False), ("blocked", False, False), (None, True, False), ("bias", True, False)])
++def test_hpu_sdpa_masks_layout_and_gqa(hpu_compiler, dtype, mask_kind, gqa, causal):
++    torch.manual_seed(14)
++    q = torch.randn(2, 17, 4, 32, dtype=dtype).to("hpu").transpose(1, 2)
++    k, v = [torch.randn(2, 23, 2 if gqa else 4, 32, dtype=dtype).to("hpu").transpose(1, 2) for _ in range(2)]
++    mask = None
++    if mask_kind == "bool":
++        mask = torch.ones(2, 1, 17, 23, dtype=torch.bool, device="hpu")
++        if dtype == torch.bfloat16:
++            mask[:, :, 0] = False
++        mask[:, :, :, -3:] = False
++    elif mask_kind == "bias":
++        mask = torch.randn(2, 1, 1, 23, dtype=dtype).to("hpu") * 0.2
++    elif mask_kind == "blocked":
++        mask = torch.zeros(2, 1, 17, 23, dtype=dtype, device="hpu")
++        mask[:, :, :, -3:] = float("-inf")
++        if dtype == torch.bfloat16:
++            mask[:, :, 0] = float("-inf")
++    with torch.no_grad():
++        expected = torch.nn.functional.scaled_dot_product_attention(q, k, v, mask, is_causal=causal, scale=0.125, enable_gqa=gqa)
++        actual = comfy.ops.scaled_dot_product_attention(q, k, v, mask, is_causal=causal, scale=0.125, enable_gqa=gqa)
++    assert actual.device.type == "hpu"
++    assert actual.dtype == dtype
++    torch.testing.assert_close(actual.cpu(), expected.cpu(), atol=0.015 if dtype == torch.bfloat16 else 2e-6, rtol=0.015 if dtype == torch.bfloat16 else 2e-5)
++    if mask_kind in ("bool", "blocked") and dtype == torch.bfloat16:
++        assert torch.count_nonzero(actual[:, :, 0]).item() == 0
++
++
++def test_hpu_sdpa_reuses_dynamic_lengths(hpu_compiler):
++    torch.manual_seed(15)
++    with torch.no_grad():
++        for length in (31, 37, 43, 53, 61, 67, 73, 83, 89, 97, 31):
++            q, k, v = [torch.randn(1, length, 4, 32, dtype=torch.bfloat16).to("hpu").transpose(1, 2) for _ in range(3)]
++            expected = torch.nn.functional.scaled_dot_product_attention(q, k, v)
++            actual = comfy.ops.scaled_dot_product_attention(q, k, v)
++            torch.testing.assert_close(actual.cpu(), expected.cpu(), atol=0.015, rtol=0.015)
++
++
++def test_cpu_sdpa_does_not_compile_hpu(monkeypatch):
++    monkeypatch.setattr(comfy.hpu_attention, "compiled_attention", lambda: pytest.fail("HPU compiler used for CPU"))
++    q = torch.randn(1, 2, 7, 16)
++    torch.testing.assert_close(comfy.ops.scaled_dot_product_attention(q, q, q), torch.nn.functional.scaled_dot_product_attention(q, q, q))
++
++
++def test_hpu_fp32_sdpa_does_not_compile(hpu_compiler, monkeypatch):
++    monkeypatch.setattr(comfy.hpu_attention, "compiled_attention", lambda: pytest.fail("BF16 compiler used for FP32"))
++    q = torch.randn(1, 2, 7, 16).to("hpu")
++    torch.testing.assert_close(comfy.ops.scaled_dot_product_attention(q, q, q).cpu(), torch.nn.functional.scaled_dot_product_attention(q, q, q).cpu())
++
++
++@pytest.mark.parametrize("disabled,training", [(True, False), (False, True)])
++def test_hpu_sdpa_can_bypass_compiler(hpu_compiler, monkeypatch, disabled, training):
++    monkeypatch.setattr(args, "disable_comfy_compiler", disabled)
++    monkeypatch.setattr(comfy.model_management, "in_training", training)
++    monkeypatch.setattr(comfy.hpu_attention, "compiled_attention", lambda: pytest.fail("compiler should be bypassed"))
++    q = torch.randn(1, 2, 7, 16).to("hpu")
++    torch.testing.assert_close(comfy.ops.scaled_dot_product_attention(q, q, q).cpu(), torch.nn.functional.scaled_dot_product_attention(q, q, q).cpu())

@@ -1,7 +1,9 @@
 """Profile MOSS text generation from the independent checkout with server stopped."""
 import json
 import os
+import statistics
 import time
+import types
 import traceback
 from pathlib import Path
 
@@ -46,6 +48,64 @@ if os.environ.get("MOSS_TRACE_DEQUANT") == "1":
 
     QuantizedTensor.dequantize = traced_dequantize
 
+
+def install_lm_head_fp8_for_probe():
+    """Investigation-only BF16 lm_head -> Gaudi fp8_gemm_v2 projection."""
+    fp8_dtype = torch.float8_e4m3fn
+    fp8_max = float(torch.finfo(torch.float8_e4m3fnuz).max) if hasattr(torch, "float8_e4m3fnuz") else 240.0
+    for name, module in clip.cond_stage_model.named_modules():
+        if not name.endswith("lm_head") or not hasattr(module, "weight"):
+            continue
+        weight = module.weight
+        if weight.dtype not in (torch.bfloat16, torch.float16):
+            print("LM_HEAD_FP8_SKIP", name, "dtype", weight.dtype, flush=True)
+            return
+        qweight = torch.empty(weight.shape, dtype=fp8_dtype, device=weight.device)
+        weight_scale = torch.empty((weight.shape[0],), dtype=torch.float32, device=weight.device)
+        step = 16384
+        start_time = time.perf_counter()
+        for start in range(0, weight.shape[0], step):
+            end = min(start + step, weight.shape[0])
+            part = weight[start:end]
+            part_scale = (part.abs().amax(dim=-1, keepdim=True).float() + 1e-8) / fp8_max
+            qweight[start:end] = torch.ops.hpu.cast_to_fp8_v2(
+                part, part_scale.reciprocal(), False, False, fp8_dtype
+            )[0]
+            weight_scale[start:end] = part_scale.squeeze(-1)
+        qweight_t = qweight.t().contiguous()
+
+        def fp8_forward(self, input, *args, **kwargs):
+            input_shape = input.shape
+            input_2d = input.reshape(-1, input_shape[-1])
+            input_scale = (input_2d.abs().amax(dim=-1, keepdim=True).float() + 1e-8) / fp8_max
+            input_fp8 = torch.ops.hpu.cast_to_fp8_v2(
+                input_2d, input_scale.reciprocal(), False, False, fp8_dtype
+            )[0]
+            output = torch.ops.hpu.fp8_gemm_v2(
+                A=input_fp8,
+                trans_A=False,
+                B=qweight_t,
+                trans_B=False,
+                D=None,
+                out_dtype=input.dtype,
+                A_scale_inv=input_scale,
+                B_scale_inv=weight_scale,
+                bias=None,
+                accumulate=False,
+            )
+            return output.reshape(*input_shape[:-1], qweight.shape[0])
+
+        module._moss_original_forward = module.forward
+        module.forward = types.MethodType(fp8_forward, module)
+        torch.hpu.synchronize()
+        print("LM_HEAD_FP8", name, {"seconds": time.perf_counter() - start_time,
+                                    "weight_shape": list(weight.shape),
+                                    "weight_bytes": qweight.numel() * qweight.element_size(),
+                                    "scale_bytes": weight_scale.numel() * weight_scale.element_size(),
+                                    "fp8_max": fp8_max}, flush=True)
+        return
+    print("LM_HEAD_FP8_SKIP no lm_head", flush=True)
+
 torch.set_grad_enabled(False)
 torch.set_num_threads(16)
 mode = os.environ.get("MOSS_PROFILE", "baseline")
@@ -65,6 +125,8 @@ if os.environ.get("MOSS_WORKFLOW"):
     system_prompt = workflow["18:14"]["inputs"]["value"]
 tokens = clip.tokenize(prompt, system_prompt=system_prompt, min_length=1, thinking=False)
 clip.load_model(tokens)
+if os.environ.get("MOSS_LM_HEAD_FP8") == "1":
+    install_lm_head_fp8_for_probe()
 torch.hpu.synchronize()
 print("loaded", torch.hpu.memory_stats(), flush=True)
 print("profiler activities", torch.profiler.supported_activities(), flush=True)
@@ -121,6 +183,24 @@ def generate(length):
               "start_wall_ns": start_wall_ns, "end_wall_ns": time.time_ns()}
     print(json.dumps(result), flush=True)
     return result
+
+
+repeat = int(os.environ.get("MOSS_REPEAT", "0"))
+if repeat > 0:
+    warmup = generate(2)
+    records = [generate(32) for _ in range(repeat)]
+    seconds = [record["seconds"] for record in records]
+    print(json.dumps({
+        "repeat": repeat,
+        "warmup_seconds": warmup["seconds"],
+        "seconds": seconds,
+        "median_seconds": statistics.median(seconds),
+        "min_seconds": min(seconds),
+        "max_seconds": max(seconds),
+        "ids_equal": all(record["ids"] == records[0]["ids"] for record in records),
+    }), flush=True)
+    print("fallback_counts", hpu_debug._get_fallback_op_count(), flush=True)
+    raise SystemExit(0)
 
 generate(2)
 if os.environ.get("MOSS_CACHE_LM_HEAD") == "1":

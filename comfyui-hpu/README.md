@@ -22,9 +22,19 @@
 
 ## 当前性能结论
 
+- **本轮执行优化已落地 `05d2a0a5`**：MOSS 投影/FFN 分区编译 + 厂商静态 recipe，固定 caption 的 DiT median **28.225 → 19.456 s（-31.07%）**；普通 BF16 Qwen3.5 短步 MLP 编译，固定 32-token teacher 轨迹 median **4.876 → 4.223 s（-13.38%）**。完整 BF16 用户图五次 warm median **52.591 → 36.648 s**，自然结束 token 数不同，不能当作同轨迹 A/B。详见 [block/文本执行优化记录](MOSS_BLOCK_OPTIMIZATION_2026-11-09.md)。
+- 九组真实 block 的 FP64 对照未见系统性精度恶化；固定 seed 的画面和扩写细节仍会改变。量化/自定义 operations 不启用新增 MLP 编译，原 INT8 图通过；forward hooks、CPU、训练、禁用编译及模型重载路径保留。最终 AIP 平均：整图 **37.93%**、扩写 **16.79%**、DiT **57.23%**，峰值 68%，仍未达到 80%。
+- **BF16 DiT attention 优化已落地 `f739cb93`**：固定 caption、1024²/25 步、各 1 cold + 5 warm，DiT median **37.916 → 28.217 s（-25.58%）**，扩写关闭的整图 **40.093 → 30.258 s**，allocator 峰值 **44.35 → 40.11 GiB**；图像 MAE 0.12055/255，与基线重复波动相当。完整 BF16 扩写图 warm median **52.591 s**，自然结束 token 数变化，不与旧 60.063 s 当作严格同轨迹 A/B。详见 [DiT 优化记录](MOSS_DIT_OPTIMIZATION_2026-11-09.md)。
+- 本轮仅编译 MOSS 既有 attention 区域，不自写 kernel。7 项专项通过；512/768/1024、加权提示词、卸载重载与原 INT8 两次完整图均通过、fallback 为空。共享动态 SDPA 和整块编译候选未合入。完整用户图 AIP 平均 **35.85%**、文本 **15.20%**、DiT **50.33%**，尚未达到 80% 目标。
+- 上轮规划的 DiT 数值定位/分区、动态 shape 成本和文本 MLP 已推进；下一步重新归因 KV attention/tree merge、采样同步及余下 norm/RoPE。当前完整用户图约为 DiT 19.36 s、扩写 14.94 s；暂不自写 kernel，FP8 继续排在 BF16 执行优化之后。硬件和路线依据见 [多维路线评估](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。
+- **GDN/conv HPU 区域编译有效**：同一 BF16 文本模型、固定用户图（1024²/25 步），各 1 cold + 5 warm；端到端 median **131.031 → 60.063 s**，TextGenerate **96.740 → 20.156 s**。自然结束输出为原始 375 tokens、编译 303–333 tokens；吞吐约 **3.88 → 15.03 token/s**，非逐 token 等价声明。59 项回归通过、1 项 CUDA 专属跳过；状态/权重复用增强后 5 项专项复验通过。详见 [区域编译记录](MOSS_GDN_COMPILE_2026-11-09.md)。
+- 产品提交/服务器部署为 **`05d2a0a5`**，本地分支 `codex/gaudi2-hpu` 未 push。原 INT8 模型通过完整图和 latent/VAE 浮点 finite 检查，可使用 DiT 优化；新增 MLP 编译仅针对普通 BF16 文本模型。日常服务已恢复；`--disable-comfy-compiler` 可关闭区域编译。
 - 严格 P1 首轮 B0/B1：1024²、25 步、固定用户图，5 次 warm median 分别为 **137.282 s** 和 **40.183 s**；所有请求 fallback 为空，327-token 输出 ID 一致，图片和 latent finite 检查通过。
 - FP8 E4M3/E5M2 `torch.mm` 在当前 eager 栈原生 HPU 通过，约 525.88/519.63 TFLOP/s；BF16 同 shape 275.76 TFLOP/s。INT8 `torch._int_mm` 发生 fallback，不作为 HPU 峰值或生产优化依据。
 - lm_head 解量化缓存、强制 embedding 留在 HPU、全模型/局部 FP8 文本编码器均未通过重复收益门槛，均未进入产品代码；当前主要线索是 `_copy_from`、小批量自回归和 host/device 控制同步。
+- 服务器已有 `qwen3.5_9b_w4a8_gptq.safetensors`，但当前 HPU 只注册 comfy-kitchen eager W4A8 backend；MOSS 默认仍逐层解量化到 BF16，强制 native 路径会回到 `torch._int_mm` fallback。下一候选是从已验证 INT8 ConvRot 生成独立普通 BF16 文本模型，做空间换时间 A/B；详见性能记录。
+- BF16 常驻已验证：由现有 INT8 ConvRot 转换的普通 BF16 文本模型约 19.31 GB，MTP auto 32-token 5 次 warm median **9.407 s**，相对 INT8 路径 **10.097 s** 约快 6.8%，fallback 为空；完整 1024² MOSS 工作流成功出图。JChen 分块 top-k 移植因 tie policy 改变采样 token 且收益仅约 0.6% 已回滚。
+- JChen 的 BF16 `lm_head`→`fp8_gemm_v2` probe 单次为 9.580 s/32-token，未证明收益、未进入产品。源码复核纠正：MTP tree 存在，但 GDN 在 HPU 上走 torch 参考实现；异步预取与 Comfy 图重放被设备门控关闭，不能视为已应用 JChen 的 HPU 优化。BF16 6.8% 也是跨进程、不同末尾 token 的描述性差异，严格端到端收益尚未建立。
 - B2/B4 完整控制矩阵、跨进程 cold 和更细的设备归因仍未完成；厂商高层 profiler 摘要存在 MME 数据兼容性限制，当前用原始 HPU trace + Perfetto SQL。
 
 ## 驱动与模型存储
@@ -34,9 +44,9 @@
 
 ## 已知边界与接续工作
 
-- 验证范围不包括编辑/控制 LoRA、SLG、批量/多卡、其它 VAE、custom nodes、lazy/compile/HPU Graph 或超大分辨率。
+- 验证范围不包括编辑/控制 LoRA、SLG、多卡、其它 VAE、其它 custom nodes、lazy/HPU Graph 或超大分辨率。区域编译已验证 Qwen3.5 deferred conv/GDN、普通 BF16 短步 MLP 与 MOSS attention/投影/FFN；batch=2 只做算子回归，没有完整批量工作流验收。
 - tokenization、采样控制和已有 Flux RoPE float64 频率表仍可能走 CPU；“模型在 HPU”不等于没有任何 CPU 算子。
-- 若继续性能调查，应先完成 B2/B4，并把 `_copy_from` 按采样回传、解量化和缓存/预取归因，再评估单变量改动。
+- 若继续性能调查，应补齐 B2/B4、更多提示词质量和区域编译之外的 host/device 归因；不要将上述单工作流结果外推到所有模型。
 
 ## 接续工作流程
 

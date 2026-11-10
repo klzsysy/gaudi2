@@ -1,23 +1,26 @@
-# Intel Gaudi 2（HL-225B/225D）原生支持的数据精度
+# Gaudi2 硬件能力与软件路径边界
 
+复核日期：2026-11-09。原文将 INT8 写成与 FP8 同量级峰值，且把所有数据类型都归为 MME 原生计算；此推断没有依据，已更正。
 
-官方架构文档的原话是：Gaudi 2 支持深度学习所需的全部主流数据类型：FP32、TF32、BF16、FP16、FP8（E4M3 和 E5M2），并且 MME（矩阵乘法引擎）中所有类型都累加到 FP32 累加器。来源
+| 项目 | 已确认能力 | 对本项目的含义 |
+|---|---|---|
+| BF16 MME | 公开峰值 432 TFLOP/s | 原生矩阵计算；不是单 token/全模型必达速度 |
+| FP8 MME | 公开峰值 865 TFLOP/s；支持 E4M3/E5M2 | 当前栈 `fp8_gemm_v2` 可用，需要匹配 scale/layout/output dtype |
+| TPC | 24 个；支持 FP32/BF16/FP16/FP8 和 INT32/INT16/INT8 | 可写融合/解量化等 kernel，不代表拥有 INT8 MME GEMM |
+| MME | 2 个；白皮书列 FP32/TF32/BF16/FP16/FP8，累加为 FP32 | 当前资料不能推出有与 FP8 同峰值的 INT8 MME 接口 |
+| HBM | 96 GB；公开标称 2.45–2.46 TB/s | 小批量 decode 要同时评估权重流量、状态流量和提交开销 |
+| SRAM | 48 MB | 全文本模型和 lm_head 不可能整体驻留 SRAM |
 
-精度	是否原生	说明
-FP32	✅	训练/推理基准精度，也用作累加精度
-TF32	✅	MME 原生，替代 FP32 做矩阵乘加速
-BF16	✅	主力训练精度（432 TFLOPS）
-FP16	✅	支持，算子覆盖少于 BF16
-FP8 E4M3	✅	Gaudi2 新增，原生格式是 E4M3 FNUZ（最大值约 240，非 OCP 的 448）
-FP8 E5M2	✅	主要用于反向传播/梯度
-INT8	✅	量化推理；PyTorch 支持矩阵中 Int8 为 Yes（算子有限）来源
+本机 Habana 1.24.2 / torch 2.13.0a0 的 `torch._int_mm` 已实测 CPU fallback；不能以支持 int8 tensor 或 TPC INT8 指令替代这一证据。W4A8/GPTQ 同样必须核实解包与矩阵计算的实际 backend。
 
-## 几个容易踩坑的点
+Gaudi2 的 FP8 数值范围和跨平台 checkpoint 的字节/scale 约定需要单独处理。本项目曾遇到 E4M3FN 高编码转 float 的 inf/nan；生产解量化使用完整解码表，原生 FP8 计算则必须按 Gaudi 的量化 API 和 scale contract 校准。不能仅凭 dtype 名称假定与其它平台逐字节等价。
 
-- FP8 是 Gaudi2 的关键增量：Gaudi1 没有 FP8，FP8 训练通过 Intel Gaudi Transformer Engine 使用，支持 E5M2 和 HYBRID（前向 E4M3、反向 E5M2）两种 recipe。[来源](https://docs.habana.ai/en/latest/PyTorch/PyTorch_FP8_Training/index.html)
-- Gaudi2 的 E4M3 是 FNUZ 变体（max≈240），而 Gaudi3/其他 GPU 用 E4M3 FN（max≈448）。跨平台部署量化模型时需要做 scale 调整，否则精度会掉。[vLLM-Gaudi 实现](https://github.com/vllm-project/vllm-gaudi/blob/57ef5ce97948228b5367c53aa72789aa804f0a55/vllm_gaudi/ops/hpu_compressed_tensors.py#L1148)
-- INT4/UINT4/NF4 不是原生算术精度：官方提供的 UINT4/NF4 推理是权重量化 + 反量化（软件路径），不是硬件 INT4 MAC。
-- 不支持：FP64、Complex32/64（PyTorch 支持矩阵明确为 No），也没有 FP4。
-- 算力参考：BF16 ≈ 432 TFLOPS，FP8 ≈ 865 TFLOPS（INT8 同量级），96 GB HBM2e / 2.45 TB/s。[规格对比](https://dstack.ai/blog/intel-gaudi/)
+`hl-smi utilization.aip` 是粗粒度活动指标，不等于 MME FLOPs 利用率。官方 hl-smi 文档使用 1000 ms 活动窗口描述；本机 HLML 头文件另注明 OAM compute utilization 可大于 100%。因此需用 trace 核实设备活动，不从此百分比直接推算剩余加速倍数。`utilization.memory` 在本机头文件定义为已占用内存，不是 HBM 带宽利用率。
 
-一句话总结：FP32 / TF32 / BF16 / FP16 / FP8(E4M3+E5M2) / INT8 都是原生支持，累加统一 FP32；FP8 是 Gaudi2 相对上代最大的精度升级。
+来源：
+
+- [Gaudi2 白皮书，第 6–10 页](https://habana.ai/wp-content/uploads/pdf/2021/gaudi2-whitepaper.pdf)
+- [Intel Gaudi 产品对照，第 3 页](https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf)
+- [TPC User Guide](https://docs.habana.ai/en/latest/TPC/TPC_User_Guide/index.html)
+- [hl-smi 指标说明](https://docs.habana.ai/en/latest/Management_and_Monitoring/Embedded_System_Tools_Guide/System_Management_Interface_Tool.html)
+- [FP8 推理 API 与校准](https://docs.habana.ai/en/latest/PyTorch/Inference_on_PyTorch/Quantization/Inference_Using_FP8.html)
