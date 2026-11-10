@@ -62,7 +62,9 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为 `3fec1143`，监听 `http://192.168.10.21:8189`；根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+当前部署提交为 `441d459d`，监听 `http://192.168.10.21:8189`；根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+
+应用入口在 HPU 初始化后恢复 Python 的 SIGPIPE 忽略策略，避免浏览器取消文件下载使 Synapse 进入 fatal 状态。遇到 `synStatus 31` 时先检查最早的 DFA 原因，不能仅凭后续 `Host malloc failed` 判定主机内存不足。详见 `HPU_SIGPIPE_RECOVERY_2026-11-10.md`。
 
 Qwen3.5 HPU decode 默认对 deferred conv/GDN 使用区域编译；启动参数 `--disable-comfy-compiler` 可关闭。首次 shape 编译有开销，舍入差异可能改变采样 caption；验收细节见 `MOSS_GDN_COMPILE_2026-11-09.md`。已有 INT8 和派生 BF16 文本模型均通过完整工作流。
 
