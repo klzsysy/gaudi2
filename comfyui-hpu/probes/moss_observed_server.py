@@ -118,5 +118,11 @@ comfy.utils.ProgressBar.update_absolute = update_progress
 if os.environ.get("MOSS_PIPELINE_DETAIL") == "1":
     import moss_pipeline_detail
     moss_pipeline_detail.install(event, lambda: detail)
+if os.environ.get("MOSS_PREPARATION_AUDIT") == "1":
+    import moss_preparation_audit
+    moss_preparation_audit.install(event)
+if os.environ.get("MOSS_CFG_BATCH") == "1":
+    import moss_cfg_batch_probe
+    moss_cfg_batch_probe.install()
 
 runpy.run_path(str(root / "main.py"), run_name="__main__")

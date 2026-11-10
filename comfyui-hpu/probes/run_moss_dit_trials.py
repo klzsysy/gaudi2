@@ -26,13 +26,15 @@ def api(path, data=None):
 for mode in os.environ.get('MOSS_DIT_CASES', 'original').split(','):
     target = directory / mode
     target.mkdir(exist_ok=True)
-    source_hashes = {name: hashlib.sha256((root / name).read_bytes()).hexdigest() for name in ('comfy/ldm/moss_image/model.py', 'comfy/ops.py')}
+    source_hashes = {name: hashlib.sha256((root / name).read_bytes()).hexdigest() for name in ('comfy/ldm/moss_image/model.py', 'comfy/model_base.py', 'comfy/ops.py')}
     (target / 'source-hashes.json').write_text(json.dumps(source_hashes, indent=2))
     workflow = json.loads((probes / 'moss-user-textgen-bf16.json').read_text())
     workflow['18:16']['inputs']['switch'] = False
     workflow['18:17']['inputs']['value'] = Path(os.environ['MOSS_CAPTION']).read_text()
     if 'MOSS_DIT_STEPS' in os.environ:
         workflow['18:7']['inputs']['steps'] = int(os.environ['MOSS_DIT_STEPS'])
+    if 'MOSS_DIT_MEGAPIXELS' in os.environ:
+        workflow['19']['inputs']['megapixels'] = float(os.environ['MOSS_DIT_MEGAPIXELS'])
     (target / 'workflow.json').write_text(json.dumps(workflow, indent=2))
     env = dict(base_env, MOSS_EVENTS=str(target / 'events.jsonl'), MOSS_DIT_DIRECTORY=str(target), MOSS_DIT_MODE=mode)
     command = [python, str(probes / 'moss_dit_server.py'), '--disable-dynamic-vram', '--disable-pinned-memory', '--disable-async-offload', '--disable-xformers', '--use-pytorch-cross-attention', '--listen', '127.0.0.1', '--port', '8190']
@@ -54,7 +56,7 @@ for mode in os.environ.get('MOSS_DIT_CASES', 'original').split(','):
             telemetry = subprocess.Popen(['hl-smi', '--query-aip=timestamp,utilization.aip,utilization.memory,memory.used,power.draw', '--format=csv,nounits', '-l', '100ms'], stdout=telemetry_log)
             for i in range(int(os.environ.get('MOSS_DIT_RUNS', '6'))):
                 start = time.perf_counter()
-                prompt_id = api('/prompt', {'prompt': workflow})['prompt_id']
+                prompt_id = api('/prompt', {'prompt': workflow, 'extra_data': {'moss_diagnostic': os.environ.get('MOSS_DIT_DIAGNOSTIC') == '1'}})['prompt_id']
                 while prompt_id not in (history := api('/history/' + prompt_id)):
                     if time.perf_counter() - start > 1800:
                         raise TimeoutError(prompt_id)

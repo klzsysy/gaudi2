@@ -62,7 +62,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为 `441d459d`，监听 `http://192.168.10.21:8189`；根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+当前部署提交为 `b1163be0`，监听 `http://192.168.10.21:8189`；根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
 
 应用入口在 HPU 初始化后恢复 Python 的 SIGPIPE 忽略策略，避免浏览器取消文件下载使 Synapse 进入 fatal 状态。遇到 `synStatus 31` 时先检查最早的 DFA 原因，不能仅凭后续 `Host malloc failed` 判定主机内存不足。详见 `HPU_SIGPIPE_RECOVERY_2026-11-10.md`。
 
@@ -73,6 +73,8 @@ MOSS BF16 HPU attention 也默认使用区域编译，序列长度自动适配�
 后续已将 MOSS 编译范围扩至投影/FFN，保留调制与残差原执行方式，并在这两个区域按实际 shape 使用厂商静态 recipe。Qwen3.5 普通 BF16 文本模型在使用 KV cache、每步不超过 8 tokens 时编译 MLP；量化或自定义 operations 保留原路径。模块/子模块/全局 forward hooks 存在时保留 eager 调用。上述优化均可用 `--disable-comfy-compiler` 关闭，细节见 `MOSS_BLOCK_OPTIMIZATION_2026-11-09.md`。固定 seed 的文本和图片细节可能变化。
 
 `3fec1143` 进一步编译 HPU BF16 的 KV decode/tree merge，以及普通 BF16 Qwen3.5 的默认短步完整 attention；prefill、训练、自定义 attention/operations 和 hooks 保留原路径。MTP 分支提交在 HPU 先 clone 被搬移的源行，避免同 storage 视图复制未更新目标的问题。没有缩小生成上限、引入 FP8 或跨请求 KV 缓存；细节见 `MOSS_KV_OPTIMIZATION_2026-11-10.md`。
+
+`b1163be0` 对普通 HPU BF16 MOSS 静态条件预计算 text_embedder 与 FP32 RoPE，只在本次 conditioning 中持有结果。动态 hooks/选项、区域、参考图等不适用场景保留原路径。完整 pipeline 卸载后的稳定占用约 2.50 GiB，已与优化前相同流程核对一致；不要把文本模型单独卸载的约 94 MiB 当成全 pipeline 的统一阈值。见 `MOSS_DIT_PRECOMPUTE_2026-11-10.md`。
 
 ## 共享模型路径
 

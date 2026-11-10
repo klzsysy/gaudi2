@@ -44,6 +44,8 @@ for mode in os.environ.get('MOSS_CASES', 'compiled,original').split(','):
             subprocess.run([python, str(probes / 'moss_baseline.py'), str(target)], env=dict(env, MOSS_B0_RUNS=os.environ.get('MOSS_B0_RUNS', '6'), MOSS_B1_RUNS='0'), stdout=client_log, stderr=subprocess.STDOUT, check=True)
             if os.environ.get('MOSS_KV_ACCEPTANCE') == '1':
                 subprocess.run([python, str(probes / 'moss_kv_acceptance.py'), str(target)], env=env, stdout=client_log, stderr=subprocess.STDOUT, check=True)
+            if os.environ.get('MOSS_UNLOAD_MEASURE') == '1':
+                subprocess.run([python, str(probes / 'moss_memory_release.py'), str(target)], env=env, stdout=client_log, stderr=subprocess.STDOUT, check=True)
             print(mode, (target / 'baseline-summary.json').read_text(), flush=True)
         finally:
             if telemetry is not None:
