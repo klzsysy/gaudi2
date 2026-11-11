@@ -13,6 +13,15 @@ args.use_pytorch_cross_attention = True
 import comfy.sd
 from comfy.text_encoders import qwen35, hpu_gated_delta
 from comfy.text_encoders.llama import BaseGenerate
+if os.environ.get('MOSS_TREE_BASELINE') == '1':
+    import moss_gdn_baseline
+    moss_gdn_baseline.install()
+if os.environ.get('MOSS_REGION_BASELINE') == '1':
+    import moss_gdn_baseline
+    moss_gdn_baseline.disable_region()
+if os.environ.get('MOSS_DELTA_STATIC') == '1':
+    import moss_delta_static
+    moss_delta_static.install()
 if os.environ.get('MOSS_PREFILL_EAGER') == '1':
     hpu_gated_delta.compiled_prefill = lambda function: function
 
@@ -146,5 +155,20 @@ if os.environ.get('MOSS_NORM_COMPILE') == '1':
 if os.environ.get('MOSS_FINAL_REGION'):
     import moss_text_final_regions
     moss_text_final_regions.install(os.environ['MOSS_FINAL_REGION'])
+if os.environ.get('MOSS_LINEAR_REGION'):
+    import moss_linear_regions
+    moss_linear_regions.install(os.environ['MOSS_LINEAR_REGION'])
+if os.environ.get('MOSS_PENDING_REPLAY'):
+    import moss_pending_replay
+    moss_pending_replay.install(os.environ['MOSS_PENDING_REPLAY'])
+if os.environ.get('MOSS_TREE_DELTA') == '1':
+    import moss_tree_delta_install
+    moss_tree_delta_install.install()
+if os.environ.get('MOSS_CONV_CONTROL') == '1':
+    import moss_conv_control
+    moss_conv_control.install()
+if os.environ.get('MOSS_DELTA_CAPTURE') == '1':
+    import moss_delta_capture
+    moss_delta_capture.install()
 if __name__ == '__main__':
     runpy.run_path(str(Path(__file__).with_name('moss_gdn_experiment.py')), run_name='__main__')

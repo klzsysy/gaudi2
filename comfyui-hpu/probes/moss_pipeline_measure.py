@@ -73,15 +73,18 @@ with (directory / 'server.log').open('w') as log, (directory / 'hpu.csv').open('
         else:
             raise TimeoutError('Measurement server startup')
         telemetry = subprocess.Popen(['hl-smi', '--query-aip=timestamp,utilization.aip,utilization.memory,memory.used,power.draw,temperature.aip,clocks.current.soc,clocks.limit.soc,clocks.limit.tpc', '--format=csv,nounits', '-l', '100ms'], stdout=telemetry_log)
-        for index in range(6):
+        for index in range(int(os.environ.get('MOSS_PIPELINE_FULL_RUNS','6'))):
             run('full-cold' if index == 0 else f'full-warm-{index}', source, True)
         for index in range(int(os.environ.get('MOSS_PIPELINE_CACHE_RUNS', '6'))):
             graph = copy.deepcopy(source)
             graph['18:7']['inputs']['seed'] = (source['18:7']['inputs']['seed'] + index + 1) % (2**64)
             run('cached-transition' if index == 0 else f'cached-warm-{index}', graph, False)
-        run('full-diagnostic', source, True, diagnostic=True)
+        if os.environ.get('MOSS_PIPELINE_DIAGNOSTIC','1') == '1':
+            run('full-diagnostic', source, True, diagnostic=True)
         if os.environ.get('MOSS_BF16_ACCEPTANCE') == '1':
             subprocess.run([sys.executable, str(Path(__file__).with_name('moss_bf16_quality.py')), str(directory)], check=True)
+        if os.environ.get('MOSS_TREE_QUALITY') == '1':
+            subprocess.run([sys.executable, str(Path(__file__).with_name('moss_tree_quality.py')), str(directory)], check=True)
         if os.environ.get('MOSS_RELEASE') == '1':
             release = directory / 'release'
             release.mkdir(exist_ok=True)

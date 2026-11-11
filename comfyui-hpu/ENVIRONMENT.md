@@ -62,7 +62,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为 `64155fe4`，监听 `http://192.168.10.21:8189`；根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+当前部署提交为 `a8f42df2`，监听 `http://192.168.10.21:8189`。根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
 
 应用入口在 HPU 初始化后恢复 Python 的 SIGPIPE 忽略策略，避免浏览器取消文件下载使 Synapse 进入 fatal 状态。遇到 `synStatus 31` 时先检查最早的 DFA 原因，不能仅凭后续 `Host malloc failed` 判定主机内存不足。详见 `HPU_SIGPIPE_RECOVERY_2026-11-10.md`。
 
@@ -118,6 +118,10 @@ shared_models:
 已验证的 MOSS 基础工作流为 25 步 `er_sde/simple`、cfg2.5；基础图关闭 prompt enhancer、SLG 和编辑 LoRA。官方 TextGenerate 扩写图也已验证，但自回归仍明显慢于直接文本编码。编辑/控制 LoRA、SLG、完整批量/多卡、lazy/通用全模型编译/HPU Graph、超大分辨率和其它 custom nodes 未验证。
 
 ## BF16计划完成后的复现状态
+
+最新`a8f42df2`包含并行FP32 deferred DeltaNet、MOSS长序列单head attention以及普通BF16八行GDN外围投影编译。head分组门控为HPU BF16、batch=1、24×128 heads、N≥4096、无mask/参考KV且默认attention的推理编译路径。GDN扩区要求八行decode、标准LinearKV、普通operations、无hooks/梯度。四行输入在进入编译递推前clone激活，已通过真实MTP `3`和`tree3s1`。区域编译继续使用既有关闭参数。
+
+最终固定298-token完整工作流5 warm中位数19.978s，独立文本4.867s，固定caption缓存整图14.386s。完整cold64.665s，自然caption与图像细节会改变。194项回归通过、1项CUDA跳过，六份部署文件SHA256一致。8189恢复后原图cold66.725s、缓存14.751s，最终队列为空。完整证据位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-11-bf16-next`，见 [最新报告](MOSS_BF16_ATTENTION_AND_SUBMISSION_2026-11-11.md)。
 
 `64155fe4`为Qwen35的HPU BF16/FP32 norm增加局部编译，继续调用原ComfyUI RMSNorm。完整固定298-token MTP工作流21.060s，固定caption缓存出图14.653s。编译冷启动、自然文本变化及质量范围见 [执行报告](MOSS_BF16_PLAN_COMPLETION_2026-11-11.md)。
 

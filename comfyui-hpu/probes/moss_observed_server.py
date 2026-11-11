@@ -17,9 +17,21 @@ import comfy.sd
 import comfy.utils
 import torch
 import habana_frameworks.torch.utils.debug as debug
+if os.environ.get('MOSS_HEAD_BASELINE') == '1':
+    import moss_head_baseline
+    moss_head_baseline.install()
 
 if os.environ.get('MOSS_MTP_FIXED') == '1':
     import moss_mtp_program
+elif os.environ.get('MOSS_TREE_BASELINE') == '1':
+    import moss_gdn_baseline
+    moss_gdn_baseline.install()
+if os.environ.get('MOSS_TREE_AB') == '1':
+    import moss_gdn_baseline
+    import moss_head_baseline
+if os.environ.get('MOSS_REGION_BASELINE') == '1':
+    import moss_gdn_baseline
+    moss_gdn_baseline.disable_region()
 
 if os.environ.get("MOSS_KV_MODE"):
     from moss_kv_candidate import install
@@ -84,6 +96,15 @@ async def execute_request(self, prompt, prompt_id, *args, **kwargs):
     prefill_baseline = extra.get('moss_prefill_baseline', False)
     rope_baseline = extra.get('moss_rope_baseline', False)
     norm_baseline = extra.get('moss_norm_baseline', False)
+    if os.environ.get('MOSS_TREE_AB') == '1':
+        moss_gdn_baseline.hpu_gated_delta.compiled_ops = (moss_gdn_baseline.baseline_ops if extra.get('moss_tree_baseline',False)
+                                                        else moss_gdn_baseline.product_ops)
+        moss_head_baseline.moss._attention_heads = (moss_head_baseline.together if extra.get('moss_tree_baseline',False)
+                                                  else moss_head_baseline.product_head)
+        if extra.get('moss_tree_baseline',False):
+            moss_gdn_baseline.disable_region()
+        else:
+            moss_gdn_baseline.qwen35._compiled_hpu_delta = moss_gdn_baseline.product_region
     if os.environ.get('MOSS_NORM_AB') == '1' and 'moss_norm_baseline' in extra:
         moss_norm_ab.baseline = norm_baseline
         moss_norm_ab.install()

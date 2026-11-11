@@ -12,6 +12,9 @@ import comfy.ldm.moss_image.model as moss
 
 directory = Path(os.environ['MOSS_DIT_DIRECTORY'])
 mode = os.environ.get('MOSS_DIT_MODE', 'original')
+if os.environ.get('MOSS_SDPA_HEAD_ONE') == '1':
+    import moss_head_candidate
+    moss_head_candidate.install()
 if mode not in ('product', 'product-final', 'acceptance-final', 'block-split', 'situ-only') and hasattr(moss, '_attention'):
     moss.attention = moss._attention
 if mode in ('product-contiguous', 'product-auto') and not hasattr(comfy, 'hpu_attention'):
