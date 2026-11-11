@@ -12,12 +12,15 @@ args.disable_pinned_memory=True
 args.disable_async_offload=True
 args.use_pytorch_cross_attention=True
 from comfy.text_encoders.qwen35 import torch_chunk_gated_delta_rule
+from comfy.text_encoders import hpu_gated_delta
 import habana_frameworks.torch.utils.debug as debug
 
 torch.set_grad_enabled(False)
 torch.set_num_threads(16)
 root=Path(os.environ['MOSS_BF16_ROOT'])
-function=torch.compile(torch_chunk_gated_delta_rule,backend='hpu_backend',dynamic=None,options={'force_static_compile':True})
+function=torch.compile(torch_chunk_gated_delta_rule,backend='hpu_backend',dynamic=False,options={'force_static_compile':True})
+if os.environ.get('MOSS_PREFILL_BUCKETED') == '1':
+    function=hpu_gated_delta.compiled_prefill(torch_chunk_gated_delta_rule)
 results=[]
 
 
@@ -48,4 +51,7 @@ for p in sorted((root/'prefill-capture').glob('prefill-*.pt')):
             for _ in range(3):fn(*values,**kwargs)
             torch.hpu.synchronize();samples.append((time.perf_counter()-start)/3)
         row={'capture':p.name,'mode':mode,'cold_s':cold,'median_ms':1000*statistics.median(samples),'samples_ms':[1000*v for v in samples],'errors':errors,'fallback':debug._get_fallback_op_count()}
-        results.append(row);(root/'prefill-replay.json').write_text(json.dumps(results,indent=2));print(json.dumps(row),flush=True)
+        row['bucketed'] = os.environ.get('MOSS_PREFILL_BUCKETED') == '1'
+        row['input_dtype'] = str(values[0].dtype)
+        row['input_shape'] = list(values[0].shape)
+        results.append(row);(root/os.environ.get('MOSS_PREFILL_RESULT', 'prefill-replay.json')).write_text(json.dumps(results,indent=2));print(json.dumps(row),flush=True)

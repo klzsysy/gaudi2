@@ -36,7 +36,18 @@ if os.environ.get("MOSS_BF16_CANDIDATE"):
 out = Path(os.environ["MOSS_EVENTS"])
 diagnostic = False
 recompute = True
+recompute_types = {"TextGenerate", "CLIPTextEncode", "KSampler", "VAEDecode"}
 detail = False
+if os.environ.get('MOSS_PREFILL_AB') == '1':
+    from comfy.text_encoders import hpu_gated_delta
+    prefill_compiler = hpu_gated_delta.compiled_prefill
+    prefill_baseline = False
+    hpu_gated_delta.compiled_prefill = lambda function: function if prefill_baseline else prefill_compiler(function)
+if os.environ.get('MOSS_ROPE_AB') == '1':
+    from comfy.ldm.moss_image import hpu as moss_hpu
+    blockwise_coefficients = moss_hpu.blockwise_coefficients
+    rope_baseline = False
+    moss_hpu.blockwise_coefficients = lambda pe: False if rope_baseline else blockwise_coefficients(pe)
 current = contextvars.ContextVar("stage", default={})
 
 
@@ -49,20 +60,24 @@ def event(kind, **fields):
 # Keep loader results/model objects; force the actual computation on every request.
 changed = execution.IsChangedCache.get
 async def get_changed(self, node_id):
-    if recompute and self.dynprompt.get_node(node_id)["class_type"] in {"TextGenerate", "CLIPTextEncode", "KSampler", "VAEDecode"}:
+    if recompute and self.dynprompt.get_node(node_id)["class_type"] in recompute_types:
         return self.prompt_id
     return await changed(self, node_id)
 execution.IsChangedCache.get = get_changed
 
 execute = execution.PromptExecutor.execute_async
 async def execute_request(self, prompt, prompt_id, *args, **kwargs):
-    global diagnostic, recompute, detail
+    global diagnostic, recompute, detail, prefill_baseline, recompute_types, rope_baseline
     extra = args[0] if args else kwargs.get("extra_data", {})
     diagnostic = extra.get("moss_diagnostic", False)
     recompute = extra.get("moss_recompute", True)
+    recompute_types = set(extra.get('moss_recompute_nodes', ("TextGenerate", "CLIPTextEncode", "KSampler", "VAEDecode")))
     detail = extra.get("moss_breakdown", False)
+    prefill_baseline = extra.get('moss_prefill_baseline', False)
+    rope_baseline = extra.get('moss_rope_baseline', False)
     token = current.set({"prompt_id": prompt_id})
     event("request_start", diagnostic_sync=diagnostic,
+          recomputed_classes=sorted(recompute_types) if recompute else [],
           cache_control="invalidate compute nodes; retain loader outputs" if recompute else "normal node cache",
           detailed_sync=detail)
     try:

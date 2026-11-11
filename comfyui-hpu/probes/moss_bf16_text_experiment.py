@@ -43,7 +43,7 @@ if mode == 'capture':
         return result
     qwen.torch_chunk_gated_delta_rule=capture
 elif mode in ('delta','both'):
-    qwen.torch_chunk_gated_delta_rule=torch.compile(original,backend='hpu_backend',dynamic=None,options={'force_static_compile':True})
+    qwen.torch_chunk_gated_delta_rule=torch.compile(original,backend='hpu_backend',dynamic=False,options={'force_static_compile':True})
 if mode in ('mlp','both'):
     MLP.forward=torch.compile(MLP.forward,backend='hpu_backend',dynamic=None,options={'force_static_compile':True})
 

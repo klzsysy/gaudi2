@@ -10,6 +10,7 @@ original_adaln = comfy.quant_ops.ck.rms_adaln
 original_rope = comfy.quant_ops.ck.rms_rope_split_half
 original_modulation = moss.modulated_rms_norm
 original_residual = moss.gated_residual
+original_native_adaln = moss.hpu.rms_adaln if hasattr(moss, 'hpu') else None
 
 
 def rms(x, weight, eps):
@@ -19,6 +20,12 @@ def rms(x, weight, eps):
 def adaln(x, scale, shift, eps=1e-6):
     normalized = rms(x, torch.ones(x.shape[-1], device=x.device, dtype=x.dtype), eps)
     return normalized * (1 + scale) + shift
+
+
+def weighted_native_adaln(x, scale, shift, eps=1e-6):
+    if scale.numel() != x.shape[-1]:
+        return original_native_adaln(x, scale, shift, eps)
+    return rms(x, (1 + scale).reshape(-1), eps) + shift
 
 
 def native_rope(x, pe):
@@ -54,6 +61,16 @@ def rounded_norm_rope(q, k, pe, q_scale, k_scale=None, epsilon=1e-6, rot_dim=0):
 
 
 def install(mode):
+    if original_native_adaln is not None:
+        moss.hpu.rms_adaln = original_native_adaln
+        if mode == 'compile-native-adaln':
+            moss.hpu.rms_adaln = torch.compile(original_native_adaln, backend='hpu_backend', dynamic=None,
+                                              options={'force_static_compile': True})
+        if mode in ('weighted-native-adaln', 'compiled-weighted-adaln'):
+            moss.hpu.rms_adaln = weighted_native_adaln
+        if mode == 'compiled-weighted-adaln':
+            moss.hpu.rms_adaln = torch.compile(weighted_native_adaln, backend='hpu_backend', dynamic=None,
+                                              options={'force_static_compile': True})
     comfy.quant_ops.ck.rms_adaln = adaln if mode in ('adaln', 'native-all', 'adaln-rotary', 'native-rounded', 'adaln-rotary-compiled') else original_adaln
     comfy.quant_ops.ck.rms_rope_split_half = {'norm': norm_rope, 'rotary': rotary_only, 'native-all': all_native_rope,
                                             'adaln-rotary': rotary_only, 'adaln-rotary-compiled': rotary_only,

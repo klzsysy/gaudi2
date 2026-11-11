@@ -62,7 +62,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为 `b1163be0`，监听 `http://192.168.10.21:8189`；根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+当前部署提交为 `1412e1f7`，监听 `http://192.168.10.21:8189`；根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
 
 应用入口在 HPU 初始化后恢复 Python 的 SIGPIPE 忽略策略，避免浏览器取消文件下载使 Synapse 进入 fatal 状态。遇到 `synStatus 31` 时先检查最早的 DFA 原因，不能仅凭后续 `Host malloc failed` 判定主机内存不足。详见 `HPU_SIGPIPE_RECOVERY_2026-11-10.md`。
 
@@ -75,6 +75,10 @@ MOSS BF16 HPU attention 也默认使用区域编译，序列长度自动适配�
 `3fec1143` 进一步编译 HPU BF16 的 KV decode/tree merge，以及普通 BF16 Qwen3.5 的默认短步完整 attention；prefill、训练、自定义 attention/operations 和 hooks 保留原路径。MTP 分支提交在 HPU 先 clone 被搬移的源行，避免同 storage 视图复制未更新目标的问题。没有缩小生成上限、引入 FP8 或跨请求 KV 缓存；细节见 `MOSS_KV_OPTIMIZATION_2026-11-10.md`。
 
 `b1163be0` 对普通 HPU BF16 MOSS 静态条件预计算 text_embedder 与 FP32 RoPE，只在本次 conditioning 中持有结果。动态 hooks/选项、区域、参考图等不适用场景保留原路径。完整 pipeline 卸载后的稳定占用约 2.50 GiB，已与优化前相同流程核对一致；不要把文本模型单独卸载的约 94 MiB 当成全 pipeline 的统一阈值。见 `MOSS_DIT_PRECOMPUTE_2026-11-10.md`。
+
+`1412e1f7` 包含native norm/RoPE、GDN prefill编译及经过系数验证的BLOCKWISE RoPE。GDN保持原有dtype：扩写BF16，普通正负编码FP32激活（不能根据BF16权重文件名推断全算子精度）。prefill按至少64、2的幂补零以复用静态recipe；裁回真实长度，新增chunk保持递归状态。`--disable-comfy-compiler` 关闭新增GDN编译。
+
+RoPE只在实际矩阵的系数满足BLOCKWISE语义时启用；一般矩阵、hooks/动态patches/参考图等保留原路径，没有跨请求tensor cache。同seed的画面细节/部分构图会改变；当前六组质量样本未见系统性退化，不承诺像素复现。新shape的编译增加cold成本，最终完整cold测量56.876 s，warm median22.231 s。完整pipeline卸载稳定约2.50 GiB，相对旧基线多256 KiB。完整证据见 `MOSS_BF16_DEEP_EXECUTION_2026-11-11.md`。
 
 ## 共享模型路径
 

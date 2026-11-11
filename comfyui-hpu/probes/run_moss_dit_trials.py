@@ -26,7 +26,8 @@ def api(path, data=None):
 for mode in os.environ.get('MOSS_DIT_CASES', 'original').split(','):
     target = directory / mode
     target.mkdir(exist_ok=True)
-    source_files = ('comfy/ldm/moss_image/model.py', 'comfy/ldm/moss_image/hpu.py', 'comfy/model_base.py', 'comfy/ops.py')
+    source_files = ('comfy/ldm/moss_image/model.py', 'comfy/ldm/moss_image/hpu.py', 'comfy/model_base.py', 'comfy/ops.py',
+                    'comfy/text_encoders/qwen35.py', 'comfy/text_encoders/hpu_gated_delta.py')
     source_hashes = {name: hashlib.sha256((root / name).read_bytes()).hexdigest() for name in source_files if (root / name).exists()}
     (target / 'source-hashes.json').write_text(json.dumps(source_hashes, indent=2))
     workflow = json.loads((probes / 'moss-user-textgen-bf16.json').read_text())
@@ -57,7 +58,11 @@ for mode in os.environ.get('MOSS_DIT_CASES', 'original').split(','):
             telemetry = subprocess.Popen(['hl-smi', '--query-aip=timestamp,utilization.aip,utilization.memory,memory.used,power.draw', '--format=csv,nounits', '-l', '100ms'], stdout=telemetry_log)
             for i in range(int(os.environ.get('MOSS_DIT_RUNS', '6'))):
                 start = time.perf_counter()
-                prompt_id = api('/prompt', {'prompt': workflow, 'extra_data': {'moss_diagnostic': os.environ.get('MOSS_DIT_DIAGNOSTIC') == '1'}})['prompt_id']
+                extra = {'moss_diagnostic': os.environ.get('MOSS_DIT_DIAGNOSTIC') == '1'}
+                cached_text = os.environ.get('MOSS_DIT_CACHE_TEXT') == '1'
+                if cached_text:
+                    extra['moss_recompute_nodes'] = ['KSampler', 'VAEDecode']
+                prompt_id = api('/prompt', {'prompt': workflow, 'extra_data': extra})['prompt_id']
                 while prompt_id not in (history := api('/history/' + prompt_id)):
                     if time.perf_counter() - start > 1800:
                         raise TimeoutError(prompt_id)
@@ -72,7 +77,7 @@ for mode in os.environ.get('MOSS_DIT_CASES', 'original').split(','):
                     begin = next(e for e in events if e['kind'] == 'node_start' and e['node'] == end['node'])
                     stages[end['node']] = {'class': end['class_type'], 'seconds': (end['mono_ns'] - begin['mono_ns']) / 1e9}
                 assert any(x['class'] == 'KSampler' for x in stages.values())
-                assert any(x['class'] == 'CLIPTextEncode' for x in stages.values())
+                assert any(x['class'] == 'CLIPTextEncode' for x in stages.values()) == (not cached_text or i == 0)
                 assert not any(x['class'] == 'TextGenerate' for x in stages.values())
                 request_start = next(e for e in events if e['kind'] == 'request_start')
                 request_end = next(e for e in events if e['kind'] == 'request_end')

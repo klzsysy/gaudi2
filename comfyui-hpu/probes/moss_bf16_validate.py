@@ -44,10 +44,15 @@ for mode in os.environ.get('MOSS_BF16_CASES', 'product,adaln,rotary,native-all')
                 x = data['args'][0].to('hpu')
                 mod = tuple(t.to('hpu') for t in data['args'][1])
                 pe = data['args'][2].to('hpu')
-                actual = block(x, mod, pe, {}).cpu()
+                options = {}
+                if os.environ.get('MOSS_VALIDATE_BLOCKWISE') == '1':
+                    assert moss.hpu.blockwise_coefficients(pe)
+                    options['_moss_hpu_blockwise_rope'] = True
+                actual = block(x, mod, pe, options).cpu()
                 expected = torch.load(root / f'fp64-{signature}.pt', weights_only=True)
                 record = {'mode': mode, 'condition': condition, 'step': step, 'layer': layer,
-                          'fp64_error': error(actual, expected), 'fallback': debug._get_fallback_op_count()}
+                          'fp64_error': error(actual, expected), 'blockwise': bool(options),
+                          'fallback': debug._get_fallback_op_count()}
                 records.append(record)
                 (root / os.environ.get('MOSS_VALIDATION_RESULTS', 'native-validation.json')).write_text(json.dumps(records, indent=2))
                 print(json.dumps(record), flush=True)

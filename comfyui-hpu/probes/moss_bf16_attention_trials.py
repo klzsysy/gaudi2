@@ -1,4 +1,4 @@
-"""Query tiling of existing BF16 SDPA; normalization and math stay unchanged."""
+"""Query tiling or masked key padding of existing BF16 SDPA."""
 import json
 import os
 from pathlib import Path
@@ -20,7 +20,7 @@ import habana_frameworks.torch.utils.debug as debug
 torch.set_grad_enabled(False)
 torch.set_num_threads(16)
 root = Path(os.environ['MOSS_BF16_ROOT'])
-candidates.install('adaln-rotary')
+candidates.install('product' if os.environ.get('MOSS_SDPA_BLOCKWISE') == '1' else 'adaln-rotary')
 state = torch.load(root / 'captures/weights-0.pt', weights_only=True)
 block = moss.Block(3072, 8192, 24, fused_qkv=True, dtype=torch.bfloat16, operations=comfy.ops.manual_cast)
 block.load_state_dict(state)
@@ -51,19 +51,31 @@ for condition in (307,23):
     x = data['args'][0].to('hpu')
     mod = tuple(t.to('hpu') for t in data['args'][1])
     pe = data['args'][2].to('hpu')
+    options = {}
+    if os.environ.get('MOSS_SDPA_BLOCKWISE') == '1':
+        assert moss.hpu.blockwise_coefficients(pe)
+        options['_moss_hpu_blockwise_rope'] = True
     reference64 = torch.load(root / f'fp64-{condition}-0-0.pt', weights_only=True)
     captured = []
     def capture(q, k, v, *values, **kwargs):
         captured.append((q,k,v))
         return original(q,k,v,*values,**kwargs)
     comfy.ops.scaled_dot_product_attention = capture
-    block._forward_attention(moss.modulate(x,block.norm1,mod,0,None), pe,{})
+    block._forward_attention(moss.modulate(x,block.norm1,mod,0,None), pe,options)
     comfy.ops.scaled_dot_product_attention = original
     q,k,v = captured[0]
     for mode in os.environ.get('MOSS_SDPA_CASES','math,math-256,math-512,math-1024,native,native-256,native-512').split(','):
         chunk = int(mode.split('-')[1]) if '-' in mode else q.shape[-2]
         def attention(q, k, v, attn_mask=None, dropout_p=0.0, is_causal=False, **kwargs):
             assert attn_mask is None and dropout_p == 0 and not is_causal
+            if mode == 'contiguous':
+                return original(q.contiguous(), k.contiguous(), v.contiguous(), dropout_p=0., is_causal=False, **kwargs)
+            if mode.startswith('keypad'):
+                padding = (-k.shape[-2]) % chunk
+                mask = torch.nn.functional.pad(q.new_zeros(k.shape[-2]), (0, padding), value=float('-inf'))
+                k = torch.nn.functional.pad(k, (0, 0, 0, padding))
+                v = torch.nn.functional.pad(v, (0, 0, 0, padding))
+                return original(q, k, v, attn_mask=mask, dropout_p=0., is_causal=False, **kwargs)
             pieces = []
             for start in range(0,q.shape[-2],chunk):
                 part = q[...,start:start+chunk,:]
@@ -78,11 +90,11 @@ for condition in (307,23):
         comfy.ops.scaled_dot_product_attention = attention
         compiled = torch.compile(attention,backend='hpu_backend',dynamic=False,options={'force_static_compile':True})
         av,at=measure(lambda:compiled(q,k,v))
-        bv,bt=measure(lambda:block(x.clone(),mod,pe,{}))
+        bv,bt=measure(lambda:block(x.clone(),mod,pe,options))
         if mode=='math':baseline_a,baseline_b=av,bv
         record={'condition':condition,'mode':mode,'attention':at,'block':bt,
                 'attention_rrmse':error(av,baseline_a),'block_rrmse':error(bv,baseline_b),
                 'fp64_rrmse':error(bv,reference64),'fallback':debug._get_fallback_op_count()}
         records.append(record)
-        (root/'attention-tiling.json').write_text(json.dumps(records,indent=2))
+        (root/os.environ.get('MOSS_SDPA_RESULT', 'attention-tiling.json')).write_text(json.dumps(records,indent=2))
         print(json.dumps(record),flush=True)

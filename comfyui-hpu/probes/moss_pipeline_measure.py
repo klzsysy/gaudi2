@@ -72,7 +72,7 @@ with (directory / 'server.log').open('w') as log, (directory / 'hpu.csv').open('
                 time.sleep(1)
         else:
             raise TimeoutError('Measurement server startup')
-        telemetry = subprocess.Popen(['hl-smi', '--query-aip=timestamp,utilization.aip,utilization.memory,memory.used,power.draw', '--format=csv,nounits', '-l', '100ms'], stdout=telemetry_log)
+        telemetry = subprocess.Popen(['hl-smi', '--query-aip=timestamp,utilization.aip,utilization.memory,memory.used,power.draw,temperature.aip,clocks.current.soc,clocks.limit.soc,clocks.limit.tpc', '--format=csv,nounits', '-l', '100ms'], stdout=telemetry_log)
         for index in range(6):
             run('full-cold' if index == 0 else f'full-warm-{index}', source, True)
         for index in range(6):
@@ -80,6 +80,12 @@ with (directory / 'server.log').open('w') as log, (directory / 'hpu.csv').open('
             graph['18:7']['inputs']['seed'] = (source['18:7']['inputs']['seed'] + index + 1) % (2**64)
             run('cached-transition' if index == 0 else f'cached-warm-{index}', graph, False)
         run('full-diagnostic', source, True, diagnostic=True)
+        if os.environ.get('MOSS_BF16_ACCEPTANCE') == '1':
+            subprocess.run([sys.executable, str(Path(__file__).with_name('moss_bf16_quality.py')), str(directory)], check=True)
+        if os.environ.get('MOSS_RELEASE') == '1':
+            release = directory / 'release'
+            release.mkdir(exist_ok=True)
+            subprocess.run([sys.executable, str(Path(__file__).with_name('moss_memory_release.py')), str(release), url], check=True)
     finally:
         if telemetry is not None:
             telemetry.terminate()

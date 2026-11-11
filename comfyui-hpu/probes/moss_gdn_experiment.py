@@ -121,11 +121,12 @@ try:
         start = time.perf_counter()
         mtp_mode = os.environ.get('MOSS_MTP', 'auto')
         mtp = False if mtp_mode == 'off' else True if mtp_mode == 'auto' else mtp_mode
-        ids = clip.generate(tokens, max_length=length, do_sample=True, temperature=0.7, top_k=64, top_p=0.95, min_p=0.05, seed=0, mtp=mtp)
+        seed = int(os.environ.get('MOSS_SEED', '0'))
+        ids = clip.generate(tokens, max_length=length, do_sample=True, temperature=0.7, top_k=64, top_p=0.95, min_p=0.05, seed=seed, mtp=mtp)
         torch.hpu.synchronize()
         record = {'index': index, 'warm': index > 0, 'seconds': time.perf_counter() - start,
                   'start_ns': start_ns, 'end_ns': time.time_ns(), 'ids': ids, 'text': clip.decode(ids),
-                  'stages': dict(stages), 'fallback': debug._get_fallback_op_count(),
+                  'stages': dict(stages), 'seed': seed, 'fallback': debug._get_fallback_op_count(),
                   'memory': torch.hpu.memory_stats()}
         records.append(record)
         if teacher_ids is not None:

@@ -36,8 +36,12 @@ for mode in os.environ.get('MOSS_BF16_CASES', 'product,compile-mod,compile-point
         x = data['args'][0].to('hpu')
         mod = tuple(t.to('hpu') for t in data['args'][1])
         pe = data['args'][2].to('hpu')
+        options = {}
+        if os.environ.get('MOSS_TRIAL_BLOCKWISE') == '1':
+            assert moss.hpu.blockwise_coefficients(pe)
+            options['_moss_hpu_blockwise_rope'] = True
         def run():
-            return block(x.clone(), mod, pe, {})
+            return block(x.clone(), mod, pe, options)
         try:
             start = time.perf_counter()
             actual = run().cpu().float()
