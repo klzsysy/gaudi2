@@ -61,7 +61,8 @@ for name, size, prompt in prompts:
             graph['18:2']['inputs']['clip_name'] = 'qwen3.5_9b_int8_convrot.safetensors'
         start = time.perf_counter()
         prompt_id = api('/prompt', {'prompt': graph, 'extra_data': {'moss_recompute': True, 'moss_diagnostic': True,
-            'moss_prefill_baseline': baseline, 'moss_rope_baseline': baseline}})['prompt_id']
+            'moss_prefill_baseline': baseline, 'moss_rope_baseline': baseline,
+            'moss_norm_baseline': baseline}})['prompt_id']
         while prompt_id not in (history := api('/history/' + prompt_id)):
             if time.perf_counter() - start > 1200:
                 raise TimeoutError(prompt_id)

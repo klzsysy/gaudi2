@@ -15,6 +15,7 @@ saved_weights = set()
 current = None
 profiling = False
 profile_request = int(os.environ.get('MOSS_BF16_PROFILE_REQUEST', '6'))
+profile_steps = {int(v) for v in os.environ.get('MOSS_BF16_PROFILE_STEPS', '0').split(',')}
 
 
 def cpu(value):
@@ -35,7 +36,7 @@ def model_forward(self, x, timestep, context, transformer_options={}, **kwargs):
     index = counts[length]
     counts[length] += 1
     current = (length, index)
-    profiling = index == 25 * profile_request
+    profiling = index // 25 == profile_request and index % 25 in profile_steps
     try:
         if not profiling:
             return original_model(self, x, timestep, context, transformer_options, **kwargs)
@@ -45,8 +46,9 @@ def model_forward(self, x, timestep, context, transformer_options={}, **kwargs):
             with torch.profiler.record_function(f'moss_forward_N{4096 + length}'):
                 result = original_model(self, x, timestep, context, transformer_options, **kwargs)
             torch.hpu.synchronize()
-        profile.profiler.export_chrome_trace(str(directory / f'forward-{length}.trace.json'))
-        (directory / f'forward-{length}.cpu.txt').write_text(profile.key_averages().table(sort_by='self_cpu_time_total', row_limit=50))
+        suffix = '' if index % 25 == 0 else f'-step{index % 25}'
+        profile.profiler.export_chrome_trace(str(directory / f'forward-{length}{suffix}.trace.json'))
+        (directory / f'forward-{length}{suffix}.cpu.txt').write_text(profile.key_averages().table(sort_by='self_cpu_time_total', row_limit=50))
         print('BF16_PROFILE_SAVED', length, flush=True)
         return result
     finally:
@@ -57,6 +59,9 @@ original_block = moss.Block.forward
 @functools.wraps(original_block)
 def block_forward(self, x, mod, pe, transformer_options={}, ref=None, ref_kv=None, kv_out=None, mask=None):
     layer = transformer_options.get('block_index')
+    if current is not None and current[1] == 0 and layer not in saved_weights and os.environ.get('MOSS_CAPTURE_ALL_WEIGHTS') == '1':
+        torch.save(cpu(self.state_dict()), directory / f'weights-{layer}.pt')
+        saved_weights.add(layer)
     if current is not None and current[1] in (0, 12, 24) and layer in (0, 20, 41):
         if layer not in saved_weights:
             torch.save(cpu(self.state_dict()), directory / f'weights-{layer}.pt')

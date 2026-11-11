@@ -1,6 +1,6 @@
 # Gaudi2 HPU 适配交接入口
 
-更新时间：2026-11-11（Asia/Shanghai）。本文件只保留当前状态和交接要点；验证细节见 `PROGRESS.md`，最新结果见 [BF16 深挖执行记录](MOSS_BF16_DEEP_EXECUTION_2026-11-11.md)。
+更新时间：2026-11-11（Asia/Shanghai）。本文件只保留当前状态和交接要点；验证细节见 `PROGRESS.md`，最新结果见 [BF16计划执行与收敛审计](MOSS_BF16_PLAN_COMPLETION_2026-11-11.md)。
 
 **文档归属：**所有过程、失败/成功证据和个人环境信息只保存在本调查仓库，不进入 `/home/sonny/ComfyUI` 或 `ComfyUI-Gaudi` 产品仓库。
 
@@ -22,12 +22,13 @@
 
 ## 当前性能结论
 
-- **2026-11-11 BF16 深挖，产品 `1412e1f7`**：恢复并提交服务器遗漏的native norm/RoPE改动（`b25001dc`），新增GDN prefill分桶编译（`d49bdd14`），再以逐次系数验证启用BLOCKWISE RoPE。严格固定caption，DiT **16.893→14.364 s**、缓存整图 **17.146→14.617 s**；完整自然扩写图5 warm **27.807→22.231 s**，输出298→296 tokens，不是严格同轨迹提速。固定298-token teacher/MTP off **13.988→12.048 s**，top-1 295/298。仍未达到缓存≤14 s、完整≤20 s，不能宣称BF16已经收敛。六组图片未见系统性质量退化，但RoPE新路径会改变同seed细节/部分构图；新增编译增加cold成本。60项MOSS、最终5项prefill专项及原INT8/形状切换/卸载重载通过，详见 [本轮证据与失败候选](MOSS_BF16_DEEP_EXECUTION_2026-11-11.md)。
+- **BF16计划P0–P6已执行，产品 `64155fe4`**。新增Qwen35 norm区域编译。固定298-token完整MTP，独立文本 **7.481→5.670 s**，完整工作流 **22.461→21.060 s**。固定caption缓存整图 **14.653 s**，DiT **14.400 s**。自然扩写完整图 **21.984 s**，输出由296增至352 tokens。当前距缓存14 s、固定轨迹完整20 s目标分别约0.653/1.060 s。六组质量、尺寸切换、卸载重载、原INT8通过，125项文本回归通过、1项CUDA跳过。相同seed的文本和图像细节存在变化。现有算子范围已完成收敛审计，预算、更大区域、native norm、lazy/Graph和全部失败证据见 [最终执行报告](MOSS_BF16_PLAN_COMPLETION_2026-11-11.md)。
+- **前轮2026-11-11 BF16 深挖，产品 `1412e1f7`**：恢复并提交服务器遗漏的native norm/RoPE改动（`b25001dc`），新增GDN prefill分桶编译（`d49bdd14`），再以逐次系数验证启用BLOCKWISE RoPE。严格固定caption，DiT **16.893→14.364 s**、缓存整图 **17.146→14.617 s**；完整自然扩写图5 warm **27.807→22.231 s**，输出298→296 tokens，不是严格同轨迹提速。固定298-token teacher/MTP off **13.988→12.048 s**，top-1 295/298。仍未达到缓存≤14 s、完整≤20 s，不能宣称BF16已经收敛。六组图片未见系统性质量退化，但RoPE新路径会改变同seed细节/部分构图；新增编译增加cold成本。60项MOSS、最终5项prefill专项及原INT8/形状切换/卸载重载通过，详见 [本轮证据与失败候选](MOSS_BF16_DEEP_EXECUTION_2026-11-11.md)。
 - **MOSS dtype更正**：BF16权重不等于所有文本计算均为BF16。实际扩写为BF16，普通正负编码继承FP32 embedding/激活；本轮保留原精度，仅编译同一GDN算法，编码 **1.804→0.364 s**。旧记录中的“文本BF16”不能理解为逐算子dtype审计。
 - **JChen 当前版本复核（2026-11-10）**：`6da6fb16` 比旧快照多 2 个提交，新增直接 MME/TPC BF16/FP16 attention 实验；另确认仓库已有真实 TPC FP8 MAC 稀疏 attention、norm/quant 融合和 GDN，不能只概括为 FP8 Linear 封装。通用 INT8 GEMM 结论不变。详见 [专项源码与适用性复核](JCHEN_GAUDI2_KERNEL_REVIEW_2026-11-10.md)，作者速度不作为本机成绩；无产品改动。
 - **INT8 / FP8 kernel 调查（2026-11-10）**：官方 FP8 GEMM/cast/SDPA 有现成路径；未找到可直接替代 `_int_mm` 的 Gaudi2 原生 INT8 GEMM。源码核实 vLLM INT8→BF16、bitsandbytes 浮点默认实现，以及 1Cat 的真正 TPC/Triton FP8 量化与权重解码 kernel；见 [支持矩阵与固定版本源码](GAUDI2_INT8_FP8_KERNEL_SURVEY_2026-11-10.md)。本轮只读调查，无新 HPU 测试或产品改动。
-- **BF16 主线继续**：已获得GDN prefill和RoPE的实测收益；下一步对最终版本重新归因，重点是DiT attention/布局与固定MTP验证树的decode/状态/提交。保留缓存整图≤14 s、完整重算≤20 s的第一门槛，暂不转量化或自写kernel。路线、验收和收敛条件见 [BF16 深挖计划](MOSS_BF16_DEEP_OPTIMIZATION_PLAN_2026-11-10.md)。
-- **BF16 硬件下界 / 5090 对标**：当前真实正负条件 307/23 tokens，DiT 必需矩阵约 2.496 PFLOP，按 432 TFLOP/s 的乐观矩阵下界 **5.78 s**；当前 18.384 s 对应约 31.43% 的有效矩阵峰值比例，不等于 AIP。公开 RTX 5090、1024²/25 步缓存出图报告为 BF16 **14.7 s**、INT8 DiT **5.8–7 s**；当前我方缓存验证 18.764 s 尚未达标。先以 BF16 缓存整图 ≤14 s、完整重算 ≤20 s 为工程门槛，后续挑战 10–12 s；6–7 s 的量化体验目标可能需要原生 FP8。详见 [硬件估算与一手来源](MOSS_HARDWARE_LIMIT_AND_5090_2026-11-10.md)，不是新 HPU 测量或严格跨卡 A/B。
+- **BF16当前收敛范围**。42层真实权重轮换的Linear达到374–404 TF/s，主干Linear活动区间与独立回放接近。主要剩余设备费用来自attention，DiT空隙约5%。双层合并、逐请求Graph和剩余文本扩区均没有值得采用的净收益。后续运行时或算子改进可复用已保存的固定MTP程序、真实输入及质量集合。原目标和验收合同见 [BF16计划](MOSS_BF16_DEEP_OPTIMIZATION_PLAN_2026-11-10.md)。
+- **BF16 硬件下界 / 5090 对标**：当前真实正负条件 307/23 tokens，DiT 必需矩阵约 2.496 PFLOP，按 432 TFLOP/s 的乐观矩阵下界 **5.78 s**；计划起点18.384 s 对应约 31.43% 的有效矩阵峰值比例，不等于 AIP。公开 RTX 5090、1024²/25 步缓存出图报告为 BF16 **14.7 s**、INT8 DiT **5.8–7 s**；我方计划起点缓存验证18.764 s，当前固定caption五次中位数14.653 s。先以 BF16 缓存整图 ≤14 s、完整重算 ≤20 s 为工程门槛，后续挑战 10–12 s；6–7 s 的量化体验目标可能需要原生 FP8。详见 [硬件估算与一手来源](MOSS_HARDWARE_LIMIT_AND_5090_2026-11-10.md)，不是新 HPU 测量或严格跨卡 A/B。
 - **2026-11-10 DiT 产品 `b1163be0`**：静态条件特征和 FP32 RoPE 在本次采样的 conditioning 内预计算，调用次数 **50→2**；固定 caption、各 5 warm，DiT **19.581→18.384 s（-6.11%）**，活动率 **56.79%→60.97%**。图片误差与基线重复波动相当。完整 seed=1 用户图 **30.786→29.673 s**，五次 298-token ID 与前轮一致。CFG 合批、fast softmax 等候选未合入；见 [本轮 DiT 优化记录](MOSS_DIT_PRECOMPUTE_2026-11-10.md)。
 - **2026-11-10 节点测量（UI 文本 seed=1）**：各五次 warm，完整重算 **30.786 s**、文本缓存 **19.900 s**；完整代表请求扩写 9.093、正负编码 1.817、DiT/采样 19.611、VAE/图片输出 0.246 s。单独诊断中，DiT 42 层主干约占采样节点 89.6%，RoPE/text_embedder 重复 50 次合计 1.34 s。下一步优先 DiT 的执行内条件预计算及主干归因；详见 [pipeline 节点统计](MOSS_PIPELINE_TIMING_2026-11-10.md)。本轮只测量，日常服务与原工作流缓存已恢复。
 - 当前部署包含 **`441d459d`** 的 SIGPIPE/Synapse fatal 修复。此前代码本来已同步；`Host malloc failed` 是运行时失效后的连带报错。恢复 Python SIGPIPE 策略后，8 次中断下载、显式信号注入和用户原 1024² pending 图重放通过；详见 [故障恢复记录](HPU_SIGPIPE_RECOVERY_2026-11-10.md)。

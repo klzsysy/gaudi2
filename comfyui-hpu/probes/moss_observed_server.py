@@ -18,6 +18,9 @@ import comfy.utils
 import torch
 import habana_frameworks.torch.utils.debug as debug
 
+if os.environ.get('MOSS_MTP_FIXED') == '1':
+    import moss_mtp_program
+
 if os.environ.get("MOSS_KV_MODE"):
     from moss_kv_candidate import install
     install(os.environ["MOSS_KV_MODE"])
@@ -38,6 +41,11 @@ diagnostic = False
 recompute = True
 recompute_types = {"TextGenerate", "CLIPTextEncode", "KSampler", "VAEDecode"}
 detail = False
+if os.environ.get('MOSS_NORM_EAGER') == '1':
+    from comfy.text_encoders import qwen35
+    qwen35.RMSNorm.forward = qwen35.LlamaRMSNorm.forward
+if os.environ.get('MOSS_NORM_AB') == '1':
+    import moss_norm_ab
 if os.environ.get('MOSS_PREFILL_AB') == '1':
     from comfy.text_encoders import hpu_gated_delta
     prefill_compiler = hpu_gated_delta.compiled_prefill
@@ -67,7 +75,7 @@ execution.IsChangedCache.get = get_changed
 
 execute = execution.PromptExecutor.execute_async
 async def execute_request(self, prompt, prompt_id, *args, **kwargs):
-    global diagnostic, recompute, detail, prefill_baseline, recompute_types, rope_baseline
+    global diagnostic, recompute, detail, prefill_baseline, recompute_types, rope_baseline, norm_baseline
     extra = args[0] if args else kwargs.get("extra_data", {})
     diagnostic = extra.get("moss_diagnostic", False)
     recompute = extra.get("moss_recompute", True)
@@ -75,6 +83,10 @@ async def execute_request(self, prompt, prompt_id, *args, **kwargs):
     detail = extra.get("moss_breakdown", False)
     prefill_baseline = extra.get('moss_prefill_baseline', False)
     rope_baseline = extra.get('moss_rope_baseline', False)
+    norm_baseline = extra.get('moss_norm_baseline', False)
+    if os.environ.get('MOSS_NORM_AB') == '1' and 'moss_norm_baseline' in extra:
+        moss_norm_ab.baseline = norm_baseline
+        moss_norm_ab.install()
     token = current.set({"prompt_id": prompt_id})
     event("request_start", diagnostic_sync=diagnostic,
           recomputed_classes=sorted(recompute_types) if recompute else [],
@@ -121,7 +133,8 @@ execution.get_output_data = get_output
 generate = comfy.sd.CLIP.generate
 def generate_text(self, tokens, *args, **kwargs):
     event("generate_start", token_shapes={k: len(v[0]) if v and isinstance(v[0], list) else len(v) for k,v in tokens.items()},
-          parameters=kwargs)
+          parameters=kwargs, cpu_threads=torch.get_num_threads(), interop_threads=torch.get_num_interop_threads(),
+          inference_mode=torch.is_inference_mode_enabled(), grad_enabled=torch.is_grad_enabled())
     ids = generate(self, tokens, *args, **kwargs)
     event("generate_end", token_ids=ids, output_tokens=len(ids), text=self.decode(ids))
     return ids

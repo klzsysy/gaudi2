@@ -75,7 +75,7 @@ with (directory / 'server.log').open('w') as log, (directory / 'hpu.csv').open('
         telemetry = subprocess.Popen(['hl-smi', '--query-aip=timestamp,utilization.aip,utilization.memory,memory.used,power.draw,temperature.aip,clocks.current.soc,clocks.limit.soc,clocks.limit.tpc', '--format=csv,nounits', '-l', '100ms'], stdout=telemetry_log)
         for index in range(6):
             run('full-cold' if index == 0 else f'full-warm-{index}', source, True)
-        for index in range(6):
+        for index in range(int(os.environ.get('MOSS_PIPELINE_CACHE_RUNS', '6'))):
             graph = copy.deepcopy(source)
             graph['18:7']['inputs']['seed'] = (source['18:7']['inputs']['seed'] + index + 1) % (2**64)
             run('cached-transition' if index == 0 else f'cached-warm-{index}', graph, False)
@@ -91,4 +91,8 @@ with (directory / 'server.log').open('w') as log, (directory / 'hpu.csv').open('
             telemetry.terminate()
             telemetry.wait(timeout=10)
         server.terminate()
-        server.wait(timeout=60)
+        try:
+            server.wait(timeout=60)
+        except subprocess.TimeoutExpired:
+            server.kill()
+            server.wait(timeout=60)

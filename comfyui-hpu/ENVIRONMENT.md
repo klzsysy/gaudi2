@@ -62,7 +62,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为 `1412e1f7`，监听 `http://192.168.10.21:8189`；根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+当前部署提交为 `64155fe4`，监听 `http://192.168.10.21:8189`；根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
 
 应用入口在 HPU 初始化后恢复 Python 的 SIGPIPE 忽略策略，避免浏览器取消文件下载使 Synapse 进入 fatal 状态。遇到 `synStatus 31` 时先检查最早的 DFA 原因，不能仅凭后续 `Host malloc failed` 判定主机内存不足。详见 `HPU_SIGPIPE_RECOVERY_2026-11-10.md`。
 
@@ -116,3 +116,9 @@ shared_models:
 ```
 
 已验证的 MOSS 基础工作流为 25 步 `er_sde/simple`、cfg2.5；基础图关闭 prompt enhancer、SLG 和编辑 LoRA。官方 TextGenerate 扩写图也已验证，但自回归仍明显慢于直接文本编码。编辑/控制 LoRA、SLG、完整批量/多卡、lazy/通用全模型编译/HPU Graph、超大分辨率和其它 custom nodes 未验证。
+
+## BF16计划完成后的复现状态
+
+`64155fe4`为Qwen35的HPU BF16/FP32 norm增加局部编译，继续调用原ComfyUI RMSNorm。完整固定298-token MTP工作流21.060s，固定caption缓存出图14.653s。编译冷启动、自然文本变化及质量范围见 [执行报告](MOSS_BF16_PLAN_COMPLETION_2026-11-11.md)。
+
+本轮独立流程默认PyTorch CPU线程数32，改为16后完整固定轨迹21.168s，未带来改善。服务使用既有启动脚本。隔离lazy/Graph测试的逐请求成本高于eager，且本安装栈lazy+`hpu_backend`出现`GraphStorage::get()`符号缺失。原始证据保存在`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-11-completion`。

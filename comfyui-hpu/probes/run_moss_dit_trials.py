@@ -99,7 +99,10 @@ for mode in os.environ.get('MOSS_DIT_CASES', 'original').split(','):
             server.terminate()
             server.wait(timeout=60)
     if len(records) > 1:
-        summary = {'request_median': statistics.median(r['seconds'] for r in records[1:]),
-                   'dit_median': statistics.median(r['stages']['18:7']['seconds'] for r in records[1:])}
+        default_end = int(os.environ.get('MOSS_BF16_PROFILE_REQUEST', '6')) if os.environ.get('MOSS_BF16_CAPTURE') else len(records)
+        warm = records[1:int(os.environ.get('MOSS_DIT_TIMED_RUNS', default_end))]
+        summary = {'request_median': statistics.median(r['seconds'] for r in warm),
+                   'dit_median': statistics.median(r['stages']['18:7']['seconds'] for r in warm),
+                   'measured_indices': [r['index'] for r in warm]}
         (target / 'summary.json').write_text(json.dumps(summary, indent=2))
         print(mode, summary, flush=True)

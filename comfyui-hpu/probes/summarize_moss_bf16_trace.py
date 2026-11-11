@@ -7,6 +7,11 @@ import sys
 
 def group(event):
     name = event['name']
+    path = event.get('args', {}).get('EventName', '')
+    if name in ('GEMM', 'gemm', 'BatchGemm', 'batch_gemm') and path.startswith('bmm_1/'):
+        return 'av_mme'
+    if name in ('GEMM', 'gemm', 'BatchGemm', 'batch_gemm') and path.startswith('bmm/'):
+        return 'qk_mme'
     if name in ('GEMM', 'gemm'):
         return 'linear_mme'
     if name in ('BatchGemm', 'batch_gemm'):
@@ -19,6 +24,24 @@ def group(event):
 def summarize(source):
     events = json.loads(source.read_text())['traceEvents']
     kernels = [e for e in events if e.get('cat') == 'kernel' and e.get('ph') == 'X' and e.get('dur', 0) > 0]
+    recipes = collections.defaultdict(list)
+    for e in kernels:
+        recipes[str(e.get('args', {}).get('recipeId'))].append(e.get('args', {}).get('EventName', ''))
+    regions = {key: 'attention_region' if any('proj/qkv/' in name for name in names)
+               else 'ffn_region' if any('ffn_up_gate/' in name for name in names)
+               else 'unresolved_outer_ops' for key, names in recipes.items()}
+    region_edges = []
+    for e in kernels:
+        category = regions[str(e.get('args', {}).get('recipeId'))]
+        region_edges.extend(((e['ts'], category, 1), (e['ts'] + e['dur'], category, -1)))
+    region_active, region_time = collections.Counter(), collections.Counter()
+    region_edges.sort()
+    previous = region_edges[0][0]
+    for stamp, category, delta in region_edges:
+        label = '+'.join(sorted(k for k, count in region_active.items() if count > 0)) or 'idle'
+        region_time[label] += stamp - previous
+        region_active[category] += delta
+        previous = stamp
     edges = []
     for e in kernels:
         category = group(e)
@@ -40,6 +63,7 @@ def summarize(source):
             'device_active_union_ms': (total-exclusive['idle']) / 1000,
             'matrix_union_ms': matrix_union / 1000,
             'disjoint_ms': {k: v/1000 for k, v in sorted(exclusive.items())},
+            'region_disjoint_ms': {k: v/1000 for k, v in sorted(region_time.items())},
             'runtime_counts': dict(runtime),
             'warning': 'Short profiler trace; extrapolation is a budget, not unprofiled phase timing.'}
 
