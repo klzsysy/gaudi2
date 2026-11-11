@@ -85,3 +85,11 @@
 - 同工作量allocator峰值39.3754GiB，卸载2,685,928,832 bytes，多形状/INT8验收为2,686,190,976 bytes。六份部署文件哈希一致，上一轮8189恢复cold66.725s、缓存14.751s、检查队列为空。[部署证据](evidence/moss-bf16-next-2026-11-11.json)
 - 下一阶段建议验证DiT原生FP8 Linear的真实shape、量化总成本和多timestep质量。BF16已有大Linear接近同shape可用速度，attention数据流和文本提交保留按证据启动的研究机会。详细决策见复盘。
 - 官方/外部实现依据分别见 [INT8/FP8调查](GAUDI2_INT8_FP8_KERNEL_SURVEY_2026-11-10.md)、[JChen核查](JCHEN_GAUDI2_KERNEL_REVIEW_2026-11-10.md) 和 [硬件下界/5090](MOSS_HARDWARE_LIMIT_AND_5090_2026-11-10.md)。
+
+## Moody MOSS原生FP8主模型
+
+- 处理用户导入的`Moody-Moss-Mix-V4.1_00001__clean-fp8.safetensors`。修复去模型前缀后重复注入量化元数据的警告，通过既有MixedPrecision Linear接入Gaudi E4M3量化/GEMM。加载时适配448→224范围，权重生命周期沿用现有加载、patch和卸载。
+- 同文件常驻BF16参考/原生FP8固定caption缓存端到端13.993→12.810s，DiT13.749→12.565s，各5 warm中位数。完整自然扩写warm中位数20.666s，首次诊断70.292s。原用户请求222.10s，稳定DiT约7.89s/step。
+- 三组图像、512/768/1024及卸载重载通过，fallback为空，显存峰值39.510→34.842GiB，卸载均回到2,685,928,832 bytes。文本实际使用现有BF16文件，遵循优先优化主模型的范围。精度与测试边界见 [FP8报告](MOSS_FP8_ADAPTATION_2026-11-11.md)。
+
+产品`2227f7d3`已部署8189，正常入口cold70.970s/缓存13.600s，文件哈希一致、队列为空。核心回归240 passed，最后量化补充29 passed（有重叠），加载重复metadata warning消失。

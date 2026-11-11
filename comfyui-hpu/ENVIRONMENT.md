@@ -62,7 +62,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为 `a8f42df2`，监听 `http://192.168.10.21:8189`。根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+当前部署提交为 `2227f7d3`，监听 `http://192.168.10.21:8189`。根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
 
 应用入口在 HPU 初始化后恢复 Python 的 SIGPIPE 忽略策略，避免浏览器取消文件下载使 Synapse 进入 fatal 状态。遇到 `synStatus 31` 时先检查最早的 DFA 原因，不能仅凭后续 `Host malloc failed` 判定主机内存不足。详见 `HPU_SIGPIPE_RECOVERY_2026-11-10.md`。
 
@@ -120,3 +120,7 @@ shared_models:
 最新大型数据位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-11-bf16-next`。固定MTP程序位于前轮`performance-2026-11-11-completion/mtp-record-298/program.pt`。该轮六段DiT预算也在`performance-2026-11-11-completion`。
 
 服务使用既有启动脚本和默认32个PyTorch CPU线程，改16线程的完整流程复验无收益。当前lazy/Graph单独试验成本高于eager，lazy＋`hpu_backend`出现`GraphStorage::get()`符号缺失，诊断见预算报告。
+
+## FP8主模型
+
+`Moody-Moss-Mix-V4.1_00001__clean-fp8.safetensors`通过普通UNETLoader/default加载，HPU MixedPrecision Linear自动使用原生E4M3量化/GEMM。FP8安全范围重编码由加载器持有，原模型文件保持原始编码。BF16/FP32激活使用原生入口，FP16/梯度/动态patch沿用浮点路径。文本配置沿用现有`qwen3.5_9b_bf16_from_int8.safetensors`。性能和质量范围见 [FP8适配](MOSS_FP8_ADAPTATION_2026-11-11.md)。

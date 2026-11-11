@@ -1,0 +1,1094 @@
+{
+  "date": "2026-11-11",
+  "product_commit": "2227f7d38b2cbd8cacb3a655d452721466d5dc45",
+  "model": "Moody-Moss-Mix-V4.1_00001__clean-fp8.safetensors",
+  "text_encoder": "qwen3.5_9b_bf16_from_int8.safetensors",
+  "text_compute_dtype": "bfloat16",
+  "raw_root": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-11-fp8",
+  "runs": {
+    "native-first": {
+      "cold_diagnostic": 70.292061523,
+      "warm_seconds": [
+        20.666484672,
+        21.984384191,
+        20.593152223
+      ],
+      "warm_median": 20.666484672,
+      "dit_median": 13.896690729,
+      "requests": {
+        "72db8f80-b38f-4eb3-99dc-db3c74fd4c09": {
+          "seconds": 70.292061523,
+          "stages": {
+            "VAELoader": 0.206834947,
+            "ResolutionSelector": 0.000177875,
+            "EmptyFlux2LatentImage": 0.002348418,
+            "CLIPLoader": 6.089441318,
+            "CLIPTextEncode": 9.32074835,
+            "StringMultiline": 0.000271025,
+            "TextGenerate": 20.177844324,
+            "SwitchNode": 0.000295611,
+            "PreviewAny": 7.5933e-05,
+            "UNETLoader": 6.981744135,
+            "KSampler": 27.17554152,
+            "VAEDecode": 0.196778229,
+            "PreviewImage": 0.113230654
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27268234368,
+            "MaxInUse": 36293328000,
+            "NumAllocs": 116441,
+            "NumFrees": 114655,
+            "ActiveAllocs": 1786,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 116442,
+            "TotalSystemFrees": 114655,
+            "TotalActiveAllocs": 1787
+          },
+          "checks": [
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794404824019626700,
+              "mono_ns": 86516428165523,
+              "prompt_id": "72db8f80-b38f-4eb3-99dc-db3c74fd4c09",
+              "node": "18:7",
+              "class_type": "KSampler",
+              "shape": [
+                1,
+                128,
+                64,
+                64
+              ],
+              "finite": true,
+              "minimum": -7.096160888671875,
+              "maximum": 6.897886753082275,
+              "std": 0.9889432787895203
+            },
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794404824217545093,
+              "mono_ns": 86516626084267,
+              "prompt_id": "72db8f80-b38f-4eb3-99dc-db3c74fd4c09",
+              "node": "18:8",
+              "class_type": "VAEDecode",
+              "shape": [
+                1,
+                1024,
+                1024,
+                3
+              ],
+              "finite": true,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "std": 0.2951374053955078
+            }
+          ],
+          "generated_tokens": [
+            396
+          ]
+        },
+        "3663a87f-a133-4c2f-8abd-0f0967edd303": {
+          "seconds": 20.666484672,
+          "stages": {
+            "TextGenerate": 6.75902504,
+            "SwitchNode": 0.000116414,
+            "PreviewAny": 7.349e-05,
+            "CLIPTextEncode": 0.332923321,
+            "KSampler": 13.318845798,
+            "VAEDecode": 0.132119739,
+            "PreviewImage": 0.108467738
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27242927232,
+            "MaxInUse": 37262070912,
+            "NumAllocs": 230681,
+            "NumFrees": 228898,
+            "ActiveAllocs": 1783,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 230682,
+            "TotalSystemFrees": 228898,
+            "TotalActiveAllocs": 1784
+          },
+          "checks": [],
+          "generated_tokens": [
+            396
+          ]
+        },
+        "5606804e-1706-4982-9bef-9568c30f2759": {
+          "seconds": 21.984384191,
+          "stages": {
+            "TextGenerate": 7.215258669,
+            "SwitchNode": 0.00011423,
+            "PreviewAny": 9.8467e-05,
+            "CLIPTextEncode": 0.592355937,
+            "KSampler": 13.917444402,
+            "VAEDecode": 0.131967126,
+            "PreviewImage": 0.111641632
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27242927232,
+            "MaxInUse": 37341762688,
+            "NumAllocs": 349843,
+            "NumFrees": 347983,
+            "ActiveAllocs": 1860,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 349844,
+            "TotalSystemFrees": 347983,
+            "TotalActiveAllocs": 1861
+          },
+          "checks": [],
+          "generated_tokens": [
+            406
+          ]
+        },
+        "05d4c101-299a-4a5f-b4d0-12efb9b6aa0a": {
+          "seconds": 20.593152223,
+          "stages": {
+            "TextGenerate": 5.863433271,
+            "SwitchNode": 0.00011392,
+            "PreviewAny": 6.1712e-05,
+            "CLIPTextEncode": 0.572003015,
+            "KSampler": 13.896690729,
+            "VAEDecode": 0.132735558,
+            "PreviewImage": 0.111210857
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27242927232,
+            "MaxInUse": 37341762688,
+            "NumAllocs": 459035,
+            "NumFrees": 457150,
+            "ActiveAllocs": 1885,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 459036,
+            "TotalSystemFrees": 457150,
+            "TotalActiveAllocs": 1886
+          },
+          "checks": [],
+          "generated_tokens": [
+            371
+          ]
+        }
+      }
+    },
+    "fixed-reference": {
+      "cold_diagnostic": 42.420165532,
+      "warm_seconds": [
+        14.207151978,
+        13.982574076,
+        13.985035059,
+        13.999915322,
+        13.993205651
+      ],
+      "warm_median": 13.993205651,
+      "dit_median": 13.749102815,
+      "requests": {
+        "637665f0-7a10-4ccd-9c8c-fc4717bddb9d": {
+          "seconds": 42.420165532,
+          "stages": {
+            "VAELoader": 0.208142154,
+            "StringMultiline": 0.000170444,
+            "SwitchNode": 0.000282422,
+            "PreviewAny": 7.0114e-05,
+            "ResolutionSelector": 0.000136805,
+            "EmptyFlux2LatentImage": 0.002583584,
+            "CLIPLoader": 6.17755186,
+            "CLIPTextEncode": 5.450793332,
+            "UNETLoader": 2.380878814,
+            "KSampler": 27.875835417,
+            "VAEDecode": 0.191021144,
+            "PreviewImage": 0.110223265
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 32324850816,
+            "MaxInUse": 41672905856,
+            "NumAllocs": 50724,
+            "NumFrees": 49289,
+            "ActiveAllocs": 1435,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 50725,
+            "TotalSystemFrees": 49289,
+            "TotalActiveAllocs": 1436
+          },
+          "checks": [
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405074706941365,
+              "mono_ns": 86767115480329,
+              "prompt_id": "637665f0-7a10-4ccd-9c8c-fc4717bddb9d",
+              "node": "18:7",
+              "class_type": "KSampler",
+              "shape": [
+                1,
+                128,
+                64,
+                64
+              ],
+              "finite": true,
+              "minimum": -5.489468574523926,
+              "maximum": 5.248266696929932,
+              "std": 0.9300446510314941
+            },
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405074899087592,
+              "mono_ns": 86767307626366,
+              "prompt_id": "637665f0-7a10-4ccd-9c8c-fc4717bddb9d",
+              "node": "18:8",
+              "class_type": "VAEDecode",
+              "shape": [
+                1,
+                1024,
+                1024,
+                3
+              ],
+              "finite": true,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "std": 0.3066833019256592
+            }
+          ],
+          "generated_tokens": []
+        },
+        "b283ef4d-5a93-421c-b400-244825291fc4": {
+          "seconds": 14.207151978,
+          "stages": {
+            "KSampler": 13.96099461,
+            "VAEDecode": 0.133856818,
+            "PreviewImage": 0.103516652
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 32324850816,
+            "MaxInUse": 41941341312,
+            "NumAllocs": 97117,
+            "NumFrees": 95684,
+            "ActiveAllocs": 1433,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 97118,
+            "TotalSystemFrees": 95684,
+            "TotalActiveAllocs": 1434
+          },
+          "checks": [],
+          "generated_tokens": []
+        },
+        "dc78cdad-c49a-4b78-8837-e0e9e4859279": {
+          "seconds": 13.982574076,
+          "stages": {
+            "KSampler": 13.738137733,
+            "VAEDecode": 0.132486117,
+            "PreviewImage": 0.10276853
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 32324850816,
+            "MaxInUse": 42077656192,
+            "NumAllocs": 143510,
+            "NumFrees": 142077,
+            "ActiveAllocs": 1433,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 143511,
+            "TotalSystemFrees": 142077,
+            "TotalActiveAllocs": 1434
+          },
+          "checks": [],
+          "generated_tokens": []
+        },
+        "75c9f46f-0e9b-4e0e-8f4b-b35a55933771": {
+          "seconds": 13.985035059,
+          "stages": {
+            "KSampler": 13.740764276,
+            "VAEDecode": 0.132479197,
+            "PreviewImage": 0.102768367
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 32324850816,
+            "MaxInUse": 42077656192,
+            "NumAllocs": 189903,
+            "NumFrees": 188470,
+            "ActiveAllocs": 1433,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 189904,
+            "TotalSystemFrees": 188470,
+            "TotalActiveAllocs": 1434
+          },
+          "checks": [],
+          "generated_tokens": []
+        },
+        "acaeacbc-aa27-47ea-b91d-8b36910d7da7": {
+          "seconds": 13.999915322,
+          "stages": {
+            "KSampler": 13.756463768,
+            "VAEDecode": 0.13270308,
+            "PreviewImage": 0.102079334
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 32324850816,
+            "MaxInUse": 42077656192,
+            "NumAllocs": 236296,
+            "NumFrees": 234863,
+            "ActiveAllocs": 1433,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 236297,
+            "TotalSystemFrees": 234863,
+            "TotalActiveAllocs": 1434
+          },
+          "checks": [],
+          "generated_tokens": []
+        },
+        "a66244eb-9277-4b1c-a32f-35bfff97c7b5": {
+          "seconds": 13.993205651,
+          "stages": {
+            "KSampler": 13.749102815,
+            "VAEDecode": 0.132955818,
+            "PreviewImage": 0.102307332
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 32324850816,
+            "MaxInUse": 42077656192,
+            "NumAllocs": 282689,
+            "NumFrees": 281256,
+            "ActiveAllocs": 1433,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 282690,
+            "TotalSystemFrees": 281256,
+            "TotalActiveAllocs": 1434
+          },
+          "checks": [],
+          "generated_tokens": []
+        },
+        "7ca9c872-4df0-4846-934c-ec2d5a05d6c6": {
+          "seconds": 9.916808874,
+          "stages": {
+            "StringMultiline": 0.000163725,
+            "SwitchNode": 0.00012091,
+            "PreviewAny": 7.2388e-05,
+            "ResolutionSelector": 0.000135983,
+            "EmptyFlux2LatentImage": 0.00029432,
+            "CLIPTextEncode": 0.731499361,
+            "KSampler": 9.030641111,
+            "VAEDecode": 0.080165016,
+            "PreviewImage": 0.057924369
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 32324850816,
+            "MaxInUse": 42077656192,
+            "NumAllocs": 331933,
+            "NumFrees": 330497,
+            "ActiveAllocs": 1436,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 331934,
+            "TotalSystemFrees": 330497,
+            "TotalActiveAllocs": 1437
+          },
+          "checks": [
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405157743694899,
+              "mono_ns": 86850152233343,
+              "prompt_id": "7ca9c872-4df0-4846-934c-ec2d5a05d6c6",
+              "node": "18:7",
+              "class_type": "KSampler",
+              "shape": [
+                1,
+                128,
+                48,
+                48
+              ],
+              "finite": true,
+              "minimum": -5.66485071182251,
+              "maximum": 4.739728927612305,
+              "std": 0.8864296674728394
+            },
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405157825583455,
+              "mono_ns": 86850234122479,
+              "prompt_id": "7ca9c872-4df0-4846-934c-ec2d5a05d6c6",
+              "node": "18:8",
+              "class_type": "VAEDecode",
+              "shape": [
+                1,
+                768,
+                768,
+                3
+              ],
+              "finite": true,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "std": 0.21357007324695587
+            }
+          ],
+          "generated_tokens": []
+        },
+        "59f9967d-a230-47b5-b5ee-aecebc4019c6": {
+          "seconds": 15.342947729,
+          "stages": {
+            "StringMultiline": 0.000168492,
+            "SwitchNode": 0.000110916,
+            "PreviewAny": 6.9995e-05,
+            "ResolutionSelector": 0.000131537,
+            "EmptyFlux2LatentImage": 0.000297015,
+            "CLIPTextEncode": 0.633859792,
+            "KSampler": 14.44853681,
+            "VAEDecode": 0.133541761,
+            "PreviewImage": 0.111729833
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 32324850816,
+            "MaxInUse": 42423686272,
+            "NumAllocs": 381176,
+            "NumFrees": 379742,
+            "ActiveAllocs": 1434,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 381177,
+            "TotalSystemFrees": 379742,
+            "TotalActiveAllocs": 1435
+          },
+          "checks": [
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405173440080442,
+              "mono_ns": 86865848619205,
+              "prompt_id": "59f9967d-a230-47b5-b5ee-aecebc4019c6",
+              "node": "18:7",
+              "class_type": "KSampler",
+              "shape": [
+                1,
+                128,
+                64,
+                64
+              ],
+              "finite": true,
+              "minimum": -5.673367023468018,
+              "maximum": 5.931857109069824,
+              "std": 0.9542807936668396
+            },
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405173575275727,
+              "mono_ns": 86865983814821,
+              "prompt_id": "59f9967d-a230-47b5-b5ee-aecebc4019c6",
+              "node": "18:8",
+              "class_type": "VAEDecode",
+              "shape": [
+                1,
+                1024,
+                1024,
+                3
+              ],
+              "finite": true,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "std": 0.3027319312095642
+            }
+          ],
+          "generated_tokens": []
+        },
+        "00f6ebc9-e4b1-4d45-b965-5fb8c37565f0": {
+          "seconds": 15.284403804,
+          "stages": {
+            "VAELoader": 0.053583655,
+            "StringMultiline": 0.000184957,
+            "SwitchNode": 0.00025404,
+            "PreviewAny": 7.4312e-05,
+            "ResolutionSelector": 0.000134041,
+            "EmptyFlux2LatentImage": 0.00027384,
+            "CLIPLoader": 5.206084683,
+            "CLIPTextEncode": 0.612368869,
+            "UNETLoader": 2.046734845,
+            "KSampler": 7.226206128,
+            "VAEDecode": 0.089611042,
+            "PreviewImage": 0.028839799
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 32324850816,
+            "MaxInUse": 42423686272,
+            "NumAllocs": 431875,
+            "NumFrees": 430438,
+            "ActiveAllocs": 1437,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 431876,
+            "TotalSystemFrees": 430438,
+            "TotalActiveAllocs": 1438
+          },
+          "checks": [
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405212858193603,
+              "mono_ns": 86905266732066,
+              "prompt_id": "00f6ebc9-e4b1-4d45-b965-5fb8c37565f0",
+              "node": "18:7",
+              "class_type": "KSampler",
+              "shape": [
+                1,
+                128,
+                32,
+                32
+              ],
+              "finite": true,
+              "minimum": -4.455198287963867,
+              "maximum": 5.500164985656738,
+              "std": 0.974605917930603
+            },
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405212948738882,
+              "mono_ns": 86905357277495,
+              "prompt_id": "00f6ebc9-e4b1-4d45-b965-5fb8c37565f0",
+              "node": "18:8",
+              "class_type": "VAEDecode",
+              "shape": [
+                1,
+                512,
+                512,
+                3
+              ],
+              "finite": true,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "std": 0.26722252368927
+            }
+          ],
+          "generated_tokens": []
+        }
+      },
+      "unload": {
+        "seconds": 23.50026654099929,
+        "used": 2685928832
+      }
+    },
+    "fixed-native": {
+      "cold_diagnostic": 46.084303294,
+      "warm_seconds": [
+        13.027450546,
+        12.800436024,
+        12.809962819,
+        12.807549195,
+        12.821626803
+      ],
+      "warm_median": 12.809962819,
+      "dit_median": 12.565089052,
+      "requests": {
+        "41707137-1bfe-4bd3-9ec2-decd5a5e9a94": {
+          "seconds": 46.084303294,
+          "stages": {
+            "VAELoader": 0.218275912,
+            "StringMultiline": 0.000164727,
+            "SwitchNode": 0.000267039,
+            "PreviewAny": 6.9033e-05,
+            "ResolutionSelector": 0.00013352,
+            "EmptyFlux2LatentImage": 0.002748633,
+            "CLIPLoader": 6.194513792,
+            "CLIPTextEncode": 5.338506711,
+            "UNETLoader": 7.254593854,
+            "KSampler": 26.716709454,
+            "VAEDecode": 0.224056894,
+            "PreviewImage": 0.11217803
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27269141632,
+            "MaxInUse": 36294235264,
+            "NumAllocs": 57735,
+            "NumFrees": 56112,
+            "ActiveAllocs": 1623,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 57736,
+            "TotalSystemFrees": 56112,
+            "TotalActiveAllocs": 1624
+          },
+          "checks": [
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405275080689438,
+              "mono_ns": 86967489228021,
+              "prompt_id": "41707137-1bfe-4bd3-9ec2-decd5a5e9a94",
+              "node": "18:7",
+              "class_type": "KSampler",
+              "shape": [
+                1,
+                128,
+                64,
+                64
+              ],
+              "finite": true,
+              "minimum": -5.040374755859375,
+              "maximum": 5.512006759643555,
+              "std": 0.9333430528640747
+            },
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405275306452816,
+              "mono_ns": 86967714991710,
+              "prompt_id": "41707137-1bfe-4bd3-9ec2-decd5a5e9a94",
+              "node": "18:8",
+              "class_type": "VAEDecode",
+              "shape": [
+                1,
+                1024,
+                1024,
+                3
+              ],
+              "finite": true,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "std": 0.3044288158416748
+            }
+          ],
+          "generated_tokens": []
+        },
+        "892d1539-fe96-4878-a859-f3b32fb0f59c": {
+          "seconds": 13.027450546,
+          "stages": {
+            "KSampler": 12.782358326,
+            "VAEDecode": 0.132783597,
+            "PreviewImage": 0.103231054
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27242927232,
+            "MaxInUse": 36993635456,
+            "NumAllocs": 110582,
+            "NumFrees": 108962,
+            "ActiveAllocs": 1620,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 110583,
+            "TotalSystemFrees": 108962,
+            "TotalActiveAllocs": 1621
+          },
+          "checks": [],
+          "generated_tokens": []
+        },
+        "75a25627-e1fb-424f-87a6-5864ed68f33e": {
+          "seconds": 12.800436024,
+          "stages": {
+            "KSampler": 12.555222712,
+            "VAEDecode": 0.131912981,
+            "PreviewImage": 0.104332739
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27242927232,
+            "MaxInUse": 37008315520,
+            "NumAllocs": 163429,
+            "NumFrees": 161809,
+            "ActiveAllocs": 1620,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 163430,
+            "TotalSystemFrees": 161809,
+            "TotalActiveAllocs": 1621
+          },
+          "checks": [],
+          "generated_tokens": []
+        },
+        "38f6d340-7e25-4d27-bc18-5a6cf533d5e0": {
+          "seconds": 12.809962819,
+          "stages": {
+            "KSampler": 12.565089052,
+            "VAEDecode": 0.133610408,
+            "PreviewImage": 0.102400521
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27242927232,
+            "MaxInUse": 37008315520,
+            "NumAllocs": 216276,
+            "NumFrees": 214656,
+            "ActiveAllocs": 1620,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 216277,
+            "TotalSystemFrees": 214656,
+            "TotalActiveAllocs": 1621
+          },
+          "checks": [],
+          "generated_tokens": []
+        },
+        "cb88a524-d9f4-4b11-bc87-f4bd2697b589": {
+          "seconds": 12.807549195,
+          "stages": {
+            "KSampler": 12.56235588,
+            "VAEDecode": 0.131901556,
+            "PreviewImage": 0.104082263
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27242927232,
+            "MaxInUse": 37008315520,
+            "NumAllocs": 269123,
+            "NumFrees": 267503,
+            "ActiveAllocs": 1620,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 269124,
+            "TotalSystemFrees": 267503,
+            "TotalActiveAllocs": 1621
+          },
+          "checks": [],
+          "generated_tokens": []
+        },
+        "b6e2ba6e-7a63-41fc-aab9-d5a38bfee314": {
+          "seconds": 12.821626803,
+          "stages": {
+            "KSampler": 12.576461449,
+            "VAEDecode": 0.132557284,
+            "PreviewImage": 0.103682268
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27242927232,
+            "MaxInUse": 37008315520,
+            "NumAllocs": 321970,
+            "NumFrees": 320350,
+            "ActiveAllocs": 1620,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 321971,
+            "TotalSystemFrees": 320350,
+            "TotalActiveAllocs": 1621
+          },
+          "checks": [],
+          "generated_tokens": []
+        },
+        "46d5dac5-3a75-4c2f-8b46-a2763db860e1": {
+          "seconds": 9.339317711,
+          "stages": {
+            "StringMultiline": 0.000191937,
+            "SwitchNode": 0.000115212,
+            "PreviewAny": 7.2798e-05,
+            "ResolutionSelector": 0.000131897,
+            "EmptyFlux2LatentImage": 0.000289164,
+            "CLIPTextEncode": 0.768465308,
+            "KSampler": 8.416956003,
+            "VAEDecode": 0.079087554,
+            "PreviewImage": 0.057863852
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27242927232,
+            "MaxInUse": 37008315520,
+            "NumAllocs": 377668,
+            "NumFrees": 376045,
+            "ActiveAllocs": 1623,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 377669,
+            "TotalSystemFrees": 376045,
+            "TotalActiveAllocs": 1624
+          },
+          "checks": [
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405351596114574,
+              "mono_ns": 87044004653237,
+              "prompt_id": "46d5dac5-3a75-4c2f-8b46-a2763db860e1",
+              "node": "18:7",
+              "class_type": "KSampler",
+              "shape": [
+                1,
+                128,
+                48,
+                48
+              ],
+              "finite": true,
+              "minimum": -5.932182788848877,
+              "maximum": 5.236571788787842,
+              "std": 0.8862465023994446
+            },
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405351676892358,
+              "mono_ns": 87044085431271,
+              "prompt_id": "46d5dac5-3a75-4c2f-8b46-a2763db860e1",
+              "node": "18:8",
+              "class_type": "VAEDecode",
+              "shape": [
+                1,
+                768,
+                768,
+                3
+              ],
+              "finite": true,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "std": 0.21390944719314575
+            }
+          ],
+          "generated_tokens": []
+        },
+        "edf25ad7-8400-4e5a-bb4e-3878c802dabd": {
+          "seconds": 14.250918595,
+          "stages": {
+            "StringMultiline": 0.000150515,
+            "SwitchNode": 0.00011987,
+            "PreviewAny": 7.332e-05,
+            "ResolutionSelector": 0.000138097,
+            "EmptyFlux2LatentImage": 0.000289784,
+            "CLIPTextEncode": 0.692782224,
+            "KSampler": 13.299146193,
+            "VAEDecode": 0.132604855,
+            "PreviewImage": 0.11138622
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27242927232,
+            "MaxInUse": 37410968704,
+            "NumAllocs": 433365,
+            "NumFrees": 431742,
+            "ActiveAllocs": 1623,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 433366,
+            "TotalSystemFrees": 431742,
+            "TotalActiveAllocs": 1624
+          },
+          "checks": [
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405365879117818,
+              "mono_ns": 87058287655890,
+              "prompt_id": "edf25ad7-8400-4e5a-bb4e-3878c802dabd",
+              "node": "18:7",
+              "class_type": "KSampler",
+              "shape": [
+                1,
+                128,
+                64,
+                64
+              ],
+              "finite": true,
+              "minimum": -5.836253643035889,
+              "maximum": 5.93635368347168,
+              "std": 0.9555674195289612
+            },
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405366012554538,
+              "mono_ns": 87058421093341,
+              "prompt_id": "edf25ad7-8400-4e5a-bb4e-3878c802dabd",
+              "node": "18:8",
+              "class_type": "VAEDecode",
+              "shape": [
+                1,
+                1024,
+                1024,
+                3
+              ],
+              "finite": true,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "std": 0.30155327916145325
+            }
+          ],
+          "generated_tokens": []
+        },
+        "3a8c3966-355c-4c6d-b157-f979c90e672c": {
+          "seconds": 19.685904843,
+          "stages": {
+            "VAELoader": 0.053719384,
+            "StringMultiline": 0.000189814,
+            "SwitchNode": 0.00027280800000000003,
+            "PreviewAny": 7.3289e-05,
+            "ResolutionSelector": 0.000131857,
+            "EmptyFlux2LatentImage": 0.000268151,
+            "CLIPLoader": 5.145551586,
+            "CLIPTextEncode": 0.7575781070000001,
+            "UNETLoader": 7.063193697,
+            "KSampler": 6.530454023,
+            "VAEDecode": 0.088279719,
+            "PreviewImage": 0.026791992
+          },
+          "fallback": {},
+          "memory": {
+            "Limit": 101601996800,
+            "InUse": 27249396864,
+            "MaxInUse": 37410968704,
+            "NumAllocs": 491073,
+            "NumFrees": 489448,
+            "ActiveAllocs": 1625,
+            "MaxAllocSize": 2034237440,
+            "TotalSystemAllocs": 491074,
+            "TotalSystemFrees": 489448,
+            "TotalActiveAllocs": 1626
+          },
+          "checks": [
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405407114484107,
+              "mono_ns": 87099523022229,
+              "prompt_id": "3a8c3966-355c-4c6d-b157-f979c90e672c",
+              "node": "18:7",
+              "class_type": "KSampler",
+              "shape": [
+                1,
+                128,
+                32,
+                32
+              ],
+              "finite": true,
+              "minimum": -4.475617408752441,
+              "maximum": 5.937269687652588,
+              "std": 0.963542640209198
+            },
+            {
+              "kind": "tensor_check",
+              "wall_ns": 1794405407203688921,
+              "mono_ns": 87099612227855,
+              "prompt_id": "3a8c3966-355c-4c6d-b157-f979c90e672c",
+              "node": "18:8",
+              "class_type": "VAEDecode",
+              "shape": [
+                1,
+                512,
+                512,
+                3
+              ],
+              "finite": true,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "std": 0.3161526918411255
+            }
+          ],
+          "generated_tokens": []
+        }
+      },
+      "unload": {
+        "seconds": 20.90624366499833,
+        "used": 2685928832
+      }
+    }
+  },
+  "linear": {
+    "records": [
+      {
+        "name": "qkv",
+        "rows": 4119,
+        "bf16_s": 0.0006148222993942909,
+        "fp8_s": 0.00041765640053199605,
+        "rrmse": 0.026648787781596184,
+        "finite": true
+      },
+      {
+        "name": "qkv",
+        "rows": 4403,
+        "bf16_s": 0.0006497733993455768,
+        "fp8_s": 0.0003965529991546646,
+        "rrmse": 0.02664759010076523,
+        "finite": true
+      },
+      {
+        "name": "o",
+        "rows": 4119,
+        "bf16_s": 0.00021668890112778172,
+        "fp8_s": 0.00014251639950089157,
+        "rrmse": 0.026684662327170372,
+        "finite": true
+      },
+      {
+        "name": "o",
+        "rows": 4403,
+        "bf16_s": 0.00022780360013712196,
+        "fp8_s": 0.00015080370067153127,
+        "rrmse": 0.026686666533350945,
+        "finite": true
+      },
+      {
+        "name": "ffn_up_gate",
+        "rows": 4119,
+        "bf16_s": 0.001062513599754311,
+        "fp8_s": 0.0005749379008193501,
+        "rrmse": 0.026685060933232307,
+        "finite": true
+      },
+      {
+        "name": "ffn_up_gate",
+        "rows": 4403,
+        "bf16_s": 0.001111281299381517,
+        "fp8_s": 0.0007369614002527669,
+        "rrmse": 0.026682578027248383,
+        "finite": true
+      },
+      {
+        "name": "ffn_down",
+        "rows": 4119,
+        "bf16_s": 0.0005503542008227669,
+        "fp8_s": 0.0003564651997294277,
+        "rrmse": 0.02669484168291092,
+        "finite": true
+      },
+      {
+        "name": "ffn_down",
+        "rows": 4403,
+        "bf16_s": 0.0005916458001593127,
+        "fp8_s": 0.0003614788001868874,
+        "rrmse": 0.02669323980808258,
+        "finite": true
+      }
+    ],
+    "fallback": {}
+  },
+  "images": {
+    "image-1.png": {
+      "mae": 5.480297724405925,
+      "rmse": 10.772847374052834
+    },
+    "poster.png": {
+      "mae": 12.383419460720486,
+      "rmse": 36.78557372148402
+    },
+    "person.png": {
+      "mae": 4.390999476114909,
+      "rmse": 7.699595377145546
+    }
+  },
+  "source_hashes": {
+    "comfy/ops.py": "e98dcf1face115451524d58b204e5d5f4ccf7cfb26a97a7168e15f66563a5136",
+    "comfy/quant_ops.py": "f97ab5f550b103ff44fd07c3a50345529d4234e77d97faefa630a7ea0201afc8",
+    "comfy/sd.py": "7c83038e0bf8311d34271b81bb3e1c11f37f10861c27d68c3b93b2d36d7dbbb1",
+    "tests-unit/comfy_test/hpu_fp8_linear_test.py": "a849d6e9d7d5ec77256a83de4709238ac4090acb68f0554ce9c6f275821cf287"
+  },
+  "tests": {
+    "tests-final": "240 passed, 42 warnings in 174.79s (0:02:54)",
+    "tests-quant-final": "29 passed, 15 warnings in 8.27s"
+  },
+  "deployment": {
+    "cold_seconds": 70.97,
+    "cold_prompt_id": "997169f1-47ea-4b82-92f5-a0dba70f076c",
+    "cached_seconds": 13.6,
+    "cached_prompt_id": "ec356a4d-1237-4171-8a84-e7ace5abe0da",
+    "queue": {
+      "queue_running": [],
+      "queue_pending": []
+    },
+    "device": "hpu:0 GAUDI2",
+    "latest_load_quant_warning": false,
+    "source_hashes_match": true,
+    "visual_check": "MOSS marquee, white balloon-sleeve coat, wet street reflections visible"
+  }
+}

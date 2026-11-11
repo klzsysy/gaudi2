@@ -22,11 +22,13 @@
 
 ## 当前性能与路线
 
-- 产品/部署基准为`a8f42df2`，本地产品分支`codex/gaudi2-hpu`。固定工作量5 warm中位数，独立298-token文本4.867s、完整MTP工作流19.978s、固定caption缓存14.386s、DiT14.134s。完整warm19.906–20.122s，cold64.665s，缓存14s目标仍差0.386s。
+- Moody MOSS E4M3主模型原生FP8适配已完成实际流程验证。同文件常驻BF16参考/原生FP8固定caption为13.993/12.810s（5 warm中位数），原用户含扩写warm中位数20.666s，初始222.10s慢路径已消除。修复重复量化元数据warning，文本沿用现有BF16配置。测试条件、质量变化和显存结果见 [FP8适配](MOSS_FP8_ADAPTATION_2026-11-11.md)。
+
+- BF16对照基准为`a8f42df2`，最新FP8产品为`2227f7d3`，本地产品分支`codex/gaudi2-hpu`。固定工作量5 warm中位数，独立298-token文本4.867s、完整MTP工作流19.978s、固定caption缓存14.386s、DiT14.134s。完整warm19.906–20.122s，cold64.665s，缓存14s目标仍差0.386s。
 - 最终194 passed、1 CUDA skip，MTP off/3/tree3s1、512/768/1024、重载与原INT8通过，fallback为空。自然扩写与同seed图像细节会变化，质量范围限于已验收集合。完整证据见 [最新验收](MOSS_BF16_ATTENTION_AND_SUBMISSION_2026-11-11.md)。
 - 各轮测试要点、收益、失败候选和下一步判断集中在 [BF16复盘与FP8路线](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。建议下一阶段主攻DiT原生FP8 Linear，BF16专项由新attention实现、运行时变化或明确热点触发。
 - 大Linear轮换374–404TF/s，旧六段DiT预算为MME9.225s、softmax2.398s、其它1.805s、间隙0.752s。最新文本改写后两步trace的Linear调用154→10、launch964→820。AIP50–70%需结合各阶段预算解释，见 [预算与利用率](MOSS_BF16_PLAN_COMPLETION_2026-11-11.md)。
-- 原生FP8 GEMM已有本机算子验证，当前仍需对最新编译BF16的真实shape做净成本/质量试点。INT8 ConvRot/W4A8当前走解量化计算，`_int_mm`出现CPU fallback。可复用接口与外部实现见 [算子调查](GAUDI2_INT8_FP8_KERNEL_SURVEY_2026-11-10.md) 和 [JChen源码核查](JCHEN_GAUDI2_KERNEL_REVIEW_2026-11-10.md)。
+- 原生FP8 GEMM已有本机算子验证，本轮已补充Moody主模型真实shape与同文件BF16对照，见FP8适配报告。INT8 ConvRot/W4A8当前走解量化计算，`_int_mm`出现CPU fallback。可复用接口与外部实现见 [算子调查](GAUDI2_INT8_FP8_KERNEL_SURVEY_2026-11-10.md) 和 [JChen源码核查](JCHEN_GAUDI2_KERNEL_REVIEW_2026-11-10.md)。
 - BF16扩写激活与FP32普通编码分别验证，GDN状态FP32。`--disable-comfy-compiler`关闭区域编译。完整pipeline卸载稳定约2.50GiB，文本单独卸载约94MiB，操作约束见 `ENVIRONMENT.md`。
 - 硬件算术下界和公开5090场景保留在 [对标记录](MOSS_HARDWARE_LIMIT_AND_5090_2026-11-10.md)。单次公开成绩与本机固定工作量基准各按其原条件解释。
 
