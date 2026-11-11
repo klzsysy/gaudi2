@@ -26,7 +26,8 @@ def api(path, data=None):
 for mode in os.environ.get('MOSS_DIT_CASES', 'original').split(','):
     target = directory / mode
     target.mkdir(exist_ok=True)
-    source_hashes = {name: hashlib.sha256((root / name).read_bytes()).hexdigest() for name in ('comfy/ldm/moss_image/model.py', 'comfy/model_base.py', 'comfy/ops.py')}
+    source_files = ('comfy/ldm/moss_image/model.py', 'comfy/ldm/moss_image/hpu.py', 'comfy/model_base.py', 'comfy/ops.py')
+    source_hashes = {name: hashlib.sha256((root / name).read_bytes()).hexdigest() for name in source_files if (root / name).exists()}
     (target / 'source-hashes.json').write_text(json.dumps(source_hashes, indent=2))
     workflow = json.loads((probes / 'moss-user-textgen-bf16.json').read_text())
     workflow['18:16']['inputs']['switch'] = False
