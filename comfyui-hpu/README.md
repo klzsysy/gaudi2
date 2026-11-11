@@ -42,7 +42,7 @@
 - 本轮仅编译 MOSS 既有 attention 区域，不自写 kernel。7 项专项通过；512/768/1024、加权提示词、卸载重载与原 INT8 两次完整图均通过、fallback 为空。共享动态 SDPA 和整块编译候选未合入。完整用户图 AIP 平均 **35.85%**、文本 **15.20%**、DiT **50.33%**，尚未达到 80% 目标。
 - DiT 数值定位/分区、动态 shape、文本 MLP 与 KV/full attention 已推进；暂不自写 kernel，FP8 继续排在 BF16 执行优化之后。硬件和路线依据见 [多维路线评估](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)，各阶段占比以本轮记录为准。
 - **GDN/conv HPU 区域编译有效**：同一 BF16 文本模型、固定用户图（1024²/25 步），各 1 cold + 5 warm；端到端 median **131.031 → 60.063 s**，TextGenerate **96.740 → 20.156 s**。自然结束输出为原始 375 tokens、编译 303–333 tokens；吞吐约 **3.88 → 15.03 token/s**，非逐 token 等价声明。59 项回归通过、1 项 CUDA 专属跳过；状态/权重复用增强后 5 项专项复验通过。详见 [区域编译记录](MOSS_GDN_COMPILE_2026-11-09.md)。
-- 产品提交/服务器部署为 **`1412e1f7`**，本地分支 `codex/gaudi2-hpu` 未 push。原 INT8 模型通过完整图和 latent/VAE 浮点 finite 检查，可使用 DiT 优化与 KV 核心编译；完整 attention 投影和 MLP 编译仅针对普通 BF16 文本模型。`--disable-comfy-compiler` 可关闭区域编译。
+- 产品提交/服务器部署为 **`64155fe4`**，本地分支 `codex/gaudi2-hpu` 未 push。原 INT8 模型通过完整图和 latent/VAE 浮点 finite 检查，可使用 DiT 优化与 KV 核心编译；完整 attention 投影和 MLP 编译仅针对普通 BF16 文本模型。`--disable-comfy-compiler` 可关闭区域编译。
 - 严格 P1 首轮 B0/B1：1024²、25 步、固定用户图，5 次 warm median 分别为 **137.282 s** 和 **40.183 s**；所有请求 fallback 为空，327-token 输出 ID 一致，图片和 latent finite 检查通过。
 - FP8 E4M3/E5M2 `torch.mm` 在当前 eager 栈原生 HPU 通过，约 525.88/519.63 TFLOP/s；BF16 同 shape 275.76 TFLOP/s。INT8 `torch._int_mm` 发生 fallback，不作为 HPU 峰值或生产优化依据。
 - lm_head 解量化缓存、强制 embedding 留在 HPU、全模型/局部 FP8 文本编码器均未通过重复收益门槛，均未进入产品代码；当前主要线索是 `_copy_from`、小批量自回归和 host/device 控制同步。
