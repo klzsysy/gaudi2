@@ -1,0 +1,212 @@
+{
+  "date": "2026-11-10",
+  "timezone": "Asia/Shanghai",
+  "repository": "JChen-318/gaudi2-single-card-vllm",
+  "commit": "6da6fb16892f0e6ec3a7e1900942dec4e47a8706",
+  "commit_date": "2026-11-09T13:45:24Z",
+  "tree_sha": "71a805bfb93dc22894589b815a57f752c6734ae8",
+  "tree_truncated": false,
+  "tree_file_count": 10251,
+  "previous_commit": "e08710f7fe4c953529c728ec0b3a661f922d07c5",
+  "ahead_by": 2,
+  "changed_files_count": 297,
+  "added_commits": [
+    {
+      "sha": "03f0dc5020887c9ee1c51125c6971909a9818845",
+      "subject": "native: hand-programmed MME/TPC attention for MiniMax H3 (experimental)"
+    },
+    {
+      "sha": "6da6fb16892f0e6ec3a7e1900942dec4e47a8706",
+      "subject": "README: show the experimental 79.7 s H3 result outside the collapsed section"
+    }
+  ],
+  "method": "Static source and author-evidence review; no execution of downloaded code, no device tests",
+  "key_sources": [
+    {
+      "path": "README.md",
+      "git_blob_sha": "00a4e17cfdb819f696383269137cfc564a273dbe",
+      "sha256": "97f41b03d73987c49c05dfce8297b1c4f1788afc92b3f316a601223127132f83",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/README.md"
+    },
+    {
+      "path": "docs/OPTIMIZATION.md",
+      "git_blob_sha": "e56be187ef5b51e5ad273b7946684b92787026c4",
+      "sha256": "b36683742f849a8ec30ae335e56c28d38d2dc138ff39bd58cd16dfa61e9aaedc",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/docs/OPTIMIZATION.md"
+    },
+    {
+      "path": "docs/INSTALL.md",
+      "git_blob_sha": "84e63469d1991d38da3e36c743972084aae38f18",
+      "sha256": "383d595fc79293933801c2916e44df171f16a7dcaa85069a28e02717cf0ab3fd",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/docs/INSTALL.md"
+    },
+    {
+      "path": "native/mme-direct-attention/README.md",
+      "git_blob_sha": "e4b61081cf418558bbe17042318a12b52844b661",
+      "sha256": "369ff06af6a1d1807c4ef1c3f7011d7eccc3785e12532e3a24f7f3ac06005569",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/mme-direct-attention/README.md"
+    },
+    {
+      "path": "native/mme-direct-attention/direct-mme/README.md",
+      "git_blob_sha": "55bf55cf7600fd53d3295b1f68d37179adc095b1",
+      "sha256": "4f8bf379ed0d9e77b32f17dc04fbf8f58f3c568b931ca7c610750745ff673688",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/mme-direct-attention/direct-mme/README.md"
+    },
+    {
+      "path": "native/mme-direct-attention/direct-mme/mme_runner.c",
+      "git_blob_sha": "477dacc84c1bb25edb1027df97246ff2c2000bea",
+      "sha256": "e60e01b31989a97dc6625878bbb13033473fc348ee643d1d6db41804dbdb4e26",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/mme-direct-attention/direct-mme/mme_runner.c"
+    },
+    {
+      "path": "native/mme-direct-attention/direct-mme/desc128.h",
+      "git_blob_sha": "b06c079ab8458bd292eff50e592fbf93678ab5c6",
+      "sha256": "99965c5249dc8fcb1cafbcc6aaca5ec2c02a1f024a4241d742e8a26f22b9afd8",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/mme-direct-attention/direct-mme/desc128.h"
+    },
+    {
+      "path": "native/mme-direct-attention/attention/README.md",
+      "git_blob_sha": "e46123bcc5210f539832929db19e9259fbebd5a1",
+      "sha256": "285c59b8968bc8b7a34c941811f02ece85eb429df277f961e369a9bcdbc2d517",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/mme-direct-attention/attention/README.md"
+    },
+    {
+      "path": "native/mme-direct-attention/attention/h3_direct_attention.py",
+      "git_blob_sha": "dc38e30c3c1d2e1dbad1dd09733f9fce90130f80",
+      "sha256": "3224dc65c95066bf79bf2583ce90b1c2191502d8bb1c764702fcd94e8ae5eda8",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/mme-direct-attention/attention/h3_direct_attention.py"
+    },
+    {
+      "path": "native/mme-direct-attention/attention/runtime_quad.hpp",
+      "git_blob_sha": "9d08ea50d959c6f52a32052e977606837c757aba",
+      "sha256": "463fcc3ec69c581b18b9384ca6be866d72d7dd19592c0ff8627236256b41993c",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/mme-direct-attention/attention/runtime_quad.hpp"
+    },
+    {
+      "path": "native/mme-direct-attention/attention/sim_fp8pv.py",
+      "git_blob_sha": "6115198fbf52196a5891cf10b571c161192cf12d",
+      "sha256": "17cd49c3ceae6ca438c0f6c674f28252ec0644cf67220d0fc19f6c96e479ecf3",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/mme-direct-attention/attention/sim_fp8pv.py"
+    },
+    {
+      "path": "native/mme-direct-attention/attention/evidence/sim-fp8pv-4layers.json",
+      "git_blob_sha": "2433bf11e7797464129b04ce1e330beffd697e07",
+      "sha256": "9dd437e8c513ded739b5af566001ea9a76002054182c2591813d60efd546fd85",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/mme-direct-attention/attention/evidence/sim-fp8pv-4layers.json"
+    },
+    {
+      "path": "native/gdn-fused-kernel/README.md",
+      "git_blob_sha": "3802d2209521e64d75f3c8971504d3f9e5ce6f17",
+      "sha256": "441d6051c65e6df034a57d03d5633527a8076e626d852b925f5d458409756fa3",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/gdn-fused-kernel/README.md"
+    },
+    {
+      "path": "native/qwen4exp-nvfp4-moe/README.md",
+      "git_blob_sha": "0d3ce0e0b5ccca7d5bcfae2883108d15995350e1",
+      "sha256": "56c625b3f39436efdaea8dd929f6fa63775fece4f6394676f531472675da6ab4",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/qwen4exp-nvfp4-moe/README.md"
+    },
+    {
+      "path": "native/qwen4exp-nvfp4-moe/kernels/qwen4exp_nvfp4_moe_gemv_bf16_gaudi2.c",
+      "git_blob_sha": "fe6f886a5137b2e06a28c3bc7008d2ee7d9e3f97",
+      "sha256": "c92a3132796a7bd779c41b44503fb43ee91d1fea67ff9ef27044bd559d04c11e",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/qwen4exp-nvfp4-moe/kernels/qwen4exp_nvfp4_moe_gemv_bf16_gaudi2.c"
+    },
+    {
+      "path": "native/tpc-kernel-shim/README.md",
+      "git_blob_sha": "577c4ab7743cf2c208e62426d8999aa1630389a1",
+      "sha256": "bda671bab5f5a59433f3dd9c732651024dae5b9730145ec7cc8ff0d67b31ded5",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/native/tpc-kernel-shim/README.md"
+    },
+    {
+      "path": "vllm-gaudi/vllm_gaudi/ops/hpu_lm_head_fp8.py",
+      "git_blob_sha": "7e33a62295349e51bedf8b255059b2fdfd529029",
+      "sha256": "a8b6280e5ca5cfe1d59f2dceae1251b2503604636551374d4f3e5685d8f90ba8",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/vllm_gaudi/ops/hpu_lm_head_fp8.py"
+    },
+    {
+      "path": "vllm-gaudi/vllm_gaudi/ops/hpu_compressed_tensors.py",
+      "git_blob_sha": "36352aaca700c57499053fd0172a119d70a01f22",
+      "sha256": "db732f94d497a2e69a91644d72bc411c85540bae7b43897c1fe0cebbe60f520a",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/vllm_gaudi/ops/hpu_compressed_tensors.py"
+    },
+    {
+      "path": "vllm-gaudi/vllm_gaudi/extension/ops.py",
+      "git_blob_sha": "9d4c9d0a9c20b8434aee088f1a28ca5e49629357",
+      "sha256": "e7f064ff22692105f97bbbfded47c7fdcb16a751c1f348ef09e94d577f60edf5",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/vllm_gaudi/extension/ops.py"
+    },
+    {
+      "path": "vllm-gaudi/csrc/flashinfer_gaudi/CMakeLists.txt",
+      "git_blob_sha": "3193c4faea9e828ae409c7fc188c27edbde82e5e",
+      "sha256": "3711488491722cf2ee03a079729cadaed01cbdfa3338ae742ecafc7e845e8b32",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/csrc/flashinfer_gaudi/CMakeLists.txt"
+    },
+    {
+      "path": "vllm-gaudi/csrc/flashinfer_gaudi/bridge/silu_quant.cpp",
+      "git_blob_sha": "d729fec3bb98f020bac66d4b6bf75156eceaa8ae",
+      "sha256": "1a5391518ad08ca728e031d82d61d2c4a52afbb144f54af023dac061aa31e457",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/csrc/flashinfer_gaudi/bridge/silu_quant.cpp"
+    },
+    {
+      "path": "vllm-gaudi/csrc/flashinfer_gaudi/kernels/gdn_mtp_fused_f32_gaudi2.c",
+      "git_blob_sha": "093cf475679c0e1d93a512604cae6c3dc45c5522",
+      "sha256": "12da981dd12b1676651cf532b1cad036106e4e5b0232ffe5707a085a37727d54",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/csrc/flashinfer_gaudi/kernels/gdn_mtp_fused_f32_gaudi2.c"
+    },
+    {
+      "path": "vllm-gaudi/csrc/flashinfer_gaudi/kernels/silu_mul_quant_bf16_gaudi2.c",
+      "git_blob_sha": "15b3650cc638a2d910e00dd917c9759a0d929e37",
+      "sha256": "bf76ce479f9848d75fdd40ec7d67497810cf136cd9f6812076127f4261bfe267",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/csrc/flashinfer_gaudi/kernels/silu_mul_quant_bf16_gaudi2.c"
+    },
+    {
+      "path": "vllm-gaudi/csrc/flashinfer_gaudi/kernels/add_rmsnorm_quant_bf16_gaudi2.c",
+      "git_blob_sha": "e1c5854793253bbca533542f0ee1cbebd927858a",
+      "sha256": "a0cc465957d53d0c682df12ab40f2295c5f90fb45f969c6974bd1053f979d86e",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/csrc/flashinfer_gaudi/kernels/add_rmsnorm_quant_bf16_gaudi2.c"
+    },
+    {
+      "path": "vllm-gaudi/csrc/flashinfer_gaudi/host/add_rmsnorm_quant_bf16_gaudi2.cpp",
+      "git_blob_sha": "6373d9aae97ea3497ee6df165772308e3d9bf6db",
+      "sha256": "e743908cb18f4ad9f4658df56869f4d9ad10727e64133a3fd5e9827840677aaf",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/csrc/flashinfer_gaudi/host/add_rmsnorm_quant_bf16_gaudi2.cpp"
+    },
+    {
+      "path": "vllm-gaudi/csrc/deepseek_v4/include/deepseek_v4_paged_sparse_attn_fp8.h",
+      "git_blob_sha": "850dc1f7b359c7948b94ba98770e884d8118669b",
+      "sha256": "2ec6085a71fb5def15474e4e8c07d84aa80a168cd1ab3363261f1de5fc6617af",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/csrc/deepseek_v4/include/deepseek_v4_paged_sparse_attn_fp8.h"
+    },
+    {
+      "path": "vllm-gaudi/csrc/deepseek_v4/kernels/deepseek_v4_paged_sparse_attn_fp8_gaudi2.c",
+      "git_blob_sha": "33d05f53d8398bd8558918d6b98138634c3b5e4c",
+      "sha256": "df37ba791e4e90ec64038e3c6903f781f3131c1edf02c38850b62fa346c17037",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/csrc/deepseek_v4/kernels/deepseek_v4_paged_sparse_attn_fp8_gaudi2.c"
+    },
+    {
+      "path": "vllm-gaudi/csrc/deepseek_v4/host/deepseek_v4_paged_sparse_attn_fp8_gaudi2.cpp",
+      "git_blob_sha": "8e46f33e308d1864acddf8aa7ab727777442d025",
+      "sha256": "6fbf319ef11dfd22519b0eb951d4c05dfc5695b80dc62d92320f4bfadde59a62",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/csrc/deepseek_v4/host/deepseek_v4_paged_sparse_attn_fp8_gaudi2.cpp"
+    },
+    {
+      "path": "vllm-gaudi/csrc/deepseek_v4/pytorch/hpu_dsv4_native_attention_pt2.cpp",
+      "git_blob_sha": "d666c01891f2c8f3034bed2a73f416d30c5a48a3",
+      "sha256": "016820f60f01923cb3cca79c12122d01aff9c47cc1db22a6de542eb7f0f972b8",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/csrc/deepseek_v4/pytorch/hpu_dsv4_native_attention_pt2.cpp"
+    },
+    {
+      "path": "vllm-gaudi/vllm_gaudi/ops/deepseek_v4_native.py",
+      "git_blob_sha": "3568b180529d570a1f249a2dbbc895246439f59c",
+      "sha256": "555b796b615cd60675a5d2a3a7291f187a6c22e978f0e7a98891f28398284724",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/vllm_gaudi/ops/deepseek_v4_native.py"
+    },
+    {
+      "path": "vllm-gaudi/vllm_gaudi/omni/regional_compile.py",
+      "git_blob_sha": "6673983ced6dffdecc3000759606e355aaa79dc7",
+      "sha256": "219df5e9a22bbc212a9863dc98ae714502ff18a0ffbec8b1585c0cdf12a657a4",
+      "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/6da6fb16892f0e6ec3a7e1900942dec4e47a8706/vllm-gaudi/vllm_gaudi/omni/regional_compile.py"
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "date": "2026-11-10",
+  "timezone": "Asia/Shanghai",
+  "method": "GitHub public recursive tree and commit-pinned raw sources; static inspection, no execution of downloaded code",
+  "repositories": [
+    {
+      "repository": "HabanaAI/gaudi-pytorch-bridge",
+      "commit": "27eccbcffeab10842c9f29f64c6bf50d8f65d78f",
+      "tree_truncated": false,
+      "tree_file_count": 2037,
+      "downloaded_sources": [
+        {
+          "path": "hpu_ops/backend/fp8_gemm_gen.cpp",
+          "git_blob_sha": "a2fbd753e96c3a83e6f969b5a51e239f52b6c16e",
+          "sha256": "f2d34ef113bd60e167d05c3ab20a8f7a36db5c52048e626187578a53f2ac180c",
+          "url": "https://github.com/HabanaAI/gaudi-pytorch-bridge/blob/27eccbcffeab10842c9f29f64c6bf50d8f65d78f/hpu_ops/backend/fp8_gemm_gen.cpp"
+        },
+        {
+          "path": "hpu_ops/backend/fp8_ops.cpp",
+          "git_blob_sha": "f74f5c56cf1d82dd84c4b7b257df61aeab06a7f8",
+          "sha256": "932702381d9e44c6d0530b5cbc5400d2aef82a83ea34cfbc51b6abb1a36e85fc",
+          "url": "https://github.com/HabanaAI/gaudi-pytorch-bridge/blob/27eccbcffeab10842c9f29f64c6bf50d8f65d78f/hpu_ops/backend/fp8_ops.cpp"
+        },
+        {
+          "path": "hpu_ops/backend/matmul.cpp",
+          "git_blob_sha": "f2666d594de5e635303b69f6ae09ec8a37d9a6cf",
+          "sha256": "8fd1fda5bb174001d8b8ef5d8041e2a7faf05fa16731ef7ab0a105b3e0385f83",
+          "url": "https://github.com/HabanaAI/gaudi-pytorch-bridge/blob/27eccbcffeab10842c9f29f64c6bf50d8f65d78f/hpu_ops/backend/matmul.cpp"
+        },
+        {
+          "path": "hpu_ops/backend/quant_dequant_gen.cpp",
+          "git_blob_sha": "2a5ff2dba4b8d9a06afa143cb0e87fccb2faef08",
+          "sha256": "3546775c794f4e62eca2388de44d41f0f55b676ee1e6826df714f124b7831dad",
+          "url": "https://github.com/HabanaAI/gaudi-pytorch-bridge/blob/27eccbcffeab10842c9f29f64c6bf50d8f65d78f/hpu_ops/backend/quant_dequant_gen.cpp"
+        },
+        {
+          "path": "hpu_ops/fp8_utils.h",
+          "git_blob_sha": "1ded317538f50ce33a89f61a6d7b6661bfe75408",
+          "sha256": "f747ec47d84da2ebb49a50dad2724e305e8a296035263231e739c51ba84873da",
+          "url": "https://github.com/HabanaAI/gaudi-pytorch-bridge/blob/27eccbcffeab10842c9f29f64c6bf50d8f65d78f/hpu_ops/fp8_utils.h"
+        },
+        {
+          "path": "python_packages/habana_frameworks/torch/hpex/kernels/Fp8FusedSDPA.py",
+          "git_blob_sha": "922c9a0134144d4a321d436bb81e7469efce2a0a",
+          "sha256": "ecfce2df83dac0a46192f59d45b12fa85675376e2a71793f544c3974e8a0c7a4",
+          "url": "https://github.com/HabanaAI/gaudi-pytorch-bridge/blob/27eccbcffeab10842c9f29f64c6bf50d8f65d78f/python_packages/habana_frameworks/torch/hpex/kernels/Fp8FusedSDPA.py"
+        },
+        {
+          "path": "scripts/hpu_op.yaml",
+          "git_blob_sha": "7f05f1d1c01ac8cc1307f68f708b41ae683eecbf",
+          "sha256": "eb715eed4c0e358ff1ffb2bb5a72d247dd88ecb1beb431ed43ef6a3cfc634851",
+          "url": "https://github.com/HabanaAI/gaudi-pytorch-bridge/blob/27eccbcffeab10842c9f29f64c6bf50d8f65d78f/scripts/hpu_op.yaml"
+        },
+        {
+          "path": "tests/pytest_working/eager/test_hpu_cast_quantized.py",
+          "git_blob_sha": "58991308a154462788f349ecceca03cca0ebb179",
+          "sha256": "aecbdf00b1e682e475c9d995e3b7903624a936f19e700b0bc8e06cecad3fe656",
+          "url": "https://github.com/HabanaAI/gaudi-pytorch-bridge/blob/27eccbcffeab10842c9f29f64c6bf50d8f65d78f/tests/pytest_working/eager/test_hpu_cast_quantized.py"
+        }
+      ],
+      "tree_sha": "bae8505e5d5ce8db01779864c3b8213a19f7881e",
+      "commit_verified_via": "https://api.github.com/repos/HabanaAI/gaudi-pytorch-bridge/commits/27eccbcffeab10842c9f29f64c6bf50d8f65d78f"
+    },
+    {
+      "repository": "HabanaAI/Habana_Custom_Kernel",
+      "commit": "06e73bbac4f50debaf67609a0dbd49aa87cb39a4",
+      "tree_truncated": false,
+      "tree_file_count": 173,
+      "downloaded_sources": [],
+      "tree_sha": "8d734e4d683668aed93e198b486051428edf52e4",
+      "commit_verified_via": "https://api.github.com/repos/HabanaAI/Habana_Custom_Kernel/commits/06e73bbac4f50debaf67609a0dbd49aa87cb39a4"
+    },
+    {
+      "repository": "vllm-project/vllm-gaudi",
+      "commit": "57cec1ec789a9eebe5338312039133e94f58fc47",
+      "tree_truncated": false,
+      "tree_file_count": 545,
+      "downloaded_sources": [
+        {
+          "path": "vllm_gaudi/extension/ops.py",
+          "git_blob_sha": "5fa19098ea29b8143cca956ae188cda51bc8eb99",
+          "sha256": "99b64d3e7776da142dcee331a2abf8bc2f0cc845949a0015da787dd3fb025ec3",
+          "url": "https://github.com/vllm-project/vllm-gaudi/blob/57cec1ec789a9eebe5338312039133e94f58fc47/vllm_gaudi/extension/ops.py"
+        },
+        {
+          "path": "vllm_gaudi/extension/quant.py",
+          "git_blob_sha": "ca66ef80e28a30963f9509c7eba5209644223d5c",
+          "sha256": "9111bb44a55b18322554d1de61424b57cb44fcaaab4389cc6beac86c0143fd17",
+          "url": "https://github.com/vllm-project/vllm-gaudi/blob/57cec1ec789a9eebe5338312039133e94f58fc47/vllm_gaudi/extension/quant.py"
+        },
+        {
+          "path": "vllm_gaudi/ops/hpu_compressed_tensors.py",
+          "git_blob_sha": "b87fbab0614f58ce93e86f09b4393d8ef191e731",
+          "sha256": "8ca3db5cd784f5399e9f1bb439e2454335d52153e0af91f5560e6537b204d013",
+          "url": "https://github.com/vllm-project/vllm-gaudi/blob/57cec1ec789a9eebe5338312039133e94f58fc47/vllm_gaudi/ops/hpu_compressed_tensors.py"
+        },
+        {
+          "path": "vllm_gaudi/ops/hpu_fp8.py",
+          "git_blob_sha": "0e62503cccacce3946dbb59c28fb2c73d11f8632",
+          "sha256": "ce70ecbd4895b73484d5f607ddea242402fcba440d4168fef64f24b7c5629acb",
+          "url": "https://github.com/vllm-project/vllm-gaudi/blob/57cec1ec789a9eebe5338312039133e94f58fc47/vllm_gaudi/ops/hpu_fp8.py"
+        },
+        {
+          "path": "vllm_gaudi/ops/hpu_gptq.py",
+          "git_blob_sha": "60e063d93aa9564f85d6d4ecf8d4c3459aa3eca1",
+          "sha256": "b7a9c98eace2c5d6ba6139282115037b6bec1e583d7ef686322e034a14a03869",
+          "url": "https://github.com/vllm-project/vllm-gaudi/blob/57cec1ec789a9eebe5338312039133e94f58fc47/vllm_gaudi/ops/hpu_gptq.py"
+        }
+      ],
+      "tree_sha": "b6f5dd4a367774cec40bc3abae3ff68e7539fff2",
+      "commit_verified_via": "https://api.github.com/repos/vllm-project/vllm-gaudi/commits/57cec1ec789a9eebe5338312039133e94f58fc47"
+    },
+    {
+      "repository": "bitsandbytes-foundation/bitsandbytes",
+      "commit": "a616886cacf86701514f0cb1d6be760f967481c0",
+      "tree_truncated": false,
+      "tree_file_count": 185,
+      "downloaded_sources": [
+        {
+          "path": "bitsandbytes/backends/default/ops.py",
+          "git_blob_sha": "521802922810fd6f6432564ef1f71233936d2508",
+          "sha256": "e39afd16dca6e6f34a14305ade0ba4acbb49dc2c7a9baf937341d7e33b682819",
+          "url": "https://github.com/bitsandbytes-foundation/bitsandbytes/blob/a616886cacf86701514f0cb1d6be760f967481c0/bitsandbytes/backends/default/ops.py"
+        },
+        {
+          "path": "bitsandbytes/backends/hpu/ops.py",
+          "git_blob_sha": "645687598c23523319450b0613cea42a319156d1",
+          "sha256": "1a017363ed6b3a0aa61fb71c5e22bf69ea3dc8a4e2b6f8fbf966cea86806f6e3",
+          "url": "https://github.com/bitsandbytes-foundation/bitsandbytes/blob/a616886cacf86701514f0cb1d6be760f967481c0/bitsandbytes/backends/hpu/ops.py"
+        }
+      ],
+      "tree_sha": "b624ef19f595f97f77fd099f4244b739908d8e97",
+      "commit_verified_via": "https://api.github.com/repos/bitsandbytes-foundation/bitsandbytes/commits/a616886cacf86701514f0cb1d6be760f967481c0"
+    },
+    {
+      "repository": "intel/neural-compressor",
+      "commit": "8667aadc26452b39a01436b010e7bcaf3230e833",
+      "tree_truncated": false,
+      "tree_file_count": 642,
+      "downloaded_sources": [
+        {
+          "path": "neural_compressor/torch/algorithms/fp8_quant/_core/quantized_func_wrappers/hpu/hpu_quantized_func_wrapper.py",
+          "git_blob_sha": "f937493fe8633a6bbf63f65027cec7e1527201a2",
+          "sha256": "4787304219c4e5f0335c128a8e0b3b5f14d40e89d49d8e9e455773dcf8979936",
+          "url": "https://github.com/intel/neural-compressor/blob/8667aadc26452b39a01436b010e7bcaf3230e833/neural_compressor/torch/algorithms/fp8_quant/_core/quantized_func_wrappers/hpu/hpu_quantized_func_wrapper.py"
+        }
+      ],
+      "tree_sha": "3c30a67c81cd9cda4e076b89f43fe6f30181aef2",
+      "commit_verified_via": "https://api.github.com/repos/intel/neural-compressor/commits/8667aadc26452b39a01436b010e7bcaf3230e833"
+    },
+    {
+      "repository": "1CatAI/1Cat-vLLM-Gaudi",
+      "commit": "e2266e0efa381e6649e0f25b789cbb61b21b0e1f",
+      "tree_truncated": false,
+      "tree_file_count": 2857,
+      "downloaded_sources": [
+        {
+          "path": "README.md",
+          "git_blob_sha": "275b0e225adaa9b21aa4c949f77000db990cf085",
+          "sha256": "32c3fb4dd9a478a83078ec3b6b6a55280ed19bbb4216725d5e910da5b97015df",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/README.md"
+        },
+        {
+          "path": "csrc/deepseek_v4/include/deepseek_v41_expert_n256.h",
+          "git_blob_sha": "41f26df9561077915f1eefe1402b78fb25c8d1f7",
+          "sha256": "5bb23d799c544debecb926b7c90de92938b7be7963037667d94526d061e57525",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/csrc/deepseek_v4/include/deepseek_v41_expert_n256.h"
+        },
+        {
+          "path": "csrc/deepseek_v4/kernels/deepseek_v41_dynamic_quant_bf16_gaudi2.c",
+          "git_blob_sha": "009d710c958057dee152f949334a90b4fe15e082",
+          "sha256": "6f130d59331625d67932b9fddb1fadb2dc7dd35a78b6bcc4815c5c6445a552a9",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/csrc/deepseek_v4/kernels/deepseek_v41_dynamic_quant_bf16_gaudi2.c"
+        },
+        {
+          "path": "csrc/deepseek_v4/kernels/deepseek_v41_expert_n256_fp8_gaudi2.c",
+          "git_blob_sha": "174e7a265b79f505e6b9e779ef77bb8c41e43447",
+          "sha256": "f6fe92f0984a8265eab0256f266df5c7b8f77c0993bdcc48e50f830826f56ad0",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/csrc/deepseek_v4/kernels/deepseek_v41_expert_n256_fp8_gaudi2.c"
+        },
+        {
+          "path": "csrc/deepseek_v4/kernels/deepseek_v41_expert_paired_decode_fp8_gaudi2.c",
+          "git_blob_sha": "f192344a07d338e8b83210811994bd2e3ad2900e",
+          "sha256": "7349f53391b4d652385bf99accc0d0bb5ef250613fd0155a40c21776b436781a",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/csrc/deepseek_v4/kernels/deepseek_v41_expert_paired_decode_fp8_gaudi2.c"
+        },
+        {
+          "path": "docs/configuration/env_variables.md",
+          "git_blob_sha": "a5851c5d37799fae24de4ab1913da9d05d5193f8",
+          "sha256": "fb83f965410e3719a8eb44e41d7dbc7ecba6c5f9ec4b6e514fd46405ea29c4f7",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/docs/configuration/env_variables.md"
+        },
+        {
+          "path": "tools/benchmark_triton_gaudi_dynamic_quant.py",
+          "git_blob_sha": "fcd62f1c3188ebe301fe0595fe6780dd34dc09a1",
+          "sha256": "a8aba514844323efb7a0694a8a73330005fcbd4c128e6b1710fe598fb57fa03f",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/tools/benchmark_triton_gaudi_dynamic_quant.py"
+        },
+        {
+          "path": "vllm_gaudi/ops/hpu_fp8.py",
+          "git_blob_sha": "d1cec6d089faaa6852045b094435d02a715683c7",
+          "sha256": "19de426780e1c196937186d341429af61e10be7999873a66da9200b96613124d",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/vllm_gaudi/ops/hpu_fp8.py"
+        },
+        {
+          "path": "vllm_gaudi/ops/triton_gaudi/kernels.py",
+          "git_blob_sha": "360b976d726c813e0699827c0808ad9740ebe74c",
+          "sha256": "73c13e39785c30707c493874f440caa8d34ffe15a4b5e114a76b6cf7f0336b45",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/vllm_gaudi/ops/triton_gaudi/kernels.py"
+        },
+        {
+          "path": "vllm_gaudi/ops/triton_gaudi/runtime.py",
+          "git_blob_sha": "a49b608fdd49c18a151a7b2d1c191eeda86898e9",
+          "sha256": "a63ec3424756082d7ab199e1f62e88db5ea93b45339daeb6eedde93d229f2a80",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/vllm_gaudi/ops/triton_gaudi/runtime.py"
+        }
+      ],
+      "tree_sha": "898bdef3ce0feff0433f66f8a1ae2d996a6099ee",
+      "commit_verified_via": "https://api.github.com/repos/1CatAI/1Cat-vLLM-Gaudi/commits/e2266e0efa381e6649e0f25b789cbb61b21b0e1f"
+    },
+    {
+      "repository": "Comfy-Org/comfy-kitchen",
+      "commit": "7d6a22ae8281cd1053a8449530fa0e764a2e51cb",
+      "tree_truncated": false,
+      "tree_file_count": 222,
+      "downloaded_sources": [
+        {
+          "path": "comfy_kitchen/backends/eager/__init__.py",
+          "git_blob_sha": "8c9f39b49235c8ac5ed5cd4eb72750b4f5e6d1ac",
+          "sha256": "14bc705a4eba18155d2f1f79c7ec969b3c8cfec5a5c1ef19f1de7693f8442b05",
+          "url": "https://github.com/Comfy-Org/comfy-kitchen/blob/7d6a22ae8281cd1053a8449530fa0e764a2e51cb/comfy_kitchen/backends/eager/__init__.py"
+        },
+        {
+          "path": "comfy_kitchen/backends/eager/quantization.py",
+          "git_blob_sha": "7f81e9a1dbd69bfc73783b66599b04e1cbbcf897",
+          "sha256": "4412eb5bbd12cb2c9a09c5c9e076e744e16bf39632fe624e4df739b84681ef12",
+          "url": "https://github.com/Comfy-Org/comfy-kitchen/blob/7d6a22ae8281cd1053a8449530fa0e764a2e51cb/comfy_kitchen/backends/eager/quantization.py"
+        },
+        {
+          "path": "comfy_kitchen/backends/eager/w4a8_int8.py",
+          "git_blob_sha": "320788fb78745a908d39208887e5f808dceb373f",
+          "sha256": "1726550820da62bcc8aa409bb986c1dd6959052f94ccaacac838b4ddc05c283e",
+          "url": "https://github.com/Comfy-Org/comfy-kitchen/blob/7d6a22ae8281cd1053a8449530fa0e764a2e51cb/comfy_kitchen/backends/eager/w4a8_int8.py"
+        },
+        {
+          "path": "comfy_kitchen/backends/triton/__init__.py",
+          "git_blob_sha": "08bf963a8268d2be1a24b7a5266c69a98db6d088",
+          "sha256": "9dd763c1688725d8d7cb4461e1e97687e4ca9e60ab19c6d369e47b175b59b8fa",
+          "url": "https://github.com/Comfy-Org/comfy-kitchen/blob/7d6a22ae8281cd1053a8449530fa0e764a2e51cb/comfy_kitchen/backends/triton/__init__.py"
+        }
+      ],
+      "tree_sha": "cafb6febf1341f63877373d5cb535f6e40df1f9f",
+      "commit_verified_via": "https://api.github.com/repos/Comfy-Org/comfy-kitchen/commits/7d6a22ae8281cd1053a8449530fa0e764a2e51cb"
+    }
+  ]
+}

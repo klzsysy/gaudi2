@@ -81,6 +81,8 @@ MTP auto 8-token trace 的主要线索是 aten::_copy_from，约 2.14 s/profile�
 
 ## 2026-11-09：JChen 仓库 FP8 路径源代码复核
 
+**后续补充（2026-11-10）：**下文保留 `e08710f7` 的输出头实验历史；此前“只能提供设计参考”的仓库整体判断过窄。当前 `6da6fb16` 新增直接 MME/TPC attention，完整 `vllm-gaudi/csrc` 还包含 TPC FP8 MAC 稀疏 attention 和量化融合。见 [专项复核](JCHEN_GAUDI2_KERNEL_REVIEW_2026-11-10.md)；旧 lm_head 性能结果未因此改变。
+
 本次复核针对仓库当前 `main`（提交 `e08710f7fe4c953529c728ec0b3a661f922d07c5`）。其目标是 Qwen3.8-27B FP8 target + 独立 DFlash2 FP16 draft，验证环境为 SDK 1.24.1、`torch 2.11.0a0`、`habana-torch-plugin 1.24.1.482`；本项目使用 Habana 1.24.2、`torch 2.13.0a0+git2469d18`，因此不能把编译产物或运行时 ABI 直接混用。
 
 ### 实际使用的 FP8 路径

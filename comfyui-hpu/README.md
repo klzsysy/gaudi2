@@ -22,6 +22,8 @@
 
 ## 当前性能结论
 
+- **JChen 当前版本复核（2026-11-10）**：`6da6fb16` 比旧快照多 2 个提交，新增直接 MME/TPC BF16/FP16 attention 实验；另确认仓库已有真实 TPC FP8 MAC 稀疏 attention、norm/quant 融合和 GDN，不能只概括为 FP8 Linear 封装。通用 INT8 GEMM 结论不变。详见 [专项源码与适用性复核](JCHEN_GAUDI2_KERNEL_REVIEW_2026-11-10.md)，作者速度不作为本机成绩；无产品改动。
+- **INT8 / FP8 kernel 调查（2026-11-10）**：官方 FP8 GEMM/cast/SDPA 有现成路径；未找到可直接替代 `_int_mm` 的 Gaudi2 原生 INT8 GEMM。源码核实 vLLM INT8→BF16、bitsandbytes 浮点默认实现，以及 1Cat 的真正 TPC/Triton FP8 量化与权重解码 kernel；见 [支持矩阵与固定版本源码](GAUDI2_INT8_FP8_KERNEL_SURVEY_2026-11-10.md)。本轮只读调查，无新 HPU 测试或产品改动。
 - **最新 DiT 产品 `b1163be0`**：静态条件特征和 FP32 RoPE 在本次采样的 conditioning 内预计算，调用次数 **50→2**；固定 caption、各 5 warm，DiT **19.581→18.384 s（-6.11%）**，活动率 **56.79%→60.97%**。图片误差与基线重复波动相当。完整 seed=1 用户图 **30.786→29.673 s**，五次 298-token ID 与前轮一致。CFG 合批、fast softmax 等候选未合入；见 [本轮 DiT 优化记录](MOSS_DIT_PRECOMPUTE_2026-11-10.md)。
 - **最新节点测量（当前 UI 文本 seed=1）**：各五次 warm，完整重算 **30.786 s**、文本缓存 **19.900 s**；完整代表请求扩写 9.093、正负编码 1.817、DiT/采样 19.611、VAE/图片输出 0.246 s。单独诊断中，DiT 42 层主干约占采样节点 89.6%，RoPE/text_embedder 重复 50 次合计 1.34 s。下一步优先 DiT 的执行内条件预计算及主干归因；详见 [pipeline 节点统计](MOSS_PIPELINE_TIMING_2026-11-10.md)。本轮只测量，日常服务与原工作流缓存已恢复。
 - 当前部署包含 **`441d459d`** 的 SIGPIPE/Synapse fatal 修复。此前代码本来已同步；`Host malloc failed` 是运行时失效后的连带报错。恢复 Python SIGPIPE 策略后，8 次中断下载、显式信号注入和用户原 1024² pending 图重放通过；详见 [故障恢复记录](HPU_SIGPIPE_RECOVERY_2026-11-10.md)。
