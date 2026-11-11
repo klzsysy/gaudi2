@@ -33,29 +33,11 @@ TextGenerate 内部 `CLIP.generate` 区间为 14.942868 秒，节点其余约 7 
 
 全部请求 fallback 为空。既有五次 warm、按阶段筛选的 AIP 采样均值：整图 37.93%、文本 16.79%、DiT 57.23%。这些不是上表单次请求的独立利用率，也不等于 FLOPs 利用率或 HBM 带宽。低活动率提示需检查执行间隙，但不能单凭它判定算子差或 host bottleneck。
 
-## 新核实的文本执行线索
+## 归因与后续验证
 
-1. **KV attention/tree merge 是尚未覆盖的路径。** 当前默认配置下，`Qwen35.GatedAttention` 的短步 decode 调用 `FixedKVCache.attend`，后者使用 Kitchen 的 `flash_attention_decode_gqa` 和 `flash_attention_decode_tree_merge`。本机 Kitchen `flash_attention.py` 的 native availability 只接受 CUDA/HIP，HPU 进入 `_decode_gqa_torch` / `_tree_merge_torch`。这些 torch 操作仍在 HPU 上，不是 CPU fallback。
-2. **参考实现显式用 FP32，并先算完整 KV 容量再 mask。** `_decode_gqa_torch` 对 Q/K/V 调 `.float()`，执行 matmul、logsumexp、exp 和第二次 matmul；tree merge 再做 FP32 计算。当前新增编译仅覆盖 GDN/conv 和 MLP，没有包住这一段。是否存在底层自动融合、这些操作的真实占比仍需新版 trace，不能只按源码行数推算速度。
-3. **容量显著大于有效长度。** 记录输入 1970 tokens、max_length=4096；`_generate_mtp` 按 `embeds.shape[1] + max_length + 7` 分配 cache，按记录推算容量约 6073，而本次生成结束约为 1970+277=2247。实际 tensor shape 应由下一次 probe 再确认。可以在保留分配容量/生成上限的前提下，尝试只计算有效前缀或向上分桶的前缀，并保持完整 tree mask/rollback 语义；不能直接截短 max_length 冒充执行优化。
-4. **MTP 控制与计时尚有验证空间。** 本次 TextGenerate 有 111 次进度更新，对应当前代码中 111 轮 draft/verify，提交 276 个后续 tokens，约 2.49 token/轮；verify 固定 8 行。每轮已有一次合并 packet 的 `.tolist()`，并非每层读回。HPU 的 auto 策略用 CPU `perf_counter` 测 draft/verify，计时点位于 packet 回读之前，需核实它能否代表异步设备成本。不能据此直接认定 MTP 应关闭或树越大越好。
+本轮发现HPU KV attention/tree merge走FP32 Torch参考实现，完整容量约6073，已有GDN/MLP编译尚未覆盖此区。111轮draft/verify提交276个后续tokens，首进度包含prefill和第一轮verify，需单独测量。
 
-首个文本进度事件距 generate_start 约 2.0303 秒，但它包含初始化、prefill、首 token 和第一轮 draft/verify，不能标成纯 prefill。现有日志无法准确拆出 prefill、GDN、MLP、KV attention、lm_head、sampling 和 host wait 各占多少，下一次应补设备时间线。
-
-## 更新后的优化顺序
-
-| 顺序 | 工作 | 测量与验收重点 |
-|---|---|---|
-| 1 | 文本 KV attention/tree merge：先记录实际 shape 与 CPU/HPU 时间线，再分别试有效前缀/shape bucket、现有 torch 区域编译、兼容 tree mask 的现有 HPU attention 路径 | 单变量、固定 token/固定树 A/B；长短前缀、0-length 边界、回滚/分支、数值和卸载；统计整段净收益 |
-| 2 | 文本 decode 执行与 MTP：投影/norm/RoPE 的编译边界、采样提交/同步、auto 成本估计；比较 off/固定树/auto | 每轮 draft/verify/接受数、固定工作量耗时；避免仅因输出变短而显得更快；不直接开启 CUDA graph 开关 |
-| 3 | DiT 余下 19.67 秒：重做算子与 host gap 归因，关注区域之间的调度、重复位置/条件准备及剩余调制/残差 | QKV/attention/FFN/静态 recipe 已完成；调制/残差保留舍入边界有原因；固定 caption/seed/steps、多提示词数值与质量回归 |
-| 4 | 原生 FP8 Linear 适配 | 等实际时间线证明矩阵/权重流量主导，再在真实 shapes 上计入 quant/layout 的总成本和品质校准；继续复用厂商 GEMM |
-
-上图的 BF16 主线仍然成立，但“DiT 和文本主干未优化”的旧状态已经过时：GDN、MLP、DiT attention/投影/FFN 和 shape recipe 都已有收益。下一优先项应明确为**文本 KV attention 与 decode 剩余执行开销**，同时继续分析占总时间最多的 DiT。按照用户最新约束，当前不开展自写 TPC/INT8/FP8 kernel；原生 FP8 也排在剩余 BF16 路径验证之后。
-
-VAE+图片输出仅约 0.26 秒，继续压它们收益有限。正负提示词编码合计约 1.75 秒，可在后续 prefill 工作中顺带评估。固定负提示词的正常节点缓存可能省一次计算，但当前基准刻意重算，不能把缓存跳过当作算子提速。
-
-以这一次请求作固定工作量的情景计算（不是预测）：文本减少 30% 可省 4.485 秒，整图约 32.163 秒；DiT 减少 20% 可省 3.933 秒，整图约 32.715 秒；两者同时达到则约 28.230 秒。两个大阶段必须持续推进，不能只用提高 AIP 百分比代替端到端收益。
+这些线索随后形成KV编译与状态修复，见 [KV结果](MOSS_KV_OPTIMIZATION_2026-11-10.md)。VAE与图片输出约0.26s，文本和DiT为主要费用。当前路线判断见 [BF16复盘与FP8](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。
 
 ## 证据与复算
 

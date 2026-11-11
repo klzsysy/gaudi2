@@ -66,19 +66,15 @@ cat .run/deployed-version
 
 应用入口在 HPU 初始化后恢复 Python 的 SIGPIPE 忽略策略，避免浏览器取消文件下载使 Synapse 进入 fatal 状态。遇到 `synStatus 31` 时先检查最早的 DFA 原因，不能仅凭后续 `Host malloc failed` 判定主机内存不足。详见 `HPU_SIGPIPE_RECOVERY_2026-11-10.md`。
 
-Qwen3.5 HPU decode 默认对 deferred conv/GDN 使用区域编译；启动参数 `--disable-comfy-compiler` 可关闭。首次 shape 编译有开销，舍入差异可能改变采样 caption；验收细节见 `MOSS_GDN_COMPILE_2026-11-09.md`。已有 INT8 和派生 BF16 文本模型均通过完整工作流。
+当前优化由`--disable-comfy-compiler`统一关闭区域编译。首次shape/recipe有编译成本，自然caption和图像细节会受舍入及MTP调度影响。
 
-MOSS BF16 HPU attention 也默认使用区域编译，序列长度自动适配；同一 `--disable-comfy-compiler` 参数可关闭。CPU、训练及自定义 attention override 走原路径。只涉及 MOSS attention，没有全局替换 SDPA；不同分辨率、加权提示词和卸载重载已通过，详见 `MOSS_DIT_OPTIMIZATION_2026-11-09.md`。
+- Qwen3.5 deferred conv/GDN、KV attention/tree merge使用HPU编译。普通BF16模型另外启用短步MLP、完整attention、norm及八行GDN投影扩区。GDN prefill覆盖BF16扩写和原有FP32普通编码，按至少64及2的幂分桶。
+- 八行GDN扩区要求标准LinearKV、普通operations、decode、无hooks/梯度。四行激活在编译递推外clone。KV分支行搬移先clone源行，相关状态回归已验收。
+- MOSS采用attention/投影与FFN分区及局部静态recipe。BF16、batch1、24×128 heads、N≥4096、默认无mask/参考KV的推理编译路径按head独立调用原dispatcher。
+- 条件text_embedder和FP32 RoPE由本次conditioning持有。BLOCKWISE经四系数语义检查启用，一般矩阵使用PAIRWISE。CPU/训练/梯度/动态hooks/不适用options按相应门控分流。
+- 参数、状态及临时tensor由既有模型/执行生命周期管理。完整pipeline卸载稳定约2.50GiB，文本单独卸载约94MiB，各用同工作流基线验证。
 
-后续已将 MOSS 编译范围扩至投影/FFN，保留调制与残差原执行方式，并在这两个区域按实际 shape 使用厂商静态 recipe。Qwen3.5 普通 BF16 文本模型在使用 KV cache、每步不超过 8 tokens 时编译 MLP；量化或自定义 operations 保留原路径。模块/子模块/全局 forward hooks 存在时保留 eager 调用。上述优化均可用 `--disable-comfy-compiler` 关闭，细节见 `MOSS_BLOCK_OPTIMIZATION_2026-11-09.md`。固定 seed 的文本和图片细节可能变化。
-
-`3fec1143` 进一步编译 HPU BF16 的 KV decode/tree merge，以及普通 BF16 Qwen3.5 的默认短步完整 attention；prefill、训练、自定义 attention/operations 和 hooks 保留原路径。MTP 分支提交在 HPU 先 clone 被搬移的源行，避免同 storage 视图复制未更新目标的问题。没有缩小生成上限、引入 FP8 或跨请求 KV 缓存；细节见 `MOSS_KV_OPTIMIZATION_2026-11-10.md`。
-
-`b1163be0` 对普通 HPU BF16 MOSS 静态条件预计算 text_embedder 与 FP32 RoPE，只在本次 conditioning 中持有结果。动态 hooks/选项、区域、参考图等不适用场景保留原路径。完整 pipeline 卸载后的稳定占用约 2.50 GiB，已与优化前相同流程核对一致；不要把文本模型单独卸载的约 94 MiB 当成全 pipeline 的统一阈值。见 `MOSS_DIT_PRECOMPUTE_2026-11-10.md`。
-
-`1412e1f7` 包含native norm/RoPE、GDN prefill编译及经过系数验证的BLOCKWISE RoPE。GDN保持原有dtype：扩写BF16，普通正负编码FP32激活（不能根据BF16权重文件名推断全算子精度）。prefill按至少64、2的幂补零以复用静态recipe；裁回真实长度，新增chunk保持递归状态。`--disable-comfy-compiler` 关闭新增GDN编译。
-
-RoPE只在实际矩阵的系数满足BLOCKWISE语义时启用；一般矩阵、hooks/动态patches/参考图等保留原路径，没有跨请求tensor cache。同seed的画面细节/部分构图会改变；当前六组质量样本未见系统性退化，不承诺像素复现。新shape的编译增加cold成本，最终完整cold测量56.876 s，warm median22.231 s。完整pipeline卸载稳定约2.50 GiB，相对旧基线多256 KiB。完整证据见 `MOSS_BF16_DEEP_EXECUTION_2026-11-11.md`。
+当前产品条件和验收范围见 [最新报告](MOSS_BF16_ATTENTION_AND_SUBMISSION_2026-11-11.md)，算法及历史失败见 [复盘索引](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。
 
 ## 共享模型路径
 
@@ -117,12 +113,10 @@ shared_models:
 
 已验证的 MOSS 基础工作流为 25 步 `er_sde/simple`、cfg2.5；基础图关闭 prompt enhancer、SLG 和编辑 LoRA。官方 TextGenerate 扩写图也已验证，但自回归仍明显慢于直接文本编码。编辑/控制 LoRA、SLG、完整批量/多卡、lazy/通用全模型编译/HPU Graph、超大分辨率和其它 custom nodes 未验证。
 
-## BF16计划完成后的复现状态
+## 性能复现资料
 
-最新`a8f42df2`包含并行FP32 deferred DeltaNet、MOSS长序列单head attention以及普通BF16八行GDN外围投影编译。head分组门控为HPU BF16、batch=1、24×128 heads、N≥4096、无mask/参考KV且默认attention的推理编译路径。GDN扩区要求八行decode、标准LinearKV、普通operations、无hooks/梯度。四行输入在进入编译递推前clone激活，已通过真实MTP `3`和`tree3s1`。区域编译继续使用既有关闭参数。
+当前正式基准为固定298-token完整MTP19.978s、独立文本4.867s、固定caption缓存14.386s，各5 warm中位数。完整cold64.665s，详情见最新报告与`evidence/moss-bf16-next-2026-11-11.json`。
 
-最终固定298-token完整工作流5 warm中位数19.978s，独立文本4.867s，固定caption缓存整图14.386s。完整cold64.665s，自然caption与图像细节会改变。194项回归通过、1项CUDA跳过，六份部署文件SHA256一致。8189恢复后原图cold66.725s、缓存14.751s，最终队列为空。完整证据位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-11-bf16-next`，见 [最新报告](MOSS_BF16_ATTENTION_AND_SUBMISSION_2026-11-11.md)。
+最新大型数据位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-11-bf16-next`。固定MTP程序位于前轮`performance-2026-11-11-completion/mtp-record-298/program.pt`。该轮六段DiT预算也在`performance-2026-11-11-completion`。
 
-`64155fe4`为Qwen35的HPU BF16/FP32 norm增加局部编译，继续调用原ComfyUI RMSNorm。完整固定298-token MTP工作流21.060s，固定caption缓存出图14.653s。编译冷启动、自然文本变化及质量范围见 [执行报告](MOSS_BF16_PLAN_COMPLETION_2026-11-11.md)。
-
-本轮独立流程默认PyTorch CPU线程数32，改为16后完整固定轨迹21.168s，未带来改善。服务使用既有启动脚本。隔离lazy/Graph测试的逐请求成本高于eager，且本安装栈lazy+`hpu_backend`出现`GraphStorage::get()`符号缺失。原始证据保存在`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-11-completion`。
+服务使用既有启动脚本和默认32个PyTorch CPU线程，改16线程的完整流程复验无收益。当前lazy/Graph单独试验成本高于eager，lazy＋`hpu_backend`出现`GraphStorage::get()`符号缺失，诊断见预算报告。

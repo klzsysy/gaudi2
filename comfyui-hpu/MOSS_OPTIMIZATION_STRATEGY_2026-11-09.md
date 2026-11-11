@@ -1,115 +1,86 @@
-# MOSS 后续性能路线评估
+# MOSS BF16复盘与FP8路线判断
 
-日期：2026-11-09（Asia/Shanghai）。基线产品版本 `60da4e33`。本轮仅审查官方资料、产品代码和服务器 checkpoint header；没有停止服务、执行新 HPU 测试或改动产品代码。下文分别标明实测、估算和工程建议。
+更新于2026-11-11，基准产品`a8f42df2`。本文汇总各轮实测及下一阶段建议，原文件名保留用于既有链接。各阶段明细保留测试条件、结果、失败原因与复现入口。
 
-## 决策
+## 当前判断
 
-主线继续做 BF16 的 DiT 区域编译/attention 和文本 decode 提交优化，同时设小范围的原生 FP8 Linear 验证分支。优先复用 `fp8_gemm_v2`，必要时只自写它周围的 activation/quant/dequant 融合。暂不立项通用 INT8 GEMM 或从零重写 FP8 GEMM。
+建议将下一阶段主要实验投入转向**DiT的原生FP8 Linear**。BF16基线继续用于生产、数值参考和兼容路径。BF16专项按新的热点证据或实现变化触发，优先保留attention数据流与文本提交两个方向。
 
-BF16 的 shape 管理、状态管理、调度和正确性基线可直接用于 FP8；这些是共同基础。工作流峰值约 44.3 GiB，容量尚未迫使我们换低比特权重；降精度必须体现为更少流量或更快计算。
+理由来自当前费用结构。大Linear已接近同形状可用速度，近期低成本开关大多只带来约1%变化。最新GDN改写和扩区仍让固定文本下降14.9%、完整图下降5.1%，说明算法/执行结构变化继续有效。后续同量级BF16收益更依赖新的attention或状态融合实现，需要更高的开发和质量验证投入。
 
-## 已有事实与未知项
+## 测试口径
 
-- BF16 完整工作流各 1 cold + 5 warm，优化后 median 60.063 s，TextGenerate 20.156 s，KSampler 37.890 s。按阶段中位数近似分配，DiT 约 63%、扩写约 34%；阶段中位数不要求严格相加。
-- BF16 扩写 AIP 平均 15.82%、DiT 48.57%、全请求 36.22%。INT8 的单次诊断扩写约 10.36 token/s、AIP 46.47%，比 BF16 更忙但更慢；两者不是严格同长度 A/B。
-- GDN 编译带来的收益已实测。相同输入的 conv/GDN 重放从 6.60/19.13 ms 降至 0.45/0.93 ms，未更换权重精度。
-- 当前只给 deferred conv/GDN 增加了 HPU 区域编译；DiT 的 Comfy `malloc_graph` 在 HPU 上不生效。Qwen 主干 Linear/MLP、attention、采样和 Python 控制尚未做同等的整体区域优化。
-- HPU attention 入口调用 PyTorch SDPA，没有显式选择 Habana FusedSDPA；最终 bridge 的设备实现仍需 trace 核实，不能仅凭 Python 入口断言未融合。
-- 服务器 DiT checkpoint **已经合并 QKV 和 FFN up/gate**，不把再次合并它们当成收益点。
-- 旧全模型 FP8 文件实验仍走 `full_precision_mm=True` 解量化路径；旧原生 FP8 head 仅有短 probe，且在 GDN 编译之前。它们不足以否定优化后 FP8 的价值。
-- 尚缺新版本的 host/device 时间线、真实 shape GEMM 校准、持续 HBM 带宽、固定 MTP 轨迹对照和完整 FP8 品质校准。
+- 单卡Gaudi2，Habana1.24.2，eager＋`hpu_backend`，1024²、25步、CFG2.5、er_sde/simple，模型与采样设置记录在各轮证据中。
+- 固定caption对照用于DiT。完整MTP对照使用1970输入/298输出，重算原采样后代入已记录的token/树/控制决策，验证调用次数。自然生成用于完整行为与质量检查。
+- 原则上各1 cold＋5 warm，报告中位数/范围。同步诊断、局部重放、节点缓存命中分别标注。各阶段独立中位数按各自统计解释。
+- BF16文本模型来自现有INT8 ConvRot转换，扩写激活BF16，普通正负编码激活FP32。GDN递归状态使用FP32。文件dtype与实际算子dtype需分别核实。
 
-## 硬件上限
+## 已兑现的主要收益
 
-公开数据：2 个 MME、24 个 TPC；BF16 MME **432 TFLOP/s**，FP8 MME **865 TFLOP/s**；HBM 96 GB、标称 **2.45–2.46 TB/s**；SRAM 48 MB。[S1][S2]
+| 阶段 | 有效改动 | 主要结果 | 证据 |
+|---|---|---|---|
+| GDN/conv | 编译Torch deferred参考实现 | 同输入conv6.60→0.45ms、GDN19.13→0.93ms。自然完整图131.03→60.06s | [GDN](MOSS_GDN_COMPILE_2026-11-09.md) |
+| DiT attention | 模型所属区域编译 | 固定caption DiT37.916→28.217s | [attention](MOSS_DIT_OPTIMIZATION_2026-11-09.md) |
+| block/MLP | 保留敏感舍入边界，分区＋静态recipe | DiT28.225→19.456s。固定32-token teacher4.876→4.223s | [block](MOSS_BLOCK_OPTIMIZATION_2026-11-09.md) |
+| KV/完整短步attention | 编译完整容量KV及投影，修复分支行搬移 | 固定32-token teacher4.312→3.002s | [KV](MOSS_KV_OPTIMIZATION_2026-11-10.md) |
+| 条件预计算 | text_embedder/RoPE每请求50→2次 | 固定caption DiT19.581→18.384s | [预计算](MOSS_DIT_PRECOMPUTE_2026-11-10.md) |
+| norm/RoPE与prefill | native norm、验证后BLOCKWISE、GDN分桶 | DiT18.397→16.887→14.364s。FP32编码1.804→0.364s | [深挖](MOSS_BF16_DEEP_EXECUTION_2026-11-11.md) |
+| 文本norm | 原公式区域编译 | 固定MTP独立文本7.481→5.670s，完整图22.461→21.060s | [预算/norm](MOSS_BF16_PLAN_COMPLETION_2026-11-11.md) |
+| 并行GDN/外围投影、单head attention | 改写短递推，再扩大八行GDN编译区 | 固定文本5.720→4.867s，完整图21.044→19.978s，缓存14.628→14.386s | [最新验收](MOSS_BF16_ATTENTION_AND_SUBMISSION_2026-11-11.md) |
 
-### 文本 decode：小矩阵与权重流量
+每行有自己的基线，早期自然caption和后期固定caption口径也有区别。当前可复用的正式基准为缓存14.386117s、DiT14.134462s、固定MTP完整19.978488s、独立文本4.866763s。完整warm范围19.906–20.122s，cold64.665s。缓存14s目标仍差0.386s。
 
-对 `[M,K] × [K,N]` 线性层，假设主要流量是每轮从 HBM 读一次权重，忽略输入/输出：BF16 算术强度约 `2MKN/(2KN)=M FLOP/byte`，FP8 约 `2M FLOP/byte`。M=1 或 verify M≤8 时，即使理论 HBM 带宽吃满，weight-only roofline 也仅为 BF16 **2.45–19.6 TFLOP/s**、FP8 **4.9–39.2 TFLOP/s**。两种精度的 compute/bandwidth 平衡点均约 M=176。不能要求单 token 达到大矩阵峰值的 80%，也不能把 AIP 80% 和算力峰值 80% 混为一谈。
+最终194 passed、1 CUDA skip，MTP off/3/tree3s1、原INT8、512/768/1024及卸载重载通过。固定caption attention图片MAE0.09832/255，自身重复约0.104；自然扩写的三组图片MAE30.918–69.111/255，文本、构图和细节变化明显。质量判断限于已检查样本。[最终指标与哈希](evidence/moss-bf16-next-2026-11-11.json)
 
-只读统计现有 BF16 checkpoint：
+## 剩余空间及BF16投入价值
 
-| 部件 | bytes | 使用方式 |
+完整六段DiT时间线来自`64155fe4`，比最新单head改动早一轮。其预算可用于量级判断，下一次改造应刷新候选覆盖区域的时间。
+
+| 部分 | 既有25步预算 | 当前判断 |
 |---|---:|---|
-| 32 层文本主干 | 13,839,131,136 | 线性层、norm、conv 等静态参数 |
-| lm_head | 2,034,237,440 | 每次词表投影的大矩阵 |
-| embedding | 2,034,237,440 | 按行查找，不应计作每 token 全量扫描 |
-| MTP | 486,581,248 | 草稿额外计算/读取 |
-| vision | 912,020,960 | 此次纯文本扩写不执行完整视觉塔 |
+| 大Linear | 活动并集5.126s，真实权重轮换374–404TF/s | 约达432TF/s峰值的86.5–93.6%。全达峰值的算术差约0.434s |
+| QK/AV | 并集4.106s | 真实形状/布局效率较低，值得新算子或数据流研究 |
+| softmax独占 | 2.398s | N×N中间矩阵仍被物化，融合潜力明确，合格实现尚待验证 |
+| 其它kernel独占 | 1.805s | norm/RoPE等已做多轮优化，敏感舍入边界限制扩区 |
+| 设备事件间隙 | 0.752s | 全部消除的理想降幅约5.2%，实际可消除量更小或有依赖约束 |
 
-主干+lm_head 约 **15.87 GB**。假设完整顺序读一次且无其它成本，BF16 的读权重下界 **6.48 ms**，FP8 约 **3.24 ms**。这不是整模型 token/s 预测：还缺 KV/GDN 状态流量、草稿/验证次数、接受率、prefill 和启动成本；也不能把整个 19.31 GB 文件视为每 token 必须读取的内容。
+MME总并集为9.225s，以上Linear与QK/AV有交叠。按互斥分类总跨度14.181s。2.496PFLOP÷432TF/s得到5.778s，覆盖必要矩阵算术，softmax、流量、状态与调度仍需时间。AIP50–70%提供粗活动信息，工程收益需由这些费用分别估计。[预算原始依据](MOSS_BF16_PLAN_COMPLETION_2026-11-11.md)
 
-因此文本 FP8 的主要价值是减少流量。若关键路径仍在 host 提交或状态处理，矩阵本身加速一倍不等于生成加速一倍。
+最新文本两步trace仍有44.1%设备间隙，且CPU Linear154→10、launch964→820。短profile受采样与工具扰动影响，不能按比例直接乘4.867s。文本继续优化可改善完整扩写，固定caption缓存场景的主要收益仍需来自DiT。
 
-### DiT：大矩阵与 attention
+值得保留的BF16方向有两个。其一是新的精度合格attention融合/在线softmax实现，其二是有完整轨迹证据的文本提交或GDN融合。既有厂商SDPA模式、布局/padding、双层合并和Graph开关的重复扫描优先级较低。
 
-checkpoint 确认为 42 层，d=3072、FFN=8192、24 heads、head_dim=128；QKV `[9216,3072]`，up/gate `[16384,3072]`，down `[3072,8192]`，均 BF16。1024² latent 有 4096 个图像 token，加文本后约数千 token，比单 token 更适合 MME。
+## 失败记录中应保留的判断
 
-只作尺度估算：假设 CFG 每步两份完整前向，两份均 N=4096+303；每层线性 FLOPs 为 `2N(4d²+3df)`，attention 两次矩阵乘为 `4N²d`。42 层×25 步×2 约 **2.59 PFLOP**，除以 BF16 理论峰值得 **约 6.0 s 的矩阵计算下界**。
+| 路线 | 已知结果 | 再投入的条件 |
+|---|---|---|
+| fast softmax | block约9.19→8.10ms，FP64误差0.314%→0.721%，中心化仍0.670% | 新精度方案及完整质量证据 |
+| CFG合批/attention分块或padding | 适配成本抵消局部收益，部分数值更差 | 形状或底层数据流发生变化 |
+| modulation/residual继续融合 | 局部少量收益，部分深层参考误差扩大 | 能保留敏感边界或有更好的数值实现 |
+| 双block/lazy/Graph | 双层无收益，逐请求Graph预算15.24s对eager14.14s，另有ABI错误 | 执行模式/SDK或capture成本条件改变 |
+| pending专门化、conv索引、单独外围Linear | 无稳定叠加收益，部分约1% | 新trace证明成为主要费用 |
+| GDN扩大编译区域 | 旧递推与norm组合失败，改写递推后成功 | 重测依赖具体算法及图结构 |
+| 四行GDN、KV搬移 | 完整模型暴露HPU输入/别名问题，分别用边界clone和源行clone修复 | 算子回放、状态回滚与完整MTP入口一起验收 |
 
-6 秒不是交付预测：正负条件实际长度、padding/batch、softmax/exp、norm/SiTU、HBM 和运行时成本没有完整计入。真实 shape 尚未采全，不能据此声称精确 MFU。它只支持对当前约 38 秒 DiT 继续调查。如果只把 Linear 换 FP8，attention 或 TPC 操作仍占关键路径，不能套用全流程 2×。
+## FP8已有依据
 
-### INT8：不能把 TPC 指令能力当成 MME 吞吐
+本机4096³ eager `torch.mm`为BF16约275.76TF/s、FP8 E4M3/E5M2约525.88/519.63TF/s，均无fallback。该BF16控制低于当前编译大Linear的374–404TF/s，FP8真实形状必须重新对照当前产品。旧全模型FP8文件通过`full_precision_mm=True`解量化执行，2-token显著变慢。原生FP8 lm_head probe为9.580s，BF16为9.407s，样本与自然token轨迹不足以证明收益。现有失败限定了这些执行方式的价值。[本机早期记录](MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md)
 
-官方确认 TPC 支持 INT8；MME 数据类型列表和本机实测没有给出可套用的同级 INT8 GEMM 路径。`torch._int_mm` 当前 CPU fallback。[S1][S3] 原硬件记录中的“INT8 与 FP8 同量级”推断已在 `gaudi2-hardware.md` 更正。
+官方1.24.2文档提供Gaudi2 FP8静态/动态校准、scale及`fp8_gemm_v2`路径。量化转换和scale配置会影响执行成本，FP8的新recipe也增加warmup。此处建议复用厂商算子，先在现有eager编译栈验证选定Linear区域。[Intel FP8指南](https://docs.habana.ai/en/latest/PyTorch/Inference_on_PyTorch/Quantization/Inference_Using_FP8.html)
 
-自写 INT8 实际有三种路线：TPC 直接做小 M INT8/ConvRot GEMV；TPC 解包后交给 BF16/FP8 MME；一次性离线转换并常驻。前两者必须计入归约、逆旋转、scale、中间张量和同步总成本。第三种是权重准备方案，无需先实现通用 INT8 GEMM。不能 reinterpret ConvRot INT8 字节为 FP8。
+## 建议的FP8试点顺序
 
-## 多维比较
+1. **先DiT FFN，再QKV/输出投影。** 两种真实N下轮换42层权重，比较当前编译BF16与FP8输入转换＋GEMM＋scale/bias＋BF16输出的总成本。FFN两个大Linear已有约3.40s轮换预算，所有四类Linear约5.14s，具备可测量的秒级目标。小型重复热循环之外，再验证完整block与25步。
+2. **按扩散过程校准。** 使用已有BF16 DiT，采集浅/中/深层、早/中/晚timestep、正负条件及多提示词/尺寸的激活范围。校准集与最终质量检查提示词分开，检查饱和、相对误差、文字、人物和构图。先量化选定Linear，attention/norm/RoPE/残差按已验收精度执行，敏感Linear逐项回退。
+3. **沿用产品生命周期。** 权重转换跟随加载、补丁更新和卸载，记录常驻字节、cold、shape切换和fallback。量化operations可能改变现有编译分流，必须确认DiT分区继续生效。静态scale与动态scale都计入实际成本，按性能/质量取舍。
+4. **再考虑文本。** DiT试点证明净收益后，针对M=1/2/4/8的原生FP8 Linear重新测定。GDN FP32 state与MTP语义继续单独验收，固定程序与自然生成都检查。现有文本权重已由INT8派生，后续FP8质量评估需记录量化来源。
 
-| 路线 | 硬件/算子现状 | 挑战 | 质量与维护成本 | 复用价值 | 优先级 |
-|---|---|---|---|---|---|
-| BF16 区域编译、执行图、现有 fused ops | 原生 MME；GDN 已证明有效；DiT/主干仍有空白 | 中：shape bucket、graph break、状态/参数 cast、hook/LoRA 边界 | 无重新量化，仍需验证融合舍入和状态语义 | 很高：Qwen、MOSS、其它 DiT，且可用于 FP8 | **主线** |
-| 原生 FP8 Linear 适配 | 厂商 `cast_to_fp8_v2`/`fp8_gemm_v2` 已通 | 中高：range、scales、布局、activation quant、缓存失效 | 提示词、MTP、不同 diffusion timestep 校准；敏感层保留高精度 | 很高：通用 Linear 路径，校准按模型进行 | **第二优先，先试点** |
-| 定点 TPC 融合：norm/RoPE/SiTU、量化准备、GDN | 适合非 GEMM；编译后是否仍是热点待量化 | 高：reduce、布局、state alias、ABI、设备验证 | 高；状态错误可能延后才表现 | 高；GDN 部分主要限同架构 | **trace 证明后投入** |
-| 自写通用 INT8/ConvRot GEMM | 没有已确认可用的同级 MME INT8 路线 | 很高：tiling、packing、归约、多 shape，可能只能用 TPC | 高；ConvRot/W4/W6/codebook 增加组合 | 中：checkpoint 格式绑定，收益不确定 | **暂缓** |
-| 从零重写 FP8 GEMM | 已有厂商 MME 原语；TPC kernel 不等于 MME microkernel | 很高，容易重复已有工作且更慢 | 最高，SDK/ABI/shape 维护面大 | 理论高，当前可兑现价值低 | **不立项，做周边适配/融合** |
+以下只是沿用旧Linear预算5.126s的Amdahl情景。设所有可覆盖Linear部分实现给定净加速，转换开销已包含、其它费用固定，以最新缓存14.386s/完整19.978s作参照。
 
-粗工程预算只作投入上限：BF16 首个热点实验用 2–4 个工程日判断；FP8 shape/质量试点用 3–7 个工程日；可复用 TPC 融合按周评估；通用 INT8 GEMM 是数周以上且可能不产生成品的研究。它们不是交付时间承诺。
+| 覆盖部分净加速 | 节省时间 | 缓存整图估算 | 完整图估算 |
+|---|---:|---:|---:|
+| 1.3倍 | 1.183s | 13.203s | 18.796s |
+| 1.5倍 | 1.709s | 12.677s | 18.270s |
+| 2.0倍 | 2.563s | 11.823s | 17.415s |
 
-## 如何使用 80% 指标
-
-保留“稳定执行阶段 AIP 向 80% 靠近”的目标，但不作为唯一门槛。官方 hl-smi 文档以 1000 ms 活动窗口描述该值；100 ms 轮询不是 100 ms 精度的独立硬件计数。[S4] 本机 HLML 头文件另注明 OAM compute utilization 可大于 100%，memory 字段表示内存占用，须核实接口/版本语义。
-
-INT8 比 BF16 更忙却更慢，说明额外工作也会抬高活动率。建议同时验收：
-
-- 固定 caption/latent 的 steps/s、固定轨迹的 prefill/TPOT/token/s、自然结束用户图时间。
-- CPU 等待、launch gap、MME/TPC/DMA 活动区间并集和重叠，不相加嵌套事件 duration。
-- 计算密集段与本机真实 shape、相同输出 dtype 的持续 GEMM 基准比较。
-- 内存密集段建立逻辑字节模型；有硬件事务计数器再给真实 MBU，不用 `utilization.memory` 替代带宽。
-- fallback、显存、文本/图像质量与能耗。`hl-smi -Q power.draw` 只含 54V rail，整卡能耗需再计 12V，或明确只是 54V 估算。[S4]
-
-“匹配 shape 的计算/带宽上限达到 70–80%、host gap 明显缩小、端到端时间下降”可作为工程目标，与粗 AIP 百分比独立。批量/并发可提高利用率，但改变单请求目标，必须另列吞吐实验。
-
-## 执行顺序和转向条件
-
-1. **重新归因。** 用优化后的版本固定最终 caption/latent，拆 DiT Linear、attention、norm/RoPE/SiTU；文本 teacher-forcing 固定轨迹，另测 MTP off/固定树/auto。记录真实 shapes、CPU 等待、device trace；不能沿用旧 GDN 瓶颈占比。
-2. **先做 BF16 DiT。** 验证 repeated block 区域编译、shape bucket；既有 QKV/FFN 已融合。按 head_dim=128、真实 mask/长度比较当前 SDPA 最终 backend 与 Habana FusedSDPA operation modes。保留正常 softmax 基线，fast softmax 独立做质量验收。[S5]
-3. **扩展文本编译边界。** 从 GDN 扩到匹配 shape 的 Linear/MLP/norm 和解码块；减少控制数据回读。HPU Graph 是后续候选，需要静态 shape/address 和正确处理状态视图，不能直接挪用 CUDA graph 开关。[S6]
-4. **FP8 小范围试点。** 与新 BF16 图路径对照，覆盖 M=1/2/4/8 与 prefill/DiT 大 M，统一 BF16 输出，分别计 quant、GEMM、scale/layout 开销。先选高占比 Linear，一次量化常驻；从现有 INT8 转换可以测性能，但不能冒充原始 BF16 校准质量。GDN state/norm/敏感层保持适当精度。[S7]
-5. **满足条件才写热点 kernel。** 编译和厂商 op 后，某可融合区域仍占目标阶段约 15% 以上，且 trace 证明是设备计算/重复 HBM 流量，才投入 TPC 融合。若主要是 host gap，继续图执行；若 Linear 成为主耗时且 FP8 在真实形状上有净收益，提高 FP8 优先级。INT8 prototype 必须在包含 unpack/ConvRot/scale 的总耗时上胜过 BF16。
-
-建议本轮投入约 **60% DiT BF16 编译/attention、25% 文本执行与同步、15% native FP8 shape/校准试点**，下一轮按证据调整。
-
-用 60 s≈文本20+DiT38+其它2 做 Amdahl 敏感性分析：
-
-| 假设 | 整图时间 | 降幅 |
-|---|---:|---:|
-| 只让文本快 2× | 50 s | 约 17% |
-| 只让 DiT 快 2× | 41 s | 约 32% |
-| 两者都快 2× | 31 s | 约 48% |
-| 文本成本降为 0 | 40 s | 只优化文本的理想上界 |
-
-这些是固定工作量假设下的情景，不是预测。沿用单变量、至少五次真实 warm、cold 单列、质量/设备语义通过、收益超过噪音的门槛；自写 kernel 还必须用端到端收益证明维护成本值得。
-
-## 依据
-
-- [S1 Gaudi2 白皮书，第 6–10 页](https://habana.ai/wp-content/uploads/pdf/2021/gaudi2-whitepaper.pdf)
-- [S2 Intel Gaudi 硬件对照，第 3 页](https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf)
-- [S3 TPC 架构与指令](https://docs.habana.ai/en/latest/TPC/TPC_User_Guide/index.html)
-- [S4 hl-smi 指标与功耗 rail](https://docs.habana.ai/en/latest/Management_and_Monitoring/Embedded_System_Tools_Guide/System_Management_Interface_Tool.html)
-- [S5 FusedSDPA 与编译约束](https://docs.habana.ai/en/latest/PyTorch/Model_Optimization_PyTorch/Optimization_in_PyTorch_Models.html)
-- [S6 HPU Graph 限制](https://docs.habana.ai/en/latest/PyTorch/Inference_on_PyTorch/Inference_Using_HPU_Graphs.html)
-- [S7 FP8 原语、校准与 scale](https://docs.habana.ai/en/latest/PyTorch/Inference_on_PyTorch/Quantization/Inference_Using_FP8.html)
-- [本项目实测](MOSS_GDN_COMPILE_2026-11-09.md)；代码：`ComfyUI-Gaudi/comfy/ldm/moss_image/model.py`、`comfy/ops.py`、`comfy/text_encoders/hpu_gated_delta.py`。
-- JChen 快照 `e08710f7` 的 `extension/ops.py` 使用厂商 `fp8_gemm_v2`；`ops/hpu_lm_head_fp8.py` 是权重量化/调用封装。其 vLLM 调度、独立 draft 和性能不能直接外推到本工作流。
+实际覆盖比例、量化误差与额外调度决定结果。只加速Linear的情景把收益集中在约1–2.6s，达到6–7s缓存体验还需要attention及其它阶段共同改善。建议先完成一次真实shape→block→完整图的FP8试点，以质量合格后的端到端净收益决定继续投入。

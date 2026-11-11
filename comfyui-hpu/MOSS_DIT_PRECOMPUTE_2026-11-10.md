@@ -27,7 +27,7 @@ DiT 减少 **1.197291 s（6.11%）**，峰值显存增加约 0.113 GiB。图片�
 
 在 `BaseModel.MOSSImage.extra_conds` 中调用模型的 `preprocess_text`，将本次执行的 text_embedder 输出和 RoPE 放入 conditioning。模型不新增跨执行 tensor cache；保留原始 context，用于不适用预计算时的原路径。
 
-RoPE 为 FP32，用 conditioning payload 保留其精度，避免 `BaseModel._apply_model` 把所有浮点附加 tensor 自动转成 BF16。普通单 latent 的 `latent_shapes` 实际是 `[[B,C,H,W]]`，不是 None；首轮代码已根据真实运行参数修正这一识别，最终每请求确实预计算两次。
+RoPE通过conditioning payload保留FP32精度。普通单latent的`latent_shapes`为`[[B,C,H,W]]`，需按实际形状判定预计算条件。
 
 优化仅针对 HPU BF16 的静态推理。训练、带梯度执行、hooks、区域、ControlNet、参考图、packed latent 及不支持的 model/transformer options 保留原路径。运行中形状、RoPE options、设备或 hooks 不匹配时重新计算；不缓存 timestep 相关调制。CPU/其它设备不启用新预计算。
 
@@ -57,13 +57,9 @@ SDPA 数据来自真实首层 N=4408 的捕获输入与实际 block，每种 5 �
 
 另只读确认本机 Habana 1.24.2 的 `hpu/graphs.py` 会在 eager 下拒绝 `HPUGraph`，明确要求 lazy mode；本产品当前依赖 eager + torch.compile。没有直接切换全栈执行模式或套用 CUDA graph 开关。
 
-## 卸载检查的修正
+## 卸载与测量经验
 
-更严格的 `/free` 检查最初设了“低于 512 MiB”，没有达到。该阈值来自文本模型单独测试，不适用于完整 pipeline，因此不能据此宣称新预计算泄漏。
-
-实际记录到 API 返回后仍在异步释放，初次观测约 32.32 GB，重试 flags 后逐步降到 **2,685,928,832 bytes**。随后恢复优化前的两份产品文件，在独立进程运行相同完整图并使用相同卸载流程，基线稳定值也为 **2,685,928,832 bytes**，与新版本完全一致。当前证据没有新增残留；没有把这 2.50 GiB 的既有残留误记为完全零占用，也没有未经归因就声称它全部属于某一种底层缓存。
-
-最初严格阈值超时日志保留在 `restore.log`，基线完整采样/卸载记录在 `full-unload-control`。后续脚本按相同基线的稳定占用比较，重试异步卸载 flags，而非沿用错误的绝对阈值。
+完整pipeline基线与候选卸载稳定值均为2,685,928,832 bytes。释放为异步过程，应等待稳定值并用相同工作流对照。文本单独卸载的约94MiB只适用于对应测试范围。
 
 ## 证据与交付
 
@@ -75,8 +71,4 @@ SDPA 数据来自真实首层 N=4408 的捕获输入与实际 block，每种 5 �
 - `tests-preparation.log`、`tests-preparation-shapes.log`、`tests-final.log`：回归与复验。
 - `product-source` / `baseline-source`：受控卸载比较的两份源码版本。
 
-产品提交 `b1163be0`，本地未 push；只更新独立 `/home/sonny/ComfyUI-Gaudi`，没有修改原始 `/home/sonny/ComfyUI` 或模型文件。所有实验与失败记录保存在本调查仓库。
-
-8189 日常服务已恢复，并以用户原图重新加载模型和节点缓存。首次恢复请求成功（cold 46.665 s），随后只改 KSampler seed 的文本缓存请求为 **18.764 s**，确认 TextGenerate 与正负编码均命中缓存。该一次日常请求仅作为使用验证，正式收益仍采用前面的五次 warm 对照。
-
-本轮稳定收益是去除重复条件计算。主干约 18 秒仍占绝大多数；下一阶段应围绕真实 shape 的矩阵与 attention 设备时间，评估现有 BF16 路径的剩余机会及独立的执行模式/原生 FP8 试点，继续以完整延迟、精度和资源生命周期验收。
+固定caption的缓存使用验证为18.764s，单次结果。后续路线见 [BF16复盘与FP8判断](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。
