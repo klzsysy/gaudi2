@@ -27,6 +27,11 @@ if os.environ.get("MOSS_DISABLE_ATTENTION_REGION") == "1":
 if os.environ.get("MOSS_DECODE_REGIONS"):
     import moss_decode_regions
     moss_decode_regions.install()
+if os.environ.get("MOSS_BF16_CAPTURE"):
+    import moss_bf16_capture
+if os.environ.get("MOSS_BF16_CANDIDATE"):
+    import moss_bf16_candidates
+    moss_bf16_candidates.install(os.environ["MOSS_BF16_CANDIDATE"])
 
 out = Path(os.environ["MOSS_EVENTS"])
 diagnostic = False
