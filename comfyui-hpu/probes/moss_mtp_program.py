@@ -63,7 +63,7 @@ def sample(module, logits, *values, **kwargs):
     global profiler
     result = original_sample(module, logits, *values, **kwargs)
     if active:
-        if os.environ.get('MOSS_MTP_LOGITS') == '1':
+        if os.environ.get('MOSS_MTP_LOGITS') == '1' and generation == int(os.environ.get('MOSS_MTP_LOGITS_GENERATION', str(generation))):
             captured['logits'].append(logits.detach().clone())
         if recording:
             captured['sample'].append(result.detach().clone())
@@ -72,7 +72,7 @@ def sample(module, logits, *values, **kwargs):
             assert expected.shape == result.shape
             result = expected
         indices['sample'] += 1
-        if os.environ.get('MOSS_MTP_PROFILE') == '1' and generation == 2:
+        if os.environ.get('MOSS_MTP_PROFILE') == '1' and generation == int(os.environ.get('MOSS_MTP_PROFILE_GENERATION', '2')):
             if indices['sample'] == 8:
                 torch.hpu.synchronize()
                 profiler = torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.HPU])
@@ -130,7 +130,7 @@ def generate(clip, *values, **kwargs):
         else:
             assert result == program['ids']
             assert all(indices[k] == len(program[k]) for k in indices), indices
-        if os.environ.get('MOSS_MTP_LOGITS') == '1' and not recording:
+        if os.environ.get('MOSS_MTP_LOGITS') == '1' and not recording and generation == int(os.environ.get('MOSS_MTP_LOGITS_GENERATION', str(generation))):
             torch.save(torch.cat([x.cpu() for x in captured['logits']]), root / f'mtp-logits-{generation}.pt')
         with (root / 'program-checks.jsonl').open('a') as stream:
             stream.write(json.dumps(dict(generation=generation, counts=indices, tokens=len(result)))+'\n')

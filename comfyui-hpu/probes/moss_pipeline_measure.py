@@ -19,7 +19,7 @@ url = 'http://127.0.0.1:8190'
 
 def api(route, data=None):
     request = urllib.request.Request(url + route, data=None if data is None else json.dumps(data).encode(), headers={'Content-Type': 'application/json'})
-    with urllib.request.urlopen(request, timeout=20) as response:
+    with urllib.request.urlopen(request, timeout=120) as response:
         return json.load(response)
 
 
@@ -55,7 +55,7 @@ def run(label, graph, recompute, diagnostic=False):
 
 env = dict(os.environ, PT_HPU_LAZY_MODE='0', GC_KERNEL_PATH='/usr/lib/habanalabs/libtpc_kernels.so',
            PYTHONPATH=str(checkout), MOSS_EVENTS=str(directory / 'events.jsonl'), MOSS_PIPELINE_DETAIL='1')
-command = [sys.executable, str(Path(__file__).with_name('moss_observed_server.py')), '--disable-dynamic-vram',
+command = [sys.executable, str(Path(__file__).with_name(os.environ.get('MOSS_SERVER_SCRIPT', 'moss_observed_server.py'))), '--disable-dynamic-vram',
            '--disable-pinned-memory', '--disable-async-offload', '--disable-xformers', '--use-pytorch-cross-attention',
            '--listen', '127.0.0.1', '--port', '8190']
 with (directory / 'server.log').open('w') as log, (directory / 'hpu.csv').open('w') as telemetry_log:

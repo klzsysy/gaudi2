@@ -79,7 +79,7 @@
 
 早期BF16常驻、FP8/INT8 probe及失败路径见 [初期调查](MOSS_HPU_PERFORMANCE_RUN_2026-11-08.md)。拆解36.648s工作流和30.786s节点耗时的证据分别见 [工作流拆解](MOSS_WORKFLOW_BREAKDOWN_2026-11-10.md) 和 [节点计时](MOSS_PIPELINE_TIMING_2026-11-10.md)。
 
-## 当前验收与下一阶段
+## BF16阶段验收与后续试点
 
 - 最新产品194 passed、1 CUDA skip，512/768/1024、MTP off/3/tree3s1、原INT8及卸载重载通过。自然文本与同seed图像细节会改变，cold64.665s，完整warm19.906–20.122s。
 - 同工作量allocator峰值39.3754GiB，卸载2,685,928,832 bytes，多形状/INT8验收为2,686,190,976 bytes。六份部署文件哈希一致，上一轮8189恢复cold66.725s、缓存14.751s、检查队列为空。[部署证据](evidence/moss-bf16-next-2026-11-11.json)
@@ -93,3 +93,11 @@
 - 三组图像、512/768/1024及卸载重载通过，fallback为空，显存峰值39.510→34.842GiB，卸载均回到2,685,928,832 bytes。文本实际使用现有BF16文件，遵循优先优化主模型的范围。精度与测试边界见 [FP8报告](MOSS_FP8_ADAPTATION_2026-11-11.md)。
 
 产品`2227f7d3`已部署8189，正常入口cold70.970s/缓存13.600s，文件哈希一致、队列为空。核心回归240 passed，最后量化补充29 passed（有重叠），加载重复metadata warning消失。
+
+## Qwen3.5 FP8文本与全流程预算（2026-11-12）
+
+- 产品`148b252a`接入HPU原生E4M3文本Linear与已有区域编译，修复CLIP强制compute dtype导致的逐次解量化。转换201个语言Linear，文件11.377GB，MTP、门控、norm等保持源精度。源权重来自INT8解码BF16，属于二次量化。
+- 同298-token程序，完整warm18.954→18.933s，扩写5.307→5.154s，普通编码0.317→0.411s，DiT约13.07s。allocator峰值34.777→27.267GiB。吞吐提升未超出波动范围。
+- DiT六段trace互斥预算为FP8 MME2.515s、其它MME3.508s、softmax2.700s、其它kernel3.604s、间隙1.041s。大Linear活动阶段估算806TF/s，后续优先attention数据流、量化/逐元素融合和文本提交粒度。
+- FP8 fused attention、FP8 QK/AV分解、全tensor激活scale均无整体收益。小M额外动态编译存在数值与重载问题，已撤回。251项最终回归、三组自然图片、默认异步重载/MTP off/INT8通过，fallback为空。
+- 8189已恢复，版本和8份文件哈希一致，正常入口cold74.786s/缓存13.466s、队列为空。详见 [全流程记录](MOSS_FP8_SYSTEM_OPTIMIZATION_2026-11-12.md)。

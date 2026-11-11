@@ -1,0 +1,997 @@
+{
+  "date": "2026-11-12",
+  "product_commit": "148b252aec862727a325ddb43eaa561241f05af9",
+  "conversion": {
+    "source": "/home/sonny/ComfyUI-Models/models/text_encoders/qwen3.5_9b_bf16_from_int8.safetensors",
+    "destination": "/home/sonny/ComfyUI-Models/models/text_encoders/qwen3.5_9b_fp8_from_int8.safetensors",
+    "converted_linears": 201,
+    "bytes": 11377021988,
+    "seconds": 25.721234974000254
+  },
+  "timings": {
+    "baseline": {
+      "warm_seconds": [
+        19.160020139,
+        18.954448676,
+        18.943359083,
+        18.962264338,
+        18.858025443
+      ],
+      "median": 18.954448676,
+      "node_medians": {
+        "TextGenerate": 5.307453922,
+        "SwitchNode": 0.000115861,
+        "PreviewAny": 6.2693e-05,
+        "CLIPTextEncode": 0.316549061,
+        "KSampler": 13.070691188,
+        "VAEDecode": 0.132461024,
+        "PreviewImage": 0.108769442
+      },
+      "traces": {}
+    },
+    "native-cast": {
+      "warm_seconds": [
+        19.019947232,
+        18.79736269,
+        18.927690693,
+        18.89853718,
+        18.814072967
+      ],
+      "median": 18.89853718,
+      "node_medians": {
+        "TextGenerate": 5.096329823,
+        "SwitchNode": 0.000111039,
+        "PreviewAny": 6.2248e-05,
+        "CLIPTextEncode": 0.38969412000000003,
+        "KSampler": 13.098178608,
+        "VAEDecode": 0.132281292,
+        "PreviewImage": 0.107528674
+      },
+      "traces": {}
+    },
+    "native-release": {
+      "warm_seconds": [
+        19.155790003,
+        18.935004422,
+        18.882305,
+        18.670408288,
+        18.932935004
+      ],
+      "median": 18.932935004,
+      "node_medians": {
+        "TextGenerate": 5.154194863,
+        "SwitchNode": 0.000116589,
+        "PreviewAny": 6.238e-05,
+        "CLIPTextEncode": 0.41057693900000003,
+        "KSampler": 13.073816334,
+        "VAEDecode": 0.131805025,
+        "PreviewImage": 0.107842185
+      },
+      "traces": {}
+    }
+  },
+  "trace_budgets": {
+    "baseline": {
+      "dit-307-step12.trace.json": {
+        "span_ms": 275.3030522460937,
+        "disjoint_ms": {
+          "idle": 18.033884277343667,
+          "other_kernel": 77.24977099604399,
+          "other_mme": 12.682958496093304,
+          "fp8_mme+other_kernel": 5.063900878906571,
+          "fp8_mme": 46.27237597656298,
+          "other_kernel+other_mme": 8.474835449224479,
+          "other_kernel+other_mme+softmax": 2.752548828123923,
+          "other_mme+softmax": 49.232669433611164,
+          "softmax": 52.56395703126426,
+          "other_kernel+softmax": 2.9761508789055013
+        },
+        "kernels": 637082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2458.3446079959244,
+          "GEMM": 657.4234200000312,
+          "fused_kernel_0x39BA8699_14A_bf16": 500.4950019999931,
+          "mult_fwd_f32": 196.7362920000005,
+          "rope_st2_fwd_f32": 146.35441500000013,
+          "DmaTranspose": 141.06821799998954,
+          "fused_kernel_0x7D079E08_149_f32": 129.81612199999952,
+          "add_bf16": 123.06064299999986,
+          "fused_kernel_0x784B32BB_151_f32": 120.43944100000269,
+          "rms_norm_fwd_bf16": 118.33573500000013,
+          "mult_fwd_bf16": 116.68685799989957,
+          "fused_kernel_0xA88B9FE3_150_f32": 77.74996899999988,
+          "cast_f32_to_bf16": 74.35571499999949,
+          "fused_kernel_0x466E3A76_14B_f32": 40.76652699999925,
+          "fused_kernel_0x370137E5_14C_f32": 38.55419699999966,
+          "fused_kernel_0xA389951E_14E_f32": 31.62956900000118,
+          "fused_kernel_0x8019A6E4_14F_f32": 25.82254000000111,
+          "fused_kernel_0x74B6387F_14D_f32": 20.139519,
+          "fused_kernel_0x74B6387F_154_f32": 20.109913999999936,
+          "fused_kernel_0xA389951E_147_f32": 16.85407000000003
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "dit-23-step12.trace.json": {
+        "span_ms": 253.776701171875,
+        "disjoint_ms": {
+          "idle": 17.985721191406533,
+          "other_kernel": 66.91418847658223,
+          "other_mme": 16.281405273438807,
+          "fp8_mme": 38.883581054687696,
+          "fp8_mme+other_kernel": 10.370839355470858,
+          "other_kernel+other_mme": 8.527016601568674,
+          "other_kernel+other_mme+softmax": 0.2175083007812589,
+          "other_mme+softmax": 42.13555517579146,
+          "softmax": 47.74614404298222,
+          "other_kernel+softmax": 4.71474169922028
+        },
+        "kernels": 595082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2160.048351000749,
+          "GEMM": 602.1042200000129,
+          "fused_kernel_0xD234406D_143_bf16": 468.48161099999896,
+          "mult_fwd_f32": 184.63254999999808,
+          "fused_kernel_0xE2ACE3C0_142_f32": 155.82021000001737,
+          "DmaTranspose": 148.4769509999906,
+          "rope_st2_fwd_f32": 138.48319200000026,
+          "add_bf16": 114.89505600000005,
+          "fused_kernel_0x36BE343_13C_f32": 112.27816599999475,
+          "rms_norm_fwd_bf16": 112.0563799999999,
+          "mult_fwd_bf16": 108.9568009998984,
+          "fused_kernel_0x92966F95_13B_f32": 71.89610100000013,
+          "cast_f32_to_bf16": 69.63988199999913,
+          "fused_kernel_0x4AD45AB_144_f32": 34.52259600000025,
+          "fused_kernel_0xCE822C0F_145_f32": 34.089011000000255,
+          "fused_kernel_0xEA65F579_139_f32": 30.030440999999936,
+          "fused_kernel_0x7EBBAC00_13A_f32": 23.45369499999986,
+          "fused_kernel_0x2CED9A52_13F_f32": 21.468745000000432,
+          "fused_kernel_0x2CED9A52_146_f32": 20.58757800000023,
+          "fused_kernel_0xEA65F579_140_f32": 14.787630000000064
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "dit-23-step24.trace.json": {
+        "span_ms": 253.9302822265625,
+        "disjoint_ms": {
+          "idle": 18.159048339843945,
+          "other_kernel": 66.87073046876918,
+          "other_mme": 16.32424560547009,
+          "fp8_mme": 38.89429931640612,
+          "fp8_mme+other_kernel": 10.35819677734583,
+          "other_kernel+other_mme": 8.505588378912423,
+          "other_mme+softmax": 42.11702099610477,
+          "other_kernel+other_mme+softmax": 0.21574414062500982,
+          "softmax": 47.76780957032521,
+          "other_kernel+softmax": 4.717598632814095
+        },
+        "kernels": 595082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2160.04231200076,
+          "GEMM": 602.0241820000174,
+          "fused_kernel_0xD234406D_143_bf16": 468.4817629999974,
+          "mult_fwd_f32": 184.80436699999967,
+          "fused_kernel_0xE2ACE3C0_142_f32": 155.80234000001792,
+          "DmaTranspose": 148.3723489999891,
+          "rope_st2_fwd_f32": 138.39108099999976,
+          "add_bf16": 113.30777600000006,
+          "fused_kernel_0x36BE343_13C_f32": 112.3126549999948,
+          "rms_norm_fwd_bf16": 111.77520500000004,
+          "mult_fwd_bf16": 107.96420699989993,
+          "fused_kernel_0x92966F95_13B_f32": 71.80354500000004,
+          "cast_f32_to_bf16": 69.62802899999893,
+          "fused_kernel_0x4AD45AB_144_f32": 34.51205600000044,
+          "fused_kernel_0xCE822C0F_145_f32": 34.11047700000011,
+          "fused_kernel_0xEA65F579_139_f32": 30.61528999999987,
+          "fused_kernel_0x7EBBAC00_13A_f32": 24.24071399999962,
+          "fused_kernel_0x2CED9A52_13F_f32": 21.445763000000436,
+          "fused_kernel_0x2CED9A52_146_f32": 20.5806450000003,
+          "fused_kernel_0xEA65F579_140_f32": 15.32730400000008
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "dit-307-step0.trace.json": {
+        "span_ms": 273.1315439453125,
+        "disjoint_ms": {
+          "idle": 15.808087402343784,
+          "other_kernel": 77.32186181635724,
+          "other_mme": 12.620648437499701,
+          "fp8_mme+other_kernel": 5.037925292969022,
+          "fp8_mme": 46.28684082031292,
+          "other_kernel+other_mme": 8.526782714849789,
+          "other_kernel+other_mme+softmax": 2.7610595703114127,
+          "other_mme+softmax": 49.21517675783067,
+          "softmax": 52.57439892579556,
+          "other_kernel+softmax": 2.9787622070305004
+        },
+        "kernels": 637082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2458.421893995932,
+          "GEMM": 657.2328750000333,
+          "fused_kernel_0x39BA8699_14A_bf16": 500.49228399999214,
+          "mult_fwd_f32": 196.72740899999894,
+          "rope_st2_fwd_f32": 146.41569600000008,
+          "DmaTranspose": 141.22825499999112,
+          "fused_kernel_0x7D079E08_149_f32": 129.8129329999999,
+          "add_bf16": 122.92905100000002,
+          "fused_kernel_0x784B32BB_151_f32": 120.5443060000028,
+          "rms_norm_fwd_bf16": 119.702616,
+          "mult_fwd_bf16": 116.68238199990023,
+          "fused_kernel_0xA88B9FE3_150_f32": 77.80191699999985,
+          "cast_f32_to_bf16": 74.31077399999936,
+          "fused_kernel_0x466E3A76_14B_f32": 40.75244199999931,
+          "fused_kernel_0x370137E5_14C_f32": 38.55334599999985,
+          "fused_kernel_0xA389951E_14E_f32": 31.827176000001163,
+          "fused_kernel_0x8019A6E4_14F_f32": 25.72445400000104,
+          "fused_kernel_0x74B6387F_154_f32": 20.18236899999992,
+          "fused_kernel_0x74B6387F_14D_f32": 20.146633000000097,
+          "fused_kernel_0xA389951E_147_f32": 17.06584500000001
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "dit-23-step0.trace.json": {
+        "span_ms": 272.67696923828123,
+        "disjoint_ms": {
+          "idle": 36.94910742187477,
+          "other_kernel": 66.85405029298967,
+          "other_mme": 16.345115722657543,
+          "fp8_mme": 38.87811474609387,
+          "fp8_mme+other_kernel": 10.356569824220898,
+          "other_kernel+other_mme": 8.486377441412488,
+          "other_kernel+other_mme+softmax": 0.21529687500000957,
+          "other_mme+softmax": 42.13854492188523,
+          "softmax": 47.72768701173201,
+          "other_kernel+softmax": 4.7261049804704225
+        },
+        "kernels": 595082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2160.0733180007796,
+          "GEMM": 602.135097000015,
+          "fused_kernel_0xD234406D_143_bf16": 468.4829729999991,
+          "mult_fwd_f32": 184.93225199999907,
+          "fused_kernel_0xE2ACE3C0_142_f32": 155.79732800001813,
+          "DmaTranspose": 150.30583699999053,
+          "rope_st2_fwd_f32": 138.2300070000002,
+          "add_bf16": 114.94309400000039,
+          "fused_kernel_0x36BE343_13C_f32": 112.26855299999458,
+          "rms_norm_fwd_bf16": 111.51588999999974,
+          "mult_fwd_bf16": 109.00342799989893,
+          "fused_kernel_0x92966F95_13B_f32": 71.97648799999999,
+          "cast_f32_to_bf16": 69.75212599999914,
+          "fused_kernel_0x4AD45AB_144_f32": 34.497042000000356,
+          "fused_kernel_0xCE822C0F_145_f32": 34.19492400000006,
+          "fused_kernel_0xEA65F579_139_f32": 29.88408599999991,
+          "fused_kernel_0x7EBBAC00_13A_f32": 23.48624099999966,
+          "fused_kernel_0x2CED9A52_13F_f32": 21.45036500000041,
+          "fused_kernel_0x2CED9A52_146_f32": 20.613158000000265,
+          "fused_kernel_0xEA65F579_140_f32": 14.943968000000051
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "dit-307-step24.trace.json": {
+        "span_ms": 275.27111181640623,
+        "disjoint_ms": {
+          "idle": 17.969805175781257,
+          "other_kernel": 77.2861611327614,
+          "other_mme": 12.642797851562191,
+          "fp8_mme+other_kernel": 5.071363769531557,
+          "fp8_mme": 46.268143554688045,
+          "other_kernel+other_mme": 8.507941406256018,
+          "other_kernel+other_mme+softmax": 2.75115869140517,
+          "other_mme+softmax": 49.226279296893196,
+          "softmax": 52.575811035170766,
+          "other_kernel+softmax": 2.971649902342964
+        },
+        "kernels": 637082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2458.388855995938,
+          "GEMM": 657.2482190000295,
+          "fused_kernel_0x39BA8699_14A_bf16": 500.4967759999944,
+          "mult_fwd_f32": 196.72112300000023,
+          "rope_st2_fwd_f32": 146.55055100000033,
+          "DmaTranspose": 141.6818379999918,
+          "fused_kernel_0x7D079E08_149_f32": 129.85768099999981,
+          "add_bf16": 123.07533200000016,
+          "fused_kernel_0x784B32BB_151_f32": 120.48640100000274,
+          "rms_norm_fwd_bf16": 119.01696399999976,
+          "mult_fwd_bf16": 116.66683999989854,
+          "fused_kernel_0xA88B9FE3_150_f32": 77.8103789999997,
+          "cast_f32_to_bf16": 74.3601869999995,
+          "fused_kernel_0x466E3A76_14B_f32": 40.7652579999994,
+          "fused_kernel_0x370137E5_14C_f32": 38.4397949999997,
+          "fused_kernel_0xA389951E_14E_f32": 31.712034000001104,
+          "fused_kernel_0x8019A6E4_14F_f32": 25.802448000001085,
+          "fused_kernel_0x74B6387F_14D_f32": 20.11344500000005,
+          "fused_kernel_0x74B6387F_154_f32": 20.087098000000022,
+          "fused_kernel_0xA389951E_147_f32": 16.877427000000047
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "mtp/mtp-steps.trace.json": {
+        "span_ms": 143.7785078125,
+        "disjoint_ms": {
+          "idle": 95.62728710937364,
+          "other_kernel": 31.44646777344972,
+          "other_mme": 14.502330566407647,
+          "other_kernel+other_mme": 2.1708227539061267,
+          "softmax": 0.031599609375000004
+        },
+        "kernels": 214897,
+        "summed_kernel_ms": {
+          "gather_fwd_f32": 95.31171600000026,
+          "GEMM": 69.51075799999995,
+          "reduce_sum_fwd_f32": 46.91825899999992,
+          "gather_fwd_bf16": 45.388110000000026,
+          "tile_fwd_f32": 35.94451299999875,
+          "BatchGemm": 21.37245499999929,
+          "cast_bf16_to_f32": 21.1402639999998,
+          "bitonic_sort_f32": 17.047639999999998,
+          "mult_fwd_f32": 13.657467999999858,
+          "DmaTranspose": 11.521001000000561,
+          "MMEH_WB1_MON_TS_BIT1": 10.842704000000001,
+          "MMEH_WB0_MON_TS_BIT1": 10.283434,
+          "radix_sort_stg2_f32": 9.791907999999994,
+          "radix_sort_stg1_f32": 7.591831000000007,
+          "index_copy_fwd_bf16": 6.076481999999999,
+          "fused_kernel_0x8E1A2508_C7_bf16": 5.334283999999969,
+          "memcpy_f32": 5.120873999999983,
+          "add_fwd_f32": 4.713380999999753,
+          "scalar_merge_f32": 4.576447,
+          "where_fwd_bf16": 4.281451999999988
+        },
+        "runtime_counts": {
+          "run": 1630,
+          "launch": 950,
+          "Launch": 950,
+          "launch_recipe": 270,
+          "LaunchRecipe": 270
+        }
+      }
+    },
+    "native-cast": {
+      "dit-307-step12.trace.json": {
+        "span_ms": 276.99949267578126,
+        "disjoint_ms": {
+          "idle": 19.58194824218744,
+          "other_kernel": 77.39825048823283,
+          "other_mme": 12.614374023437147,
+          "fp8_mme+other_kernel": 5.04120068359404,
+          "fp8_mme": 46.30574902343804,
+          "other_kernel+other_mme": 8.53350000000591,
+          "other_kernel+other_mme+softmax": 2.754669433592662,
+          "other_mme+softmax": 49.208865234393244,
+          "softmax": 52.57786035157724,
+          "other_kernel+softmax": 2.9830751953117445
+        },
+        "kernels": 637082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2458.4209949958663,
+          "GEMM": 657.4039120000327,
+          "fused_kernel_0x39BA8699_15D_bf16": 500.49370399999424,
+          "mult_fwd_f32": 196.75575699999985,
+          "rope_st2_fwd_f32": 147.66100700000067,
+          "DmaTranspose": 141.44649799999038,
+          "fused_kernel_0x7D079E08_15C_f32": 129.75124999999997,
+          "add_bf16": 122.73900600000017,
+          "fused_kernel_0x784B32BB_164_f32": 120.54135100000279,
+          "rms_norm_fwd_bf16": 119.70235899999979,
+          "mult_fwd_bf16": 115.6401479999029,
+          "fused_kernel_0xA88B9FE3_163_f32": 77.77137899999992,
+          "cast_f32_to_bf16": 74.29430099999946,
+          "fused_kernel_0x466E3A76_15E_f32": 40.67099399999927,
+          "fused_kernel_0x370137E5_15F_f32": 38.39775499999974,
+          "fused_kernel_0xA389951E_161_f32": 31.993478000001105,
+          "fused_kernel_0x8019A6E4_162_f32": 25.589785000000983,
+          "fused_kernel_0x74B6387F_167_f32": 20.127137999999988,
+          "fused_kernel_0x74B6387F_160_f32": 20.09019100000006,
+          "fused_kernel_0xA389951E_15A_f32": 17.112420000000057
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "dit-23-step12.trace.json": {
+        "span_ms": 252.87926611328126,
+        "disjoint_ms": {
+          "idle": 17.070572265625227,
+          "other_kernel": 66.89606005861448,
+          "other_mme": 16.33239697265756,
+          "fp8_mme": 38.915241699219,
+          "other_kernel+other_mme": 8.494797363287441,
+          "other_kernel+other_mme+softmax": 0.21624707031250964,
+          "other_mme+softmax": 42.11646923829242,
+          "softmax": 47.76609619141859,
+          "other_kernel+softmax": 4.7208662109390485,
+          "fp8_mme+other_kernel": 10.350519042970868
+        },
+        "kernels": 595082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2160.1081920008087,
+          "GEMM": 602.2127660000217,
+          "fused_kernel_0xD234406D_156_bf16": 468.4812370000003,
+          "mult_fwd_f32": 184.63559100000003,
+          "fused_kernel_0xE2ACE3C0_155_f32": 155.82496300001796,
+          "DmaTranspose": 149.4404719999904,
+          "rope_st2_fwd_f32": 137.44094299999946,
+          "add_bf16": 115.93012799999988,
+          "fused_kernel_0x36BE343_14F_f32": 112.2643159999957,
+          "rms_norm_fwd_bf16": 111.29084500000016,
+          "mult_fwd_bf16": 108.59392299989872,
+          "fused_kernel_0x92966F95_14E_f32": 72.05171500000006,
+          "cast_f32_to_bf16": 69.71845499999894,
+          "fused_kernel_0x4AD45AB_157_f32": 34.381296000000276,
+          "fused_kernel_0xCE822C0F_158_f32": 34.04324700000019,
+          "fused_kernel_0xEA65F579_14C_f32": 29.90779399999992,
+          "fused_kernel_0x7EBBAC00_14D_f32": 23.43049899999971,
+          "fused_kernel_0x2CED9A52_152_f32": 21.402207000000242,
+          "fused_kernel_0x2CED9A52_159_f32": 20.612618000000282,
+          "fused_kernel_0xEA65F579_153_f32": 14.912232000000072
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "dit-23-step24.trace.json": {
+        "span_ms": 254.19067919921875,
+        "disjoint_ms": {
+          "idle": 18.412988769531488,
+          "other_kernel": 66.87720996095689,
+          "other_mme": 16.3263144531263,
+          "fp8_mme": 38.90802978515642,
+          "fp8_mme+other_kernel": 10.356770507814558,
+          "other_kernel+other_mme": 8.49258300781863,
+          "other_kernel+other_mme+softmax": 0.21530664062500776,
+          "other_mme+softmax": 42.12299121094952,
+          "softmax": 47.756561035168836,
+          "other_kernel+softmax": 4.721923828126563
+        },
+        "kernels": 595082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2160.1400420008313,
+          "GEMM": 602.197426000017,
+          "fused_kernel_0xD234406D_156_bf16": 468.48251599999514,
+          "mult_fwd_f32": 184.79451699999956,
+          "fused_kernel_0xE2ACE3C0_155_f32": 155.80484200001825,
+          "DmaTranspose": 149.48226399998867,
+          "rope_st2_fwd_f32": 137.44411099999994,
+          "add_bf16": 115.97000800000005,
+          "fused_kernel_0x36BE343_14F_f32": 112.3366149999944,
+          "rms_norm_fwd_bf16": 110.95475699999997,
+          "mult_fwd_bf16": 108.57215299989821,
+          "fused_kernel_0x92966F95_14E_f32": 72.11213599999992,
+          "cast_f32_to_bf16": 69.86188399999904,
+          "fused_kernel_0x4AD45AB_157_f32": 34.4261390000004,
+          "fused_kernel_0xCE822C0F_158_f32": 34.12216700000021,
+          "fused_kernel_0xEA65F579_14C_f32": 29.884100999999855,
+          "fused_kernel_0x7EBBAC00_14D_f32": 23.366342999999745,
+          "fused_kernel_0x2CED9A52_152_f32": 21.4120540000004,
+          "fused_kernel_0x2CED9A52_159_f32": 20.61238400000022,
+          "fused_kernel_0xEA65F579_153_f32": 14.950631000000069
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "dit-307-step0.trace.json": {
+        "span_ms": 273.72755078125,
+        "disjoint_ms": {
+          "idle": 16.336817382812587,
+          "other_kernel": 77.36777636713843,
+          "other_mme": 12.649521972655872,
+          "fp8_mme+other_kernel": 5.017205566406507,
+          "fp8_mme": 46.325316406250515,
+          "other_kernel+other_mme": 8.501701660162245,
+          "other_kernel+other_mme+softmax": 2.754629882811413,
+          "other_mme+softmax": 49.21383203126769,
+          "softmax": 52.586580566420345,
+          "other_kernel+softmax": 2.9741689453117623
+        },
+        "kernels": 637082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2458.492488995877,
+          "GEMM": 657.3855840000306,
+          "fused_kernel_0x39BA8699_15D_bf16": 500.4926339999942,
+          "mult_fwd_f32": 196.77258799999927,
+          "rope_st2_fwd_f32": 147.7050269999998,
+          "DmaTranspose": 141.6518909999911,
+          "fused_kernel_0x7D079E08_15C_f32": 129.85487900000004,
+          "add_bf16": 122.71135899999997,
+          "fused_kernel_0x784B32BB_164_f32": 120.6621610000023,
+          "rms_norm_fwd_bf16": 119.98393799999995,
+          "mult_fwd_bf16": 115.63567099990263,
+          "fused_kernel_0xA88B9FE3_163_f32": 77.7534289999998,
+          "cast_f32_to_bf16": 74.30058199999918,
+          "fused_kernel_0x466E3A76_15E_f32": 40.59131099999935,
+          "fused_kernel_0x370137E5_15F_f32": 38.40663799999983,
+          "fused_kernel_0xA389951E_161_f32": 31.789887000001258,
+          "fused_kernel_0x8019A6E4_162_f32": 25.549528000000983,
+          "fused_kernel_0x74B6387F_160_f32": 20.122631000000066,
+          "fused_kernel_0x74B6387F_167_f32": 20.077541000000007,
+          "fused_kernel_0x8019A6E4_15B_f32": 16.742435999999984
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "dit-23-step0.trace.json": {
+        "span_ms": 277.29125390625,
+        "disjoint_ms": {
+          "idle": 41.46169970703116,
+          "other_kernel": 66.95128613283103,
+          "other_mme": 16.319703613282527,
+          "fp8_mme": 38.91374023437535,
+          "other_kernel+other_mme": 8.497715332037412,
+          "other_kernel+other_mme+softmax": 0.21793457031251012,
+          "other_mme+softmax": 42.12382177735497,
+          "softmax": 47.74770214845048,
+          "other_kernel+softmax": 4.720457031251625,
+          "fp8_mme+other_kernel": 10.337193359377139
+        },
+        "kernels": 595082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2160.1081630007498,
+          "GEMM": 602.0085750000183,
+          "fused_kernel_0xD234406D_156_bf16": 468.48378599999813,
+          "mult_fwd_f32": 184.5866819999988,
+          "fused_kernel_0xE2ACE3C0_155_f32": 155.7932880000178,
+          "DmaTranspose": 148.26768599999025,
+          "rope_st2_fwd_f32": 137.26692699999973,
+          "add_bf16": 115.9201330000005,
+          "rms_norm_fwd_bf16": 112.39173699999982,
+          "fused_kernel_0x36BE343_14F_f32": 112.27068299999496,
+          "mult_fwd_bf16": 108.58684599989931,
+          "fused_kernel_0x92966F95_14E_f32": 72.0433419999999,
+          "cast_f32_to_bf16": 69.75948599999866,
+          "fused_kernel_0x4AD45AB_157_f32": 34.325620000000335,
+          "fused_kernel_0xCE822C0F_158_f32": 34.08409199999997,
+          "fused_kernel_0xEA65F579_14C_f32": 30.071691000000005,
+          "fused_kernel_0x7EBBAC00_14D_f32": 23.41580399999961,
+          "fused_kernel_0x2CED9A52_152_f32": 21.4150000000004,
+          "fused_kernel_0x2CED9A52_159_f32": 20.61542000000019,
+          "fused_kernel_0xEA65F579_153_f32": 14.757239000000054
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "dit-307-step24.trace.json": {
+        "span_ms": 276.70600439453125,
+        "disjoint_ms": {
+          "idle": 19.252815429687498,
+          "other_kernel": 77.42269482416971,
+          "other_mme": 12.651053710937186,
+          "fp8_mme+other_kernel": 5.0155590820314915,
+          "fp8_mme": 46.33851074218787,
+          "other_kernel+other_mme": 8.498922363287042,
+          "other_kernel+other_mme+softmax": 2.7528432617176755,
+          "other_mme+softmax": 49.217385742205934,
+          "softmax": 52.57438183595233,
+          "other_kernel+softmax": 2.9818374023430376
+        },
+        "kernels": 637082,
+        "summed_kernel_ms": {
+          "softmax_fwd_bf16": 2458.3541259958915,
+          "GEMM": 657.393636000035,
+          "fused_kernel_0x39BA8699_15D_bf16": 500.49536399999454,
+          "mult_fwd_f32": 196.78299599999883,
+          "rope_st2_fwd_f32": 147.4045879999997,
+          "DmaTranspose": 141.6980049999905,
+          "fused_kernel_0x7D079E08_15C_f32": 129.79324599999987,
+          "add_bf16": 122.70536400000016,
+          "rms_norm_fwd_bf16": 120.6172969999998,
+          "fused_kernel_0x784B32BB_164_f32": 120.58207700000223,
+          "mult_fwd_bf16": 115.6772419999019,
+          "fused_kernel_0xA88B9FE3_163_f32": 77.82431399999984,
+          "cast_f32_to_bf16": 74.26950099999952,
+          "fused_kernel_0x466E3A76_15E_f32": 40.663204999999095,
+          "fused_kernel_0x370137E5_15F_f32": 38.398393999999705,
+          "fused_kernel_0xA389951E_161_f32": 32.07443600000101,
+          "fused_kernel_0x8019A6E4_162_f32": 25.552488000000963,
+          "fused_kernel_0x74B6387F_167_f32": 20.134320999999932,
+          "fused_kernel_0x74B6387F_160_f32": 20.108783999999975,
+          "fused_kernel_0xA389951E_15A_f32": 17.045516000000017
+        },
+        "runtime_counts": {
+          "run": 1816,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 168,
+          "LaunchRecipe": 168
+        }
+      },
+      "mtp/mtp-steps.trace.json": {
+        "span_ms": 142.54929931640626,
+        "disjoint_ms": {
+          "idle": 100.83534716796589,
+          "other_kernel": 28.416058593764422,
+          "other_mme": 5.759851074218879,
+          "other_kernel+other_mme": 1.065742187499927,
+          "fp8_mme": 5.948613281249944,
+          "fp8_mme+other_kernel": 0.4919267578125172,
+          "softmax": 0.03176025390625
+        },
+        "kernels": 257168,
+        "summed_kernel_ms": {
+          "gather_fwd_f32": 96.35884000000009,
+          "reduce_sum_fwd_f32": 46.81868199999967,
+          "gather_fwd_bf16": 43.26816299999983,
+          "GEMM": 42.605597999999986,
+          "tile_fwd_f32": 35.457289999998615,
+          "BatchGemm": 21.50376399999859,
+          "cast_bf16_to_f32": 20.731357999999958,
+          "bitonic_sort_f32": 17.039015,
+          "mult_fwd_f32": 14.11745799999989,
+          "DmaTranspose": 12.65607100000072,
+          "gemm": 10.373376,
+          "radix_sort_stg2_f32": 9.822291999999996,
+          "radix_sort_stg1_f32": 7.576745999999986,
+          "index_copy_fwd_bf16": 6.015862000000036,
+          "memcpy_f32": 5.284493000000014,
+          "scalar_merge_f32": 4.557863999999999,
+          "abs_fwd_bf16": 4.314800999999927,
+          "where_fwd_bf16": 4.2851699999999795,
+          "div_f32": 4.231738000000037,
+          "add_bf16": 4.067848999999984
+        },
+        "runtime_counts": {
+          "run": 1714,
+          "launch": 992,
+          "Launch": 992,
+          "launch_recipe": 270,
+          "LaunchRecipe": 270
+        }
+      }
+    }
+  },
+  "dit_budget_seconds": {
+    "idle": 1.0408804484049496,
+    "other_kernel": 3.6041396931958642,
+    "other_mme": 3.5075356363942394,
+    "fp8_linear": 2.51451792805997,
+    "softmax": 2.7003401326504486
+  },
+  "memory": {
+    "baseline": {
+      "peak_gib": 34.77722656726837,
+      "resident_gib": 25.37195312976837,
+      "unload": {
+        "seconds": 18.08934504399076,
+        "used": 3711490432
+      }
+    },
+    "native-release": {
+      "peak_gib": 27.26746094226837,
+      "resident_gib": 17.98718750476837,
+      "unload": {
+        "seconds": 16.395704353999463,
+        "used": 2685928832
+      }
+    }
+  },
+  "logits": {
+    "native-cast": {
+      "shape": [
+        1033,
+        248320
+      ],
+      "top1_equal": 974,
+      "kl_mean": 0.011884446264722712,
+      "kl_max": 0.259262353181839,
+      "rrmse": 0.0671777140249436,
+      "max_abs": 3.375
+    }
+  },
+  "attention": [
+    {
+      "name": "bf16-heads",
+      "seconds": 0.003229397998075001,
+      "rrmse": 0.0,
+      "finite": true,
+      "fallback": {}
+    },
+    {
+      "name": "fp8-all",
+      "seconds": 0.014747971598990262,
+      "rrmse": 0.031277190893888474,
+      "finite": true,
+      "fallback": {}
+    },
+    {
+      "name": "fp8-heads",
+      "seconds": 0.015320194998639635,
+      "rrmse": 0.03127719461917877,
+      "finite": true,
+      "fallback": {}
+    }
+  ],
+  "attention_gemm": [
+    {
+      "name": "bf16-heads",
+      "seconds": 0.0032302037987392397,
+      "rrmse": 0.0,
+      "finite": true,
+      "fallback": {}
+    },
+    {
+      "name": "fp8-gemm-heads",
+      "seconds": 0.0035195071977796033,
+      "rrmse": 0.02070923149585724,
+      "finite": true,
+      "fallback": {}
+    }
+  ],
+  "activation_scaling": {
+    "records": [
+      {
+        "name": "qkv",
+        "rows": 4119,
+        "mode": "row",
+        "bf16_s": 0.000610835499537643,
+        "fp8_s": 0.0004147888001170941,
+        "rrmse": 0.026648787781596184,
+        "finite": true
+      },
+      {
+        "name": "qkv",
+        "rows": 4119,
+        "mode": "tensor",
+        "bf16_s": 0.000610835499537643,
+        "fp8_s": 0.0003719234999152832,
+        "rrmse": 0.026669545099139214,
+        "finite": true
+      },
+      {
+        "name": "qkv",
+        "rows": 4403,
+        "mode": "row",
+        "bf16_s": 0.0006390002992702648,
+        "fp8_s": 0.00039466720045311376,
+        "rrmse": 0.02664759010076523,
+        "finite": true
+      },
+      {
+        "name": "qkv",
+        "rows": 4403,
+        "mode": "tensor",
+        "bf16_s": 0.0006390002992702648,
+        "fp8_s": 0.0003955104999477044,
+        "rrmse": 0.026663808152079582,
+        "finite": true
+      },
+      {
+        "name": "o",
+        "rows": 4119,
+        "mode": "row",
+        "bf16_s": 0.0002142793993698433,
+        "fp8_s": 0.00014379210042534397,
+        "rrmse": 0.026684662327170372,
+        "finite": true
+      },
+      {
+        "name": "o",
+        "rows": 4119,
+        "mode": "tensor",
+        "bf16_s": 0.0002142793993698433,
+        "fp8_s": 0.0001696484992862679,
+        "rrmse": 0.02674340270459652,
+        "finite": true
+      },
+      {
+        "name": "o",
+        "rows": 4403,
+        "mode": "row",
+        "bf16_s": 0.00022760170104447753,
+        "fp8_s": 0.00015029189962660893,
+        "rrmse": 0.026686666533350945,
+        "finite": true
+      },
+      {
+        "name": "o",
+        "rows": 4403,
+        "mode": "tensor",
+        "bf16_s": 0.00022760170104447753,
+        "fp8_s": 0.00017922400002134964,
+        "rrmse": 0.02673935331404209,
+        "finite": true
+      },
+      {
+        "name": "ffn_up_gate",
+        "rows": 4119,
+        "mode": "row",
+        "bf16_s": 0.0010708032001275568,
+        "fp8_s": 0.0005762998989666812,
+        "rrmse": 0.026685060933232307,
+        "finite": true
+      },
+      {
+        "name": "ffn_up_gate",
+        "rows": 4119,
+        "mode": "tensor",
+        "bf16_s": 0.0010708032001275568,
+        "fp8_s": 0.000605054700281471,
+        "rrmse": 0.026639144867658615,
+        "finite": true
+      },
+      {
+        "name": "ffn_up_gate",
+        "rows": 4403,
+        "mode": "row",
+        "bf16_s": 0.0011279952988843434,
+        "fp8_s": 0.0007352750006248243,
+        "rrmse": 0.026682578027248383,
+        "finite": true
+      },
+      {
+        "name": "ffn_up_gate",
+        "rows": 4403,
+        "mode": "tensor",
+        "bf16_s": 0.0011279952988843434,
+        "fp8_s": 0.000650650099851191,
+        "rrmse": 0.026630545035004616,
+        "finite": true
+      },
+      {
+        "name": "ffn_down",
+        "rows": 4119,
+        "mode": "row",
+        "bf16_s": 0.0005469171010190621,
+        "fp8_s": 0.00034358729899395255,
+        "rrmse": 0.02669484168291092,
+        "finite": true
+      },
+      {
+        "name": "ffn_down",
+        "rows": 4119,
+        "mode": "tensor",
+        "bf16_s": 0.0005469171010190621,
+        "fp8_s": 0.00040905309870140625,
+        "rrmse": 0.02668660320341587,
+        "finite": true
+      },
+      {
+        "name": "ffn_down",
+        "rows": 4403,
+        "mode": "row",
+        "bf16_s": 0.0005870652996236459,
+        "fp8_s": 0.0003588506006053649,
+        "rrmse": 0.02669323980808258,
+        "finite": true
+      },
+      {
+        "name": "ffn_down",
+        "rows": 4403,
+        "mode": "tensor",
+        "bf16_s": 0.0005870652996236459,
+        "fp8_s": 0.0004401355006848462,
+        "rrmse": 0.026685453951358795,
+        "finite": true
+      }
+    ],
+    "fallback": {}
+  },
+  "quality": [
+    {
+      "case": "fp8-person-history",
+      "tokens": [
+        453
+      ],
+      "finite_checks": 2,
+      "fallback": {}
+    },
+    {
+      "case": "fp8-poster-history",
+      "tokens": [
+        266
+      ],
+      "finite_checks": 2,
+      "fallback": {}
+    },
+    {
+      "case": "fp8-reloaded-off-512-history",
+      "tokens": [
+        32
+      ],
+      "finite_checks": 2,
+      "fallback": {}
+    },
+    {
+      "case": "fp8-teapot-history",
+      "tokens": [
+        332
+      ],
+      "finite_checks": 2,
+      "fallback": {}
+    },
+    {
+      "case": "int8-regression-512-history",
+      "tokens": [
+        32
+      ],
+      "finite_checks": 2,
+      "fallback": {}
+    }
+  ],
+  "tests": "251 passed, 42 warnings in 174.55s (0:02:54)",
+  "deployment": {
+    "cold": {
+      "prompt_id": "4b4502de-929f-4183-b7c9-0678bc242b96",
+      "seconds": 74.786,
+      "status": "success"
+    },
+    "cached": {
+      "prompt_id": "5e844bc6-5b01-494f-9c4e-42f0904e46f6",
+      "seconds": 13.466,
+      "status": "success"
+    },
+    "queue": {
+      "queue_running": [],
+      "queue_pending": []
+    },
+    "device": "hpu:0 GAUDI2"
+  },
+  "source_hashes": {
+    "comfy/ops.py": "5d28da2e0588c752d74225742eec04600fe70c85267e4b8d9c837362b0b64037",
+    "comfy/utils.py": "9dc023b4c9c32b83717cad479704c91c847f9eb214ab36f312aee8bdd06ab15b",
+    "comfy/quant_ops.py": "f97ab5f550b103ff44fd07c3a50345529d4234e77d97faefa630a7ea0201afc8",
+    "comfy/text_encoders/qwen35.py": "6fb7e34d615395f5a7c49660ae0c284a7f7fdaadc9198a8a923feb2962d97ef0",
+    "comfy/text_encoders/hpu_gated_delta.py": "a041b37464fd9234759166aed19d182700242123d5c9deee216b54cf692e6a3c",
+    "scripts/gaudi/convert_qwen35_fp8.py": "b440426aecb643211f19a21f6ed7a0bb046ad2978ef945c685c78887d8c9ba12",
+    "tests-unit/comfy_test/hpu_fp8_linear_test.py": "813f75f6078261d4948c66ac1ac9801cfcf54c1336d139210a7e75bada6e3e42",
+    "tests-unit/comfy_test/qwen35_fp8_conversion_test.py": "d8b9be6249d1294b890cdb1661a34b4761081f870d0b839422f5bcbe7d8144de"
+  }
+}
