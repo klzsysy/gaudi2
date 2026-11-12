@@ -62,7 +62,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为 `0995638a`，监听 `http://192.168.10.21:8189`。根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+当前部署提交为 `69fe4a54`，监听 `http://192.168.10.21:8189`。根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
 
 应用入口在 HPU 初始化后恢复 Python 的 SIGPIPE 忽略策略，避免浏览器取消文件下载使 Synapse 进入 fatal 状态。遇到 `synStatus 31` 时先检查最早的 DFA 原因，不能仅凭后续 `Host malloc failed` 判定主机内存不足。详见 `HPU_SIGPIPE_RECOVERY_2026-11-10.md`。
 
@@ -115,7 +115,7 @@ shared_models:
 
 ## 性能复现资料
 
-当前产品已恢复`0995638a`，同轮固定298-token完整MTP基线为16.036s（5 warm中位数）。上一轮GDN候选15.751s因质量变化被用户拒绝。当前质量保值试验位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-quality-preserving`。固定MTP程序位于`performance-2026-11-11-completion/mtp-record-298/program.pt`，此前数据保留在各轮目录。
+质量回退基线为`0995638a`，同轮固定298-token完整MTP基线为16.036s（5 warm中位数）。上一轮GDN候选15.751s因质量变化被用户拒绝。质量保值试验位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-quality-preserving`。固定MTP程序位于`performance-2026-11-11-completion/mtp-record-298/program.pt`，此前数据保留在各轮目录。当前`69fe4a54`的长序列验证位于`performance-2026-11-12-resolution-fix`，原用户1088×1936固定caption中位29.572s。
 
 服务使用既有启动脚本和默认32个PyTorch CPU线程，改16线程的完整流程复验无收益。当前lazy/Graph单独试验成本高于eager，lazy＋`hpu_backend`出现`GraphStorage::get()`符号缺失，诊断见预算报告。
 
@@ -132,6 +132,8 @@ CLIPLoader可选择`qwen3.5_9b_fp8_from_int8.safetensors`，位置为共享模�
 ## FP8 attention与环境恢复
 
 `f67e7f3f`在原生HPU FP8 MOSS模型的forward中默认请求`fp8_attention`，由原attention dispatcher在已支持形状上选择BF16 QK＋融合FP8概率量化＋FP8 AV。用户传入的`transformer_options["fp8_attention"] = False`可关闭此请求。该路径的选择条件和精度数据见进一步优化报告。
+
+`69fe4a54`移除8192总序列上限，现行长度条件为N≥4096。8192／8193／8629／16385已做原生分支回归，BF16长度8193逐元素对照通过。真实1088×1936的18组block对FP32参考误差0.44%–3.97%。16385-token分散随机压力输入误差8.83%。大尺寸启用现有FP8算法会改变图像细节。
 
 2026-11-12发现测试venv中CUDA版torch2.14.1遮蔽了Gaudi安装。对应`torch`、`torchgen`及dist-info已移动到`/home/sonny/ComfyUI-Gaudi/.run/torch-cu130-backup-2026-11-12`，现通过原`gaudi-base.pth`使用Habana torch2.13.0a0。HPU矩阵、266项回归和正常服务已验证。安装来源尚未确认。
 

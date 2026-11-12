@@ -1,0 +1,490 @@
+{
+  "date": "2026-11-12",
+  "timezone": "Asia/Shanghai",
+  "deployed_version": "0995638a6546bb10d4558417d3327e3137871830",
+  "original": [
+    {
+      "prompt_id": "dd866fb4-384e-4edc-8091-7e5e6f02ae8a",
+      "filename": "ComfyUI_temp_rrgyb_00015_.png",
+      "kind": "image",
+      "width": 1024,
+      "height": 1824,
+      "seconds": 24.965,
+      "seed": 373271981476629,
+      "cached_nodes": [
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ]
+    },
+    {
+      "prompt_id": "9b051ad6-b244-49c7-b5da-222b94519dd7",
+      "filename": "ComfyUI_temp_rrgyb_00016_.png",
+      "kind": "image",
+      "width": 1088,
+      "height": 1936,
+      "seconds": 35.748,
+      "seed": 860080871118957,
+      "cached_nodes": [
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ]
+    }
+  ],
+  "original_caption_equal": true,
+  "original_differing_nodes": [
+    "19",
+    "18:7"
+  ],
+  "product_token_counts": {
+    "positive": [
+      355
+    ],
+    "negative": [
+      401
+    ]
+  },
+  "paired": [
+    {
+      "label": "paired-0-1024x1824",
+      "prompt_id": "86c9bbc6-fe48-4dba-a15e-c3933221777a",
+      "width": 1024,
+      "height": 1824,
+      "seed": 734670000,
+      "seconds": 23.743,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.0008074019860941917,
+        "KSampler": 23.316744798008585,
+        "VAEDecode": 0.22801285699824803
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 0.9297932829940692,
+      "steady_step_interval_count": 21
+    },
+    {
+      "label": "paired-0-1088x1936",
+      "prompt_id": "7540f1af-f26e-4807-8c2c-a6ef1b97dc9c",
+      "width": 1088,
+      "height": 1936,
+      "seed": 734670000,
+      "seconds": 35.745,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.0008297149906866252,
+        "KSampler": 35.25439157101209,
+        "VAEDecode": 0.2671220729826018
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 1.407917416014243,
+      "steady_step_interval_count": 21
+    },
+    {
+      "label": "paired-1-1024x1824",
+      "prompt_id": "7a2a6272-31c5-4acc-aa7f-af724da95f6e",
+      "width": 1024,
+      "height": 1824,
+      "seed": 734670001,
+      "seconds": 23.78,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.0009369750041514635,
+        "KSampler": 23.350388199003646,
+        "VAEDecode": 0.22878595598740503
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 0.9319678629981354,
+      "steady_step_interval_count": 21
+    },
+    {
+      "label": "paired-1-1088x1936",
+      "prompt_id": "c01b705d-cb08-4f9a-8a49-8c776db241be",
+      "width": 1088,
+      "height": 1936,
+      "seed": 734670001,
+      "seconds": 35.707,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.0009432640217710286,
+        "KSampler": 35.219039798976155,
+        "VAEDecode": 0.26715780902304687
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 1.4050813659850974,
+      "steady_step_interval_count": 21
+    },
+    {
+      "label": "paired-2-1024x1824",
+      "prompt_id": "2488582f-bee6-4479-b206-c019fabc5900",
+      "width": 1024,
+      "height": 1824,
+      "seed": 734670002,
+      "seconds": 23.771,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.0009101750038098544,
+        "KSampler": 23.34176050699898,
+        "VAEDecode": 0.22850376699352637
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 0.9312017900228966,
+      "steady_step_interval_count": 21
+    },
+    {
+      "label": "paired-2-1088x1936",
+      "prompt_id": "54bd63f9-e40b-4ad5-8840-59180da6683b",
+      "width": 1088,
+      "height": 1936,
+      "seed": 734670002,
+      "seconds": 35.764,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.0009387980098836124,
+        "KSampler": 35.27665163599886,
+        "VAEDecode": 0.26713407700299285
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 1.4088141659740359,
+      "steady_step_interval_count": 21
+    }
+  ],
+  "paired_medians": [
+    {
+      "width": 1024,
+      "height": 1824,
+      "median_total_s": 23.771,
+      "median_sampler_s": 23.34176050699898,
+      "median_vae_s": 0.22850376699352637,
+      "median_steady_step_s": 0.9312017900228966
+    },
+    {
+      "width": 1088,
+      "height": 1936,
+      "median_total_s": 35.745,
+      "median_sampler_s": 35.25439157101209,
+      "median_vae_s": 0.26713407700299285,
+      "median_steady_step_s": 1.407917416014243
+    }
+  ],
+  "boundary": [
+    {
+      "label": "boundary-0-1024x1936",
+      "prompt_id": "95c7380d-8254-49a2-ac25-c07507bc397e",
+      "width": 1024,
+      "height": 1936,
+      "seed": 734670000,
+      "seconds": 29.733,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.0007453209836967289,
+        "KSampler": 29.25705437400029,
+        "VAEDecode": 0.2515397800016217
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 1.092206288012676,
+      "steady_step_interval_count": 21
+    },
+    {
+      "label": "boundary-0-1024x1952",
+      "prompt_id": "a6b557f1-24d0-4df1-8fd8-f801c1fa1b96",
+      "width": 1024,
+      "height": 1952,
+      "seed": 734670000,
+      "seconds": 33.009,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.0007951449952088296,
+        "KSampler": 32.52885259798495,
+        "VAEDecode": 0.25305981701239944
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 1.2244400169875007,
+      "steady_step_interval_count": 21
+    },
+    {
+      "label": "boundary-0-1024x1968",
+      "prompt_id": "b57e05c3-3081-4188-9280-ecfbebadf898",
+      "width": 1024,
+      "height": 1968,
+      "seed": 734670000,
+      "seconds": 36.011,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.005655499000567943,
+        "KSampler": 35.523469873005524,
+        "VAEDecode": 0.2546770340122748
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 1.3532734150066972,
+      "steady_step_interval_count": 21
+    },
+    {
+      "label": "boundary-1-1024x1936",
+      "prompt_id": "2014023c-62a9-4907-8985-5834a554ba61",
+      "width": 1024,
+      "height": 1936,
+      "seed": 734670001,
+      "seconds": 27.784,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.0013099430070724338,
+        "KSampler": 27.32351367198862,
+        "VAEDecode": 0.24357652899925597
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 1.0896812840073835,
+      "steady_step_interval_count": 21
+    },
+    {
+      "label": "boundary-1-1024x1952",
+      "prompt_id": "f35a9272-9fab-4993-bb1d-f990706672c8",
+      "width": 1024,
+      "height": 1952,
+      "seed": 734670001,
+      "seconds": 31.102,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.0008417149947490543,
+        "KSampler": 30.640693846013164,
+        "VAEDecode": 0.2447635860007722
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 1.2232621889852453,
+      "steady_step_interval_count": 21
+    },
+    {
+      "label": "boundary-1-1024x1968",
+      "prompt_id": "7b1b3895-ace8-4037-9904-b147bdf7f909",
+      "width": 1024,
+      "height": 1968,
+      "seed": 734670001,
+      "seconds": 34.303,
+      "node_seconds": {
+        "EmptyFlux2LatentImage": 0.0008371580042876303,
+        "KSampler": 33.84280533299898,
+        "VAEDecode": 0.24624930098070763
+      },
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:5",
+        "18:24"
+      ],
+      "steady_step_median_s": 1.351440881000599,
+      "steady_step_interval_count": 21
+    }
+  ],
+  "attention_sequences": [
+    {
+      "width": 1024,
+      "height": 1824,
+      "image_tokens": 7296,
+      "positive": 7651,
+      "negative": 7697
+    },
+    {
+      "width": 1088,
+      "height": 1936,
+      "image_tokens": 8228,
+      "positive": 8583,
+      "negative": 8629
+    },
+    {
+      "width": 1024,
+      "height": 1936,
+      "image_tokens": 7744,
+      "positive": 8099,
+      "negative": 8145
+    },
+    {
+      "width": 1024,
+      "height": 1952,
+      "image_tokens": 7808,
+      "positive": 8163,
+      "negative": 8209
+    },
+    {
+      "width": 1024,
+      "height": 1968,
+      "image_tokens": 7872,
+      "positive": 8227,
+      "negative": 8273
+    }
+  ],
+  "source_sha256": {
+    "comfy/ldm/modules/attention.py": "e3cb3c7c81140f3ef7020b880d4545acbd93f1db18cbe7d8782d96c79101541b",
+    "comfy/ldm/moss_image/model.py": "0597de6ee3049c09643f4e9f23c7ff2bb526d9c8e3bbbd67629bad80958803c5",
+    "comfy/text_encoders/moss_image.py": "5bf5dff2669aab8fccc4a4662a0cd394fd0d7a7ea91f6757291f83e1940d9deb",
+    "comfy/text_encoders/qwen35.py": "6fb7e34d615395f5a7c49660ae0c284a7f7fdaadc9198a8a923feb2962d97ef0",
+    "comfy_extras/nodes_flux.py": "6e1fb4c4b173d96395782b0b430aa29c34bbd768be782118da5cec67b84b83fa"
+  },
+  "final_queue": {
+    "queue_running": [],
+    "queue_pending": []
+  },
+  "service_pid": 1281567,
+  "raw_server_directory": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution",
+  "measurement": "Normal HTTP API with cached text. Server history timestamps for total, server-local websocket receive timestamps for node and progress intervals. No inserted HPU synchronization or profiler.",
+  "branch_evidence": "Deployed code condition and exact product-tokenizer lengths, corroborated by adjacent-resolution timing. No device kernel trace or same-shape forced-path comparison.",
+  "probe_failures": [
+    "Initial localhost connection refused. Retried successfully using actual service bind address 192.168.10.21.",
+    "Server checkout lacks .git. Deployment version and five source SHA256 values verified against local checkout."
+  ]
+}

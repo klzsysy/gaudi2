@@ -22,6 +22,8 @@
 
 ## 当前性能与路线
 
+- `69fe4a54`已移除FP8 attention的8192总序列上限并部署8189。1088×1936同caption、同seed三轮中位35.753→29.572s，1024×1824为23.721s。BF16代码与完整跨界流程已复核。306项回归及最终30项attention专项通过，18组真实block对FP32参考误差0.44%–3.97%，大图细节存在量化差异。调查文档按用户要求删除，验收摘要见`PROGRESS.md`，数据见[修复证据](evidence/moss-resolution-fix-2026-11-12.json)。
+
 - 最新分层复核将研发主线转向图编译器／HPU bridge与attention kernel的联合数据流。节点外耗时中位15.9ms，24个QK分数张量均非persistent却落DRAM，文本16轮窗口kernel间隙约39.7%。前两层常规空间已收窄，第三层结构性上限仍待闭合。bridge两份本机源码已与公开1.24.2版本核对一致，详见 [分层边界复核](MOSS_LAYER_BOUNDARY_AUDIT_2026-11-12.md)。
 
 - 用户明确要求质量保值优先。上一轮GDN候选已撤回，产品恢复`0995638a`，固定logits与基线逐元素一致。本轮完成9种attention布局及8组有效编译配置筛选。32MiB候选通过90组输入及固定logits一致性检查，完整流程收益未超出波动，当前维持基线。茶壶恢复单侧把手，历史自然图仍有复现差异，见 [质量保值优化](MOSS_QUALITY_PRESERVING_OPTIMIZATION_2026-11-12.md)。上一轮收益和失败路径保留在 [历史执行记录](MOSS_OPTIMIZATION_EXECUTION_2026-11-12.md)。
