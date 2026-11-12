@@ -101,3 +101,11 @@
 - DiT六段trace互斥预算为FP8 MME2.515s、其它MME3.508s、softmax2.700s、其它kernel3.604s、间隙1.041s。大Linear活动阶段估算806TF/s，后续优先attention数据流、量化/逐元素融合和文本提交粒度。
 - FP8 fused attention、FP8 QK/AV分解、全tensor激活scale均无整体收益。小M额外动态编译存在数值与重载问题，已撤回。251项最终回归、三组自然图片、默认异步重载/MTP off/INT8通过，fallback为空。
 - 8189已恢复，版本和8份文件哈希一致，正常入口cold74.786s/缓存13.466s、队列为空。详见 [全流程记录](MOSS_FP8_SYSTEM_OPTIMIZATION_2026-11-12.md)。
+
+## FP8 attention覆盖与数据流（2026-11-12）
+
+- 产品`f67e7f3f`采用BF16 QK、融合softmax量化与FP8 AV，经现有attention dispatcher启用。固定完整流程18.936→17.191s，DiT13.068→11.364s，分别减少9.2%和13.0%。
+- 两段trace外推的FP8 MME时间2.515→3.046s，占比19.0%→26.4%；softmax2.701→1.356s。42层主干矩阵运算量的FP8覆盖81.2%→90.6%。AIP均值仍约56%。
+- 全FP8 QK/AV的末层误差最高48.1%，逐head/逐行scale、中心化与exp方案未获得更好的速度/误差组合。所选方案18组真实输入误差1.76%–3.07%，分散概率随机压力测试约7.3%，厂商softmax额外误差已记录。
+- 静态Linear scale存在局部收益，尚需跨输入校准；文本共享量化完整17.166s、文本5.157s，和产品持平，保留为调查候选。
+- 266项回归、三组相同caption/seed图片、重载MTP off/512²、原INT8通过。8189正常cold76.278s、缓存11.881s、768² 13.676s，七份文件哈希一致、队列为空。恢复被CUDA torch遮蔽的既有Habana环境，冲突包保留备份。详见 [进一步优化](MOSS_FP8_DEEP_OPTIMIZATION_2026-11-12.md)。

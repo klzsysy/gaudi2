@@ -1,10 +1,12 @@
 # MOSS BF16复盘与FP8路线判断
 
+2026-11-12进一步优化已部署`f67e7f3f`。BF16 QK＋融合softmax量化＋FP8 AV使完整流程18.936→17.191s、DiT13.068→11.364s，FP8 MME时间占比19.0%→26.4%。接续优先处理其它kernel的3.67s，再推进QK数据流与文本提交。精度边界、淘汰候选和验收见 [FP8进一步优化](MOSS_FP8_DEEP_OPTIMIZATION_2026-11-12.md)。
+
 2026-11-12已完成FP8文本转换和全流程拆解。同工作量吞吐基本持平，显存峰值减少7.51GiB，大Linear活动阶段约806TF/s。当前优先级与验证结果见 [全流程FP8分析](MOSS_FP8_SYSTEM_OPTIMIZATION_2026-11-12.md)。
 2026-11-11后续进展已完成Moody MOSS E4M3主模型首轮适配。同文件常驻BF16/原生FP8固定caption中位数13.993/12.810s，质量、显存、cold与正常入口验收见 [FP8执行结果](MOSS_FP8_ADAPTATION_2026-11-11.md)。下文Amdahl表保留为试验前估算。
 更新于2026-11-11，基准产品`a8f42df2`。本文汇总各轮实测及下一阶段建议，原文件名保留用于既有链接。各阶段明细保留测试条件、结果、失败原因与复现入口。
 
-## 当前判断
+## BF16阶段的路线判断
 
 建议将下一阶段主要实验投入转向**DiT的原生FP8 Linear**。BF16基线继续用于生产、数值参考和兼容路径。BF16专项按新的热点证据或实现变化触发，优先保留attention数据流与文本提交两个方向。
 
@@ -70,7 +72,7 @@ MME总并集为9.225s，以上Linear与QK/AV有交叠。按互斥分类总跨度
 
 官方1.24.2文档提供Gaudi2 FP8静态/动态校准、scale及`fp8_gemm_v2`路径。量化转换和scale配置会影响执行成本，FP8的新recipe也增加warmup。此处建议复用厂商算子，先在现有eager编译栈验证选定Linear区域。[Intel FP8指南](https://docs.habana.ai/en/latest/PyTorch/Inference_on_PyTorch/Quantization/Inference_Using_FP8.html)
 
-## 建议的FP8试点顺序
+## 首轮FP8试点设计
 
 1. **先DiT FFN，再QKV/输出投影。** 两种真实N下轮换42层权重，比较当前编译BF16与FP8输入转换＋GEMM＋scale/bias＋BF16输出的总成本。FFN两个大Linear已有约3.40s轮换预算，所有四类Linear约5.14s，具备可测量的秒级目标。小型重复热循环之外，再验证完整block与25步。
 2. **按扩散过程校准。** 使用已有BF16 DiT，采集浅/中/深层、早/中/晚timestep、正负条件及多提示词/尺寸的激活范围。校准集与最终质量检查提示词分开，检查饱和、相对误差、文字、人物和构图。先量化选定Linear，attention/norm/RoPE/残差按已验收精度执行，敏感Linear逐项回退。

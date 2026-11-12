@@ -6,7 +6,7 @@
 
 ## 目标与边界
 
-- 单卡 Gaudi2 96 GiB，Habana 1.24.2，Python 3.10，Habana PyTorch `2.13.0a0+git2469d18`，实际验证固定为 eager（`PT_HPU_LAZY_MODE=0`）+ bf16。
+- 单卡 Gaudi2 96 GiB，Habana 1.24.2，Python 3.10，Habana PyTorch `2.13.0a0+git2469d18`，实际验证采用 eager（`PT_HPU_LAZY_MODE=0`），已覆盖BF16与原生FP8混合精度。
 - 服务器独立 checkout：`/home/sonny/ComfyUI-Gaudi`；原始 `/home/sonny/ComfyUI` 只读复用模型，禁止修改其代码、环境、配置、输出或模型。
 - 服务器使用共享模型目录 `/home/sonny/ComfyUI-Models/models`；下载只使用服务器已有 `HF_ENDPOINT`、`HF_TOKEN`，不记录凭据。
 - 调查结论以服务器实测为准；启动成功、设备可见或单个算子通过不等于完整模型验证成功。
@@ -22,11 +22,13 @@
 
 ## 当前性能与路线
 
+- 当前部署`f67e7f3f`在Moody FP8主模型使用BF16 QK、融合概率量化与FP8 AV。固定298-token完整流程18.936→17.191s，DiT13.068→11.364s。FP8 MME时间占比约19.0%→26.4%，266项回归、同caption三组配对图及重载通过。正常入口缓存11.881s。精度边界与下一步方向见 [FP8进一步优化](MOSS_FP8_DEEP_OPTIMIZATION_2026-11-12.md)。
+
 - Qwen3.5 FP8文本已转换并适配普通CLIPLoader，文件`qwen3.5_9b_fp8_from_int8.safetensors`为11.377GB，来自现有INT8解码BF16。固定298-token完整流程18.954→18.933s，当前吞吐基本持平，allocator峰值34.777→27.267GiB。251项回归、自然扩写与重载通过。耗时分布、失败候选及硬件余量分析见 [全流程FP8](MOSS_FP8_SYSTEM_OPTIMIZATION_2026-11-12.md)。
 
 - Moody MOSS E4M3主模型原生FP8适配已完成实际流程验证。同文件常驻BF16参考/原生FP8固定caption为13.993/12.810s（5 warm中位数），原用户含扩写warm中位数20.666s，初始222.10s慢路径已消除。修复重复量化元数据warning，文本沿用现有BF16配置。测试条件、质量变化和显存结果见 [FP8适配](MOSS_FP8_ADAPTATION_2026-11-11.md)。
 
-- BF16对照基准为`a8f42df2`，DiT FP8基准为`2227f7d3`，当前部署为`148b252a`，本地产品分支`codex/gaudi2-hpu`。固定工作量5 warm中位数，独立298-token文本4.867s、完整MTP工作流19.978s、固定caption缓存14.386s、DiT14.134s。完整warm19.906–20.122s，cold64.665s，缓存14s目标仍差0.386s。
+- BF16对照基准为`a8f42df2`，DiT FP8基准为`2227f7d3`，FP8文本基准为`148b252a`，本地产品分支`codex/gaudi2-hpu`。BF16固定工作量5 warm中位数，独立298-token文本4.867s、完整MTP工作流19.978s、固定caption缓存14.386s、DiT14.134s。完整warm19.906–20.122s，cold64.665s。
 - 最终194 passed、1 CUDA skip，MTP off/3/tree3s1、512/768/1024、重载与原INT8通过，fallback为空。自然扩写与同seed图像细节会变化，质量范围限于已验收集合。完整证据见 [最新验收](MOSS_BF16_ATTENTION_AND_SUBMISSION_2026-11-11.md)。
 - 各轮测试要点、收益、失败候选和下一步判断集中在 [BF16复盘与FP8路线](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。FP8全流程已补齐实测，接续优先级为attention数据流、量化/逐元素融合与文本提交粒度。
 - 大Linear轮换374–404TF/s，旧六段DiT预算为MME9.225s、softmax2.398s、其它1.805s、间隙0.752s。最新文本改写后两步trace的Linear调用154→10、launch964→820。AIP50–70%需结合各阶段预算解释，见 [预算与利用率](MOSS_BF16_PLAN_COMPLETION_2026-11-11.md)。
