@@ -1,0 +1,1952 @@
+{
+  "date": "2026-11-13",
+  "started": "2026-11-12",
+  "product_commit": "34e2649e9b9bd6e1e48c23f76e1c93d35e559596",
+  "final_targeted_test_tree": "4d9cc16d8fc372dc580511bed073bb0ce606672e",
+  "baseline_commit": "69fe4a54088adab9e20ce4a71dbc38af370785db",
+  "server_root": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage",
+  "source_hashes": {
+    "comfy/ldm/modules/attention.py": "bd6f9944b312bb8b49beca3cec5b902d2d777cfbcbf3e89f754640f41d8b7cb6",
+    "comfy/text_encoders/hpu_kv_attention.py": "0833245d72d7289f2a15651f494c841d323bbafa7767eb11192cc28b82155b1e",
+    "tests-unit/comfy_test/hpu_moss_attention_test.py": "a334df067a1a65d70a66b30f7ac7545b19c77b8bbcd9b74963d47bbda79799f8",
+    "tests-unit/comfy_test/hpu_rope_test.py": "a8efdd950784589b9ca872274570403fb1e68b0f852dca5768022606bd773b18"
+  },
+  "environment": {
+    "device": "Gaudi2 HL-225",
+    "torch": "2.13.0a0+git2469d18",
+    "synapse": "1.24.2",
+    "mode": "eager",
+    "cpu_threads": 32
+  },
+  "attention": {
+    "paired": {
+      "timing": {
+        "baseline": {
+          "seconds": [
+            29.560777602,
+            29.663330183,
+            29.644906249,
+            29.585623308,
+            29.649861954
+          ],
+          "median": 29.644906249
+        },
+        "long-query": {
+          "seconds": [
+            28.823021085,
+            28.869890981,
+            28.898050078,
+            28.894208922,
+            28.891517383
+          ],
+          "median": 28.891517383
+        }
+      },
+      "paired": {
+        "0": {
+          "mae": 0.07979438224153297,
+          "maximum": 3,
+          "equal": false
+        },
+        "1": {
+          "mae": 0.08026359433236105,
+          "maximum": 3,
+          "equal": false
+        },
+        "2": {
+          "mae": 0.08013034759358288,
+          "maximum": 3,
+          "equal": false
+        },
+        "3": {
+          "mae": 0.07798542324987846,
+          "maximum": 3,
+          "equal": false
+        },
+        "4": {
+          "mae": 0.08021880950210662,
+          "maximum": 3,
+          "equal": false
+        }
+      },
+      "repeat": {
+        "baseline-0-1": {
+          "mae": 0.0802191260026738,
+          "maximum": 4,
+          "equal": false
+        },
+        "baseline-1-4": {
+          "mae": 0.0802241900117485,
+          "maximum": 3,
+          "equal": false
+        },
+        "long-query-0-1": {
+          "mae": 0.07948531943769244,
+          "maximum": 3,
+          "equal": false
+        },
+        "long-query-1-4": {
+          "mae": 0.08035411349457139,
+          "maximum": 3,
+          "equal": false
+        }
+      }
+    },
+    "real_inputs": [
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 0,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-355-0-0.pt",
+        "layer": 0,
+        "shape": [
+          1,
+          8583,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.013571688000000002,
+        "samples": [
+          0.013646116,
+          0.0135485592,
+          0.0135798364,
+          0.0135436478,
+          0.013571688000000002
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 1,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-355-0-20.pt",
+        "layer": 20,
+        "shape": [
+          1,
+          8583,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.013532380799999999,
+        "samples": [
+          0.013601641000000001,
+          0.0135082924,
+          0.013523223000000001,
+          0.013545380400000001,
+          0.013532380799999999
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 2,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-355-0-41.pt",
+        "layer": 41,
+        "shape": [
+          1,
+          8583,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.013537470400000001,
+        "samples": [
+          0.013618623,
+          0.013537470400000001,
+          0.013534179399999999,
+          0.0135348586,
+          0.0135385662
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 3,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-355-12-0.pt",
+        "layer": 0,
+        "shape": [
+          1,
+          8583,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.0135244946,
+        "samples": [
+          0.013606082,
+          0.013520631,
+          0.0135244946,
+          0.013525882999999999,
+          0.0135173162
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 4,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-355-12-20.pt",
+        "layer": 20,
+        "shape": [
+          1,
+          8583,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.0135632214,
+        "samples": [
+          0.013628725999999999,
+          0.0135389006,
+          0.0135400744,
+          0.0135632214,
+          0.0136029852
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 5,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-355-12-41.pt",
+        "layer": 41,
+        "shape": [
+          1,
+          8583,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.0135474034,
+        "samples": [
+          0.013614558600000002,
+          0.0135550328,
+          0.013531725999999999,
+          0.0135474034,
+          0.013533975200000001
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 6,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-355-24-0.pt",
+        "layer": 0,
+        "shape": [
+          1,
+          8583,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.013532431000000001,
+        "samples": [
+          0.013626674799999999,
+          0.0135389746,
+          0.013532431000000001,
+          0.013528973599999999,
+          0.013521698600000001
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 7,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-355-24-20.pt",
+        "layer": 20,
+        "shape": [
+          1,
+          8583,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.013527906000000001,
+        "samples": [
+          0.0136149814,
+          0.013527906000000001,
+          0.013535303200000001,
+          0.013527867800000001,
+          0.013522509999999998
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 8,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-355-24-41.pt",
+        "layer": 41,
+        "shape": [
+          1,
+          8583,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.013534896599999999,
+        "samples": [
+          0.013628653800000001,
+          0.013530225400000002,
+          0.013534896599999999,
+          0.0135480242,
+          0.013521734799999999
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 9,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-401-0-0.pt",
+        "layer": 0,
+        "shape": [
+          1,
+          8629,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.013573708600000001,
+        "samples": [
+          0.013641192399999998,
+          0.0135550826,
+          0.013573708600000001,
+          0.013558704,
+          0.013591483800000002
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 10,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-401-0-20.pt",
+        "layer": 20,
+        "shape": [
+          1,
+          8629,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.0136047054,
+        "samples": [
+          0.013642315999999998,
+          0.01361735,
+          0.0135342894,
+          0.0135979872,
+          0.0136047054
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 11,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-401-0-41.pt",
+        "layer": 41,
+        "shape": [
+          1,
+          8629,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.0135841182,
+        "samples": [
+          0.013640968,
+          0.013545257799999998,
+          0.0135783556,
+          0.0135895666,
+          0.0135841182
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 12,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-401-12-0.pt",
+        "layer": 0,
+        "shape": [
+          1,
+          8629,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.0136161944,
+        "samples": [
+          0.013665316799999999,
+          0.0135952308,
+          0.013605671,
+          0.0136161944,
+          0.0136537192
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 13,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-401-12-20.pt",
+        "layer": 20,
+        "shape": [
+          1,
+          8629,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.0135762844,
+        "samples": [
+          0.013638933,
+          0.013558277399999999,
+          0.0135762844,
+          0.0135744118,
+          0.0135928254
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 14,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-401-12-41.pt",
+        "layer": 41,
+        "shape": [
+          1,
+          8629,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.013577282199999999,
+        "samples": [
+          0.013655387599999999,
+          0.013577282199999999,
+          0.0135637056,
+          0.0135655784,
+          0.013617177999999999
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 15,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-401-24-0.pt",
+        "layer": 0,
+        "shape": [
+          1,
+          8629,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.0136122406,
+        "samples": [
+          0.013641775,
+          0.013591121000000001,
+          0.013595601399999999,
+          0.0136122406,
+          0.013627787999999998
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 16,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-401-24-20.pt",
+        "layer": 20,
+        "shape": [
+          1,
+          8629,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.013602397999999998,
+        "samples": [
+          0.0136510872,
+          0.0135609692,
+          0.013602397999999998,
+          0.013616014400000001,
+          0.0135964368
+        ],
+        "fallback": {}
+      },
+      {
+        "mode": "batch-query-linear-softmax2d-av2d-1536",
+        "index": 17,
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-resolution-fix/captures/input-401-24-41.pt",
+        "layer": 41,
+        "shape": [
+          1,
+          8629,
+          3072
+        ],
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "repeat_equal": true,
+        "finite": true,
+        "seconds": 0.013584965600000002,
+        "samples": [
+          0.013647457800000002,
+          0.013562732,
+          0.0135975566,
+          0.0135679358,
+          0.013584965600000002
+        ],
+        "fallback": {}
+      }
+    ],
+    "dynamic_lengths": [
+      {
+        "length": 8192,
+        "equal": true,
+        "graph_count": 1,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 8193,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 8194,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 8195,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 8196,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 8197,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 8198,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 8199,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 8200,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 8583,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 8629,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 9216,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 16385,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      },
+      {
+        "length": 8192,
+        "equal": true,
+        "graph_count": 2,
+        "maximum": 0.0,
+        "fallback": {}
+      }
+    ],
+    "dynamic_graph_count": 2,
+    "storage": [
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/long-query/post/.graph_dumps/graph_0000_fused_0_syn_1000000_1000000_372.1328115.57714.post.json",
+        "graph": ".graph_dumps/graph_0000_fused_0_syn_1000000_1000000_372",
+        "workspace": 519216128,
+        "softmax_nodes": 216,
+        "allocations": [
+          {
+            "role": "input",
+            "allocation": "DRAM",
+            "count": 216
+          },
+          {
+            "role": "output",
+            "allocation": "SRAM",
+            "count": 216
+          }
+        ],
+        "shapes": [
+          {
+            "role": "input",
+            "shape": [
+              8583,
+              1024
+            ],
+            "count": 192
+          },
+          {
+            "role": "output",
+            "shape": [
+              8583,
+              1024
+            ],
+            "count": 192
+          },
+          {
+            "role": "input",
+            "shape": [
+              8583,
+              391
+            ],
+            "count": 24
+          },
+          {
+            "role": "output",
+            "shape": [
+              8583,
+              391
+            ],
+            "count": 24
+          }
+        ]
+      },
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/long-query/post/.graph_dumps/graph_0006_fused_0_syn_1006000_1006000_451.1328115.57938.post.json",
+        "graph": ".graph_dumps/graph_0006_fused_0_syn_1006000_1006000_451",
+        "workspace": 519216128,
+        "softmax_nodes": 120,
+        "allocations": [
+          {
+            "role": "input",
+            "allocation": "DRAM",
+            "count": 120
+          },
+          {
+            "role": "output",
+            "allocation": "SRAM",
+            "count": 120
+          }
+        ],
+        "shapes": [
+          {
+            "role": "input",
+            "shape": [
+              8583,
+              2048,
+              1
+            ],
+            "count": 96
+          },
+          {
+            "role": "output",
+            "shape": [
+              8583,
+              2048,
+              1
+            ],
+            "count": 96
+          },
+          {
+            "role": "input",
+            "shape": [
+              8583,
+              391,
+              1
+            ],
+            "count": 24
+          },
+          {
+            "role": "output",
+            "shape": [
+              8583,
+              391,
+              1
+            ],
+            "count": 24
+          }
+        ]
+      },
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/long-query/post/.graph_dumps/graph_0012_fused_0_syn_1012000_1012000_525.1328115.62883.post.json",
+        "graph": ".graph_dumps/graph_0012_fused_0_syn_1012000_1012000_525",
+        "workspace": 519109632,
+        "softmax_nodes": 144,
+        "allocations": [
+          {
+            "role": "input",
+            "allocation": "DRAM",
+            "count": 144
+          },
+          {
+            "role": "output",
+            "allocation": "SRAM",
+            "count": 144
+          }
+        ],
+        "shapes": [
+          {
+            "role": "input",
+            "shape": [
+              8583,
+              1536,
+              1
+            ],
+            "count": 144
+          },
+          {
+            "role": "output",
+            "shape": [
+              8583,
+              1536,
+              1
+            ],
+            "count": 144
+          }
+        ]
+      },
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/long-query/post/.graph_dumps/graph_0024_fused_0_syn_1024000_1024000_672.1328115.62947.post.json",
+        "graph": ".graph_dumps/graph_0024_fused_0_syn_1024000_1024000_672",
+        "workspace": 522197248,
+        "softmax_nodes": 216,
+        "allocations": [
+          {
+            "role": "input",
+            "allocation": "DRAM",
+            "count": 216
+          },
+          {
+            "role": "output",
+            "allocation": "SRAM",
+            "count": 216
+          }
+        ],
+        "shapes": [
+          {
+            "role": "input",
+            "shape": [
+              8629,
+              1024
+            ],
+            "count": 192
+          },
+          {
+            "role": "output",
+            "shape": [
+              8629,
+              1024
+            ],
+            "count": 192
+          },
+          {
+            "role": "input",
+            "shape": [
+              8629,
+              437
+            ],
+            "count": 24
+          },
+          {
+            "role": "output",
+            "shape": [
+              8629,
+              437
+            ],
+            "count": 24
+          }
+        ]
+      },
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/long-query/post/.graph_dumps/graph_0030_fused_0_syn_1030000_1030000_751.1328115.60068.post.json",
+        "graph": ".graph_dumps/graph_0030_fused_0_syn_1030000_1030000_751",
+        "workspace": 522197248,
+        "softmax_nodes": 120,
+        "allocations": [
+          {
+            "role": "input",
+            "allocation": "DRAM",
+            "count": 120
+          },
+          {
+            "role": "output",
+            "allocation": "SRAM",
+            "count": 120
+          }
+        ],
+        "shapes": [
+          {
+            "role": "input",
+            "shape": [
+              8629,
+              2048,
+              1
+            ],
+            "count": 96
+          },
+          {
+            "role": "output",
+            "shape": [
+              8629,
+              2048,
+              1
+            ],
+            "count": 96
+          },
+          {
+            "role": "input",
+            "shape": [
+              8629,
+              437,
+              1
+            ],
+            "count": 24
+          },
+          {
+            "role": "output",
+            "shape": [
+              8629,
+              437,
+              1
+            ],
+            "count": 24
+          }
+        ]
+      },
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/long-query/post/.graph_dumps/graph_0036_fused_0_syn_1036000_1036000_825.1328115.57516.post.json",
+        "graph": ".graph_dumps/graph_0036_fused_0_syn_1036000_1036000_825",
+        "workspace": 522211584,
+        "softmax_nodes": 144,
+        "allocations": [
+          {
+            "role": "input",
+            "allocation": "DRAM",
+            "count": 144
+          },
+          {
+            "role": "output",
+            "allocation": "SRAM",
+            "count": 144
+          }
+        ],
+        "shapes": [
+          {
+            "role": "input",
+            "shape": [
+              8629,
+              1536,
+              1
+            ],
+            "count": 144
+          },
+          {
+            "role": "output",
+            "shape": [
+              8629,
+              1536,
+              1
+            ],
+            "count": 144
+          }
+        ]
+      }
+    ],
+    "cumulative_allocator_peak_bytes": {
+      "baseline": 45773745664,
+      "after_candidate": 50759928576
+    },
+    "memory_scope": "Same-process cumulative high water including cold and both recipe sets",
+    "unloaded_bytes": 5393876352
+  },
+  "bf16_trials": {
+    "screen": [
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "baseline",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.0062686959,
+        "samples": [
+          0.006329863,
+          0.0062511706,
+          0.006255810400000001,
+          0.0062653467000000004,
+          0.0062720981,
+          0.0062686959,
+          0.0062706388000000005
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "whole-block",
+        "equal": false,
+        "differing": 9667315,
+        "rrmse": 0.003713554237037897,
+        "maximum": 128.0,
+        "finite": true,
+        "seconds": 0.0060517845,
+        "samples": [
+          0.0061193931,
+          0.0060517845,
+          0.0060543883,
+          0.0060436403999999996,
+          0.0060455051,
+          0.0060402653,
+          0.0060533258
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "rank3",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.006323667600000001,
+        "samples": [
+          0.0063566288,
+          0.0063181064,
+          0.006335837699999999,
+          0.0062897802,
+          0.006323667600000001,
+          0.0063550252,
+          0.0063127643999999995
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "batch-query-512",
+        "equal": false,
+        "differing": 165605,
+        "rrmse": 2.5540633942000568e-05,
+        "maximum": 1.0,
+        "finite": true,
+        "seconds": 0.0089949618,
+        "samples": [
+          0.0090451254,
+          0.008994692299999999,
+          0.008974769,
+          0.008996449,
+          0.0089949618,
+          0.0089819686,
+          0.0090058119
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "batch-query-1536",
+        "equal": false,
+        "differing": 165605,
+        "rrmse": 2.5540633942000568e-05,
+        "maximum": 1.0,
+        "finite": true,
+        "seconds": 0.0075246745,
+        "samples": [
+          0.007564420299999999,
+          0.0075150432,
+          0.007555872700000001,
+          0.0075313331999999995,
+          0.0075194797,
+          0.007523366700000001,
+          0.0075246745
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "baseline",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.0062705405,
+        "samples": [
+          0.0062705405,
+          0.0062501782,
+          0.0063121701,
+          0.0062676802,
+          0.0062956557,
+          0.0062954503,
+          0.0062679787
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "baseline",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.0066966487,
+        "samples": [
+          0.0067949641,
+          0.0067099723,
+          0.0066841681,
+          0.0066936923,
+          0.0066965115,
+          0.0066997472,
+          0.0066966487
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-block",
+        "equal": false,
+        "differing": 10197046,
+        "rrmse": 0.003804178675636649,
+        "maximum": 128.0,
+        "finite": true,
+        "seconds": 0.0063639947,
+        "samples": [
+          0.0064938942,
+          0.0063551541000000005,
+          0.0063634904,
+          0.006352970800000001,
+          0.0063682322,
+          0.0063751361000000005,
+          0.0063639947
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "rank3",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.0066714467,
+        "samples": [
+          0.006738785999999999,
+          0.0066714467,
+          0.0066650191999999995,
+          0.006665313500000001,
+          0.0066686516000000005,
+          0.00668321,
+          0.0066820913999999995
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "batch-query-512",
+        "equal": false,
+        "differing": 175556,
+        "rrmse": 7.96424865256995e-05,
+        "maximum": 4.0,
+        "finite": true,
+        "seconds": 0.009847236700000001,
+        "samples": [
+          0.0099025592,
+          0.009847236700000001,
+          0.009836612,
+          0.009831162899999999,
+          0.009813198300000001,
+          0.009856363,
+          0.0098588457
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "batch-query-1536",
+        "equal": false,
+        "differing": 175556,
+        "rrmse": 7.96424865256995e-05,
+        "maximum": 4.0,
+        "finite": true,
+        "seconds": 0.0078834802,
+        "samples": [
+          0.0079112916,
+          0.0078108352,
+          0.0078164314,
+          0.0078974598,
+          0.0078576681,
+          0.0078834802,
+          0.0078845487
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "baseline",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.006667167,
+        "samples": [
+          0.0066523102,
+          0.006680050999999999,
+          0.0066859687,
+          0.006709431300000001,
+          0.0066578705,
+          0.0066436615,
+          0.006667167
+        ],
+        "fallback": {}
+      }
+    ],
+    "rounding_preserved": [
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "baseline",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.0063372344,
+        "samples": [
+          0.0063396419999999995,
+          0.0063305893,
+          0.0063372344,
+          0.0063725529,
+          0.0063214494999999996,
+          0.0063293824999999995,
+          0.0063563413
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "whole-block-preserve",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.006274154299999999,
+        "samples": [
+          0.006284244499999999,
+          0.0062706529,
+          0.006276501800000001,
+          0.0062726438999999995,
+          0.006274154299999999,
+          0.006269103600000001,
+          0.0062885250000000005
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "baseline",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.0062618336999999994,
+        "samples": [
+          0.0062803762,
+          0.0062388893,
+          0.0062457186,
+          0.006282116799999999,
+          0.0062618336999999994,
+          0.006246703399999999,
+          0.0062775442
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "baseline",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.0066734347,
+        "samples": [
+          0.006849756899999999,
+          0.0066618151,
+          0.0066704522,
+          0.0066734347,
+          0.0066754828,
+          0.0066860318000000005,
+          0.0066567378
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-block-preserve",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.0066787836,
+        "samples": [
+          0.0066699832,
+          0.0066787836,
+          0.0066751970999999995,
+          0.006666723300000001,
+          0.0066892835,
+          0.0067060779,
+          0.0067292359999999996
+        ],
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "baseline",
+        "equal": true,
+        "differing": 0,
+        "rrmse": 0.0,
+        "maximum": 0.0,
+        "finite": true,
+        "seconds": 0.0066635911,
+        "samples": [
+          0.0066619316,
+          0.0066484662,
+          0.0066480195,
+          0.0066635911,
+          0.0067164662,
+          0.0067080264,
+          0.0067339917
+        ],
+        "fallback": {}
+      }
+    ],
+    "decision": "Retain existing BF16 DiT regions after quality-preserving candidates showed no net gain"
+  },
+  "decision": {
+    "attention": "accepted",
+    "bf16_dit": "existing regions retained",
+    "text": "accepted after controlled equality checks and a baseline recheck reproduced the Auto text-insertion issue"
+  },
+  "pipelines": {
+    "baseline-retry": {
+      "cold_seconds": 78.064895324,
+      "warm_seconds": [
+        16.33558095,
+        15.979694581,
+        16.09203614,
+        16.201284372,
+        16.073871951
+      ],
+      "median_seconds": 16.09203614,
+      "node_medians": {
+        "TextGenerate": 5.227062095,
+        "SwitchNode": 0.000119895,
+        "PreviewAny": 6.3769e-05,
+        "CLIPTextEncode": 0.40450593700000004,
+        "KSampler": 10.205935006,
+        "VAEDecode": 0.132106897,
+        "PreviewImage": 0.108698583
+      },
+      "program_checks": [
+        {
+          "generation": 1,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 2,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 3,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 4,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 5,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 6,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 7,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        }
+      ]
+    },
+    "product-functional-fp8": {
+      "cold_seconds": 78.070380111,
+      "warm_seconds": [
+        15.949452065,
+        15.902137145,
+        15.918740065,
+        15.806434295,
+        15.81820694
+      ],
+      "median_seconds": 15.902137145,
+      "node_medians": {
+        "TextGenerate": 4.985312936,
+        "SwitchNode": 0.000115175,
+        "PreviewAny": 6.5781e-05,
+        "CLIPTextEncode": 0.40604544,
+        "KSampler": 10.205774041,
+        "VAEDecode": 0.13231774,
+        "PreviewImage": 0.108145786
+      },
+      "program_checks": [
+        {
+          "generation": 1,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 2,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 3,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 4,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 5,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 6,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 7,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        }
+      ]
+    },
+    "bf16-baseline": {
+      "cold_seconds": 64.333513593,
+      "warm_seconds": [
+        19.653473675,
+        19.521317479,
+        19.395796852,
+        19.514298649,
+        19.550010327
+      ],
+      "median_seconds": 19.521317479,
+      "node_medians": {
+        "TextGenerate": 5.314388936,
+        "SwitchNode": 0.000111438,
+        "PreviewAny": 6.1312e-05,
+        "CLIPTextEncode": 0.31534551,
+        "KSampler": 13.614789606,
+        "VAEDecode": 0.131995047,
+        "PreviewImage": 0.111644768
+      },
+      "program_checks": [
+        {
+          "generation": 1,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 2,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 3,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 4,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 5,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 6,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 7,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        }
+      ]
+    },
+    "product-functional-bf16": {
+      "cold_seconds": 64.129777937,
+      "warm_seconds": [
+        19.550884046,
+        19.395565888,
+        19.350594285,
+        19.416140215,
+        19.314992512
+      ],
+      "median_seconds": 19.395565888,
+      "node_medians": {
+        "TextGenerate": 5.156212923,
+        "SwitchNode": 0.000117488,
+        "PreviewAny": 6.2685e-05,
+        "CLIPTextEncode": 0.322805484,
+        "KSampler": 13.628817109,
+        "VAEDecode": 0.132228376,
+        "PreviewImage": 0.112145755
+      },
+      "program_checks": [
+        {
+          "generation": 1,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 2,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 3,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 4,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 5,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 6,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 7,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        }
+      ]
+    }
+  },
+  "logits": {
+    "fp8": {
+      "baseline": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/baseline-retry/mtp/mtp-logits-7.pt",
+      "candidate": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/product-functional-fp8/mtp/mtp-logits-7.pt",
+      "shape": [
+        1033,
+        248320
+      ],
+      "equal": true,
+      "differing": 0,
+      "top1_equal": 1033,
+      "rrmse": 0.0,
+      "maximum": 0.0
+    },
+    "bf16": {
+      "baseline": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/bf16-baseline/mtp/mtp-logits-7.pt",
+      "candidate": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/product-functional-bf16/mtp/mtp-logits-7.pt",
+      "shape": [
+        1033,
+        248320
+      ],
+      "equal": true,
+      "differing": 0,
+      "top1_equal": 1033,
+      "rrmse": 0.0,
+      "maximum": 0.0
+    }
+  },
+  "natural_quality": [
+    {
+      "label": "bf16-teapot",
+      "baseline_tokens": 296,
+      "product_tokens": 296,
+      "tokens_equal": true,
+      "text_equal": true,
+      "pixel_mae": 0.08120981852213542,
+      "pixel_max": 4
+    },
+    {
+      "label": "bf16-poster",
+      "baseline_tokens": 322,
+      "product_tokens": 322,
+      "tokens_equal": true,
+      "text_equal": true,
+      "pixel_mae": 0.08518664042154948,
+      "pixel_max": 9
+    },
+    {
+      "label": "bf16-person",
+      "baseline_tokens": 267,
+      "product_tokens": 267,
+      "tokens_equal": true,
+      "text_equal": true,
+      "pixel_mae": 0.0798807144165039,
+      "pixel_max": 4
+    },
+    {
+      "label": "fp8-teapot",
+      "baseline_tokens": 330,
+      "product_tokens": 330,
+      "tokens_equal": true,
+      "text_equal": true,
+      "pixel_mae": 0.08224232991536458,
+      "pixel_max": 5
+    },
+    {
+      "label": "fp8-poster",
+      "baseline_tokens": 408,
+      "product_tokens": 408,
+      "tokens_equal": true,
+      "text_equal": true,
+      "pixel_mae": 0.08599249521891277,
+      "pixel_max": 6
+    },
+    {
+      "label": "fp8-person",
+      "baseline_tokens": 251,
+      "product_tokens": 251,
+      "tokens_equal": true,
+      "text_equal": true,
+      "pixel_mae": 0.07596619923909505,
+      "pixel_max": 3
+    }
+  ],
+  "default_auto_review": {
+    "workflow_equal": true,
+    "baseline_text": "Studio photograph of an elegant woman posing gracefully amidst a lush arrangement of blooming flowers and delicate branches, wearing a sophisticated strapless grey-brown and beige gown with soft, draped fabric that flows around her form. Her hands gently cradle a magnificent floral bouquet featuring abundant peach, coral, and blush pink garden roses interspersed with tiny white blossoms and fresh green leaves. Delicate flowering branches extend naturally to frame her head and shoulders, creating a romantic botanical crown. A magnificent blue hummingbird hovers beside her, its wings spread elegantly in mid-flight. She tilts her head back slightly with a serene, dreamy expression, her posture relaxed and poised. The scene is set within a dreamy botanical studio against a soft sage green background, richly framed by flowering stems and a lush garden-style composition. Soft, diffused natural light illuminates the subject, casting gentle highlights and subtle shadows while a warm, glowing radiance bathes the entire scene. The image exhibits exquisite artistic plant portrait photography, blending romantic ethereal fantasy with Renaissance editorial aesthetics and painterly surrealism. Intricate floral textures and delicate brush-like influences are visible, enhanced by a soft cinematic depth of field that draws focus to the woman and the hovering bird. The palette is luxurious and harmonious, combining the earthy tones of the dress with the vibrant pinks of the roses and the vivid blue of the hummingbird against the calming sage backdrop. Every element contributes to a cohesive, high-end editorial composition that feels both timeless and magically alive, capturing a fleeting moment of nature's beauty intertwined with human grace. The lighting emphasizes the softness of the fabric and the delicate petals, creating a sense of depth and dimensionality without harsh contrasts.",
+    "candidate_text": "Studio photograph of an elegant woman posing gracefully amidst a lush arrangement of blooming flowers and delicate branches, wearing a sophisticated strapless grey-brown and beige gown with soft, draped fabric that flows around her form. Her hands gently cradle a magnificent floral bouquet featuring abundant peach, coral, and blush pink garden roses interspersed with tiny white blossoms and fresh green leaves. Delicate flowering branches extend naturally to frame her head and shoulders, creating a romantic botanical crown. A magnificent blue hummingbird hovers beside her, its wings spread elegantly in mid-flight. She tilts her head back slightly with a serene, dreamy expression, her posture relaxed and poised. The scene is set within a dreamy botanical studio against a soft sage green background, richly framed by flowering stems and a lush garden-style composition. Soft, diffused natural light bathes the scene, casting gentle highlights and subtle shadows while imparting a warm, glowing radiance to the atmosphere. The image exhibits intricate floral textures, artistic painterly influences, and a sophisticated Renaissance editorial aesthetic. The overall tone is romantic, ethereal, and fantastical, blending realistic botanical details with a painting-like surreal quality and luxurious cinematic depth of field. Visible text appears verbatim as \"Romantic Ethereal Fantasy\" on a small, elegant card resting on a nearby branch, written in a delicate serif typeface in white ink with high legibility against the dark foliage.",
+    "finding": "Unrequested visible text also occurs after restoring the original text implementation. Default Auto variability limits same-seed output comparisons.",
+    "decision": "Retain the quality-preserving arithmetic optimizations, with the Auto-output limitation explicitly recorded.",
+    "restored_baseline_text": "Studio photograph of an elegant woman posing gracefully amidst a lush arrangement of blooming flowers and delicate branches, wearing a sophisticated strapless grey-brown and beige gown with soft, draped fabric that flows around her form. Her hands gently cradle a magnificent floral bouquet featuring abundant peach, coral, and blush pink garden roses interspersed with tiny white blossoms and fresh green leaves. Delicate flowering branches extend naturally to frame her head and shoulders, creating a romantic botanical crown. A magnificent blue hummingbird hovers beside her, its wings spread elegantly in mid-flight. She tilts her head back slightly with a serene, dreamy expression, her posture relaxed and poised. The scene is set within a dreamy botanical studio against a soft sage green background, richly framed by flowering stems and a lush garden-style composition. Soft, diffused natural light illuminates the subject, casting gentle highlights and subtle shadows while a warm, glowing radiance bathes the entire image in an ethereal light. The texture of the fabric and petals is rendered with exquisite detail, blending realistic photography with a painting-like surrealist aesthetic. The composition features a cinematic depth of field, blurring the background slightly to emphasize the sharp focus on the woman, the vibrant flowers, and the tiny bird. The overall tone is romantic, airy, and fantastical, evoking a Renaissance editorial beauty with a touch of modern fantasy. Visible text appears on a small vintage label attached to one of the stems near the bouquet's base, reading \"Ethereal Flora Collection\" in an elegant, cursive serif font in dark charcoal ink, clearly legible against the pale green leaf behind it, positioned in the lower-left quadrant of the frame. The lighting creates a halo effect around the hummingbird's wings and the edges of her dress, enhancing the magical atmosphere.",
+    "restored_baseline_workflow_equal": true,
+    "baseline_text_module_sha256": "db26e3a06343ccaa32a4f2ae798bd7e688739538b9d358c2735ad9f82e697b39"
+  },
+  "visual_review": {
+    "fp8_teapot": "Single visible handle",
+    "bf16_teapot": "No visible handle in both baseline and candidate",
+    "posters": "Three yellow flowers and MOSS text in both pairs; FP8 text has low contrast",
+    "people": "Wrinkles, red scarf and white cup preserved"
+  },
+  "quality_workflow": {
+    "mtp": "tree3s1",
+    "stochastic_generation": true,
+    "forced_tokens": false,
+    "unloaded_bytes": 2685928832,
+    "reload": "512px MTP off and original INT8 successful"
+  },
+  "tests": {
+    "finish-regressions.log": "341 passed, 1 skipped, 43 warnings in 268.82s (0:04:28)",
+    "final-targeted-tests.log": "37 passed, 18 warnings in 34.29s",
+    "final-accepted-regressions.log": "335 passed, 1 skipped, 42 warnings in 269.18s (0:04:29)"
+  },
+  "test_scope": {
+    "broad": "341 tests before the dynamic padding formula cleanup",
+    "targeted": "37 attention and RoPE tests on the final source tree",
+    "rollback": "335 tests during the original-text baseline recheck"
+  },
+  "jobs": [
+    {
+      "name": "product-bf16",
+      "returncode": 0,
+      "seconds": 284.1329802600085
+    },
+    {
+      "name": "product-bf16-logits",
+      "returncode": 0,
+      "seconds": 4.8017160540039185
+    },
+    {
+      "name": "quality-baseline",
+      "returncode": 0,
+      "seconds": 267.1054083289928
+    },
+    {
+      "name": "quality-product",
+      "returncode": 0,
+      "seconds": 260.94689081198885
+    },
+    {
+      "name": "regressions",
+      "returncode": 0,
+      "seconds": 274.52439731900813
+    }
+  ],
+  "excluded_trials": {
+    "functional_decomposition": {
+      "baseline": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/baseline-retry/mtp/mtp-logits-7.pt",
+      "candidate": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage/rope-fp8/mtp/mtp-logits-7.pt",
+      "shape": [
+        1033,
+        248320
+      ],
+      "equal": false,
+      "differing": 230456429,
+      "top1_equal": 1007,
+      "rrmse": 0.04680510303890349,
+      "maximum": 4.66796875
+    },
+    "hot_registration": "Runtime kernel replacement corrupted comparisons. Fixed-kernel processes are the accepted comparisons.",
+    "process_crashes": [
+      "baseline/server.log",
+      "product-fp8/server.log",
+      "product-fp8-retry/server.log"
+    ]
+  },
+  "remaining_items": [
+    "QK score tensors still use DRAM. Probability tiles use SRAM.",
+    "The earlier measurement-process segmentation faults have no confirmed vendor-level root cause.",
+    "Image defects already present in the baseline samples are retained in the visual review.",
+    "Default Auto expansion can insert unrequested visible text with both the original and optimized text implementation."
+  ],
+  "deployment": [
+    {
+      "trial": 0,
+      "prompt_id": "badabb90-9c34-4b83-b00a-82f0b41c81d2",
+      "cached_nodes": [],
+      "seconds": 100.467
+    },
+    {
+      "trial": 1,
+      "prompt_id": "d0153b73-e476-4b98-9f19-a661deffaa27",
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:6",
+        "18:5",
+        "18:24"
+      ],
+      "seconds": 29.113
+    },
+    {
+      "trial": 2,
+      "prompt_id": "e1e278e4-2211-47a5-835c-ab5595e6985f",
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:11",
+        "18:1",
+        "18:4",
+        "18:2",
+        "18:3",
+        "18:13",
+        "18:16",
+        "18:6",
+        "18:5",
+        "18:24"
+      ],
+      "seconds": 28.887
+    }
+  ],
+  "final_queue": {
+    "queue_running": [],
+    "queue_pending": []
+  },
+  "final_auto_text": "Studio photograph of an elegant woman posing gracefully amidst a lush arrangement of blooming flowers and delicate branches, wearing a sophisticated strapless grey-brown and beige gown with soft, draped fabric that flows around her form. Her hands gently cradle a magnificent floral bouquet featuring abundant peach, coral, and blush pink garden roses interspersed with tiny white blossoms and fresh green leaves. Delicate flowering branches extend naturally to frame her head and shoulders, creating a romantic botanical crown. A magnificent blue hummingbird hovers beside her, its wings spread elegantly in mid-flight. She tilts her head back slightly with a serene, dreamy expression, her posture relaxed and poised. The scene is set within a dreamy botanical studio against a soft sage green background, richly framed by flowering stems and a lush garden-style composition. Soft, diffused natural light illuminates the subject, casting gentle highlights and subtle shadows while a warm, glowing radiance bathes the entire scene. The image exhibits exquisite artistic plant portrait photography, blending romantic ethereal fantasy with Renaissance editorial aesthetics and painterly surrealism. Intricate floral textures and delicate brush-like influences are visible, enhanced by a soft cinematic depth of field that draws focus to the woman and the hovering bird. The palette is luxurious and harmonious, combining the earthy tones of the dress with the vibrant pinks of the roses and the vivid blue of the hummingbird against the calming sage backdrop. Every element contributes to a cohesive, high-end editorial composition that feels both timeless and magically alive, capturing a fleeting moment of nature's beauty intertwined with human grace. The lighting emphasizes the softness of the fabric and the delicate petals, creating a sense of depth and dimensionality without harsh contrasts.",
+  "final_auto_text_equal_to_prior_baseline": true,
+  "deployment_artifacts": [
+    {
+      "history": "deployment-0-history.json",
+      "image": "deployment-0.png",
+      "image_sha256": "02b5360855451a65bcbaade01607bfaa02298dc321fc491807d71d93903a781c"
+    },
+    {
+      "history": "deployment-1-history.json",
+      "image": "deployment-1.png",
+      "image_sha256": "28cab7bf3b74af02c00e6db451a9f802a40fc0b69b37cd861d8d24af0ea43a26"
+    },
+    {
+      "history": "deployment-2-history.json",
+      "image": "deployment-2.png",
+      "image_sha256": "2a5598a78fd385f4b8bd11f452cd39630fa1aba4a841d5af49273ba17f7fa5ca"
+    }
+  ],
+  "final_visual_review": "First final deployment image retains woman, hummingbird, roses and gown details. No extra text label is visible."
+}

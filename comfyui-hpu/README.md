@@ -1,6 +1,6 @@
 # Gaudi2 HPU 适配交接入口
 
-更新时间为2026-11-12（Asia/Shanghai）。本文件保留当前状态和交接要点，验证细节见 `PROGRESS.md`，优化复盘与路线判断见 [BF16与FP8](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。
+更新时间为2026-11-13（Asia/Shanghai）。本文件保留当前状态和交接要点，验证细节见 `PROGRESS.md`，优化复盘与路线判断见 [BF16与FP8](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。
 
 **文档归属：**所有过程、失败/成功证据和个人环境信息只保存在本调查仓库，不进入 `/home/sonny/ComfyUI` 或 `ComfyUI-Gaudi` 产品仓库。
 
@@ -21,6 +21,8 @@
 - MOSS 输出头回退修复：`0690d18f`。普通/MTP 路径改为调用量化 lm_head 层自身，避免 `torch._int_mm` CPU fallback；解码回归 **42 passed, 1 skipped**，同一完整请求约 `337.013 s → 134.586 s`。这不是全面性能优化完成的声明。
 
 ## 当前性能与路线
+
+- 当前产品为`34e2649e`，包含FP8长序列QK分批及文本短步RoPE编译。1088×1936同caption五轮中位29.645→28.892s，FP8／BF16扩写5.227→4.985s、5.314→5.156s。18组block及两种文本固定logits逐元素一致，6组固定树自然扩写token一致。341项广泛回归、最终37项专项通过。默认Auto添加未请求文字在优化版及原始文本回退版均复现，完整质量边界、显存高水位与失败路径见 [三阶段验收](MOSS_THREE_STAGE_EXECUTION_2026-11-12.md) 和 [证据](evidence/moss-three-stage-2026-11-13.json)。
 
 - `69fe4a54`已移除FP8 attention的8192总序列上限并部署8189。1088×1936同caption、同seed三轮中位35.753→29.572s，1024×1824为23.721s。BF16代码与完整跨界流程已复核。306项回归及最终30项attention专项通过，18组真实block对FP32参考误差0.44%–3.97%，大图细节存在量化差异。调查文档按用户要求删除，验收摘要见`PROGRESS.md`，数据见[修复证据](evidence/moss-resolution-fix-2026-11-12.json)。
 

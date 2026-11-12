@@ -62,11 +62,15 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为 `69fe4a54`，监听 `http://192.168.10.21:8189`。根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+当前部署提交为 `34e2649e`，监听 `http://192.168.10.21:8189`。根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
 
 应用入口在 HPU 初始化后恢复 Python 的 SIGPIPE 忽略策略，避免浏览器取消文件下载使 Synapse 进入 fatal 状态。遇到 `synStatus 31` 时先检查最早的 DFA 原因，不能仅凭后续 `Host malloc failed` 判定主机内存不足。详见 `HPU_SIGPIPE_RECOVERY_2026-11-10.md`。
 
 当前优化由`--disable-comfy-compiler`统一关闭区域编译。首次shape/recipe有编译成本，自然caption和图像细节会受舍入及MTP调度影响。
+
+- `ef16c195`对N≥8192的FP8 attention使用1536行query批次，padding采用floor division，14次长序列调用仅产生2份动态图。QK分数仍分配DRAM，概率tile供AV在SRAM中消费。
+- `34e2649e`在现有Kitchen RoPE入口注册HPU短步实现，覆盖BF16激活、64维旋转部分及1–8行。非原地公式采用`decomposition_mode=none`保留原生addcmul舍入。关闭编译、训练／梯度、prefill及其它dtype走既有实现。
+- 三阶段原始资料位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage`。正式对照为每进程固定实现，运行中热替换custom-op kernel的结果已排除。默认Auto扩写在原始文本回退版也出现未请求文字标签，详情见`MOSS_THREE_STAGE_EXECUTION_2026-11-12.md`。
 
 - Qwen3.5 deferred conv/GDN、KV attention/tree merge使用HPU编译。普通BF16模型另外启用短步MLP、完整attention、norm及八行GDN投影扩区。GDN prefill覆盖BF16扩写和原有FP32普通编码，按至少64及2的幂分桶。
 - 八行GDN扩区要求标准LinearKV、普通operations、decode、无hooks/梯度。四行激活在编译递推外clone。KV分支行搬移先clone源行，相关状态回归已验收。
@@ -74,7 +78,7 @@ cat .run/deployed-version
 - 条件text_embedder和FP32 RoPE由本次conditioning持有。BLOCKWISE经四系数语义检查启用，一般矩阵使用PAIRWISE。CPU/训练/梯度/动态hooks/不适用options按相应门控分流。
 - 参数、状态及临时tensor由既有模型/执行生命周期管理。完整pipeline卸载稳定约2.50GiB，文本单独卸载约94MiB，各用同工作流基线验证。
 
-当前产品条件和验收范围见 [最新报告](MOSS_FP8_FUSION_OPTIMIZATION_2026-11-12.md)，算法及历史失败见 [复盘索引](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。
+当前产品条件和验收范围见 [最新报告](MOSS_THREE_STAGE_EXECUTION_2026-11-12.md)，算法及历史失败见 [复盘索引](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。
 
 ## 共享模型路径
 

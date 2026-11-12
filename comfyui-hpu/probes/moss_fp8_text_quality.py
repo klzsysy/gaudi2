@@ -13,6 +13,8 @@ root = Path(os.environ['MOSS_SYSTEM_ROOT']) / os.environ.get('MOSS_QUALITY_DIREC
 root.mkdir(exist_ok=True)
 probes = Path(__file__).parent
 source = json.loads((root.parent.parent / 'performance-2026-11-11-fp8/source.json').read_text())
+if os.environ.get('MOSS_QUALITY_MTP'):
+    source['18:11']['inputs']['mtp'] = os.environ['MOSS_QUALITY_MTP']
 url = 'http://127.0.0.1:8190'
 
 def api(path, data=None):
