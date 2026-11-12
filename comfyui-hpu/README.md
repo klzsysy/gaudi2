@@ -22,7 +22,9 @@
 
 ## 当前性能与路线
 
-- 当前部署`f67e7f3f`在Moody FP8主模型使用BF16 QK、融合概率量化与FP8 AV。固定298-token完整流程18.936→17.191s，DiT13.068→11.364s。FP8 MME时间占比约19.0%→26.4%，266项回归、同caption三组配对图及重载通过。正常入口缓存11.881s。精度边界与下一步方向见 [FP8进一步优化](MOSS_FP8_DEEP_OPTIMIZATION_2026-11-12.md)。
+- 当前部署`0995638a`采用native FP32 Q/K RMSNorm与FP8 block扩区编译。固定完整流程17.202→15.925s，DiT11.361→10.211s，FP8 MME时间占比约26.4%→29.7%。allocator高水位27.402→31.285GiB，287项回归与正常入口缓存10.696s通过。精度代价、分区边界和量化对照见 [FP8区域融合](MOSS_FP8_FUSION_OPTIMIZATION_2026-11-12.md)。
+
+- 前轮`f67e7f3f`在Moody FP8主模型使用BF16 QK、融合概率量化与FP8 AV。固定298-token完整流程18.936→17.191s，DiT13.068→11.364s。FP8 MME时间占比约19.0%→26.4%，266项回归、同caption三组配对图及重载通过。正常入口缓存11.881s。精度边界与下一步方向见 [FP8进一步优化](MOSS_FP8_DEEP_OPTIMIZATION_2026-11-12.md)。
 
 - Qwen3.5 FP8文本已转换并适配普通CLIPLoader，文件`qwen3.5_9b_fp8_from_int8.safetensors`为11.377GB，来自现有INT8解码BF16。固定298-token完整流程18.954→18.933s，当前吞吐基本持平，allocator峰值34.777→27.267GiB。251项回归、自然扩写与重载通过。耗时分布、失败候选及硬件余量分析见 [全流程FP8](MOSS_FP8_SYSTEM_OPTIMIZATION_2026-11-12.md)。
 

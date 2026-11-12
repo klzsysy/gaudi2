@@ -62,7 +62,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为 `f67e7f3f`，监听 `http://192.168.10.21:8189`。根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+当前部署提交为 `0995638a`，监听 `http://192.168.10.21:8189`。根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
 
 应用入口在 HPU 初始化后恢复 Python 的 SIGPIPE 忽略策略，避免浏览器取消文件下载使 Synapse 进入 fatal 状态。遇到 `synStatus 31` 时先检查最早的 DFA 原因，不能仅凭后续 `Host malloc failed` 判定主机内存不足。详见 `HPU_SIGPIPE_RECOVERY_2026-11-10.md`。
 
@@ -74,7 +74,7 @@ cat .run/deployed-version
 - 条件text_embedder和FP32 RoPE由本次conditioning持有。BLOCKWISE经四系数语义检查启用，一般矩阵使用PAIRWISE。CPU/训练/梯度/动态hooks/不适用options按相应门控分流。
 - 参数、状态及临时tensor由既有模型/执行生命周期管理。完整pipeline卸载稳定约2.50GiB，文本单独卸载约94MiB，各用同工作流基线验证。
 
-当前产品条件和验收范围见 [最新报告](MOSS_BF16_ATTENTION_AND_SUBMISSION_2026-11-11.md)，算法及历史失败见 [复盘索引](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。
+当前产品条件和验收范围见 [最新报告](MOSS_FP8_FUSION_OPTIMIZATION_2026-11-12.md)，算法及历史失败见 [复盘索引](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。
 
 ## 共享模型路径
 
@@ -115,9 +115,9 @@ shared_models:
 
 ## 性能复现资料
 
-当前FP8正式基准为固定298-token完整MTP17.191s、文本5.149s、DiT11.364s，各5 warm中位数。完整cold73.529s，正常服务缓存11.881s。详情见`MOSS_FP8_DEEP_OPTIMIZATION_2026-11-12.md`与`evidence/moss-fp8-deep-2026-11-12.json`。BF16历史基准见`evidence/moss-bf16-next-2026-11-11.json`。
+当前FP8正式基准为固定298-token完整MTP15.925s、文本5.040s、DiT10.211s，各5 warm中位数。完整cold77.273s，正常服务缓存10.696s。allocator高水位31.285GiB，包含cold。详情见`MOSS_FP8_FUSION_OPTIMIZATION_2026-11-12.md`与`evidence/moss-fp8-fusion-2026-11-12.json`。BF16历史基准见`evidence/moss-bf16-next-2026-11-11.json`。
 
-最新大型数据位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep`。固定MTP程序位于`performance-2026-11-11-completion/mtp-record-298/program.pt`。此前BF16和FP8全流程数据保留在各自日期目录。
+最新大型数据位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-fusion`，最终产品数据在`verified`与`quality-verified`。固定MTP程序位于`performance-2026-11-11-completion/mtp-record-298/program.pt`。此前BF16和FP8全流程数据保留在各自日期目录。
 
 服务使用既有启动脚本和默认32个PyTorch CPU线程，改16线程的完整流程复验无收益。当前lazy/Graph单独试验成本高于eager，lazy＋`hpu_backend`出现`GraphStorage::get()`符号缺失，诊断见预算报告。
 
@@ -136,3 +136,7 @@ CLIPLoader可选择`qwen3.5_9b_fp8_from_int8.safetensors`，位置为共享模�
 `f67e7f3f`在原生HPU FP8 MOSS模型的forward中默认请求`fp8_attention`，由原attention dispatcher在已支持形状上选择BF16 QK＋融合FP8概率量化＋FP8 AV。用户传入的`transformer_options["fp8_attention"] = False`可关闭此请求。该路径的选择条件和精度数据见进一步优化报告。
 
 2026-11-12发现测试venv中CUDA版torch2.14.1遮蔽了Gaudi安装。对应`torch`、`torchgen`及dist-info已移动到`/home/sonny/ComfyUI-Gaudi/.run/torch-cu130-backup-2026-11-12`，现通过原`gaudi-base.pth`使用Habana torch2.13.0a0。HPU矩阵、266项回归和正常服务已验证。安装来源尚未确认。
+
+## FP8 block扩区
+
+`0995638a`将MOSS Q/K归一化改为native FP32 RMSNorm。FP8 block在HPU BF16推理、无hooks/attention override/reference/mask时扩大编译区域，attention与FFN的调制方法保留graph break边界。`--disable-comfy-compiler`继续控制编译路径。287项回归、18组真实输入、自然图片和卸载重载通过，九份源码/测试文件哈希一致。正常服务cold79.030s、缓存10.696s、768²/MTP off 14.295s。舍入变化和显存成本见融合报告。

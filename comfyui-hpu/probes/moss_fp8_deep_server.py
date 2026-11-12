@@ -10,6 +10,19 @@ import torch
 from comfy.ldm.moss_image import model as moss
 import execution
 
+if os.environ.get('MOSS_FUSION_MODE'):
+    import moss_fp8_fusion_candidate
+    moss_fp8_fusion_candidate.install()
+
+if os.environ.get('MOSS_FUSION_AB') == '1':
+    import moss_fp8_fusion_candidate
+    fusion_execute = execution.PromptExecutor.execute_async
+    async def execute_fusion(self, prompt, prompt_id, *args, **kwargs):
+        extra = args[0] if args else kwargs.get('extra_data', {})
+        moss_fp8_fusion_candidate.install(os.environ['MOSS_FUSION_AB_MODE'] if extra.get('moss_fusion') else 'baseline')
+        return await fusion_execute(self, prompt, prompt_id, *args, **kwargs)
+    execution.PromptExecutor.execute_async = execute_fusion
+
 if os.environ.get('MOSS_DEEP_SHARED_QUANT') == '1':
     import moss_fp8_shared_quant
     moss_fp8_shared_quant.install()

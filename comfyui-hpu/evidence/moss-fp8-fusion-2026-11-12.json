@@ -1,0 +1,3179 @@
+{
+  "date": "2026-11-12",
+  "baseline_commit": "f67e7f3f2c9d369502a218f549c589f2c13c436f",
+  "product_commit": "0995638a6546bb10d4558417d3327e3137871830",
+  "server_root": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-fusion",
+  "accepted_case": "verified",
+  "conditions": {
+    "model": "Moody-Moss-Mix-V4.1_00001__clean-fp8.safetensors",
+    "text": "qwen3.5_9b_fp8_from_int8.safetensors",
+    "input_tokens": 1970,
+    "output_tokens": 298,
+    "width": 1024,
+    "height": 1024,
+    "steps": 25,
+    "cfg": 2.5,
+    "sampler": "er_sde",
+    "scheduler": "simple",
+    "warm_runs": 5,
+    "program": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-11-completion/mtp-record-298/program.pt"
+  },
+  "accepted_changes": [
+    "Native FP32 Q/K RMSNorm",
+    "FP8 block compilation with attention/FFN modulation boundaries"
+  ],
+  "case_meaning": {
+    "baseline": "Unmodified f67e7f3f",
+    "whole": "Investigation prototype with batched BF16 V cast",
+    "release": "Intermediate batched FP32 V product",
+    "unshared": "Investigation prototype with original per-head V cast",
+    "final": "Intermediate product with modulation inlined in the outer block",
+    "verified": "Accepted product with explicit modulation method boundaries"
+  },
+  "timings": {
+    "release": {
+      "warm_seconds": [
+        16.082201295,
+        16.106592143,
+        16.20620887,
+        15.928473802,
+        16.136409501
+      ],
+      "median": 16.106592143,
+      "node_medians": {
+        "TextGenerate": 5.18708012,
+        "SwitchNode": 0.000114773,
+        "PreviewAny": 6.5859e-05,
+        "CLIPTextEncode": 0.39174469700000003,
+        "KSampler": 10.307281366,
+        "VAEDecode": 0.132782359,
+        "PreviewImage": 0.107883586
+      }
+    },
+    "whole": {
+      "warm_seconds": [
+        15.799162576,
+        15.635328752,
+        15.597219339,
+        15.700253719,
+        15.674501316
+      ],
+      "median": 15.674501316,
+      "node_medians": {
+        "TextGenerate": 5.152499571,
+        "SwitchNode": 0.000116765,
+        "PreviewAny": 6.2423e-05,
+        "CLIPTextEncode": 0.404709327,
+        "KSampler": 9.847279735,
+        "VAEDecode": 0.13221328,
+        "PreviewImage": 0.108410733
+      }
+    },
+    "final": {
+      "warm_seconds": [
+        16.783460467,
+        16.40267095,
+        16.459309419,
+        16.284991099,
+        16.561699741
+      ],
+      "median": 16.459309419,
+      "node_medians": {
+        "TextGenerate": 5.136778757,
+        "SwitchNode": 0.000120391,
+        "PreviewAny": 6.5859e-05,
+        "CLIPTextEncode": 0.40272972,
+        "KSampler": 10.681910654,
+        "VAEDecode": 0.132565713,
+        "PreviewImage": 0.108958632
+      }
+    },
+    "verified": {
+      "warm_seconds": [
+        15.925341166,
+        15.894252774,
+        15.734057231,
+        15.997553033,
+        16.09368976
+      ],
+      "median": 15.925341166,
+      "node_medians": {
+        "TextGenerate": 5.039580052,
+        "SwitchNode": 0.000120891,
+        "PreviewAny": 6.2893e-05,
+        "CLIPTextEncode": 0.386177781,
+        "KSampler": 10.211354198,
+        "VAEDecode": 0.131645774,
+        "PreviewImage": 0.108320333
+      }
+    },
+    "baseline": {
+      "warm_seconds": [
+        17.506649261,
+        17.363842251,
+        16.907697155,
+        17.178379532,
+        17.201786719
+      ],
+      "median": 17.201786719,
+      "node_medians": {
+        "TextGenerate": 5.194520233,
+        "SwitchNode": 0.000114843,
+        "PreviewAny": 6.6199e-05,
+        "CLIPTextEncode": 0.41018605100000005,
+        "KSampler": 11.361361581,
+        "VAEDecode": 0.132477316,
+        "PreviewImage": 0.107935363
+      }
+    },
+    "unshared": {
+      "warm_seconds": [
+        16.289142378,
+        15.907271134,
+        16.155542378,
+        16.078653638,
+        16.066249116
+      ],
+      "median": 16.078653638,
+      "node_medians": {
+        "TextGenerate": 5.230433793,
+        "SwitchNode": 0.000115574,
+        "PreviewAny": 6.3426e-05,
+        "CLIPTextEncode": 0.403496054,
+        "KSampler": 10.196725047,
+        "VAEDecode": 0.131931419,
+        "PreviewImage": 0.108589708
+      }
+    }
+  },
+  "verified_runs": [
+    {
+      "label": "full-cold",
+      "prompt_id": "ac1045fe-feca-49f1-a066-dc93a68bc294",
+      "request_seconds": 77.272610968,
+      "client_seconds": 77.99553518698667,
+      "diagnostic": false,
+      "recompute": true,
+      "cached_nodes": [],
+      "output_tokens": 298
+    },
+    {
+      "label": "full-warm-1",
+      "prompt_id": "22fa23a5-4451-42a7-a3dc-e25e3be60a97",
+      "request_seconds": 15.925341166,
+      "client_seconds": 16.52839111900539,
+      "diagnostic": false,
+      "recompute": true,
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:1",
+        "18:2",
+        "18:3",
+        "18:6",
+        "18:24"
+      ],
+      "output_tokens": 298
+    },
+    {
+      "label": "full-warm-2",
+      "prompt_id": "bc830771-dc17-4b48-8273-30e5b88b8b35",
+      "request_seconds": 15.894252774,
+      "client_seconds": 16.483402771002147,
+      "diagnostic": false,
+      "recompute": true,
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:1",
+        "18:2",
+        "18:3",
+        "18:6",
+        "18:24"
+      ],
+      "output_tokens": 298
+    },
+    {
+      "label": "full-warm-3",
+      "prompt_id": "7752225c-287c-4dda-bc54-2f720a27fbcb",
+      "request_seconds": 15.734057231,
+      "client_seconds": 16.35425029200269,
+      "diagnostic": false,
+      "recompute": true,
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:1",
+        "18:2",
+        "18:3",
+        "18:6",
+        "18:24"
+      ],
+      "output_tokens": 298
+    },
+    {
+      "label": "full-warm-4",
+      "prompt_id": "6e118bde-80f7-47ac-8ebb-e0b0d3528b71",
+      "request_seconds": 15.997553033,
+      "client_seconds": 16.604399595002178,
+      "diagnostic": false,
+      "recompute": true,
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:1",
+        "18:2",
+        "18:3",
+        "18:6",
+        "18:24"
+      ],
+      "output_tokens": 298
+    },
+    {
+      "label": "full-warm-5",
+      "prompt_id": "8b9ccc93-f5f4-4d37-b213-e69c4696f7d1",
+      "request_seconds": 16.09368976,
+      "client_seconds": 16.707099905994255,
+      "diagnostic": false,
+      "recompute": true,
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:1",
+        "18:2",
+        "18:3",
+        "18:6",
+        "18:24"
+      ],
+      "output_tokens": 298
+    },
+    {
+      "label": "full-diagnostic",
+      "prompt_id": "5d2510bc-7c60-4691-8bc0-8ca1753077b4",
+      "request_seconds": 93.360634575,
+      "client_seconds": 93.98685454099905,
+      "diagnostic": true,
+      "recompute": true,
+      "cached_nodes": [
+        "19",
+        "18:17",
+        "18:14",
+        "18:1",
+        "18:2",
+        "18:3",
+        "18:6",
+        "18:24"
+      ],
+      "output_tokens": 298
+    }
+  ],
+  "memory_telemetry": {
+    "baseline": {
+      "cold": 73.860517446,
+      "warm_peak_gib": 27.401829838752747,
+      "resident_gib": 17.98718750476837,
+      "telemetry": {
+        "TextGenerate": {
+          "samples": 148,
+          "aip_mean": 21.37837837837838,
+          "power_mean_w": 137.75
+        },
+        "KSampler": {
+          "samples": 439,
+          "aip_mean": 56.14350797266515,
+          "power_mean_w": 342.9931662870159
+        }
+      }
+    },
+    "release": {
+      "cold": 68.445289231,
+      "warm_peak_gib": 33.916255593299866,
+      "resident_gib": 17.98738133907318,
+      "telemetry": {
+        "TextGenerate": {
+          "samples": 169,
+          "aip_mean": 21.668639053254438,
+          "power_mean_w": 138.62721893491124
+        },
+        "KSampler": {
+          "samples": 390,
+          "aip_mean": 58.217948717948715,
+          "power_mean_w": 356.04102564102567
+        }
+      }
+    },
+    "verified": {
+      "cold": 77.272610968,
+      "warm_peak_gib": 31.284505248069763,
+      "resident_gib": 17.987192273139954,
+      "telemetry": {
+        "TextGenerate": {
+          "samples": 145,
+          "aip_mean": 21.351724137931033,
+          "power_mean_w": 140.15862068965518
+        },
+        "KSampler": {
+          "samples": 410,
+          "aip_mean": 58.50731707317073,
+          "power_mean_w": 356.95365853658535
+        }
+      }
+    }
+  },
+  "device_budget": {
+    "before": {
+      "seconds": {
+        "idle": 1.0786140747070196,
+        "other_kernel": 3.6676776367164248,
+        "other_mme": 2.391876123047098,
+        "fp8_mme": 3.0464400634767546,
+        "softmax": 1.3561974853516945
+      },
+      "total_seconds": 11.540805383298991,
+      "fp8_time_fraction": 0.2639711841848871,
+      "runtime_counts": {
+        "run": 3632,
+        "launch": 1984,
+        "Launch": 1984,
+        "launch_recipe": 336,
+        "LaunchRecipe": 336
+      }
+    },
+    "after": {
+      "seconds": {
+        "idle": 0.8194087158203109,
+        "other_kernel": 2.6508655517595687,
+        "other_mme": 2.4086657958986106,
+        "fp8_mme": 3.0452863891603577,
+        "softmax": 1.3404394287110826
+      },
+      "total_seconds": 10.26466588134993,
+      "fp8_time_fraction": 0.2966766209792953,
+      "runtime_counts": {
+        "run": 776,
+        "launch": 640,
+        "Launch": 640,
+        "launch_recipe": 504,
+        "LaunchRecipe": 504
+      }
+    },
+    "before_sources": [
+      "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/release/dit-307-step12.trace.json",
+      "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/release/dit-23-step12.trace.json"
+    ],
+    "after_sources": [
+      "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-fusion/verified/dit-307-step12.trace.json",
+      "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-fusion/verified/dit-23-step12.trace.json"
+    ]
+  },
+  "screening": {
+    "screen": [
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "baseline",
+        "seconds": 0.005643970001256093,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "regions",
+        "seconds": 0.0053560658008791505,
+        "rrmse": 0.005875594913959503,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole",
+        "seconds": 0.005308626499027014,
+        "rrmse": 0.006941661238670349,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "rope",
+        "seconds": 0.005604682897683233,
+        "rrmse": 0.003499079728499055,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "norm",
+        "seconds": 0.00534646230225917,
+        "rrmse": 0.004870761185884476,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-rope",
+        "seconds": 0.005361942600575276,
+        "rrmse": 0.006149230524897575,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-rope-norm",
+        "seconds": 0.005225957999937236,
+        "rrmse": 0.006928102113306522,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "baseline",
+        "seconds": 0.0056227230001240965,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "regions",
+        "seconds": 0.0053624242020305244,
+        "rrmse": 0.0039620911702513695,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole",
+        "seconds": 0.005291143100475892,
+        "rrmse": 0.0040641603991389275,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "rope",
+        "seconds": 0.005577101299422793,
+        "rrmse": 0.0031652417965233326,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "norm",
+        "seconds": 0.005286453900043853,
+        "rrmse": 0.003203991800546646,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole-rope",
+        "seconds": 0.005356615400523878,
+        "rrmse": 0.0040662228129804134,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole-rope-norm",
+        "seconds": 0.005232786200940609,
+        "rrmse": 0.00409932155162096,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "baseline",
+        "seconds": 0.005606695800088346,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "regions",
+        "seconds": 0.005362331098876893,
+        "rrmse": 0.03862651437520981,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole",
+        "seconds": 0.005298276798566803,
+        "rrmse": 0.03859885782003403,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "rope",
+        "seconds": 0.005615975701948628,
+        "rrmse": 0.03337741643190384,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "norm",
+        "seconds": 0.00525748539948836,
+        "rrmse": 0.03659516200423241,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole-rope",
+        "seconds": 0.005356599399237894,
+        "rrmse": 0.04278286546468735,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole-rope-norm",
+        "seconds": 0.005236688000150025,
+        "rrmse": 0.04404066130518913,
+        "finite": true,
+        "fallback": {}
+      }
+    ],
+    "norm-screen": [
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "baseline",
+        "seconds": 0.0056026494974503295,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "norm-separate",
+        "seconds": 0.0052513449016259985,
+        "rrmse": 0.0063014221377670765,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "norm-fp32",
+        "seconds": 0.005309765800484456,
+        "rrmse": 0.0001734502293402329,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-norm-separate",
+        "seconds": 0.005017526098527014,
+        "rrmse": 0.007594397757202387,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-norm-fp32",
+        "seconds": 0.005006149999098852,
+        "rrmse": 0.0069413757883012295,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "baseline",
+        "seconds": 0.0055879221996292475,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "norm-separate",
+        "seconds": 0.0052826169005129485,
+        "rrmse": 0.00327150896191597,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "norm-fp32",
+        "seconds": 0.005280851200222969,
+        "rrmse": 0.00018970121163874865,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole-norm-separate",
+        "seconds": 0.0050132256001234055,
+        "rrmse": 0.004078056197613478,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole-norm-fp32",
+        "seconds": 0.004989273499813862,
+        "rrmse": 0.00406274851411581,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "baseline",
+        "seconds": 0.005610300798434764,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "norm-separate",
+        "seconds": 0.00530369259940926,
+        "rrmse": 0.0407039076089859,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "norm-fp32",
+        "seconds": 0.0052861602016491815,
+        "rrmse": 0.0007505767280235887,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole-norm-separate",
+        "seconds": 0.0050130942981923,
+        "rrmse": 0.04450204223394394,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole-norm-fp32",
+        "seconds": 0.005002520399284549,
+        "rrmse": 0.03861194849014282,
+        "finite": true,
+        "fallback": {}
+      }
+    ],
+    "precision-screen-fixed": [
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "baseline",
+        "seconds": 0.005624352200538851,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.01379717793315649
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "norm-fp32",
+        "seconds": 0.0052849415980745105,
+        "rrmse": 0.0001734502293402329,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013796507380902767
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-norm-fp32",
+        "seconds": 0.005023519400856458,
+        "rrmse": 0.0069413757883012295,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0178359504789114
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "scaled",
+        "seconds": 0.005580632499186322,
+        "rrmse": 0.00531759625300765,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.015393965877592564
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "norm-unrounded",
+        "seconds": 0.005281947102048434,
+        "rrmse": 0.0001734502293402329,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013796507380902767
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-norm-unrounded-scaled",
+        "seconds": 0.004983715500566177,
+        "rrmse": 0.006274010520428419,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.015961069613695145
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "baseline",
+        "seconds": 0.0055886875983560454,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005054458975791931
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "norm-fp32",
+        "seconds": 0.005269694700837135,
+        "rrmse": 0.00018970121163874865,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005053847562521696
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole-norm-fp32",
+        "seconds": 0.00500894540164154,
+        "rrmse": 0.00406274851411581,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005325238686054945
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "scaled",
+        "seconds": 0.005617485899711028,
+        "rrmse": 0.004226119257509708,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0051816352643072605
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "norm-unrounded",
+        "seconds": 0.005292210500920191,
+        "rrmse": 0.00018970121163874865,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005053847562521696
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole-norm-unrounded-scaled",
+        "seconds": 0.004967973800376058,
+        "rrmse": 0.004200749099254608,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005132525227963924
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "baseline",
+        "seconds": 0.005586261898861267,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03956044465303421
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "norm-fp32",
+        "seconds": 0.005272573899128474,
+        "rrmse": 0.0007505767280235887,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03955848887562752
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole-norm-fp32",
+        "seconds": 0.005010176298674196,
+        "rrmse": 0.03861194849014282,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0385555624961853
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "scaled",
+        "seconds": 0.005565050002769567,
+        "rrmse": 0.03904338553547859,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.040514253079891205
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "norm-unrounded",
+        "seconds": 0.005272043199511245,
+        "rrmse": 0.0007505767280235887,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03955848887562752
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole-norm-unrounded-scaled",
+        "seconds": 0.004957343701971695,
+        "rrmse": 0.04442635551095009,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03992541879415512
+      }
+    ],
+    "shared-v-screen": [
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "baseline",
+        "seconds": 0.005647209499147721,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.01379717793315649
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "shared-v",
+        "seconds": 0.005530916602583602,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.01379717793315649
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.00514663640060462,
+        "rrmse": 0.0001734502293402329,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013796507380902767
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "baseline",
+        "seconds": 0.005635695101227611,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005054458975791931
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "shared-v",
+        "seconds": 0.005503180698724464,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005054458975791931
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.005232418500236235,
+        "rrmse": 0.00018970121163874865,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005053847562521696
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "baseline",
+        "seconds": 0.00561943170032464,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03956044465303421
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "shared-v",
+        "seconds": 0.005480289299157448,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03956044465303421
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.0051267795992316675,
+        "rrmse": 0.0007505767280235887,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03955848887562752
+      }
+    ],
+    "validation": [
+      {
+        "source": "input-23-0-0.pt",
+        "mode": "baseline",
+        "seconds": 0.005204486299771815,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013197277672588825
+      },
+      {
+        "source": "input-23-0-0.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.00471607560175471,
+        "rrmse": 0.0001319455332122743,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013196188025176525
+      },
+      {
+        "source": "input-23-0-0.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.004641710798023268,
+        "rrmse": 0.0036351201124489307,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.012173822149634361
+      },
+      {
+        "source": "input-23-0-0.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.004637799799093045,
+        "rrmse": 0.003928803838789463,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.01208527758717537
+      },
+      {
+        "source": "input-23-0-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004433427401818335,
+        "rrmse": 0.0069944062270224094,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.011685026809573174
+      },
+      {
+        "source": "input-23-0-20.pt",
+        "mode": "baseline",
+        "seconds": 0.0052012525004101915,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.003833406139165163
+      },
+      {
+        "source": "input-23-0-20.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.004718481301097199,
+        "rrmse": 0.00010182834375882521,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.003833306021988392
+      },
+      {
+        "source": "input-23-0-20.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.004622126402682625,
+        "rrmse": 0.002430020598694682,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004070213995873928
+      },
+      {
+        "source": "input-23-0-20.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.004600145199219696,
+        "rrmse": 0.0024429261684417725,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004061389248818159
+      },
+      {
+        "source": "input-23-0-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.0044368674978613855,
+        "rrmse": 0.0030601059552282095,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.003974888473749161
+      },
+      {
+        "source": "input-23-0-41.pt",
+        "mode": "baseline",
+        "seconds": 0.005184952900162898,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.030182354152202606
+      },
+      {
+        "source": "input-23-0-41.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.004702768599963747,
+        "rrmse": 0.00034635356860235333,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.030182018876075745
+      },
+      {
+        "source": "input-23-0-41.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.0046289674995932725,
+        "rrmse": 0.02077706903219223,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.030826697126030922
+      },
+      {
+        "source": "input-23-0-41.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.004599724701256492,
+        "rrmse": 0.02095569297671318,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03112460859119892
+      },
+      {
+        "source": "input-23-0-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004451955301919952,
+        "rrmse": 0.03357415273785591,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.031199289485812187
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "baseline",
+        "seconds": 0.005176309999660589,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.021010491997003555
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.004705491699860431,
+        "rrmse": 0.0001389978569932282,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.02101002261042595
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.0046242454001912845,
+        "rrmse": 0.0031801650766283274,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.020792104303836823
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.0046049405005760494,
+        "rrmse": 0.00406779395416379,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.020131181925535202
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.0044549818005179985,
+        "rrmse": 0.008661959320306778,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.018912959843873978
+      },
+      {
+        "source": "input-23-12-20.pt",
+        "mode": "baseline",
+        "seconds": 0.005214016701211221,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005197169259190559
+      },
+      {
+        "source": "input-23-12-20.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.004708960899733938,
+        "rrmse": 0.00011880281090270728,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005197159945964813
+      },
+      {
+        "source": "input-23-12-20.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.004619311101851054,
+        "rrmse": 0.002444025594741106,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005238204263150692
+      },
+      {
+        "source": "input-23-12-20.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.004599718601093627,
+        "rrmse": 0.00250078528188169,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0052334037609398365
+      },
+      {
+        "source": "input-23-12-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.0044401706021744754,
+        "rrmse": 0.004624617751687765,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005107112694531679
+      },
+      {
+        "source": "input-23-12-41.pt",
+        "mode": "baseline",
+        "seconds": 0.0051858273014659065,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.032088182866573334
+      },
+      {
+        "source": "input-23-12-41.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.004714479198446498,
+        "rrmse": 0.0005246163345873356,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03208659961819649
+      },
+      {
+        "source": "input-23-12-41.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.004626814398216083,
+        "rrmse": 0.015184401534497738,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03199339658021927
+      },
+      {
+        "source": "input-23-12-41.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.004614378599217162,
+        "rrmse": 0.015147654339671135,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03198312222957611
+      },
+      {
+        "source": "input-23-12-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004452890699030832,
+        "rrmse": 0.030386697500944138,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03236544877290726
+      },
+      {
+        "source": "input-23-24-0.pt",
+        "mode": "baseline",
+        "seconds": 0.005213462800020352,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013964652083814144
+      },
+      {
+        "source": "input-23-24-0.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.004715044097974896,
+        "rrmse": 0.00016639393288642168,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013966359198093414
+      },
+      {
+        "source": "input-23-24-0.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.0046289175021229315,
+        "rrmse": 0.0053606415167450905,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.012734971940517426
+      },
+      {
+        "source": "input-23-24-0.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.0046190676977857946,
+        "rrmse": 0.006149053107947111,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.012168549001216888
+      },
+      {
+        "source": "input-23-24-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004461650797748007,
+        "rrmse": 0.012411034666001797,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.010167332366108894
+      },
+      {
+        "source": "input-23-24-20.pt",
+        "mode": "baseline",
+        "seconds": 0.005189829299342819,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004854477941989899
+      },
+      {
+        "source": "input-23-24-20.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.004698773601558059,
+        "rrmse": 0.00015305077249649912,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0048536574468016624
+      },
+      {
+        "source": "input-23-24-20.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.0046068713010754435,
+        "rrmse": 0.0028270285110920668,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.00489730853587389
+      },
+      {
+        "source": "input-23-24-20.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.004605824698228389,
+        "rrmse": 0.002886757254600525,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004851745441555977
+      },
+      {
+        "source": "input-23-24-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004441431400482543,
+        "rrmse": 0.0043618204072117805,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004893545061349869
+      },
+      {
+        "source": "input-23-24-41.pt",
+        "mode": "baseline",
+        "seconds": 0.005193722099647857,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.02949993684887886
+      },
+      {
+        "source": "input-23-24-41.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.004744541400577873,
+        "rrmse": 0.010877356864511967,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.029506899416446686
+      },
+      {
+        "source": "input-23-24-41.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.004647471301723272,
+        "rrmse": 0.014842141419649124,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.029418136924505234
+      },
+      {
+        "source": "input-23-24-41.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.004609118701773695,
+        "rrmse": 0.014852866530418396,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.029371239244937897
+      },
+      {
+        "source": "input-23-24-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004463151001255028,
+        "rrmse": 0.029663028195500374,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0296779777854681
+      },
+      {
+        "source": "input-307-0-0.pt",
+        "mode": "baseline",
+        "seconds": 0.005633998499251902,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.016067970544099808
+      },
+      {
+        "source": "input-307-0-0.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.005137580700102262,
+        "rrmse": 0.00013538345228880644,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.01606740802526474
+      },
+      {
+        "source": "input-307-0-0.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.005024190997937694,
+        "rrmse": 0.004292507655918598,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.014632216654717922
+      },
+      {
+        "source": "input-307-0-0.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.005013615099596791,
+        "rrmse": 0.004104644525796175,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013577987439930439
+      },
+      {
+        "source": "input-307-0-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004837285898975097,
+        "rrmse": 0.007599856238812208,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013048211112618446
+      },
+      {
+        "source": "input-307-0-20.pt",
+        "mode": "baseline",
+        "seconds": 0.005601769001805224,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004051347263157368
+      },
+      {
+        "source": "input-307-0-20.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.005110602101194672,
+        "rrmse": 0.00029430753784254193,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004052990581840277
+      },
+      {
+        "source": "input-307-0-20.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.005050784099148586,
+        "rrmse": 0.002375643700361252,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004235067404806614
+      },
+      {
+        "source": "input-307-0-20.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.005013250600313768,
+        "rrmse": 0.0024121690075844526,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004236304201185703
+      },
+      {
+        "source": "input-307-0-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004835480198380537,
+        "rrmse": 0.0033423604909330606,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004135638941079378
+      },
+      {
+        "source": "input-307-0-41.pt",
+        "mode": "baseline",
+        "seconds": 0.005600475997198373,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.040078822523355484
+      },
+      {
+        "source": "input-307-0-41.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.005100240500178188,
+        "rrmse": 0.001080104848369956,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.04008094593882561
+      },
+      {
+        "source": "input-307-0-41.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.005024007899919525,
+        "rrmse": 0.021671129390597343,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03736063838005066
+      },
+      {
+        "source": "input-307-0-41.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.0050175481010228395,
+        "rrmse": 0.021790312603116035,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03717938810586929
+      },
+      {
+        "source": "input-307-0-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004845531302271411,
+        "rrmse": 0.04065724089741707,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03754846006631851
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "baseline",
+        "seconds": 0.005612728398409672,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.01379717793315649
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.00515157170011662,
+        "rrmse": 0.0001734502293402329,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013796507380902767
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.005035915700136684,
+        "rrmse": 0.0047269053757190704,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.012419577687978745
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.004994735700893216,
+        "rrmse": 0.00432038027793169,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.012587525881826878
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004838752097566612,
+        "rrmse": 0.0069413757883012295,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0178359504789114
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "baseline",
+        "seconds": 0.005603102000895888,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005054458975791931
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.005100367599516176,
+        "rrmse": 0.00018970121163874865,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005053847562521696
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.005025490999105387,
+        "rrmse": 0.0024374271742999554,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005137861706316471
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.005007587099680677,
+        "rrmse": 0.0025419786106795073,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005124339833855629
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004834449599729851,
+        "rrmse": 0.00406274851411581,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005325238686054945
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "baseline",
+        "seconds": 0.005633800098439679,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03956044465303421
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.005102925599203445,
+        "rrmse": 0.0007505767280235887,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03955848887562752
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.005005351800355129,
+        "rrmse": 0.015040713362395763,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03944975510239601
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.005026549499598331,
+        "rrmse": 0.015016183257102966,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0394400879740715
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004843708599219098,
+        "rrmse": 0.03861194849014282,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0385555624961853
+      },
+      {
+        "source": "input-307-24-0.pt",
+        "mode": "baseline",
+        "seconds": 0.005604667300940491,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.010182058438658714
+      },
+      {
+        "source": "input-307-24-0.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.005104802298592404,
+        "rrmse": 8.607262861914933e-05,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.010181665420532227
+      },
+      {
+        "source": "input-307-24-0.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.005029413898591883,
+        "rrmse": 0.006246454082429409,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.01094872783869505
+      },
+      {
+        "source": "input-307-24-0.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.00499002359865699,
+        "rrmse": 0.006787808146327734,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.012003803625702858
+      },
+      {
+        "source": "input-307-24-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004847425100160762,
+        "rrmse": 0.007880454882979393,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.010675349272787571
+      },
+      {
+        "source": "input-307-24-20.pt",
+        "mode": "baseline",
+        "seconds": 0.005584944598376751,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.00502546364441514
+      },
+      {
+        "source": "input-307-24-20.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.005125658598262817,
+        "rrmse": 0.00014280540926847607,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005024817306548357
+      },
+      {
+        "source": "input-307-24-20.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.005032271199161187,
+        "rrmse": 0.0029106801375746727,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005189275369048119
+      },
+      {
+        "source": "input-307-24-20.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.005006136000156402,
+        "rrmse": 0.002983726328238845,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005148414522409439
+      },
+      {
+        "source": "input-307-24-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004824160199495964,
+        "rrmse": 0.00502946088090539,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004482243210077286
+      },
+      {
+        "source": "input-307-24-41.pt",
+        "mode": "baseline",
+        "seconds": 0.005592484900262207,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.032752446830272675
+      },
+      {
+        "source": "input-307-24-41.pt",
+        "mode": "norm-fp32-shared-v",
+        "seconds": 0.0051403126999503,
+        "rrmse": 0.001973628532141447,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03275694698095322
+      },
+      {
+        "source": "input-307-24-41.pt",
+        "mode": "ffn-norm-fp32-shared-v",
+        "seconds": 0.005009714199695736,
+        "rrmse": 0.013739756308495998,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03267066925764084
+      },
+      {
+        "source": "input-307-24-41.pt",
+        "mode": "ffn-residual-norm-fp32-shared-v",
+        "seconds": 0.005021677300101146,
+        "rrmse": 0.013779398053884506,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03263300284743309
+      },
+      {
+        "source": "input-307-24-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004825725397677161,
+        "rrmse": 0.034207526594400406,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03320400044322014
+      }
+    ],
+    "situ-screen": [
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "baseline",
+        "seconds": 0.005600417600362562,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.01379717793315649
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.00483757310139481,
+        "rrmse": 0.0069413757883012295,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0178359504789114
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-norm-fp32-shared-v-situ",
+        "seconds": 0.008007449499564246,
+        "rrmse": 0.006460730452090502,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.017896931618452072
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "baseline",
+        "seconds": 0.0055864996975287795,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005054458975791931
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004837315599434078,
+        "rrmse": 0.00406274851411581,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005325238686054945
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole-norm-fp32-shared-v-situ",
+        "seconds": 0.007982092400197871,
+        "rrmse": 0.004076863173395395,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0049587432295084
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "baseline",
+        "seconds": 0.00561387790075969,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03956044465303421
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004832624600385316,
+        "rrmse": 0.03861194849014282,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0385555624961853
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole-norm-fp32-shared-v-situ",
+        "seconds": 0.008024541099439375,
+        "rrmse": 0.03872673958539963,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0382605642080307
+      }
+    ],
+    "value-cast-screen": [
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "product",
+        "seconds": 0.00513345809886232,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "value-flat",
+        "seconds": 0.005095125499065034,
+        "rrmse": 0.002097445772960782,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "value-mul",
+        "seconds": 0.00502061230072286,
+        "rrmse": 0.002097445772960782,
+        "finite": true,
+        "fallback": {}
+      }
+    ],
+    "shared-amax-validation": [
+      {
+        "source": "input-23-0-0.pt",
+        "mode": "product",
+        "seconds": 0.004741383300279267,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-0-0.pt",
+        "mode": "shared-amax",
+        "seconds": 0.0049668784020468594,
+        "rrmse": 0.0019742741715162992,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-0-20.pt",
+        "mode": "product",
+        "seconds": 0.00465251159912441,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-0-20.pt",
+        "mode": "shared-amax",
+        "seconds": 0.004885800500051119,
+        "rrmse": 0.00143112160731107,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-0-41.pt",
+        "mode": "product",
+        "seconds": 0.004663259800872765,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-0-41.pt",
+        "mode": "shared-amax",
+        "seconds": 0.0048801651020767165,
+        "rrmse": 0.009629081934690475,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "product",
+        "seconds": 0.004735128898755647,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "shared-amax",
+        "seconds": 0.004963274102192372,
+        "rrmse": 0.002831745659932494,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-20.pt",
+        "mode": "product",
+        "seconds": 0.004663897698628716,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-20.pt",
+        "mode": "shared-amax",
+        "seconds": 0.004895745500107296,
+        "rrmse": 0.0017583955777809024,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-41.pt",
+        "mode": "product",
+        "seconds": 0.004686814299202524,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-41.pt",
+        "mode": "shared-amax",
+        "seconds": 0.004914711098535918,
+        "rrmse": 0.011054400354623795,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-0.pt",
+        "mode": "product",
+        "seconds": 0.00466364540043287,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-0.pt",
+        "mode": "shared-amax",
+        "seconds": 0.004896979301702231,
+        "rrmse": 0.008536195382475853,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-20.pt",
+        "mode": "product",
+        "seconds": 0.004749703800189309,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-20.pt",
+        "mode": "shared-amax",
+        "seconds": 0.004979148000711575,
+        "rrmse": 0.00199309759773314,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-41.pt",
+        "mode": "product",
+        "seconds": 0.0046708251989912245,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-41.pt",
+        "mode": "shared-amax",
+        "seconds": 0.004907166701741517,
+        "rrmse": 0.01296666357666254,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-0.pt",
+        "mode": "product",
+        "seconds": 0.005147106599179096,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-0.pt",
+        "mode": "shared-amax",
+        "seconds": 0.0053393617999972776,
+        "rrmse": 0.0017792313592508435,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-20.pt",
+        "mode": "product",
+        "seconds": 0.005151451099663973,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-20.pt",
+        "mode": "shared-amax",
+        "seconds": 0.005359934698208235,
+        "rrmse": 0.001980413682758808,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-41.pt",
+        "mode": "product",
+        "seconds": 0.005077819299185648,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-41.pt",
+        "mode": "shared-amax",
+        "seconds": 0.0052985985006671395,
+        "rrmse": 0.010474433191120625,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "product",
+        "seconds": 0.005139325899654068,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "shared-amax",
+        "seconds": 0.005357952800113708,
+        "rrmse": 0.002097445772960782,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "product",
+        "seconds": 0.005153059598524123,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "shared-amax",
+        "seconds": 0.005359732397482731,
+        "rrmse": 0.002039473969489336,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "product",
+        "seconds": 0.0051640900986967605,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "shared-amax",
+        "seconds": 0.005375012301374227,
+        "rrmse": 0.01584717445075512,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-0.pt",
+        "mode": "product",
+        "seconds": 0.005053939300705679,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-0.pt",
+        "mode": "shared-amax",
+        "seconds": 0.005278150699450634,
+        "rrmse": 0.00243294145911932,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-20.pt",
+        "mode": "product",
+        "seconds": 0.00506711229973007,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-20.pt",
+        "mode": "shared-amax",
+        "seconds": 0.005291631000000052,
+        "rrmse": 0.0021826184820383787,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-41.pt",
+        "mode": "product",
+        "seconds": 0.0050650630990276115,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-41.pt",
+        "mode": "shared-amax",
+        "seconds": 0.005288680500234478,
+        "rrmse": 0.013103733770549297,
+        "finite": true,
+        "fallback": {}
+      }
+    ],
+    "product-parity-final": [
+      {
+        "source": "input-23-0-0.pt",
+        "mode": "product",
+        "seconds": 0.004740491000120528,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-0-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004439738500514068,
+        "rrmse": 9.254817427972739e-07,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-0-20.pt",
+        "mode": "product",
+        "seconds": 0.004665623401524499,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-0-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004436164200888016,
+        "rrmse": 6.691528597002616e-06,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-0-41.pt",
+        "mode": "product",
+        "seconds": 0.0046243412012699995,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-0-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004433881698059849,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "product",
+        "seconds": 0.004718765200232155,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004424436599947512,
+        "rrmse": 1.0027478083429742e-06,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-20.pt",
+        "mode": "product",
+        "seconds": 0.00463371239893604,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004416047901031561,
+        "rrmse": 5.992937076371163e-05,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-41.pt",
+        "mode": "product",
+        "seconds": 0.004737432399997488,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-12-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004438750000554137,
+        "rrmse": 5.259117097011767e-05,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-0.pt",
+        "mode": "product",
+        "seconds": 0.004642173100728541,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004432696898584254,
+        "rrmse": 4.044007255288307e-06,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-20.pt",
+        "mode": "product",
+        "seconds": 0.004748697299510241,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004447987000457942,
+        "rrmse": 4.3850875954376534e-05,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-41.pt",
+        "mode": "product",
+        "seconds": 0.004648946298402734,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-23-24-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.0044367611000780014,
+        "rrmse": 0.0001302502496400848,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-0.pt",
+        "mode": "product",
+        "seconds": 0.005035121200489811,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004831865400774404,
+        "rrmse": 3.2393122637586202e-06,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-20.pt",
+        "mode": "product",
+        "seconds": 0.005126074000145309,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004821829299908131,
+        "rrmse": 1.6417583537986502e-05,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-41.pt",
+        "mode": "product",
+        "seconds": 0.005025111100985668,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-0-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004820235900115222,
+        "rrmse": 4.889285992248915e-05,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "product",
+        "seconds": 0.005049933501868509,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004809247399680317,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "product",
+        "seconds": 0.005107885698089376,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.0048145613021915775,
+        "rrmse": 8.260788490588311e-06,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "product",
+        "seconds": 0.005093652199138887,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004834939001011662,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-0.pt",
+        "mode": "product",
+        "seconds": 0.005041467800037935,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-0.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.0048226476006675515,
+        "rrmse": 1.0483034202479757e-05,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-20.pt",
+        "mode": "product",
+        "seconds": 0.005065199398086406,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-20.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.004825222300132737,
+        "rrmse": 2.551536454120651e-06,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-41.pt",
+        "mode": "product",
+        "seconds": 0.005052828800398856,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-24-41.pt",
+        "mode": "whole-norm-fp32-shared-v",
+        "seconds": 0.00481935559946578,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      }
+    ],
+    "product-validation": [
+      {
+        "source": "input-23-0-0.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005162504100007936,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013197277672588825
+      },
+      {
+        "source": "input-23-0-0.pt",
+        "mode": "product",
+        "seconds": 0.0046340566012077035,
+        "rrmse": 0.0069944062270224094,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.011685026809573174
+      },
+      {
+        "source": "input-23-0-20.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.0051888754009269174,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.003833406139165163
+      },
+      {
+        "source": "input-23-0-20.pt",
+        "mode": "product",
+        "seconds": 0.004627657099626958,
+        "rrmse": 0.0030601059552282095,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.003974888473749161
+      },
+      {
+        "source": "input-23-0-41.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.00518516099837143,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.030182354152202606
+      },
+      {
+        "source": "input-23-0-41.pt",
+        "mode": "product",
+        "seconds": 0.004622493300121278,
+        "rrmse": 0.03357415273785591,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.031199289485812187
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005193319800309837,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.021010491997003555
+      },
+      {
+        "source": "input-23-12-0.pt",
+        "mode": "product",
+        "seconds": 0.004619020799873396,
+        "rrmse": 0.008661959320306778,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.018912959843873978
+      },
+      {
+        "source": "input-23-12-20.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005174853501375765,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005197169259190559
+      },
+      {
+        "source": "input-23-12-20.pt",
+        "mode": "product",
+        "seconds": 0.004624165597488172,
+        "rrmse": 0.004624617751687765,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005107112694531679
+      },
+      {
+        "source": "input-23-12-41.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005183081299765036,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.032088182866573334
+      },
+      {
+        "source": "input-23-12-41.pt",
+        "mode": "product",
+        "seconds": 0.0046424304018728435,
+        "rrmse": 0.030386697500944138,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03236544877290726
+      },
+      {
+        "source": "input-23-24-0.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005202577402815223,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013964652083814144
+      },
+      {
+        "source": "input-23-24-0.pt",
+        "mode": "product",
+        "seconds": 0.004634211899247021,
+        "rrmse": 0.012411034666001797,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.010167332366108894
+      },
+      {
+        "source": "input-23-24-20.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005205594401923008,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004854477941989899
+      },
+      {
+        "source": "input-23-24-20.pt",
+        "mode": "product",
+        "seconds": 0.0046285501011880115,
+        "rrmse": 0.0043618204072117805,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004893545061349869
+      },
+      {
+        "source": "input-23-24-41.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.00518068389792461,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.02949993684887886
+      },
+      {
+        "source": "input-23-24-41.pt",
+        "mode": "product",
+        "seconds": 0.004636091299471445,
+        "rrmse": 0.029663028195500374,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0296779777854681
+      },
+      {
+        "source": "input-307-0-0.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005602886999258772,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.016067970544099808
+      },
+      {
+        "source": "input-307-0-0.pt",
+        "mode": "product",
+        "seconds": 0.005014964297879487,
+        "rrmse": 0.007599856238812208,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.013048211112618446
+      },
+      {
+        "source": "input-307-0-20.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005608668099739589,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004051347263157368
+      },
+      {
+        "source": "input-307-0-20.pt",
+        "mode": "product",
+        "seconds": 0.005001442099455744,
+        "rrmse": 0.0033423604909330606,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004135638941079378
+      },
+      {
+        "source": "input-307-0-41.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005568362100166269,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.040078822523355484
+      },
+      {
+        "source": "input-307-0-41.pt",
+        "mode": "product",
+        "seconds": 0.005010282201692462,
+        "rrmse": 0.04065724089741707,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03754846006631851
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005583451499114744,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.01379717793315649
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "product",
+        "seconds": 0.005000273798941635,
+        "rrmse": 0.0069413757883012295,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0178359504789114
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005627594099496491,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005054458975791931
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "product",
+        "seconds": 0.005010636101360433,
+        "rrmse": 0.00406274851411581,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.005325238686054945
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.0056035295012407,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03956044465303421
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "product",
+        "seconds": 0.0050122435000957925,
+        "rrmse": 0.03861194849014282,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.0385555624961853
+      },
+      {
+        "source": "input-307-24-0.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005617892698501237,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.010182058438658714
+      },
+      {
+        "source": "input-307-24-0.pt",
+        "mode": "product",
+        "seconds": 0.005006411101203412,
+        "rrmse": 0.007880454882979393,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.010675349272787571
+      },
+      {
+        "source": "input-307-24-20.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.005599859802168794,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.00502546364441514
+      },
+      {
+        "source": "input-307-24-20.pt",
+        "mode": "product",
+        "seconds": 0.005016572799650021,
+        "rrmse": 0.00502946088090539,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.004482243210077286
+      },
+      {
+        "source": "input-307-24-41.pt",
+        "mode": "baseline-f67",
+        "seconds": 0.0055998486001044515,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.032752446830272675
+      },
+      {
+        "source": "input-307-24-41.pt",
+        "mode": "product",
+        "seconds": 0.005017915699863806,
+        "rrmse": 0.034207526594400406,
+        "finite": true,
+        "fallback": {},
+        "fp32_rrmse": 0.03320400044322014
+      }
+    ],
+    "lifetime-screen": [
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "product",
+        "seconds": 0.005226587297511287,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-norm-fp32-unshared",
+        "seconds": 0.005019609900773503,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "product",
+        "seconds": 0.0052451953990384935,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-20.pt",
+        "mode": "whole-norm-fp32-unshared",
+        "seconds": 0.0050038399989716705,
+        "rrmse": 8.260788490588311e-06,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "product",
+        "seconds": 0.005204033001791686,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-41.pt",
+        "mode": "whole-norm-fp32-unshared",
+        "seconds": 0.005002506100572646,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      }
+    ],
+    "integration-screen": [
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "product",
+        "seconds": 0.005212013801792636,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole",
+        "seconds": 0.005004720800206997,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-norm-fp32",
+        "seconds": 0.00500027300149668,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole-norm-fp32-unshared",
+        "seconds": 0.0050133059005020185,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      }
+    ],
+    "region-boundary-screen": [
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "product",
+        "seconds": 0.004999398998916149,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      },
+      {
+        "source": "input-307-12-0.pt",
+        "mode": "whole",
+        "seconds": 0.005006902301101945,
+        "rrmse": 0.0,
+        "finite": true,
+        "fallback": {}
+      }
+    ]
+  },
+  "paired_quality": {
+    "requests": [
+      {
+        "prompt_id": "c4e8a3d8-4279-4123-b155-cc77d08e3458",
+        "seconds": 76.510537614,
+        "generated_tokens": [
+          451
+        ],
+        "finite_checks": 2,
+        "fallback": {}
+      },
+      {
+        "prompt_id": "ba6a34a7-5c67-4b21-87a8-d2050b1c5a72",
+        "seconds": 17.495787535,
+        "generated_tokens": [],
+        "finite_checks": 2,
+        "fallback": {}
+      },
+      {
+        "prompt_id": "b84d1afa-d671-400e-a04a-9c0acbb88ec3",
+        "seconds": 20.930042778,
+        "generated_tokens": [
+          308
+        ],
+        "finite_checks": 2,
+        "fallback": {}
+      },
+      {
+        "prompt_id": "5e88586a-2e3a-4b68-8515-2c6bb5176e01",
+        "seconds": 10.943355266,
+        "generated_tokens": [],
+        "finite_checks": 2,
+        "fallback": {}
+      },
+      {
+        "prompt_id": "ffbb4c95-4cad-4d29-afb3-e74e7b955257",
+        "seconds": 19.180876911,
+        "generated_tokens": [
+          315
+        ],
+        "finite_checks": 2,
+        "fallback": {}
+      },
+      {
+        "prompt_id": "5f395c67-e01c-47d7-9ba3-30f6d66f2a3f",
+        "seconds": 10.831624284,
+        "generated_tokens": [],
+        "finite_checks": 2,
+        "fallback": {}
+      }
+    ],
+    "pixel_metrics": [
+      {
+        "prompt": "teapot",
+        "mae": 32.79155699412028
+      },
+      {
+        "prompt": "poster",
+        "mae": 2.9376001358032227
+      },
+      {
+        "prompt": "person",
+        "mae": 8.66235097249349
+      }
+    ],
+    "caption_reuse_asserted": true,
+    "visual_review": "Subjects, MOSS text and three flowers retained. Teapot lighting/background and fine details changed."
+  },
+  "product_quality": {
+    "requests": [
+      {
+        "prompt_id": "464a4f48-fb3b-4eef-962a-6a23ac487533",
+        "seconds": 77.875032601,
+        "generated_tokens": [
+          332
+        ],
+        "finite_checks": 2,
+        "fallback": {}
+      },
+      {
+        "prompt_id": "9a1b8f95-8699-46e1-a3d7-ea09d356a3b7",
+        "seconds": 20.304319857,
+        "generated_tokens": [
+          310
+        ],
+        "finite_checks": 2,
+        "fallback": {}
+      },
+      {
+        "prompt_id": "4de6f1a4-80ef-48c1-8b3d-be952f95c97b",
+        "seconds": 21.036698724,
+        "generated_tokens": [
+          453
+        ],
+        "finite_checks": 2,
+        "fallback": {}
+      },
+      {
+        "prompt_id": "e1bf1fd1-47d6-4a12-a023-060d2a3ee6be",
+        "seconds": 30.354220572,
+        "generated_tokens": [
+          32
+        ],
+        "finite_checks": 2,
+        "fallback": {}
+      },
+      {
+        "prompt_id": "39e6fd5c-3598-46ef-a763-3bb36e86debf",
+        "seconds": 11.651465531,
+        "generated_tokens": [
+          32
+        ],
+        "finite_checks": 2,
+        "fallback": {}
+      }
+    ],
+    "unload_series": [
+      {
+        "seconds": 0.0063926530128810555,
+        "used": 19314071168
+      },
+      {
+        "seconds": 0.5103423350083176,
+        "used": 19314071168
+      },
+      {
+        "seconds": 1.014403951994609,
+        "used": 19314071168
+      },
+      {
+        "seconds": 1.5186344500107225,
+        "used": 16892761216
+      },
+      {
+        "seconds": 2.022951216000365,
+        "used": 16077229440
+      },
+      {
+        "seconds": 2.5272854570066556,
+        "used": 15211366016
+      },
+      {
+        "seconds": 3.0319308250036556,
+        "used": 14395834240
+      },
+      {
+        "seconds": 3.5373760930087883,
+        "used": 13529970816
+      },
+      {
+        "seconds": 4.042952051997418,
+        "used": 12680950400
+      },
+      {
+        "seconds": 4.548392816999694,
+        "used": 11832388480
+      },
+      {
+        "seconds": 5.055142621014966,
+        "used": 11000079488
+      },
+      {
+        "seconds": 5.560620266012847,
+        "used": 10352918144
+      },
+      {
+        "seconds": 6.06610595699749,
+        "used": 9335799424
+      },
+      {
+        "seconds": 6.5716577199928,
+        "used": 8375200896
+      },
+      {
+        "seconds": 7.077130959019996,
+        "used": 7518720384
+      },
+      {
+        "seconds": 7.582896186009748,
+        "used": 6631522688
+      },
+      {
+        "seconds": 8.088386348012136,
+        "used": 5788377984
+      },
+      {
+        "seconds": 8.593889205018058,
+        "used": 4932637568
+      },
+      {
+        "seconds": 9.099396720994264,
+        "used": 4089492864
+      },
+      {
+        "seconds": 9.605602266994538,
+        "used": 3233752448
+      },
+      {
+        "seconds": 10.567483635997633,
+        "used": 2685928832
+      },
+      {
+        "seconds": 11.07287194399396,
+        "used": 2685928832
+      },
+      {
+        "seconds": 11.578266930999234,
+        "used": 2685928832
+      },
+      {
+        "seconds": 12.083841764018871,
+        "used": 2685928832
+      },
+      {
+        "seconds": 12.589393778995145,
+        "used": 2685928832
+      },
+      {
+        "seconds": 13.095101835991954,
+        "used": 2685928832
+      },
+      {
+        "seconds": 13.60044605800067,
+        "used": 2685928832
+      },
+      {
+        "seconds": 14.106010312010767,
+        "used": 2685928832
+      },
+      {
+        "seconds": 14.611510874994565,
+        "used": 2685928832
+      },
+      {
+        "seconds": 15.117411776009249,
+        "used": 2685928832
+      },
+      {
+        "seconds": 16.210798009007704,
+        "used": 2685928832
+      },
+      {
+        "seconds": 16.71623923801235,
+        "used": 2685928832
+      }
+    ],
+    "visual_review": "Red teapot, MOSS poster with three yellow flowers, elderly woman with red scarf and white cup passed visual inspection."
+  },
+  "tests": {
+    "passed": 287,
+    "warnings": 42,
+    "seconds": 203.75,
+    "log": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-fusion/tests-verified.log",
+    "log_sha256": "1d4fdd8117733308aa42a7502f0e9e78639b32e0e84e492133bf78be4379a9df"
+  },
+  "deployment": {
+    "runs": [
+      {
+        "label": "cold",
+        "prompt_id": "4d744037-d8cf-4a41-821f-edc06e2f131d",
+        "seconds": 79.03,
+        "cached_nodes": []
+      },
+      {
+        "label": "cached",
+        "prompt_id": "26988fc3-ce4b-4839-892c-b9cce1694b8b",
+        "seconds": 10.696,
+        "cached_nodes": [
+          "19",
+          "18:17",
+          "18:14",
+          "18:11",
+          "18:1",
+          "18:4",
+          "18:2",
+          "18:3",
+          "18:13",
+          "18:16",
+          "18:6",
+          "18:5",
+          "18:24"
+        ]
+      },
+      {
+        "label": "768",
+        "prompt_id": "b32503e7-211a-4369-ae27-5de5faa8fb6d",
+        "seconds": 14.295,
+        "cached_nodes": [
+          "18:17",
+          "18:14",
+          "18:1",
+          "18:2",
+          "18:3",
+          "18:5",
+          "18:24"
+        ]
+      }
+    ],
+    "queue": {
+      "queue_running": 0,
+      "queue_pending": 0
+    },
+    "torch_version": "2.13.0a0+git2469d18",
+    "device": "hpu:0 GAUDI2",
+    "url": "http://192.168.10.21:8189",
+    "commit": "0995638a6546bb10d4558417d3327e3137871830"
+  },
+  "source_hashes": {
+    "comfy/ldm/moss_image/model.py": "0597de6ee3049c09643f4e9f23c7ff2bb526d9c8e3bbbd67629bad80958803c5",
+    "comfy/ldm/moss_image/hpu.py": "94dc8bdde701965acdebff817be3898cf0672a8fa71bacb88ecda77368c2e1dc",
+    "comfy/ldm/modules/attention.py": "e3cb3c7c81140f3ef7020b880d4545acbd93f1db18cbe7d8782d96c79101541b",
+    "comfy/ops.py": "a8b1e24ceb78455b3cd16f5e0309eaed88093d8b7501e41c33006b3f60b02940",
+    "comfy/quant_ops.py": "f97ab5f550b103ff44fd07c3a50345529d4234e77d97faefa630a7ea0201afc8",
+    "comfy/text_encoders/qwen35.py": "6fb7e34d615395f5a7c49660ae0c284a7f7fdaadc9198a8a923feb2962d97ef0",
+    "comfy/text_encoders/hpu_gated_delta.py": "a041b37464fd9234759166aed19d182700242123d5c9deee216b54cf692e6a3c",
+    "tests-unit/comfy_test/hpu_moss_block_test.py": "6a392643c3164bb763b0a991458c9789504727868cfaf087f3443449a5a6e99e",
+    "tests-unit/comfy_test/hpu_moss_native_ops_test.py": "b9521377620332f356619a0c50f8fc5d8f4d3a17cc72a62619e01d5f48fbc5cc"
+  },
+  "limitations": [
+    "Two step12 traces extrapolated across 25 steps. Before trace comes from the prior deployment run.",
+    "Allocator MaxInUse is cumulative through the warm phase and includes cold allocations.",
+    "Fusion changes rounding. Final 18-case block RRMSE versus prior product is 0.306%-4.066%.",
+    "FP32 reference uses the same decoded quantized weights.",
+    "Natural-image quality conclusions cover the inspected prompts.",
+    "Profiler-enabled process exit can abort after trace export and unload. The same symptom exists in prior release logs."
+  ],
+  "excluded_artifacts": {
+    "precision-screen.json": "Initial inv_attn_heads scalar argument rejected by the installed Tensor-only schema. Corrected results are in precision-screen-fixed.json."
+  },
+  "runtime": {
+    "device": "Gaudi2",
+    "habana": "1.24.2",
+    "torch": "2.13.0a0+git2469d18",
+    "PT_HPU_LAZY_MODE": "0"
+  }
+}

@@ -1,6 +1,8 @@
 # MOSS BF16复盘与FP8路线判断
 
-2026-11-12进一步优化已部署`f67e7f3f`。BF16 QK＋融合softmax量化＋FP8 AV使完整流程18.936→17.191s、DiT13.068→11.364s，FP8 MME时间占比19.0%→26.4%。接续优先处理其它kernel的3.67s，再推进QK数据流与文本提交。精度边界、淘汰候选和验收见 [FP8进一步优化](MOSS_FP8_DEEP_OPTIMIZATION_2026-11-12.md)。
+2026-11-12当前部署`0995638a`。native FP32 Q/K归一化与FP8 block扩区使本轮完整流程17.202→15.925s、DiT11.361→10.211s，FP8 MME时间占比约29.7%。高水位显存增加3.883GiB，层级误差和图像变化已验收记录。下一步重点为TPC量化/逐元素融合、QK与softmax数据流、文本短步提交。[最新融合结果](MOSS_FP8_FUSION_OPTIMIZATION_2026-11-12.md)
+
+此前`f67e7f3f`。BF16 QK＋融合softmax量化＋FP8 AV使完整流程18.936→17.191s、DiT13.068→11.364s，FP8 MME时间占比19.0%→26.4%。接续优先处理其它kernel的3.67s，再推进QK数据流与文本提交。精度边界、淘汰候选和验收见 [FP8进一步优化](MOSS_FP8_DEEP_OPTIMIZATION_2026-11-12.md)。
 
 2026-11-12已完成FP8文本转换和全流程拆解。同工作量吞吐基本持平，显存峰值减少7.51GiB，大Linear活动阶段约806TF/s。当前优先级与验证结果见 [全流程FP8分析](MOSS_FP8_SYSTEM_OPTIMIZATION_2026-11-12.md)。
 2026-11-11后续进展已完成Moody MOSS E4M3主模型首轮适配。同文件常驻BF16/原生FP8固定caption中位数13.993/12.810s，质量、显存、cold与正常入口验收见 [FP8执行结果](MOSS_FP8_ADAPTATION_2026-11-11.md)。下文Amdahl表保留为试验前估算。

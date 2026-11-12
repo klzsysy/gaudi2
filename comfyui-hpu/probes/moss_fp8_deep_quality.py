@@ -23,6 +23,8 @@ def api(route, data=None):
 def run(label, graph, candidate):
     extra = dict(moss_diagnostic=True, moss_fp8_attention=candidate,
                  moss_recompute_nodes=['KSampler', 'VAEDecode'])
+    if os.environ.get('MOSS_FUSION_AB') == '1':
+        extra['moss_fusion'] = candidate
     prompt_id = api('/prompt', dict(prompt=graph, extra_data=extra))['prompt_id']
     start = time.monotonic()
     while prompt_id not in (history := api('/history/' + prompt_id)):
@@ -48,7 +50,8 @@ def run(label, graph, candidate):
 
 env = dict(os.environ, PT_HPU_LAZY_MODE='0', GC_KERNEL_PATH='/usr/lib/habanalabs/libtpc_kernels.so', PYTHONPATH=str(Path.cwd()),
            MOSS_PIPELINE_DIR=str(root), MOSS_EVENTS=str(root / 'events.jsonl'))
-env['MOSS_DEEP_PRODUCT_AB' if os.environ.get('MOSS_DEEP_PRODUCT_AB') == '1' else 'MOSS_DEEP_ATTENTION_AB'] = '1'
+if os.environ.get('MOSS_FUSION_AB') != '1':
+    env['MOSS_DEEP_PRODUCT_AB' if os.environ.get('MOSS_DEEP_PRODUCT_AB') == '1' else 'MOSS_DEEP_ATTENTION_AB'] = '1'
 command = [sys.executable, str(Path(__file__).with_name('moss_fp8_deep_server.py')), '--disable-dynamic-vram',
            '--disable-pinned-memory', '--disable-async-offload', '--disable-xformers', '--use-pytorch-cross-attention',
            '--listen', '127.0.0.1', '--port', '8190']
