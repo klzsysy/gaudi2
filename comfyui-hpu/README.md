@@ -22,7 +22,15 @@
 
 ## 当前性能与路线
 
-- 当前部署`0995638a`采用native FP32 Q/K RMSNorm与FP8 block扩区编译。固定完整流程17.202→15.925s，DiT11.361→10.211s，FP8 MME时间占比约26.4%→29.7%。allocator高水位27.402→31.285GiB，287项回归与正常入口缓存10.696s通过。精度代价、分区边界和量化对照见 [FP8区域融合](MOSS_FP8_FUSION_OPTIMIZATION_2026-11-12.md)。
+- 最新分层复核将研发主线转向图编译器／HPU bridge与attention kernel的联合数据流。节点外耗时中位15.9ms，24个QK分数张量均非persistent却落DRAM，文本16轮窗口kernel间隙约39.7%。前两层常规空间已收窄，第三层结构性上限仍待闭合。bridge两份本机源码已与公开1.24.2版本核对一致，详见 [分层边界复核](MOSS_LAYER_BOUNDARY_AUDIT_2026-11-12.md)。
+
+- 用户明确要求质量保值优先。上一轮GDN候选已撤回，产品恢复`0995638a`，固定logits与基线逐元素一致。本轮完成9种attention布局及8组有效编译配置筛选。32MiB候选通过90组输入及固定logits一致性检查，完整流程收益未超出波动，当前维持基线。茶壶恢复单侧把手，历史自然图仍有复现差异，见 [质量保值优化](MOSS_QUALITY_PRESERVING_OPTIMIZATION_2026-11-12.md)。上一轮收益和失败路径保留在 [历史执行记录](MOSS_OPTIMIZATION_EXECUTION_2026-11-12.md)。
+
+- 第10节六段DiT预算10.261s／实测10.183s，约99.4%的其它kernel已归因，新增72组精度输入。AIP采用驱动功率公式，概率tile已驻留SRAM，HBM实际字节／BMON校准继续调查，详见 [证据补齐](MOSS_EVIDENCE_BOUNDARIES_2026-11-12.md)。
+
+- 2026-11-12全栈复核将后续重点落在attention的SRAM数据流、TPC量化/逐元素融合及文本短步执行。最新预算、硬件与运行时归因、5090口径和收益情景见 [全栈瓶颈分析](MOSS_CROSS_STACK_BOTTLENECK_REVIEW_2026-11-12.md)。
+
+- 前轮`0995638a`采用native FP32 Q/K RMSNorm与FP8 block扩区编译。固定完整流程17.202→15.925s，DiT11.361→10.211s，FP8 MME时间占比约26.4%→29.7%。allocator高水位27.402→31.285GiB，287项回归与正常入口缓存10.696s通过。精度代价、分区边界和量化对照见 [FP8区域融合](MOSS_FP8_FUSION_OPTIMIZATION_2026-11-12.md)。
 
 - 前轮`f67e7f3f`在Moody FP8主模型使用BF16 QK、融合概率量化与FP8 AV。固定298-token完整流程18.936→17.191s，DiT13.068→11.364s。FP8 MME时间占比约19.0%→26.4%，266项回归、同caption三组配对图及重载通过。正常入口缓存11.881s。精度边界与下一步方向见 [FP8进一步优化](MOSS_FP8_DEEP_OPTIMIZATION_2026-11-12.md)。
 

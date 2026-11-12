@@ -1,0 +1,6881 @@
+{
+  "product": "0995638a6546bb10d4558417d3327e3137871830",
+  "disposition": "GDN candidate withdrawn. Existing product retained. SRAM32 timing benefit not established.",
+  "rollback_logits": {
+    "shape": [
+      1033,
+      248320
+    ],
+    "bitwise_equal": true
+  },
+  "layouts": [
+    {
+      "condition": 307,
+      "mode": "baseline",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0049740366000000005,
+      "samples": [
+        0.0050223873,
+        0.0049778514,
+        0.0049704482,
+        0.0049711933,
+        0.0049740366000000005
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 307,
+      "mode": "qkv-contiguous",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0049889149,
+      "samples": [
+        0.0050184784,
+        0.0049788328,
+        0.0049956551,
+        0.0049889149,
+        0.00498308
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 307,
+      "mode": "key-contiguous",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0050004932,
+      "samples": [
+        0.0050362149000000005,
+        0.0049981518,
+        0.0049964722,
+        0.0050004932,
+        0.0050017111
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 307,
+      "mode": "qk-contiguous",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0049959394,
+      "samples": [
+        0.0050186195,
+        0.0049938582,
+        0.0049959394,
+        0.0049905482,
+        0.0049974716
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 307,
+      "mode": "av-transpose",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0050141036,
+      "samples": [
+        0.0050204531,
+        0.0050076849,
+        0.0050157820999999995,
+        0.0050132283,
+        0.0050141036
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 307,
+      "mode": "heads-contiguous",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0050104441,
+      "samples": [
+        0.0050294646,
+        0.0049971469999999995,
+        0.0050121206,
+        0.0050104441,
+        0.0050076819
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 307,
+      "mode": "heads-stack",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0050032292,
+      "samples": [
+        0.0050313234,
+        0.004999807,
+        0.0050029367,
+        0.0050032292,
+        0.0050032341
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 307,
+      "mode": "heads-reverse",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0055186222,
+      "samples": [
+        0.0055235617,
+        0.0054950177,
+        0.0055010108,
+        0.0055346564,
+        0.0055186222
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 307,
+      "mode": "heads-even-odd",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0052441703,
+      "samples": [
+        0.0052792532,
+        0.0052416276,
+        0.0052588926000000005,
+        0.0052410577,
+        0.0052441703
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 307,
+      "mode": "heads-interleave",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0055161915,
+      "samples": [
+        0.005549729,
+        0.0055162266,
+        0.0055141154,
+        0.0055161915,
+        0.0055141014000000006
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 23,
+      "mode": "baseline",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0046165334,
+      "samples": [
+        0.0046798866000000005,
+        0.0046036479,
+        0.004598972,
+        0.0046188016999999994,
+        0.0046165334
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 23,
+      "mode": "qkv-contiguous",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0045996718999999995,
+      "samples": [
+        0.0046392574,
+        0.0045975358,
+        0.004602353,
+        0.0045996718999999995,
+        0.0045973674999999995
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 23,
+      "mode": "key-contiguous",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0046224471000000005,
+      "samples": [
+        0.0046451213,
+        0.0046224471000000005,
+        0.0046187356,
+        0.0046286474,
+        0.0046161326
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 23,
+      "mode": "qk-contiguous",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0046217531,
+      "samples": [
+        0.004647618,
+        0.0045997239,
+        0.0046159983,
+        0.0046217531,
+        0.0046253645000000005
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 23,
+      "mode": "av-transpose",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0046307175,
+      "samples": [
+        0.004641947400000001,
+        0.0046118812,
+        0.0046088036,
+        0.0046307175,
+        0.0046383631
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 23,
+      "mode": "heads-contiguous",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0046119793,
+      "samples": [
+        0.0046384631,
+        0.0046091591,
+        0.0046119793,
+        0.0046136668,
+        0.0046109437
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 23,
+      "mode": "heads-stack",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0046245812,
+      "samples": [
+        0.0046570279,
+        0.0046132512,
+        0.0046245812,
+        0.0046132301,
+        0.0046695168000000006
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 23,
+      "mode": "heads-reverse",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0049891885,
+      "samples": [
+        0.0050242322,
+        0.0049846256,
+        0.004981127300000001,
+        0.0049949132,
+        0.0049891885
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 23,
+      "mode": "heads-even-odd",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.004794103,
+      "samples": [
+        0.0048334732,
+        0.004794103,
+        0.0047825197,
+        0.0047983594,
+        0.0047934551
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    },
+    {
+      "condition": 23,
+      "mode": "heads-interleave",
+      "label": "baseline",
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "rrmse": 0.0,
+      "seconds": 0.0048288513,
+      "samples": [
+        0.0048344618,
+        0.0047933418999999994,
+        0.0048336214,
+        0.0047934881,
+        0.0048288513
+      ],
+      "repeat_equal": true,
+      "fallback": {}
+    }
+  ],
+  "compiler": [
+    {
+      "label": "layered",
+      "requested": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": "1"
+      },
+      "returncode": 0,
+      "seconds": 27.535121396009345,
+      "configuration": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        }
+      },
+      "set_status": null,
+      "activation_verified": false,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "layered",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049746462,
+          "samples": [
+            0.005009591900000001,
+            0.0049668556,
+            0.0049679862,
+            0.0049746462,
+            0.0049785131
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "layered",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0045856063,
+          "samples": [
+            0.0046568244000000005,
+            0.0045832647,
+            0.0045856063,
+            0.0045918155000000006,
+            0.0045850193
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "layered-attention",
+      "requested": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": "1",
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": "1",
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": "1",
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": "1"
+      },
+      "returncode": 0,
+      "seconds": 26.582470510009443,
+      "configuration": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        }
+      },
+      "set_status": null,
+      "activation_verified": false,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "layered-attention",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049785139,
+          "samples": [
+            0.0050075655,
+            0.004972634,
+            0.004973320099999999,
+            0.0049785139,
+            0.0049825389
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "layered-attention",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0046092675999999996,
+          "samples": [
+            0.004670982299999999,
+            0.0046003352,
+            0.0046035721,
+            0.0046158125,
+            0.0046092675999999996
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "flash-slicing",
+      "requested": {
+        "ENABLE_FLASH_ATTENTION_SLICING": "1"
+      },
+      "returncode": 0,
+      "seconds": 26.531804467987968,
+      "configuration": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        }
+      },
+      "set_status": null,
+      "activation_verified": false,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "flash-slicing",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049712988,
+          "samples": [
+            0.005003684600000001,
+            0.0049711525,
+            0.0049712988,
+            0.0049695361,
+            0.0049812779
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "flash-slicing",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0046070932000000005,
+          "samples": [
+            0.0046609071,
+            0.0045939994,
+            0.0045901486,
+            0.004609428699999999,
+            0.0046070932000000005
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "sram-32",
+      "requested": {
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": "33554432"
+      },
+      "returncode": 0,
+      "seconds": 27.58075234599528,
+      "configuration": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        }
+      },
+      "set_status": null,
+      "activation_verified": false,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "sram-32",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049746467,
+          "samples": [
+            0.0050146758999999996,
+            0.0049649611,
+            0.0049746467,
+            0.0049705896,
+            0.004979139400000001
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "sram-32",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0046059894,
+          "samples": [
+            0.004675533,
+            0.0045919581,
+            0.0046059894,
+            0.0046057558999999994,
+            0.0046068366
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "sram-24",
+      "requested": {
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": "25165824"
+      },
+      "returncode": 0,
+      "seconds": 27.58346836498822,
+      "configuration": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        }
+      },
+      "set_status": null,
+      "activation_verified": false,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "sram-24",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0050019736,
+          "samples": [
+            0.0050128959,
+            0.0049661747,
+            0.0050019736,
+            0.00499697,
+            0.0050079285
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "sram-24",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0046214184,
+          "samples": [
+            0.0046853884,
+            0.0046214184,
+            0.004614516,
+            0.0046203898,
+            0.0046217338
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "depth-2",
+      "requested": {
+        "DEFAULT_PIPELINE_DEPTH": "2"
+      },
+      "returncode": 0,
+      "seconds": 27.53593740600627,
+      "configuration": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        }
+      },
+      "set_status": null,
+      "activation_verified": false,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "depth-2",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.004981137,
+          "samples": [
+            0.0050247797,
+            0.0049805572,
+            0.004981137,
+            0.004978501,
+            0.0049826804
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "depth-2",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0046110035,
+          "samples": [
+            0.0046697749,
+            0.0046070746,
+            0.004611622399999999,
+            0.0046110035,
+            0.0046106459
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "depth-5",
+      "requested": {
+        "DEFAULT_PIPELINE_DEPTH": "5"
+      },
+      "returncode": 0,
+      "seconds": 26.529151009977795,
+      "configuration": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        }
+      },
+      "set_status": null,
+      "activation_verified": false,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "depth-5",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049966913,
+          "samples": [
+            0.0050310688999999995,
+            0.0049679641,
+            0.0049763296,
+            0.0049966913,
+            0.0050026270999999995
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "depth-5",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0045972246,
+          "samples": [
+            0.0046794151,
+            0.0045992256,
+            0.0045972246,
+            0.0045969392,
+            0.0045915872
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "shared-multibuffer",
+      "requested": {
+        "ENABLE_SHARED_MULTIBUF_PER_SLICED_CHAIN": "1"
+      },
+      "returncode": 0,
+      "seconds": 26.528251604991965,
+      "configuration": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        }
+      },
+      "set_status": null,
+      "activation_verified": false,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "shared-multibuffer",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049680249000000004,
+          "samples": [
+            0.0050109824999999995,
+            0.0049680249000000004,
+            0.004973376,
+            0.0049641602,
+            0.0049674201
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "shared-multibuffer",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0046064533,
+          "samples": [
+            0.0046591486,
+            0.0046064533,
+            0.0045984173,
+            0.0046130553,
+            0.0046005305
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "api-layered",
+      "requested": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": "1"
+      },
+      "returncode": 0,
+      "seconds": 27.53265097300755,
+      "configuration": {
+        "ENABLE_EXPERIMENTAL_FLAGS": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        },
+        "ENABLE_SHARED_MULTIBUF_PER_SLICED_CHAIN": {
+          "status": 0,
+          "value": "0"
+        }
+      },
+      "set_status": {
+        "ENABLE_EXPERIMENTAL_FLAGS": 0,
+        "ENABLE_LAYERED_PIPELINE_BRAIN": 0
+      },
+      "activation_verified": true,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "api-layered",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049817644,
+          "samples": [
+            0.0050123874,
+            0.0049697513,
+            0.0049640168,
+            0.0049817644,
+            0.0049909902999999995
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "api-layered",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0045979026,
+          "samples": [
+            0.0046885978,
+            0.0045929511,
+            0.0045914788,
+            0.0045979026,
+            0.0046160157
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "api-layered-attention",
+      "requested": {
+        "ENABLE_LAYERED_PIPELINE_BRAIN": "1",
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": "1",
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": "1",
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": "1"
+      },
+      "returncode": 0,
+      "seconds": 26.532986106001772,
+      "configuration": {
+        "ENABLE_EXPERIMENTAL_FLAGS": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        },
+        "ENABLE_SHARED_MULTIBUF_PER_SLICED_CHAIN": {
+          "status": 0,
+          "value": "0"
+        }
+      },
+      "set_status": {
+        "ENABLE_EXPERIMENTAL_FLAGS": 0,
+        "ENABLE_LAYERED_PIPELINE_BRAIN": 0,
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": 0,
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": 0,
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": 0
+      },
+      "activation_verified": true,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "api-layered-attention",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049748139,
+          "samples": [
+            0.0050196042000000005,
+            0.0049617843,
+            0.004968861,
+            0.0049748139,
+            0.0049848481
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "api-layered-attention",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0045910872,
+          "samples": [
+            0.0046594950000000005,
+            0.0045798062,
+            0.0045874036,
+            0.0045941118,
+            0.0045910872
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "api-flash-slicing",
+      "requested": {
+        "ENABLE_FLASH_ATTENTION_SLICING": "1"
+      },
+      "returncode": 0,
+      "seconds": 27.531937941996148,
+      "configuration": {
+        "ENABLE_EXPERIMENTAL_FLAGS": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "1"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        },
+        "ENABLE_SHARED_MULTIBUF_PER_SLICED_CHAIN": {
+          "status": 0,
+          "value": "0"
+        }
+      },
+      "set_status": {
+        "ENABLE_EXPERIMENTAL_FLAGS": 0,
+        "ENABLE_FLASH_ATTENTION_SLICING": 0
+      },
+      "activation_verified": true,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "api-flash-slicing",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049967509,
+          "samples": [
+            0.0049996883,
+            0.0049871505,
+            0.0050087898999999995,
+            0.0049954369,
+            0.0049967509
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "api-flash-slicing",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0046083922,
+          "samples": [
+            0.004672282099999999,
+            0.0046048498,
+            0.004610074699999999,
+            0.004600976,
+            0.0046083922
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "api-sram-32",
+      "requested": {
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": "33554432"
+      },
+      "returncode": 0,
+      "seconds": 26.531770030007465,
+      "configuration": {
+        "ENABLE_EXPERIMENTAL_FLAGS": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "33554432"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        },
+        "ENABLE_SHARED_MULTIBUF_PER_SLICED_CHAIN": {
+          "status": 0,
+          "value": "0"
+        }
+      },
+      "set_status": {
+        "ENABLE_EXPERIMENTAL_FLAGS": 0,
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": 0
+      },
+      "activation_verified": true,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "api-sram-32",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049223669999999995,
+          "samples": [
+            0.004957342599999999,
+            0.0049187946,
+            0.0049214467,
+            0.0049223669999999995,
+            0.004947323599999999
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "api-sram-32",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0045778092,
+          "samples": [
+            0.0046626327000000006,
+            0.0045706925,
+            0.0045727136,
+            0.0045778092,
+            0.0045957601
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "api-sram-24",
+      "requested": {
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": "25165824"
+      },
+      "returncode": 0,
+      "seconds": 27.582714872987708,
+      "configuration": {
+        "ENABLE_EXPERIMENTAL_FLAGS": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "25165824"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        },
+        "ENABLE_SHARED_MULTIBUF_PER_SLICED_CHAIN": {
+          "status": 0,
+          "value": "0"
+        }
+      },
+      "set_status": {
+        "ENABLE_EXPERIMENTAL_FLAGS": 0,
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": 0
+      },
+      "activation_verified": true,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "api-sram-24",
+          "bitwise_equal": false,
+          "differing_elements": 16930,
+          "max_absolute": 4.0,
+          "rrmse": 7.426854318465222e-05,
+          "seconds": 0.0049965866,
+          "samples": [
+            0.0050284205,
+            0.004996274,
+            0.0049965866,
+            0.0049890974,
+            0.004997601
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "api-sram-24",
+          "bitwise_equal": false,
+          "differing_elements": 10524,
+          "max_absolute": 0.015625,
+          "rrmse": 6.418328698841332e-06,
+          "seconds": 0.004585054,
+          "samples": [
+            0.0046541308000000005,
+            0.0045715358,
+            0.0045799283,
+            0.004585054,
+            0.0045851411000000005
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "api-depth-2",
+      "requested": {
+        "DEFAULT_PIPELINE_DEPTH": "2"
+      },
+      "returncode": 0,
+      "seconds": 26.53168634598842,
+      "configuration": {
+        "ENABLE_EXPERIMENTAL_FLAGS": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "2"
+        },
+        "ENABLE_SHARED_MULTIBUF_PER_SLICED_CHAIN": {
+          "status": 0,
+          "value": "0"
+        }
+      },
+      "set_status": {
+        "ENABLE_EXPERIMENTAL_FLAGS": 0,
+        "DEFAULT_PIPELINE_DEPTH": 0
+      },
+      "activation_verified": true,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "api-depth-2",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049706214,
+          "samples": [
+            0.0050126747,
+            0.0049693115,
+            0.004984853799999999,
+            0.0049678343,
+            0.0049706214
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "api-depth-2",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0046245824,
+          "samples": [
+            0.0046776851000000005,
+            0.0046080695999999996,
+            0.0046221318,
+            0.0046441548,
+            0.0046245824
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "api-depth-5",
+      "requested": {
+        "DEFAULT_PIPELINE_DEPTH": "5"
+      },
+      "returncode": 0,
+      "seconds": 27.581791723001515,
+      "configuration": {
+        "ENABLE_EXPERIMENTAL_FLAGS": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "5"
+        },
+        "ENABLE_SHARED_MULTIBUF_PER_SLICED_CHAIN": {
+          "status": 0,
+          "value": "0"
+        }
+      },
+      "set_status": {
+        "ENABLE_EXPERIMENTAL_FLAGS": 0,
+        "DEFAULT_PIPELINE_DEPTH": 0
+      },
+      "activation_verified": true,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "api-depth-5",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0049709109,
+          "samples": [
+            0.0050143923,
+            0.0049706184,
+            0.0049736881,
+            0.0049680586,
+            0.0049709109
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "api-depth-5",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0045854306,
+          "samples": [
+            0.0046701588,
+            0.0045842398,
+            0.0045854306,
+            0.004593016,
+            0.0045842979
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    },
+    {
+      "label": "api-shared-multibuffer",
+      "requested": {
+        "ENABLE_SHARED_MULTIBUF_PER_SLICED_CHAIN": "1"
+      },
+      "returncode": 0,
+      "seconds": 26.574413919006474,
+      "configuration": {
+        "ENABLE_EXPERIMENTAL_FLAGS": {
+          "status": 0,
+          "value": "1"
+        },
+        "ENABLE_LAYERED_PIPELINE_BRAIN": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_ATTENTION_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_LAYERED_BRAIN_MULTI_MME_SEEDS": {
+          "status": 0,
+          "value": "0"
+        },
+        "ENABLE_FLASH_ATTENTION_SLICING": {
+          "status": 0,
+          "value": "0"
+        },
+        "SRAM_SLICER_MAX_CAPACITY_BYTES": {
+          "status": 0,
+          "value": "18446744073709551615"
+        },
+        "DEFAULT_PIPELINE_DEPTH": {
+          "status": 0,
+          "value": "3"
+        },
+        "ENABLE_SHARED_MULTIBUF_PER_SLICED_CHAIN": {
+          "status": 0,
+          "value": "1"
+        }
+      },
+      "set_status": {
+        "ENABLE_EXPERIMENTAL_FLAGS": 0,
+        "ENABLE_SHARED_MULTIBUF_PER_SLICED_CHAIN": 0
+      },
+      "activation_verified": true,
+      "results": [
+        {
+          "condition": 307,
+          "mode": "baseline",
+          "label": "api-shared-multibuffer",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.004974792699999999,
+          "samples": [
+            0.0050214008,
+            0.0049751491,
+            0.0049745734,
+            0.004974792699999999,
+            0.0049714877999999995
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        },
+        {
+          "condition": 23,
+          "mode": "baseline",
+          "label": "api-shared-multibuffer",
+          "bitwise_equal": true,
+          "differing_elements": 0,
+          "max_absolute": 0.0,
+          "rrmse": 0.0,
+          "seconds": 0.0046288648,
+          "samples": [
+            0.0046713025,
+            0.0045939253,
+            0.0046138472,
+            0.0046390661,
+            0.0046288648
+          ],
+          "repeat_equal": true,
+          "fallback": {}
+        }
+      ]
+    }
+  ],
+  "compiler_preflight": [
+    {
+      "name": "ENABLE_LAYERED_PIPELINE_BRAIN",
+      "requested": "1",
+      "status": 1,
+      "read_status": 0,
+      "value": "0"
+    },
+    {
+      "name": "ENABLE_EXPERIMENTAL_FLAGS",
+      "requested": "1",
+      "status": 0,
+      "read_status": 0,
+      "value": "1"
+    },
+    {
+      "name": "ENABLE_LAYERED_PIPELINE_BRAIN",
+      "requested": "1",
+      "status": 0,
+      "read_status": 0,
+      "value": "1"
+    },
+    {
+      "name": "SRAM_SLICER_MAX_CAPACITY_BYTES",
+      "requested": "33554432",
+      "status": 0,
+      "read_status": 0,
+      "value": "33554432"
+    }
+  ],
+  "baseline_inputs": [
+    {
+      "index": 0,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047119362,
+      "samples": [
+        0.004761729399999999,
+        0.0047119362,
+        0.0046916878
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 1,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046748446,
+      "samples": [
+        0.0047279506,
+        0.0046653622,
+        0.0046748446
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 2,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046819888,
+      "samples": [
+        0.0047246456,
+        0.0046819888,
+        0.004677389
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 3,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047025116,
+      "samples": [
+        0.0047566907999999995,
+        0.0047025116,
+        0.0046875002
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 4,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047062516,
+      "samples": [
+        0.004753820000000001,
+        0.0047062516,
+        0.0046893444
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 5,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046773332,
+      "samples": [
+        0.0047293232,
+        0.0046700568,
+        0.0046773332
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 6,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046782462,
+      "samples": [
+        0.0047429776,
+        0.004672677,
+        0.0046782462
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 7,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047148616,
+      "samples": [
+        0.004758892,
+        0.0046796874,
+        0.0047148616
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 8,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046797276,
+      "samples": [
+        0.0047449592,
+        0.0046797276,
+        0.0046757778
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 9,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050635689999999995,
+      "samples": [
+        0.005126323800000001,
+        0.0050635689999999995,
+        0.0050436864
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 10,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050502112,
+      "samples": [
+        0.005174195,
+        0.0050413218,
+        0.0050502112
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 11,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.005063448,
+      "samples": [
+        0.0051337052,
+        0.0050424881999999996,
+        0.005063448
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 12,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050858373999999994,
+      "samples": [
+        0.0051990336,
+        0.0050858373999999994,
+        0.0050750822
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 13,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050569412,
+      "samples": [
+        0.005115178,
+        0.005033352600000001,
+        0.0050569412
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 14,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050385557999999995,
+      "samples": [
+        0.0051198426,
+        0.0050345476,
+        0.0050385557999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 15,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.005077818600000001,
+      "samples": [
+        0.005149013,
+        0.0050439034,
+        0.005077818600000001
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 16,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.005089359,
+      "samples": [
+        0.0051458544,
+        0.005089359,
+        0.0050480052
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 17,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.005061017,
+      "samples": [
+        0.0051494062,
+        0.0050341466,
+        0.005061017
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 18,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047913744,
+      "samples": [
+        0.0049438762,
+        0.0047913744,
+        0.0047800941999999996
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 19,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048293106,
+      "samples": [
+        0.0049138102,
+        0.0048293106,
+        0.0048056094
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 20,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048039716,
+      "samples": [
+        0.0048705302,
+        0.0047612442,
+        0.0048039716
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 21,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004768712600000001,
+      "samples": [
+        0.0048718308,
+        0.0047550358,
+        0.004768712600000001
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 22,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004789232,
+      "samples": [
+        0.0048558956,
+        0.0047736854,
+        0.004789232
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 23,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047772794,
+      "samples": [
+        0.0048828985999999994,
+        0.0047772794,
+        0.0047666458
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 24,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047767988,
+      "samples": [
+        0.0048596878,
+        0.0047767988,
+        0.0047761541999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 25,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047892101999999995,
+      "samples": [
+        0.0048893074,
+        0.004776494399999999,
+        0.0047892101999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 26,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047802593999999995,
+      "samples": [
+        0.004853520599999999,
+        0.004778337400000001,
+        0.0047802593999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 27,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046912444,
+      "samples": [
+        0.0048465774000000005,
+        0.0046867796000000005,
+        0.0046912444
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 28,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046620684,
+      "samples": [
+        0.0047512792,
+        0.0046582922,
+        0.0046620684
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 29,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046550566000000005,
+      "samples": [
+        0.0047494854000000005,
+        0.004653443,
+        0.0046550566000000005
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 30,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046584244,
+      "samples": [
+        0.0047499198,
+        0.0046559136000000004,
+        0.0046584244
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 31,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046783038,
+      "samples": [
+        0.0047449484,
+        0.004662831,
+        0.0046783038
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 32,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004672946,
+      "samples": [
+        0.0047821618,
+        0.004672946,
+        0.0046617635999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 33,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004721525,
+      "samples": [
+        0.0047880236,
+        0.004721525,
+        0.004697244200000001
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 34,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004721426799999999,
+      "samples": [
+        0.004812961,
+        0.0046955882,
+        0.004721426799999999
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 35,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047043338,
+      "samples": [
+        0.0047914014,
+        0.0046825602,
+        0.0047043338
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 36,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046748336,
+      "samples": [
+        0.004783841,
+        0.0046739848,
+        0.0046748336
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 37,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046688116,
+      "samples": [
+        0.0047492424,
+        0.0046463288,
+        0.0046688116
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 38,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046842924,
+      "samples": [
+        0.0047652496,
+        0.004656746,
+        0.0046842924
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 39,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046795709999999996,
+      "samples": [
+        0.0047811772,
+        0.0046795709999999996,
+        0.0046753844000000004
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 40,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046854036000000005,
+      "samples": [
+        0.0047565,
+        0.0046759309999999995,
+        0.0046854036000000005
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 41,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046998173999999995,
+      "samples": [
+        0.0047680468,
+        0.0046998173999999995,
+        0.0046929838
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 42,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046988356,
+      "samples": [
+        0.0047705694,
+        0.0046988356,
+        0.0046866742
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 43,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046869264,
+      "samples": [
+        0.0047606366,
+        0.0046869264,
+        0.0046726946
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 44,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046693328,
+      "samples": [
+        0.0047502568,
+        0.0046693328,
+        0.0046651404
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 45,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046858374,
+      "samples": [
+        0.004756722,
+        0.0046858374,
+        0.004673782
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 46,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047277618,
+      "samples": [
+        0.0048100292000000005,
+        0.0047024678,
+        0.0047277618
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 47,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046664298,
+      "samples": [
+        0.004734053199999999,
+        0.0046664298,
+        0.0046566508
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 48,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046866722,
+      "samples": [
+        0.0047682376,
+        0.0046866722,
+        0.0046717938
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 49,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046895534,
+      "samples": [
+        0.0047670602,
+        0.0046573614,
+        0.0046895534
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 50,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004683737,
+      "samples": [
+        0.004772012,
+        0.0046699316,
+        0.004683737
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 51,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046851468,
+      "samples": [
+        0.0047684978,
+        0.00468457,
+        0.0046851468
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 52,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046778818,
+      "samples": [
+        0.0047548564,
+        0.0046778818,
+        0.0046611812
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 53,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046684192,
+      "samples": [
+        0.0047896636,
+        0.0046684192,
+        0.0046674559999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 54,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004662114199999999,
+      "samples": [
+        0.0047710028,
+        0.0046516444,
+        0.004662114199999999
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 55,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046689514,
+      "samples": [
+        0.0047838928,
+        0.0046689514,
+        0.0046555562
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 56,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046689794,
+      "samples": [
+        0.0047714948,
+        0.0046689794,
+        0.0046531554
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 57,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004684092799999999,
+      "samples": [
+        0.0047747754,
+        0.0046565316,
+        0.004684092799999999
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 58,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046475394,
+      "samples": [
+        0.0047683301999999995,
+        0.0046424336,
+        0.0046475394
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 59,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046934030000000005,
+      "samples": [
+        0.0047348,
+        0.0046934030000000005,
+        0.004668691
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 60,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046638776,
+      "samples": [
+        0.0047550088,
+        0.0046552338,
+        0.0046638776
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 61,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046619794,
+      "samples": [
+        0.004738483999999999,
+        0.0046619794,
+        0.004653996400000001
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 62,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046744123999999995,
+      "samples": [
+        0.0047637202,
+        0.0046744123999999995,
+        0.0046641548
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 63,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049164034,
+      "samples": [
+        0.0051312058,
+        0.0048962486,
+        0.0049164034
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 64,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048963646,
+      "samples": [
+        0.0050050232,
+        0.0048963646,
+        0.0048780916
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 65,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048907682,
+      "samples": [
+        0.0049866302,
+        0.0048654092,
+        0.0048907682
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 66,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048900454,
+      "samples": [
+        0.0049731105999999995,
+        0.004885950599999999,
+        0.0048900454
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 67,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049290722000000006,
+      "samples": [
+        0.0049896454,
+        0.0048745176,
+        0.0049290722000000006
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 68,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004918970999999999,
+      "samples": [
+        0.005017048200000001,
+        0.004918970999999999,
+        0.0049068974000000005
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 69,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049211256,
+      "samples": [
+        0.0049933128,
+        0.0049211256,
+        0.0049054334
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 70,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049016089999999995,
+      "samples": [
+        0.0049877022,
+        0.0049016089999999995,
+        0.0048865076
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 71,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049198782,
+      "samples": [
+        0.0050010556,
+        0.004906747,
+        0.0049198782
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 72,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048321902,
+      "samples": [
+        0.0050494958,
+        0.0048258068000000005,
+        0.0048321902
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 73,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048510428,
+      "samples": [
+        0.0049301326,
+        0.004833388,
+        0.0048510428
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 74,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004829183,
+      "samples": [
+        0.004937533,
+        0.004829183,
+        0.0048169326
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 75,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048340826,
+      "samples": [
+        0.0049118072,
+        0.0048340826,
+        0.0048275612
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 76,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004824968000000001,
+      "samples": [
+        0.0049387243999999995,
+        0.004824968000000001,
+        0.0048231638
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 77,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004859248,
+      "samples": [
+        0.004932261,
+        0.0048347736,
+        0.004859248
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 78,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004854548,
+      "samples": [
+        0.0049302806,
+        0.0048273482,
+        0.004854548
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 79,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048240404,
+      "samples": [
+        0.0049387944,
+        0.0048240404,
+        0.0048122106
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 80,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048355598,
+      "samples": [
+        0.0049149246,
+        0.0048355598,
+        0.0048351832
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 81,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047208154,
+      "samples": [
+        0.004953374599999999,
+        0.004706502600000001,
+        0.0047208154
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 82,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047372868,
+      "samples": [
+        0.0048275487999999995,
+        0.0047104392,
+        0.0047372868
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 83,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047112526,
+      "samples": [
+        0.004790171,
+        0.0046919314,
+        0.0047112526
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 84,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004745764,
+      "samples": [
+        0.0048308964000000005,
+        0.0047107386,
+        0.004745764
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 85,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047348832,
+      "samples": [
+        0.004812787000000001,
+        0.0047348832,
+        0.0047187582
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 86,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047502252,
+      "samples": [
+        0.0048047136,
+        0.0047502252,
+        0.0047415948
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 87,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047463084000000004,
+      "samples": [
+        0.0048109628000000005,
+        0.0047463084000000004,
+        0.004740743800000001
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 88,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047443082,
+      "samples": [
+        0.0048328106,
+        0.00470351,
+        0.0047443082
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 89,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047610864000000004,
+      "samples": [
+        0.0048439827999999996,
+        0.0047578787999999995,
+        0.0047610864000000004
+      ],
+      "fallback": {}
+    }
+  ],
+  "sram32_inputs": [
+    {
+      "index": 0,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046354056,
+      "samples": [
+        0.0047550974,
+        0.0046354056,
+        0.0046213758
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 1,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004623042,
+      "samples": [
+        0.004694737,
+        0.004623042,
+        0.0046216964
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 2,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046662348,
+      "samples": [
+        0.0047109234,
+        0.0046662348,
+        0.0046394947999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 3,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046654038000000005,
+      "samples": [
+        0.0047387866,
+        0.004657067,
+        0.0046654038000000005
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 4,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004675518599999999,
+      "samples": [
+        0.0047440011999999995,
+        0.0046754246,
+        0.004675518599999999
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 5,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004689288,
+      "samples": [
+        0.0047401824,
+        0.0046688762,
+        0.004689288
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 6,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047023426,
+      "samples": [
+        0.0047601678,
+        0.0047023426,
+        0.0046983091999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 7,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047325909999999995,
+      "samples": [
+        0.0047671946,
+        0.004687728,
+        0.0047325909999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 8,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-23-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046951846,
+      "samples": [
+        0.0047995614,
+        0.0046951846,
+        0.0046937168
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 9,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050439446,
+      "samples": [
+        0.0051920296,
+        0.005036815599999999,
+        0.0050439446
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 10,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050601406000000005,
+      "samples": [
+        0.0051444232,
+        0.005049198600000001,
+        0.0050601406000000005
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 11,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050609314,
+      "samples": [
+        0.0051399776,
+        0.0050609314,
+        0.005043403
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 12,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050504098,
+      "samples": [
+        0.0051293576,
+        0.0050504098,
+        0.0050441478
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 13,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050449045999999996,
+      "samples": [
+        0.0051586874,
+        0.0050449045999999996,
+        0.005034932000000001
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 14,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050543051999999995,
+      "samples": [
+        0.0051394366,
+        0.005018745,
+        0.0050543051999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 15,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050454076,
+      "samples": [
+        0.0051143062,
+        0.0050306584000000005,
+        0.0050454076
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 16,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050629442,
+      "samples": [
+        0.0051456348,
+        0.0050344132,
+        0.0050629442
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 17,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-deep/baseline/captures/input-307-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4403,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0050509458,
+      "samples": [
+        0.0051388378,
+        0.0050509458,
+        0.005042344
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 18,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004830254,
+      "samples": [
+        0.0050829648,
+        0.004830254,
+        0.0047750644
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 19,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048520062,
+      "samples": [
+        0.0048572268,
+        0.0048520062,
+        0.0048046848
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 20,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048181702,
+      "samples": [
+        0.0048775751999999995,
+        0.004805231599999999,
+        0.0048181702
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 21,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048158492,
+      "samples": [
+        0.0048755966,
+        0.0047954448,
+        0.0048158492
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 22,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048216088,
+      "samples": [
+        0.0048709246,
+        0.0048162938,
+        0.0048216088
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 23,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048308368,
+      "samples": [
+        0.004912875,
+        0.0048085718,
+        0.0048308368
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 24,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048240817999999994,
+      "samples": [
+        0.004875985,
+        0.004787923,
+        0.0048240817999999994
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 25,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047839516,
+      "samples": [
+        0.0048734738,
+        0.0047804556,
+        0.0047839516
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 26,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-20-request0-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4116,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048092544,
+      "samples": [
+        0.004912458,
+        0.0048037812,
+        0.0048092544
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 27,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046975587999999995,
+      "samples": [
+        0.004913166599999999,
+        0.0046965116,
+        0.0046975587999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 28,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046932332,
+      "samples": [
+        0.004804473599999999,
+        0.0046932332,
+        0.0046734737999999994
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 29,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004709921000000001,
+      "samples": [
+        0.004793219,
+        0.0046907702,
+        0.004709921000000001
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 30,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047055554,
+      "samples": [
+        0.0048005344,
+        0.0046732234,
+        0.0047055554
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 31,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047108259999999996,
+      "samples": [
+        0.0047664022,
+        0.0047062522,
+        0.0047108259999999996
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 32,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004721582199999999,
+      "samples": [
+        0.0048218122,
+        0.004721582199999999,
+        0.004705561400000001
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 33,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047139062,
+      "samples": [
+        0.0047929185999999995,
+        0.004703693,
+        0.0047139062
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 34,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047035156,
+      "samples": [
+        0.0047961802,
+        0.0047035156,
+        0.004700668
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 35,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request0-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047133264000000005,
+      "samples": [
+        0.0048146097999999995,
+        0.004689571599999999,
+        0.0047133264000000005
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 36,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047154794,
+      "samples": [
+        0.0048134466,
+        0.0047070904,
+        0.0047154794
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 37,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047080153999999996,
+      "samples": [
+        0.0047648174,
+        0.0047010002,
+        0.0047080153999999996
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 38,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004721765399999999,
+      "samples": [
+        0.0047779324,
+        0.0047063712,
+        0.004721765399999999
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 39,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004702879,
+      "samples": [
+        0.0048008702,
+        0.0046925312,
+        0.004702879
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 40,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047494534,
+      "samples": [
+        0.004761460800000001,
+        0.0047494534,
+        0.0047054042
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 41,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047396266,
+      "samples": [
+        0.0047936446,
+        0.0047396266,
+        0.004710677
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 42,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047452286,
+      "samples": [
+        0.0048047082,
+        0.0047452286,
+        0.0046994552
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 43,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047172142,
+      "samples": [
+        0.0048003804,
+        0.0046997276,
+        0.0047172142
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 44,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request1-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047131552,
+      "samples": [
+        0.0047736778,
+        0.0047131552,
+        0.004713131000000001
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 45,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004692354,
+      "samples": [
+        0.004801706,
+        0.004692354,
+        0.004688699
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 46,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004734673,
+      "samples": [
+        0.0048044396,
+        0.004734673,
+        0.004701604
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 47,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047013736,
+      "samples": [
+        0.0047719634,
+        0.0047013736,
+        0.0046982455999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 48,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047021566,
+      "samples": [
+        0.0048137376,
+        0.0047021566,
+        0.004700032
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 49,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004720871,
+      "samples": [
+        0.0047786922,
+        0.0047145408,
+        0.004720871
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 50,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047020152,
+      "samples": [
+        0.0047942652,
+        0.004695723000000001,
+        0.0047020152
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 51,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004685003,
+      "samples": [
+        0.0047673,
+        0.0046711428,
+        0.004685003
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 52,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047107966,
+      "samples": [
+        0.0048007436,
+        0.0047107966,
+        0.0047074262
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 53,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request2-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046975754,
+      "samples": [
+        0.0047693788,
+        0.0046975754,
+        0.0046924668000000004
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 54,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047061524,
+      "samples": [
+        0.0047893486,
+        0.0046947556,
+        0.0047061524
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 55,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047075742,
+      "samples": [
+        0.0047756248,
+        0.0046877344,
+        0.0047075742
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 56,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047317558,
+      "samples": [
+        0.0047860484,
+        0.0047317558,
+        0.0046990612
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 57,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047021032,
+      "samples": [
+        0.0047913211999999995,
+        0.0047021032,
+        0.0046967924
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 58,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004701054200000001,
+      "samples": [
+        0.0047801352,
+        0.0046950586,
+        0.004701054200000001
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 59,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004729425000000001,
+      "samples": [
+        0.0047991857999999995,
+        0.004729425000000001,
+        0.0046930758
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 60,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0046818732000000005,
+      "samples": [
+        0.0047796284,
+        0.0046818732000000005,
+        0.004674826
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 61,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004707152,
+      "samples": [
+        0.004796969,
+        0.004700918,
+        0.004707152
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 62,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-23-request3-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4119,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0047166566,
+      "samples": [
+        0.004764126400000001,
+        0.004691796,
+        0.0047166566
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 63,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049510902,
+      "samples": [
+        0.005155811,
+        0.0049510902,
+        0.0049267688
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 64,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049297544,
+      "samples": [
+        0.0050427798,
+        0.004928412599999999,
+        0.0049297544
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 65,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049286612,
+      "samples": [
+        0.0050342666,
+        0.0049286612,
+        0.0049279580000000005
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 66,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049347914,
+      "samples": [
+        0.0050228846,
+        0.0049260742,
+        0.0049347914
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 67,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049311804,
+      "samples": [
+        0.0050314634,
+        0.0049311804,
+        0.0048842694
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 68,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049615,
+      "samples": [
+        0.0050117838,
+        0.0049615,
+        0.0049346132
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 69,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049312046,
+      "samples": [
+        0.0050221134,
+        0.0049312046,
+        0.0049232582
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 70,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049487916,
+      "samples": [
+        0.0050367242,
+        0.004918398,
+        0.0049487916
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 71,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-272-request0-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4368,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0049329327999999995,
+      "samples": [
+        0.0050084774,
+        0.0049251768,
+        0.0049329327999999995
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 72,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048510558,
+      "samples": [
+        0.005047813,
+        0.0048510558,
+        0.0048489792
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 73,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048626874,
+      "samples": [
+        0.00495659,
+        0.004848002,
+        0.0048626874
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 74,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048379208,
+      "samples": [
+        0.0049233606,
+        0.0048230374,
+        0.0048379208
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 75,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004905477,
+      "samples": [
+        0.0049463604000000005,
+        0.004905477,
+        0.0048587178000000005
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 76,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048597252,
+      "samples": [
+        0.0049248122,
+        0.0048576564,
+        0.0048597252
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 77,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048468662,
+      "samples": [
+        0.0049687054000000005,
+        0.0048290992,
+        0.0048468662
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 78,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048755518,
+      "samples": [
+        0.0049540924,
+        0.0048572076,
+        0.0048755518
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 79,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004864185,
+      "samples": [
+        0.0049726266,
+        0.004864185,
+        0.0048554016
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 80,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-58-request0-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4154,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048703392,
+      "samples": [
+        0.004934605,
+        0.0048703392,
+        0.0048583472
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 81,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-0-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048184448,
+      "samples": [
+        0.0049656132,
+        0.004767396,
+        0.0048184448
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 82,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-0-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048149416,
+      "samples": [
+        0.0048857488,
+        0.004804744200000001,
+        0.0048149416
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 83,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-0-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048248766,
+      "samples": [
+        0.004908456,
+        0.0048120296,
+        0.0048248766
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 84,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-12-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048400744,
+      "samples": [
+        0.0049180828,
+        0.0048400744,
+        0.0048125224
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 85,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-12-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004826016000000001,
+      "samples": [
+        0.004898451,
+        0.0048136598,
+        0.004826016000000001
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 86,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-12-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048269652,
+      "samples": [
+        0.0048813304,
+        0.0048269652,
+        0.004825037
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 87,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-24-0.pt",
+      "layer": 0,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.004820743000000001,
+      "samples": [
+        0.004900041,
+        0.004820743000000001,
+        0.0048005608
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 88,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-24-20.pt",
+      "layer": 20,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048324462,
+      "samples": [
+        0.0049208822,
+        0.0048324462,
+        0.0048195236
+      ],
+      "fallback": {}
+    },
+    {
+      "index": 89,
+      "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/quality/captures/input-77-request0-24-41.pt",
+      "layer": 41,
+      "shape": [
+        1,
+        4173,
+        3072
+      ],
+      "bitwise_equal": true,
+      "differing_elements": 0,
+      "max_absolute": 0.0,
+      "repeat_equal": true,
+      "seconds": 0.0048296468,
+      "samples": [
+        0.0049085582,
+        0.0048201584,
+        0.0048296468
+      ],
+      "fallback": {}
+    }
+  ],
+  "sram32_exact_count": 90,
+  "sram32_median_block_time_ratio": 1.006681460390165,
+  "sram32_logits": {
+    "shape": [
+      1033,
+      248320
+    ],
+    "bitwise_equal": true,
+    "differing_elements": 0,
+    "max_absolute": 0.0,
+    "rrmse": 0.0
+  },
+  "pipelines": {
+    "pipeline-baseline": {
+      "runs": [
+        {
+          "label": "full-cold",
+          "prompt_id": "31b1bdb2-ccd6-4594-95ed-5c978fd73663",
+          "request_seconds": 77.222309914,
+          "client_seconds": 77.92959625701769,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-warm-1",
+          "prompt_id": "01f87685-ad96-467e-9156-eaa896d1bee6",
+          "request_seconds": 16.438188818,
+          "client_seconds": 17.06695082198712,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-warm-2",
+          "prompt_id": "17611989-fbce-479b-88b8-2b91c4d8aa7e",
+          "request_seconds": 15.751425377,
+          "client_seconds": 16.361030675005168,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-warm-3",
+          "prompt_id": "5275402f-f278-4a20-b627-b0e05426e29a",
+          "request_seconds": 15.62683576,
+          "client_seconds": 16.23267037901678,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-warm-4",
+          "prompt_id": "2eea66ef-a403-4f22-b8d5-50038f755d0b",
+          "request_seconds": 16.100924638,
+          "client_seconds": 16.692265522986418,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-warm-5",
+          "prompt_id": "38bda688-2253-44fe-ad60-5f25354fc7b0",
+          "request_seconds": 16.125995069,
+          "client_seconds": 16.73641705198679,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-diagnostic",
+          "prompt_id": "841fe691-3fc4-4393-b8da-d69b25731438",
+          "request_seconds": 18.574025191,
+          "client_seconds": 19.210846286005108,
+          "diagnostic": true,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        }
+      ],
+      "warm_seconds": [
+        16.438188818,
+        15.751425377,
+        15.62683576,
+        16.100924638,
+        16.125995069
+      ],
+      "median": 16.100924638,
+      "mean": 16.0086739324,
+      "program_checks": [
+        {
+          "generation": 1,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 2,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 3,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 4,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 5,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 6,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 7,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        }
+      ],
+      "unload": [
+        {
+          "seconds": 0.005875481991097331,
+          "used": 19313660160
+        },
+        {
+          "seconds": 0.5102484709932469,
+          "used": 19313660160
+        },
+        {
+          "seconds": 1.0154491449939087,
+          "used": 19313660160
+        },
+        {
+          "seconds": 1.520861116994638,
+          "used": 16791146240
+        },
+        {
+          "seconds": 2.0263116299756803,
+          "used": 15925282816
+        },
+        {
+          "seconds": 2.5313192089961376,
+          "used": 15059419392
+        },
+        {
+          "seconds": 3.03674215299543,
+          "used": 14193555968
+        },
+        {
+          "seconds": 3.542537547997199,
+          "used": 13327692544
+        },
+        {
+          "seconds": 4.0481227439886425,
+          "used": 12461829120
+        },
+        {
+          "seconds": 4.553577229991788,
+          "used": 11595965696
+        },
+        {
+          "seconds": 5.060371142986696,
+          "used": 10713259264
+        },
+        {
+          "seconds": 5.565623987000436,
+          "used": 10352507136
+        },
+        {
+          "seconds": 6.07110383399413,
+          "used": 8949495040
+        },
+        {
+          "seconds": 6.576592676981818,
+          "used": 8017007872
+        },
+        {
+          "seconds": 7.082107053982327,
+          "used": 7122307456
+        },
+        {
+          "seconds": 7.587632048991509,
+          "used": 6291745664
+        },
+        {
+          "seconds": 8.093109045003075,
+          "used": 5423422336
+        },
+        {
+          "seconds": 8.598800286999904,
+          "used": 4542528896
+        },
+        {
+          "seconds": 9.104316699987976,
+          "used": 3696225664
+        },
+        {
+          "seconds": 9.609845293976832,
+          "used": 2893975424
+        },
+        {
+          "seconds": 10.368941280990839,
+          "used": 2685928832
+        },
+        {
+          "seconds": 10.875254949991358,
+          "used": 2685928832
+        },
+        {
+          "seconds": 11.380159057996934,
+          "used": 2685928832
+        },
+        {
+          "seconds": 11.8851084659982,
+          "used": 2685928832
+        },
+        {
+          "seconds": 12.390660003002267,
+          "used": 2685928832
+        },
+        {
+          "seconds": 12.894518681976479,
+          "used": 2685928832
+        },
+        {
+          "seconds": 13.399669570993865,
+          "used": 2685928832
+        },
+        {
+          "seconds": 13.904889083001763,
+          "used": 2685928832
+        },
+        {
+          "seconds": 14.410387313982937,
+          "used": 2685928832
+        },
+        {
+          "seconds": 14.916042848984944,
+          "used": 2685928832
+        },
+        {
+          "seconds": 16.01680513599422,
+          "used": 2685928832
+        },
+        {
+          "seconds": 16.521630267001456,
+          "used": 2685928832
+        }
+      ]
+    },
+    "pipeline-sram32": {
+      "runs": [
+        {
+          "label": "full-cold",
+          "prompt_id": "7872b222-8af9-4596-97d9-19b055f06005",
+          "request_seconds": 76.712198733,
+          "client_seconds": 77.4155411630054,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-warm-1",
+          "prompt_id": "f95e4d29-981d-4ba1-8c26-fbb6265208f0",
+          "request_seconds": 16.28506752,
+          "client_seconds": 16.896275804989273,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-warm-2",
+          "prompt_id": "02fb9d01-0717-4958-9fbe-42f98c31ff5e",
+          "request_seconds": 16.063602738,
+          "client_seconds": 16.667204929020954,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-warm-3",
+          "prompt_id": "2f04b165-4bd7-4713-ae70-f30191924c20",
+          "request_seconds": 16.15126255,
+          "client_seconds": 16.745773502014345,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-warm-4",
+          "prompt_id": "2c9251e7-8c42-4156-9cf6-959fd2ba1251",
+          "request_seconds": 16.011169946,
+          "client_seconds": 16.600252531003207,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-warm-5",
+          "prompt_id": "04fdeb1c-d2bc-4ba1-bee7-8ce611212b27",
+          "request_seconds": 15.984089446,
+          "client_seconds": 16.591351757990196,
+          "diagnostic": false,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        },
+        {
+          "label": "full-diagnostic",
+          "prompt_id": "7a41568c-fc25-4006-b2db-99a044c75a98",
+          "request_seconds": 18.313898349,
+          "client_seconds": 18.931519109988585,
+          "diagnostic": true,
+          "recompute": true,
+          "cached_nodes": [
+            "19",
+            "18:17",
+            "18:14",
+            "18:1",
+            "18:2",
+            "18:3",
+            "18:6",
+            "18:24"
+          ],
+          "output_tokens": 298
+        }
+      ],
+      "warm_seconds": [
+        16.28506752,
+        16.063602738,
+        16.15126255,
+        16.011169946,
+        15.984089446
+      ],
+      "median": 16.063602738,
+      "mean": 16.09903844,
+      "program_checks": [
+        {
+          "generation": 1,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 2,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 3,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 4,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 5,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 6,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        },
+        {
+          "generation": 7,
+          "counts": {
+            "top": 258,
+            "sample": 130,
+            "widths": 4,
+            "controls": 130
+          },
+          "tokens": 298
+        }
+      ],
+      "unload": [
+        {
+          "seconds": 0.004173666005954146,
+          "used": 19313595520
+        },
+        {
+          "seconds": 0.5087523529946338,
+          "used": 19313595520
+        },
+        {
+          "seconds": 1.0138294259959366,
+          "used": 19313595520
+        },
+        {
+          "seconds": 1.5191107669961639,
+          "used": 16723906944
+        },
+        {
+          "seconds": 2.0244958999974187,
+          "used": 15858043520
+        },
+        {
+          "seconds": 2.5299228740041144,
+          "used": 14992180096
+        },
+        {
+          "seconds": 3.0356916659802664,
+          "used": 14176648320
+        },
+        {
+          "seconds": 3.541134030005196,
+          "used": 13310784896
+        },
+        {
+          "seconds": 4.046705807006219,
+          "used": 12444921472
+        },
+        {
+          "seconds": 4.552086290001171,
+          "used": 11579058048
+        },
+        {
+          "seconds": 5.0588343709823675,
+          "used": 10713194624
+        },
+        {
+          "seconds": 5.564299330988433,
+          "used": 10352442496
+        },
+        {
+          "seconds": 6.0697862560045905,
+          "used": 9050093696
+        },
+        {
+          "seconds": 6.575339845992858,
+          "used": 8057352576
+        },
+        {
+          "seconds": 7.080818488000659,
+          "used": 7197817728
+        },
+        {
+          "seconds": 7.58622624000418,
+          "used": 6329494400
+        },
+        {
+          "seconds": 8.09168939900701,
+          "used": 5498932608
+        },
+        {
+          "seconds": 8.597100993007189,
+          "used": 4630609280
+        },
+        {
+          "seconds": 9.10117254499346,
+          "used": 3800047488
+        },
+        {
+          "seconds": 9.60739285100135,
+          "used": 2956902784
+        },
+        {
+          "seconds": 10.434688138979254,
+          "used": 2685928832
+        },
+        {
+          "seconds": 10.940455122996354,
+          "used": 2685928832
+        },
+        {
+          "seconds": 11.445868496986805,
+          "used": 2685928832
+        },
+        {
+          "seconds": 11.950574055983452,
+          "used": 2685928832
+        },
+        {
+          "seconds": 12.45577896598843,
+          "used": 2685928832
+        },
+        {
+          "seconds": 12.959220788005041,
+          "used": 2685928832
+        },
+        {
+          "seconds": 13.46282999299001,
+          "used": 2685928832
+        },
+        {
+          "seconds": 13.966939040983561,
+          "used": 2685928832
+        },
+        {
+          "seconds": 14.470794149994617,
+          "used": 2685928832
+        },
+        {
+          "seconds": 14.976016083004652,
+          "used": 2685928832
+        },
+        {
+          "seconds": 16.079090171988355,
+          "used": 2685928832
+        },
+        {
+          "seconds": 16.582949831994483,
+          "used": 2685928832
+        }
+      ]
+    }
+  },
+  "attention_storage": {
+    "sram32": [
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-quality-preserving/post-sram32/.graph_dumps/graph_0000_fused_0_syn_1000000_1000000_372.1255925.59824.post.json",
+        "qk_nodes": 72,
+        "softmax_nodes": 72,
+        "probability_mme_consumers": 72,
+        "qk_outputs": [
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4403,
+              4403
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4403,
+              1536
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4403,
+              4403
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4403,
+              1331
+            ],
+            "count": 24
+          }
+        ],
+        "softmax_inputs": [
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4403,
+              4403
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4403,
+              2048
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4403,
+              4403
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4403,
+              307
+            ],
+            "count": 24
+          }
+        ],
+        "softmax_outputs": [
+          {
+            "alias_allocation": null,
+            "alias_shape": null,
+            "allocation": "SRAM",
+            "dtype": "hfloat8",
+            "shape": [
+              4403,
+              2048
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": null,
+            "alias_shape": null,
+            "allocation": "SRAM",
+            "dtype": "hfloat8",
+            "shape": [
+              4403,
+              307
+            ],
+            "count": 24
+          }
+        ]
+      },
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-quality-preserving/post-sram32/.graph_dumps/graph_0006_fused_0_syn_1006000_1006000_431.1255925.64846.post.json",
+        "qk_nodes": 72,
+        "softmax_nodes": 72,
+        "probability_mme_consumers": 72,
+        "qk_outputs": [
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4119,
+              4119
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4119,
+              1536
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4119,
+              4119
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4119,
+              1047
+            ],
+            "count": 24
+          }
+        ],
+        "softmax_inputs": [
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4119,
+              4119
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4119,
+              2048
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4119,
+              4119
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4119,
+              23
+            ],
+            "count": 24
+          }
+        ],
+        "softmax_outputs": [
+          {
+            "alias_allocation": null,
+            "alias_shape": null,
+            "allocation": "SRAM",
+            "dtype": "hfloat8",
+            "shape": [
+              4119,
+              2048
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": null,
+            "alias_shape": null,
+            "allocation": "SRAM",
+            "dtype": "hfloat8",
+            "shape": [
+              4119,
+              23
+            ],
+            "count": 24
+          }
+        ]
+      }
+    ],
+    "baseline_positive": [
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/block-native-full-tef/post/.graph_dumps/graph_0000_fused_0_syn_1000000_1000000_372.1145064.62332.post.json",
+        "qk_nodes": 72,
+        "softmax_nodes": 72,
+        "probability_mme_consumers": 72,
+        "qk_outputs": [
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4403,
+              4403
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4403,
+              1536
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4403,
+              4403
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4403,
+              1331
+            ],
+            "count": 24
+          }
+        ],
+        "softmax_inputs": [
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4403,
+              4403
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4403,
+              2048
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4403,
+              4403
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4403,
+              307
+            ],
+            "count": 24
+          }
+        ],
+        "softmax_outputs": [
+          {
+            "alias_allocation": null,
+            "alias_shape": null,
+            "allocation": "SRAM",
+            "dtype": "hfloat8",
+            "shape": [
+              4403,
+              2048
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": null,
+            "alias_shape": null,
+            "allocation": "SRAM",
+            "dtype": "hfloat8",
+            "shape": [
+              4403,
+              307
+            ],
+            "count": 24
+          }
+        ]
+      }
+    ],
+    "baseline_negative": [
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/block-native-negative-tef/post/.graph_dumps/graph_0000_fused_0_syn_1000000_1000000_372.1145705.60488.post.json",
+        "qk_nodes": 72,
+        "softmax_nodes": 72,
+        "probability_mme_consumers": 72,
+        "qk_outputs": [
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4119,
+              4119
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4119,
+              1536
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4119,
+              4119
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4119,
+              1047
+            ],
+            "count": 24
+          }
+        ],
+        "softmax_inputs": [
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4119,
+              4119
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4119,
+              2048
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": "DRAM",
+            "alias_shape": [
+              4119,
+              4119
+            ],
+            "allocation": "DRAM",
+            "dtype": "bf16",
+            "shape": [
+              4119,
+              23
+            ],
+            "count": 24
+          }
+        ],
+        "softmax_outputs": [
+          {
+            "alias_allocation": null,
+            "alias_shape": null,
+            "allocation": "SRAM",
+            "dtype": "hfloat8",
+            "shape": [
+              4119,
+              2048
+            ],
+            "count": 48
+          },
+          {
+            "alias_allocation": null,
+            "alias_shape": null,
+            "allocation": "SRAM",
+            "dtype": "hfloat8",
+            "shape": [
+              4119,
+              23
+            ],
+            "count": 24
+          }
+        ]
+      }
+    ]
+  },
+  "historical_quality_comparison": [
+    {
+      "label": "teapot",
+      "source_graph_equal": true,
+      "caption_equal": true,
+      "pixels_equal": false,
+      "pixel_mae": 0.08020273844401042,
+      "baseline_pixel_sha256": "b36ce853c8779501c863d2b8f21d23b8b9561d2bbc635c223b8863750ccc1a12",
+      "rollback_pixel_sha256": "8d790c617ca8f1c4e13c577dc7b0179ee774529450a02856b351c97cbe0f2de9",
+      "status": "success"
+    },
+    {
+      "label": "poster",
+      "source_graph_equal": true,
+      "caption_equal": false,
+      "pixels_equal": false,
+      "pixel_mae": 34.058287620544434,
+      "baseline_pixel_sha256": "11e9edeb79027edc962a6163c95df2a099a2708de1c31f2d1738f2c4c3cc8a4f",
+      "rollback_pixel_sha256": "851fb6f3e15f8fc5f29fb2ba61852c3aaf63d00de4cd5b849e92dd2bc0cf4d0b",
+      "status": "success"
+    },
+    {
+      "label": "person",
+      "source_graph_equal": true,
+      "caption_equal": true,
+      "pixels_equal": false,
+      "pixel_mae": 0.08151753743489583,
+      "baseline_pixel_sha256": "3c47c612f50a6b8361822467b54c1a1d02d9e22f9a0e42fa2183e7edefde7877",
+      "rollback_pixel_sha256": "d8f6c9431880afbd7ddb846d073c18ea5cb9d1183d7435108c27d90b08d64f7d",
+      "status": "success"
+    }
+  ],
+  "quality_unload": [
+    {
+      "seconds": 0.006342189997667447,
+      "used": 19313779328
+    },
+    {
+      "seconds": 0.5112793139996938,
+      "used": 19313779328
+    },
+    {
+      "seconds": 1.0164669619989581,
+      "used": 19313779328
+    },
+    {
+      "seconds": 1.5217676699976437,
+      "used": 16842121344
+    },
+    {
+      "seconds": 2.027105326007586,
+      "used": 16026605952
+    },
+    {
+      "seconds": 2.5325300870172214,
+      "used": 15160742528
+    },
+    {
+      "seconds": 3.0383033649995923,
+      "used": 14294879104
+    },
+    {
+      "seconds": 3.5437617799907457,
+      "used": 13479347328
+    },
+    {
+      "seconds": 4.049352385016391,
+      "used": 12613483904
+    },
+    {
+      "seconds": 4.554826767009217,
+      "used": 11747620480
+    },
+    {
+      "seconds": 5.061437427008059,
+      "used": 10932088704
+    },
+    {
+      "seconds": 5.566907297994476,
+      "used": 10352626304
+    },
+    {
+      "seconds": 6.0718438340118155,
+      "used": 9184496256
+    },
+    {
+      "seconds": 6.577276955009438,
+      "used": 8301369216
+    },
+    {
+      "seconds": 7.082701242004987,
+      "used": 7424335744
+    },
+    {
+      "seconds": 7.588215308991494,
+      "used": 6581191040
+    },
+    {
+      "seconds": 8.093631063995417,
+      "used": 5725450624
+    },
+    {
+      "seconds": 8.599502107012086,
+      "used": 4857127296
+    },
+    {
+      "seconds": 9.105023629992502,
+      "used": 4026565504
+    },
+    {
+      "seconds": 9.611179916013498,
+      "used": 3183420800
+    },
+    {
+      "seconds": 10.561219983996125,
+      "used": 2685928832
+    },
+    {
+      "seconds": 11.066648159001488,
+      "used": 2685928832
+    },
+    {
+      "seconds": 11.572109071013983,
+      "used": 2685928832
+    },
+    {
+      "seconds": 12.077720481000142,
+      "used": 2685928832
+    },
+    {
+      "seconds": 12.583131737017538,
+      "used": 2685928832
+    },
+    {
+      "seconds": 13.08855139100342,
+      "used": 2685928832
+    },
+    {
+      "seconds": 13.594386353011942,
+      "used": 2685928832
+    },
+    {
+      "seconds": 14.099718097015284,
+      "used": 2685928832
+    },
+    {
+      "seconds": 14.605169090005802,
+      "used": 2685928832
+    },
+    {
+      "seconds": 15.11072866799077,
+      "used": 2685928832
+    },
+    {
+      "seconds": 16.214924764994066,
+      "used": 2685928832
+    },
+    {
+      "seconds": 16.720770712010562,
+      "used": 2685928832
+    }
+  ],
+  "visual_review": "Restored teapot has one side handle. Poster retains MOSS and three yellow flowers. Portrait retains red scarf and white cup. Historical cross-run caption/pixel differences remain unlocalized.",
+  "deployment": {
+    "runs": [
+      {
+        "label": "cold",
+        "prompt_id": "fb919558-783e-4874-a1b5-f2ad806224fe",
+        "seconds": 79.338,
+        "cached_nodes": []
+      },
+      {
+        "label": "cached",
+        "prompt_id": "9480b17a-24e6-4253-bc23-edbd8d1a5e90",
+        "seconds": 10.693,
+        "cached_nodes": [
+          "19",
+          "18:17",
+          "18:14",
+          "18:11",
+          "18:1",
+          "18:4",
+          "18:2",
+          "18:3",
+          "18:13",
+          "18:16",
+          "18:6",
+          "18:5",
+          "18:24"
+        ]
+      },
+      {
+        "label": "768",
+        "prompt_id": "95de7421-8d36-4e12-841c-33921e1fef08",
+        "seconds": 14.213,
+        "cached_nodes": [
+          "18:17",
+          "18:14",
+          "18:1",
+          "18:2",
+          "18:3",
+          "18:5",
+          "18:24"
+        ]
+      }
+    ],
+    "queue": {
+      "queue_running": 0,
+      "queue_pending": 0
+    },
+    "torch_version": "2.13.0a0+git2469d18",
+    "device": "hpu:0 GAUDI2"
+  },
+  "runtime": {
+    "checkout_matches": true,
+    "gc_kernel_path": "/usr/lib/habanalabs/libtpc_kernels.so",
+    "compiler_environment_overrides": {},
+    "queue": {
+      "queue_running": 0,
+      "queue_pending": 0
+    }
+  },
+  "source_sha256": {
+    "comfy/ldm/moss_image/model.py": "0597de6ee3049c09643f4e9f23c7ff2bb526d9c8e3bbbd67629bad80958803c5",
+    "comfy/ldm/moss_image/hpu.py": "94dc8bdde701965acdebff817be3898cf0672a8fa71bacb88ecda77368c2e1dc",
+    "comfy/ldm/modules/attention.py": "e3cb3c7c81140f3ef7020b880d4545acbd93f1db18cbe7d8782d96c79101541b",
+    "comfy/ops.py": "a8b1e24ceb78455b3cd16f5e0309eaed88093d8b7501e41c33006b3f60b02940",
+    "comfy/quant_ops.py": "f97ab5f550b103ff44fd07c3a50345529d4234e77d97faefa630a7ea0201afc8",
+    "comfy/text_encoders/qwen35.py": "6fb7e34d615395f5a7c49660ae0c284a7f7fdaadc9198a8a923feb2962d97ef0",
+    "comfy/text_encoders/llama.py": "2c216c354e9be2e42c1b8c88ef20c1fbf919e0b187f65e30030647d1c3f695cd",
+    "comfy/text_encoders/hpu_gated_delta.py": "a041b37464fd9234759166aed19d182700242123d5c9deee216b54cf692e6a3c",
+    "scripts/gaudi/start.sh": "ad922255076aadffde48613a330b8494f757af3e64dc5214a97378ad3dc1b0b8",
+    ".gitignore": "a4e72642ec7a4bc64120ecf744e21ce55d877f47c80b7489ebbf7730596b7dd1"
+  },
+  "native_extension_removed": true
+}

@@ -45,8 +45,8 @@ def run(label, graph):
     print(label, time.monotonic() - start, [event['output_tokens'] for event in request if event['kind'] == 'generate_end'], flush=True)
 
 
-env = dict(os.environ, PT_HPU_LAZY_MODE='0', GC_KERNEL_PATH='/usr/lib/habanalabs/libtpc_kernels.so', PYTHONPATH=str(Path.cwd()), MOSS_EVENTS=str(root / 'events.jsonl'))
-command = [sys.executable, str(probes / 'moss_observed_server.py'), '--disable-dynamic-vram', '--disable-pinned-memory', '--disable-async-offload', '--disable-xformers', '--use-pytorch-cross-attention', '--listen', '127.0.0.1', '--port', '8190']
+env = dict(os.environ, PT_HPU_LAZY_MODE='0', GC_KERNEL_PATH=os.environ.get('GC_KERNEL_PATH', '/usr/lib/habanalabs/libtpc_kernels.so'), PYTHONPATH=str(Path.cwd()), MOSS_EVENTS=str(root / 'events.jsonl'))
+command = [sys.executable, str(probes / os.environ.get('MOSS_QUALITY_SERVER', 'moss_observed_server.py')), '--disable-dynamic-vram', '--disable-pinned-memory', '--disable-async-offload', '--disable-xformers', '--use-pytorch-cross-attention', '--listen', '127.0.0.1', '--port', '8190']
 with (root / 'server.log').open('w') as log:
     server = subprocess.Popen(command, env=env, stdout=log, stderr=subprocess.STDOUT)
     try:

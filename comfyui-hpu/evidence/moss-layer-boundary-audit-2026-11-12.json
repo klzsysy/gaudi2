@@ -1,0 +1,1606 @@
+{
+  "workflow_rows": [
+    {
+      "label": "full-warm-1",
+      "request_seconds": 16.438188818,
+      "node_seconds": {
+        "TextGenerate": 5.381838716,
+        "SwitchNode": 0.000111868,
+        "PreviewAny": 6.3977e-05,
+        "CLIPTextEncode": 0.41020221,
+        "KSampler": 10.388750801,
+        "VAEDecode": 0.132072618,
+        "PreviewImage": 0.109494153
+      },
+      "node_union_seconds": 16.422534343,
+      "outside_nodes_seconds": 0.01565447500000161
+    },
+    {
+      "label": "full-warm-2",
+      "request_seconds": 15.751425377,
+      "node_seconds": {
+        "TextGenerate": 5.060718115,
+        "SwitchNode": 0.000117826,
+        "PreviewAny": 6.5804e-05,
+        "CLIPTextEncode": 0.32513352,
+        "KSampler": 10.110276441,
+        "VAEDecode": 0.130998008,
+        "PreviewImage": 0.108612414
+      },
+      "node_union_seconds": 15.735922128,
+      "outside_nodes_seconds": 0.015503248999999997
+    },
+    {
+      "label": "full-warm-3",
+      "request_seconds": 15.62683576,
+      "node_seconds": {
+        "TextGenerate": 4.882362878,
+        "SwitchNode": 0.000139303,
+        "PreviewAny": 0.000189209,
+        "CLIPTextEncode": 0.32899862300000005,
+        "KSampler": 10.158375603,
+        "VAEDecode": 0.132886051,
+        "PreviewImage": 0.107980656
+      },
+      "node_union_seconds": 15.610932323,
+      "outside_nodes_seconds": 0.01590343700000041
+    },
+    {
+      "label": "full-warm-4",
+      "request_seconds": 16.100924638,
+      "node_seconds": {
+        "TextGenerate": 5.221977946,
+        "SwitchNode": 0.000119849,
+        "PreviewAny": 6.685e-05,
+        "CLIPTextEncode": 0.407169494,
+        "KSampler": 10.214956456,
+        "VAEDecode": 0.13165939,
+        "PreviewImage": 0.108839832
+      },
+      "node_union_seconds": 16.084789817,
+      "outside_nodes_seconds": 0.016134820999997856
+    },
+    {
+      "label": "full-warm-5",
+      "request_seconds": 16.125995069,
+      "node_seconds": {
+        "TextGenerate": 5.242234938,
+        "SwitchNode": 0.000115701,
+        "PreviewAny": 6.3834e-05,
+        "CLIPTextEncode": 0.420369634,
+        "KSampler": 10.205935943,
+        "VAEDecode": 0.132346068,
+        "PreviewImage": 0.108141226
+      },
+      "node_union_seconds": 16.109207344,
+      "outside_nodes_seconds": 0.01678772499999681
+    }
+  ],
+  "median_outside_nodes_seconds": 0.01590343700000041,
+  "median_outside_nodes_fraction": 0.0010021052431931677,
+  "score_tensor_metadata": {
+    "baseline_positive": [
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/block-native-full-tef/post/.graph_dumps/graph_0000_fused_0_syn_1000000_1000000_372.1145064.62332.post.json",
+        "graph": ".graph_dumps/graph_0000_fused_0_syn_1000000_1000000_372",
+        "workspace_size": 324654848,
+        "scores": [
+          {
+            "name": "1019",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "1066",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "1113",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "1160",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "1207",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "1254",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "1301",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "220",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "267",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "314",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "361",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "408",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "455",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "502",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "549",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "596",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "643",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "690",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "737",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "784",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "831",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "878",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "925",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "972",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          }
+        ],
+        "softmax_count": 72,
+        "mme_count": 151
+      }
+    ],
+    "baseline_negative": [
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/block-native-negative-tef/post/.graph_dumps/graph_0000_fused_0_syn_1000000_1000000_372.1145705.60488.post.json",
+        "graph": ".graph_dumps/graph_0000_fused_0_syn_1000000_1000000_372",
+        "workspace_size": 303714944,
+        "scores": [
+          {
+            "name": "1019",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "1066",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "1113",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "1160",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "1207",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "1254",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "1301",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "220",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "267",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "314",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "361",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "408",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "455",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "502",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "549",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "596",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "643",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "690",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "737",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "784",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "831",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "878",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "925",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "972",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          }
+        ],
+        "softmax_count": 72,
+        "mme_count": 152
+      }
+    ],
+    "sram32": [
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-quality-preserving/post-sram32/.graph_dumps/graph_0000_fused_0_syn_1000000_1000000_372.1255925.59824.post.json",
+        "graph": ".graph_dumps/graph_0000_fused_0_syn_1000000_1000000_372",
+        "workspace_size": 324654848,
+        "scores": [
+          {
+            "name": "1019",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "1066",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "1113",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "1160",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "1207",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "1254",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "1301",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "220",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "267",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "314",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "361",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "408",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "455",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "502",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "549",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "596",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "643",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "690",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "737",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "784",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "831",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "878",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          },
+          {
+            "name": "925",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 243498496
+          },
+          {
+            "name": "972",
+            "max_shape": [
+              4403,
+              4403
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 69891328
+          }
+        ],
+        "softmax_count": 72,
+        "mme_count": 151
+      },
+      {
+        "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-quality-preserving/post-sram32/.graph_dumps/graph_0006_fused_0_syn_1006000_1006000_431.1255925.64846.post.json",
+        "graph": ".graph_dumps/graph_0006_fused_0_syn_1006000_1006000_431",
+        "workspace_size": 303714944,
+        "scores": [
+          {
+            "name": "1019",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "1066",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "1113",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "1160",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "1207",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "1254",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "1301",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "220",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "267",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "314",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "361",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "408",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "455",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "502",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "549",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "596",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "643",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "690",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "737",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "784",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "831",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "878",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          },
+          {
+            "name": "925",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 202486144
+          },
+          {
+            "name": "972",
+            "max_shape": [
+              4119,
+              4119
+            ],
+            "dtype": "bf16",
+            "persistent": false,
+            "in_persist_storage": false,
+            "allocation": "DRAM",
+            "allow_permutation": false,
+            "offset": 65383680
+          }
+        ],
+        "softmax_count": 72,
+        "mme_count": 152
+      }
+    ]
+  },
+  "fx_graphs": {
+    "block-native-full-tef": [
+      {
+        "index": 0,
+        "nodes": 903,
+        "relevant_targets": {
+          "hpu.fp8_gemm_v2": 26,
+          "<built-in function matmul>": 24,
+          "hpu.softmax_fp8.Scalar_scales": 24
+        }
+      },
+      {
+        "index": 1,
+        "nodes": 14,
+        "relevant_targets": {}
+      },
+      {
+        "index": 2,
+        "nodes": 15,
+        "relevant_targets": {
+          "hpu.fp8_gemm_v2": 1
+        }
+      },
+      {
+        "index": 3,
+        "nodes": 14,
+        "relevant_targets": {}
+      },
+      {
+        "index": 4,
+        "nodes": 15,
+        "relevant_targets": {
+          "hpu.fp8_gemm_v2": 1
+        }
+      },
+      {
+        "index": 5,
+        "nodes": 5,
+        "relevant_targets": {}
+      }
+    ],
+    "block-native-negative-tef": [
+      {
+        "index": 0,
+        "nodes": 903,
+        "relevant_targets": {
+          "hpu.fp8_gemm_v2": 26,
+          "<built-in function matmul>": 24,
+          "hpu.softmax_fp8.Scalar_scales": 24
+        }
+      },
+      {
+        "index": 1,
+        "nodes": 14,
+        "relevant_targets": {}
+      },
+      {
+        "index": 2,
+        "nodes": 15,
+        "relevant_targets": {
+          "hpu.fp8_gemm_v2": 1
+        }
+      },
+      {
+        "index": 3,
+        "nodes": 14,
+        "relevant_targets": {}
+      },
+      {
+        "index": 4,
+        "nodes": 15,
+        "relevant_targets": {
+          "hpu.fp8_gemm_v2": 1
+        }
+      },
+      {
+        "index": 5,
+        "nodes": 5,
+        "relevant_targets": {}
+      }
+    ]
+  },
+  "installed_bridge": {
+    "version_source": "###############################################################################\n# Copyright (c) 2021-2025 Intel Corporation\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#     http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n###############################################################################\n__version__ = \"1.24.2.481\"\ndef version():\n   return \"1.24.2.481\"",
+    "sha256": {
+      "version.py": "132c2a97e5491895314acda88afaefb788f6e36a339746c918e4117be532dc60",
+      "dynamo/compile_backend/compilers.py": "a4ccbb2c501f27ecc63c40c06361b93ef97742862c908066fab5e1a540735c95",
+      "dynamo/compile_backend/_passes/fuse_attention.py": "576412fb691d0b031e4c8cb08fcfabe735fd79b0ef68281b33fd201ed80eaf57",
+      "dynamo/compile_backend/partitioner.py": "2fec8847c54967bae621dae7b84853e9e62a1981448ec0f33b2717be1a3ca1f2",
+      "dynamo/compile_backend/recipe_compiler.py": "9af0a0486ea4a1a7dfb739e4bb18a2a42fcea7ed0a17d0cda1166b0e7500f4cc"
+    }
+  },
+  "text_profile16": {
+    "source": "/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-evidence/text-gc/10-profile16.trace.json",
+    "kernel_events": 2051592,
+    "runtime_counts": {
+      "run": 11408,
+      "launch": 6848,
+      "Launch": 6848,
+      "launch_recipe": 2288,
+      "LaunchRecipe": 2288
+    },
+    "span_ms": 548.4970009765625,
+    "active_ms": 330.6213349609375,
+    "gap_ms": 217.875666015625,
+    "largest_gap_ms": 0.9658447265625,
+    "controls": [
+      {
+        "index": 9,
+        "mode": "sync16",
+        "seconds": 4.782876618,
+        "window_seconds": 0.553000924,
+        "window_rounds": 16,
+        "tokens": 298,
+        "fallback": {}
+      },
+      {
+        "index": 10,
+        "mode": "profile16",
+        "seconds": 99.951217874,
+        "window_seconds": 0.559853054,
+        "window_rounds": 16,
+        "tokens": 298,
+        "fallback": {}
+      }
+    ],
+    "gap_fraction": 0.39722307620226155,
+    "window_profiler_overhead_fraction": 0.01239081112276752
+  },
+  "date": "2026-11-12",
+  "scope": "Read-only reassessment of warm single-image 1024x1024, 25-step MOSS under quality preservation.",
+  "product_commit": "0995638a6546bb10d4558417d3327e3137871830",
+  "public_bridge_source_match": {
+    "commit": "27eccbcffeab10842c9f29f64c6bf50d8f65d78f",
+    "files": {
+      "_passes/fuse_attention.py": {
+        "git_blob": "3b02b98f986d58c4a12224b8e415531b1d540547",
+        "public_v1242_blob": "3b02b98f986d58c4a12224b8e415531b1d540547",
+        "matches": true
+      },
+      "compilers.py": {
+        "git_blob": "a542d0109501ed9b6ae836d72f843aee5a64fd93",
+        "public_v1242_blob": "a542d0109501ed9b6ae836d72f843aee5a64fd93",
+        "matches": true
+      }
+    }
+  },
+  "device_budget": {
+    "idle": 0.8152769938151043,
+    "other_kernel": 2.652099523925781,
+    "other_mme": 0.00330673828125,
+    "fp8_linear": 2.513971346028646,
+    "bf16_qk": 2.405665901692708,
+    "softmax": 1.340237967936198,
+    "fp8_av": 0.5308218872070313
+  },
+  "other_kernel_budget": {
+    "SiTU": 1.010823681640625,
+    "QK_FP32_norm": 0.26689982096354165,
+    "modulation_norm": 0.2530872965494792,
+    "quantization": 0.20654805908203133,
+    "GEMM_output_scale": 0.18761052652994795,
+    "RoPE_and_cast": 0.17881392008463542,
+    "residual": 0.1518346232096354,
+    "GEMM_output_scale + layout_copy": 0.13410528564453125,
+    "QK_FP32_norm + layout_copy": 0.09724217529296875,
+    "named_mult_fwd_bf16": 0.06630920817057293,
+    "modulation_norm + quantization": 0.01591820068359375,
+    "RoPE_and_cast + quantization": 0.011607303873697915,
+    "named_cast_i64_to_f32": 0.011196378580729166,
+    "named_mult_fwd_bf16 + unresolved_fused": 0.007704296875,
+    "unresolved_fused": 0.007126013183593752,
+    "layout_copy": 0.006517053222656249,
+    "named_cast_f32_to_bf16": 0.004842488606770833,
+    "named_reduce_max_fwd_bf16": 0.0038261840820312497,
+    "named_mult_bf16": 0.0038052408854166667,
+    "named_add_bf16": 0.0031826416015625003,
+    "named_constant_i64": 0.0031749918619791663,
+    "GEMM_output_scale + named_constant_i64": 0.0029832926432291668,
+    "named_rms_norm_fwd_bf16": 0.0027872273763020834,
+    "named_cast_i64_to_i32": 0.0019849324544270832,
+    "named_cast_bf16_to_hf8": 0.0017313273111979168,
+    "named_abs_fwd_bf16": 0.0015000813802083332,
+    "named_div_f32": 0.0008042521158854168,
+    "named_cast_bf16_to_f32": 0.0007614339192708334,
+    "named_neg_fwd_f32": 0.0007448649088541668,
+    "named_mult_f32": 0.00060970458984375,
+    "named_clamp_fwd_f32": 0.0006075764973958334,
+    "named_transpose_dma": 0.0005990559895833334,
+    "modulation_coefficients + named_constant_bf16": 0.0005552449544270834,
+    "named_constant_f32": 0.0004432535807291666,
+    "named_reciprocal_fwd_f32": 0.00043221028645833333,
+    "named_cast_i32_to_bf16": 0.0003786702473958333,
+    "quantization + unresolved_fused": 0.0002942138671875,
+    "QK_FP32_norm + named_neg_fwd_f32": 0.00027757161458333334,
+    "named_constant_bf16": 0.00027343343098958333,
+    "named_mult_fwd_f32": 0.0002486572265625,
+    "QK_FP32_norm + named_cast_bf16_to_f32": 0.000221923828125,
+    "GEMM_output_scale + layout_copy + named_cast_bf16_to_f32": 0.0002154296875,
+    "GEMM_output_scale + named_cast_bf16_to_f32": 0.00021149088541666668,
+    "named_max_fwd_bf16": 0.00016478271484375,
+    "layout_copy + named_neg_fwd_f32": 0.00016371256510416666,
+    "modulation_coefficients": 0.00014681396484375,
+    "named_sub_bf16": 0.00012904052734375002,
+    "named_div_bf16": 0.00010074462890624999,
+    "named_cos_fwd_f32": 9.599609375e-05,
+    "named_sin_fwd_f32": 9.3994140625e-05,
+    "QK_FP32_norm + layout_copy + named_neg_fwd_f32": 9.246419270833333e-05,
+    "named_exp_bf16": 8.515625e-05,
+    "named_neg_bf16": 7.050374348958332e-05,
+    "named_exp_fwd_f32": 6.533203125e-05,
+    "named_range_f32": 3.1420898437499995e-05,
+    "named_constant_f32 + unresolved_fused": 1.832275390625e-05
+  },
+  "sensitivity": {
+    "full_reference_seconds": 16.100924638,
+    "dit_reference_seconds": 10.18296,
+    "full_10pct_required_seconds": 1.6100924638,
+    "full_20pct_required_seconds": 3.2201849276,
+    "dit_20pct_required_seconds": 2.036592,
+    "fp8_linear_ideal_865tflops_seconds": 2.342979190751445,
+    "fp8_linear_ideal_saving_seconds": 0.1709921552772009,
+    "situ_half_time_saving_seconds": 0.505,
+    "quantization_zero_time_saving_seconds": 0.2,
+    "other_kernel_half_time_saving_seconds": 1.3260497619628906,
+    "softmax_and_other_half_time_saving_seconds": 1.9961687459309896,
+    "dit_gap_zero_time_saving_seconds": 0.8152769938151043,
+    "attention_budget_seconds": 4.276725756835937,
+    "qk_softmax_35pct_saving_seconds": 1.311066354370117,
+    "attention_half_time_saving_seconds": 2.1383628784179685,
+    "qk_score_logical_traffic_bytes": 3664339056000,
+    "interpretation": "Independent cost-model scenarios, not measured gains. Sub-budgets overlap with aggregate rows."
+  }
+}

@@ -53,7 +53,7 @@ def run(label, graph, recompute, diagnostic=False):
     print(json.dumps(record), flush=True)
 
 
-env = dict(os.environ, PT_HPU_LAZY_MODE='0', GC_KERNEL_PATH='/usr/lib/habanalabs/libtpc_kernels.so',
+env = dict(os.environ, PT_HPU_LAZY_MODE='0', GC_KERNEL_PATH=os.environ.get('GC_KERNEL_PATH', '/usr/lib/habanalabs/libtpc_kernels.so'),
            PYTHONPATH=str(checkout), MOSS_EVENTS=str(directory / 'events.jsonl'), MOSS_PIPELINE_DETAIL='1')
 command = [sys.executable, str(Path(__file__).with_name(os.environ.get('MOSS_SERVER_SCRIPT', 'moss_observed_server.py'))), '--disable-dynamic-vram',
            '--disable-pinned-memory', '--disable-async-offload', '--disable-xformers', '--use-pytorch-cross-attention',

@@ -1,5 +1,6 @@
 """Capture selected Moody block inputs separately from warm workflow timings."""
 import collections
+import gc
 import os
 from pathlib import Path
 import runpy
@@ -52,6 +53,8 @@ counts = collections.Counter()
 context = None
 original_forward = moss.MOSSImage._forward
 original_block = moss.Block.forward
+profile_steps = {int(value) for value in os.environ.get('MOSS_DEEP_PROFILE_STEPS', '12').split(',')}
+profile_request = int(os.environ.get('MOSS_DEEP_PROFILE_REQUEST', '6'))
 
 def forward(self, x, timestep, context_tensor, transformer_options={}, *args, **kwargs):
     global context
@@ -60,15 +63,26 @@ def forward(self, x, timestep, context_tensor, transformer_options={}, *args, **
     length = context_tensor.shape[1]
     index = counts[length]
     counts[length] += 1
-    capture = os.environ.get('MOSS_DEEP_CAPTURE') == '1' and index // 25 == 6 and index % 25 in (0, 12, 24)
-    context = (length, index % 25, {id(block): layer for layer, block in enumerate(self.layers)}) if capture else None
+    capture = (os.environ.get('MOSS_DEEP_CAPTURE') == '1' and index % 25 in (0, 12, 24)
+               and (index // 25 == 6 or os.environ.get('MOSS_DEEP_CAPTURE_ALL') == '1'))
+    context = (length, index % 25, {id(block): layer for layer, block in enumerate(self.layers)}, index // 25) if capture else None
     try:
-        if os.environ.get('MOSS_DEEP_PROFILE') == '1' and index == 6 * 25 + 12:
+        if os.environ.get('MOSS_DEEP_PROFILE') == '1' and index // 25 == profile_request and index % 25 in profile_steps:
+            control_gc = os.environ.get('MOSS_PROFILE_GC_CONTROL') == '1'
+            gc_enabled = gc.isenabled()
+            if control_gc:
+                gc.collect()
+                gc.disable()
             torch.hpu.synchronize()
-            with torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.HPU]) as profile:
-                output = original_forward(self, x, timestep, context_tensor, transformer_options, *args, **kwargs)
-                torch.hpu.synchronize()
-            profile.profiler.export_chrome_trace(str(directory / f'dit-{length}-step12.trace.json'))
+            try:
+                with torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.HPU]) as profile:
+                    output = original_forward(self, x, timestep, context_tensor, transformer_options, *args, **kwargs)
+                    torch.hpu.synchronize()
+                profile.profiler.export_chrome_trace(str(directory / f'dit-{length}-step{index % 25}.trace.json'))
+                del profile
+            finally:
+                if control_gc and gc_enabled:
+                    gc.enable()
             return output
         return original_forward(self, x, timestep, context_tensor, transformer_options, *args, **kwargs)
     finally:
@@ -79,9 +93,12 @@ def block_forward(self, x, mod, pe, transformer_options={}, *args, **kwargs):
         layer = context[2][id(self)]
         target = directory / 'captures'
         target.mkdir(exist_ok=True)
+        prefix = f'input-{context[0]}'
+        if os.environ.get('MOSS_DEEP_CAPTURE_ALL') == '1':
+            prefix += f'-request{context[3]}'
         torch.save(dict(x=x.cpu(), mod=tuple(value.cpu() for value in mod), pe=pe.cpu(),
                         blockwise=transformer_options.get('_moss_hpu_blockwise_rope', False), layer=layer),
-                   target / f'input-{context[0]}-{context[1]}-{layer}.pt')
+                   target / f'{prefix}-{context[1]}-{layer}.pt')
     return original_block(self, x, mod, pe, transformer_options, *args, **kwargs)
 
 moss.MOSSImage._forward = forward

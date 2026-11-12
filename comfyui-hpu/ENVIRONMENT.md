@@ -12,7 +12,7 @@
 
 ## 内核、驱动和设备检查
 
-当前内核为 `5.15.0-202-generic`；Habana DKMS 已覆盖 `5.15.0-186-generic` 和 `5.15.0-202-generic`。重启前检查目标内核的 DKMS，而不是只看 `lspci` 或 `lsmod`：
+2026-11-12证据调查时实际内核为`5.15.0-203-generic`，驱动`1.24.2-52a555d`，设备Operational。此前双内核验收覆盖`5.15.0-186-generic`和`5.15.0-202-generic`。重启前检查目标内核的DKMS：
 
 ```bash
 sudo bash /home/sonny/gaudi2/gaudi2-single-card-driver/scripts/install-gaudi2.sh \
@@ -115,9 +115,7 @@ shared_models:
 
 ## 性能复现资料
 
-当前FP8正式基准为固定298-token完整MTP15.925s、文本5.040s、DiT10.211s，各5 warm中位数。完整cold77.273s，正常服务缓存10.696s。allocator高水位31.285GiB，包含cold。详情见`MOSS_FP8_FUSION_OPTIMIZATION_2026-11-12.md`与`evidence/moss-fp8-fusion-2026-11-12.json`。BF16历史基准见`evidence/moss-bf16-next-2026-11-11.json`。
-
-最新大型数据位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-fp8-fusion`，最终产品数据在`verified`与`quality-verified`。固定MTP程序位于`performance-2026-11-11-completion/mtp-record-298/program.pt`。此前BF16和FP8全流程数据保留在各自日期目录。
+当前产品已恢复`0995638a`，同轮固定298-token完整MTP基线为16.036s（5 warm中位数）。上一轮GDN候选15.751s因质量变化被用户拒绝。当前质量保值试验位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-quality-preserving`。固定MTP程序位于`performance-2026-11-11-completion/mtp-record-298/program.pt`，此前数据保留在各轮目录。
 
 服务使用既有启动脚本和默认32个PyTorch CPU线程，改16线程的完整流程复验无收益。当前lazy/Graph单独试验成本高于eager，lazy＋`hpu_backend`出现`GraphStorage::get()`符号缺失，诊断见预算报告。
 
@@ -140,3 +138,9 @@ CLIPLoader可选择`qwen3.5_9b_fp8_from_int8.safetensors`，位置为共享模�
 ## FP8 block扩区
 
 `0995638a`将MOSS Q/K归一化改为native FP32 RMSNorm。FP8 block在HPU BF16推理、无hooks/attention override/reference/mask时扩大编译区域，attention与FFN的调制方法保留graph break边界。`--disable-comfy-compiler`继续控制编译路径。287项回归、18组真实输入、自然图片和卸载重载通过，九份源码/测试文件哈希一致。正常服务cold79.030s、缓存10.696s、768²/MTP off 14.295s。舍入变化和显存成本见融合报告。
+
+## GDN候选已撤回
+
+用户要求质量保值优先，GDN候选的FP8 logits漂移及茶壶双把手样本不予接受。产品代码和启动脚本已恢复`0995638a`。扩展源码及构建产物分别移至调查目录`performance-2026-11-12-optimization/rejected-product-source`和`rejected-product-build`，本仓库保留完整撤回补丁。
+
+回退后1033×248320 logits与基线逐元素一致。32MiB SRAM预算仅作为独立调查进程的实验配置，因完整收益未确认，普通启动采用原设置。8189正常入口cold79.338s、缓存10.693s、768²／MTP off14.213s，队列为空。自然图的历史复现差异和完整验收见`MOSS_QUALITY_PRESERVING_OPTIMIZATION_2026-11-12.md`。
