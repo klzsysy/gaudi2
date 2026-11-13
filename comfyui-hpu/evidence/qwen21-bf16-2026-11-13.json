@@ -1,0 +1,3245 @@
+{
+  "date": "2026-11-13",
+  "baseline_product": "9f2ff96e",
+  "product": "ed9552e5",
+  "tests": {
+    "passed": 159,
+    "skipped": 1
+  },
+  "workflow": "qwen21-user-bf16-api.json",
+  "settings": {
+    "width": 832,
+    "height": 1504,
+    "steps": 8,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "cfg": 1,
+    "thinking": false,
+    "seed": 1,
+    "pe_seed": 1
+  },
+  "measurements": {
+    "baseline": {
+      "runs": [
+        {
+          "file": "cached-0.json",
+          "prompt_id": "4eb7f1a9-312c-4268-9c75-1dfe507c0c29",
+          "status": "success",
+          "seconds": 20.857,
+          "nodes": {
+            "TextGenerate": 11.343609723,
+            "SwitchNode": 0.000182001,
+            "PreviewAny": 6.7972e-05,
+            "TextEncodeQwenImage21": 0.296539905,
+            "KSampler": 8.095831522,
+            "VAEDecode": 0.655441636,
+            "SaveImageAdvanced": 0.449798784
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.71325409412384,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "cached-1.json",
+          "prompt_id": "cd830c39-38cc-4806-90e2-8fa6d061688d",
+          "status": "success",
+          "seconds": 9.223,
+          "nodes": {
+            "KSampler": 8.111613016,
+            "VAEDecode": 0.656360259,
+            "SaveImageAdvanced": 0.447717031
+          },
+          "fallback": {},
+          "peak_gib": 76.71325409412384,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "cached-2.json",
+          "prompt_id": "91f97fe9-43a8-42a6-8cf2-6f9f63e4f0f1",
+          "status": "success",
+          "seconds": 9.216,
+          "nodes": {
+            "KSampler": 8.104298694,
+            "VAEDecode": 0.656544163,
+            "SaveImageAdvanced": 0.447291531
+          },
+          "fallback": {},
+          "peak_gib": 76.84527444839478,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "cached-3.json",
+          "prompt_id": "987fefcb-57d5-4205-9eb6-b56ae0305e99",
+          "status": "success",
+          "seconds": 9.221,
+          "nodes": {
+            "KSampler": 8.109991607,
+            "VAEDecode": 0.655980981,
+            "SaveImageAdvanced": 0.447172529
+          },
+          "fallback": {},
+          "peak_gib": 76.84527444839478,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "cached-4.json",
+          "prompt_id": "beb3ca4a-a73d-4a48-9f4b-d4c485d349e3",
+          "status": "success",
+          "seconds": 9.215,
+          "nodes": {
+            "KSampler": 8.104147459,
+            "VAEDecode": 0.656347276,
+            "SaveImageAdvanced": 0.447081439
+          },
+          "fallback": {},
+          "peak_gib": 76.84527444839478,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-0.json",
+          "prompt_id": "421df976-df38-4933-a137-2a79fc59d3cb",
+          "status": "success",
+          "seconds": 63.864,
+          "nodes": {
+            "VAELoader": 0.313687991,
+            "ResolutionSelector": 0.000170215,
+            "EmptyLatentImage": 0.000661047,
+            "CLIPLoader": 12.622894587,
+            "UNETLoader": 2.233437204,
+            "QwenImage21Cache": 0.002140548,
+            "StringMultiline": 0.000203725,
+            "TextGenerate": 28.449345443,
+            "SwitchNode": 0.000110795,
+            "PreviewAny": 6.2744e-05,
+            "TextEncodeQwenImage21": 0.43107813,
+            "KSampler": 12.597982476,
+            "VAEDecode": 0.843530605,
+            "SaveImageAdvanced": 0.450351248
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 75.44142091274261,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "67ac25da-4ae7-40ce-929f-268e3abdddaf",
+          "status": "success",
+          "seconds": 21.089,
+          "nodes": {
+            "TextGenerate": 11.484733933,
+            "SwitchNode": 0.000110384,
+            "PreviewAny": 6.7721e-05,
+            "TextEncodeQwenImage21": 0.387315718,
+            "KSampler": 8.097521156,
+            "VAEDecode": 0.65531813,
+            "SaveImageAdvanced": 0.449878991
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.60304749011993,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-2.json",
+          "prompt_id": "52b3c74e-e6a3-47e3-9306-e8e274cd2ff7",
+          "status": "success",
+          "seconds": 21.057,
+          "nodes": {
+            "TextGenerate": 11.494053355,
+            "SwitchNode": 0.000117596,
+            "PreviewAny": 6.1061e-05,
+            "TextEncodeQwenImage21": 0.355966453,
+            "KSampler": 8.088942028,
+            "VAEDecode": 0.655709251,
+            "SaveImageAdvanced": 0.448258238
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.60304749011993,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-3.json",
+          "prompt_id": "344fba16-c10e-4d43-a920-357d9b37cbb7",
+          "status": "success",
+          "seconds": 20.833,
+          "nodes": {
+            "TextGenerate": 11.310328145,
+            "SwitchNode": 0.000132989,
+            "PreviewAny": 0.000111977,
+            "TextEncodeQwenImage21": 0.315362939,
+            "KSampler": 8.088913999,
+            "VAEDecode": 0.656224407,
+            "SaveImageAdvanced": 0.448038647
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.6267306804657,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-4.json",
+          "prompt_id": "9baa1c9c-12df-446b-9664-f4696b564ad6",
+          "status": "success",
+          "seconds": 21.028,
+          "nodes": {
+            "TextGenerate": 11.416125367,
+            "SwitchNode": 0.000185708,
+            "PreviewAny": 6.3144e-05,
+            "TextEncodeQwenImage21": 0.384002593,
+            "KSampler": 8.105655596,
+            "VAEDecode": 0.657275931,
+            "SaveImageAdvanced": 0.449700326
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.6267306804657,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-5.json",
+          "prompt_id": "5e3cb72b-9dff-48f9-9aa5-378266cfe737",
+          "status": "success",
+          "seconds": 20.819,
+          "nodes": {
+            "TextGenerate": 11.321938286,
+            "SwitchNode": 0.000196013,
+            "PreviewAny": 6.1642e-05,
+            "TextEncodeQwenImage21": 0.294363593,
+            "KSampler": 8.08188786,
+            "VAEDecode": 0.657499188,
+            "SaveImageAdvanced": 0.447649629
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.64452564716339,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "stages-0.json",
+          "prompt_id": "07188a06-4018-4f65-85eb-cf533518d059",
+          "status": "success",
+          "seconds": 25.11,
+          "nodes": {
+            "TextGenerate": 13.146717509,
+            "SwitchNode": 0.000212958,
+            "PreviewAny": 6.9634e-05,
+            "TextEncodeQwenImage21": 0.394314384,
+            "KSampler": 10.451377566,
+            "VAEDecode": 0.654937264,
+            "SaveImageAdvanced": 0.446992503
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.84527444839478,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "window_text-0.json",
+          "prompt_id": "8a5ce5ba-ea1a-4752-9419-880ddfa41a5c",
+          "status": "success",
+          "seconds": 20.812,
+          "nodes": {
+            "TextGenerate": 11.262353605,
+            "SwitchNode": 0.000183834,
+            "PreviewAny": 6.2604e-05,
+            "TextEncodeQwenImage21": 0.331109534,
+            "KSampler": 8.098141356,
+            "VAEDecode": 0.656178698,
+            "SaveImageAdvanced": 0.448938064
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.84527444839478,
+          "end_gib": 48.75116240978241
+        }
+      ],
+      "warm_full": {
+        "count": 5,
+        "median": 21.028,
+        "range": [
+          20.819,
+          21.089
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.355966453,
+          "KSampler": 8.088942028,
+          "VAEDecode": 0.656224407,
+          "SwitchNode": 0.000132989,
+          "PreviewAny": 6.3144e-05,
+          "TextGenerate": 11.416125367,
+          "SaveImageAdvanced": 0.448258238
+        }
+      },
+      "cached_text": {
+        "count": 4,
+        "median": 9.218499999999999,
+        "range": [
+          9.215,
+          9.223
+        ],
+        "nodes": {
+          "VAEDecode": 0.6563537675,
+          "SaveImageAdvanced": 0.44723203,
+          "KSampler": 8.1071451505
+        }
+      },
+      "diagnostics": [
+        {
+          "prompt_id": "07188a06-4018-4f65-85eb-cf533518d059",
+          "mode": "stages",
+          "regions": {
+            "text_prefill": [
+              1,
+              0.4466418429801706
+            ],
+            "text_lm_head": [
+              427,
+              0.6464340102684218
+            ],
+            "text_sampling": [
+              427,
+              1.7436676534125581
+            ],
+            "text_decode": [
+              426,
+              9.738200599764241
+            ],
+            "dit_sequence": [
+              8,
+              0.08593664193176664
+            ],
+            "dit_modulation": [
+              576,
+              0.7516091472061817
+            ],
+            "dit_sdpa": [
+              288,
+              3.6053405090642627
+            ],
+            "dit_attention_with_projections": [
+              288,
+              7.820353782066377
+            ],
+            "dit_residual": [
+              576,
+              0.49378727047587745
+            ],
+            "dit_ffn": [
+              288,
+              1.1304361558577511
+            ],
+            "dit_forward": [
+              8,
+              10.405250374955358
+            ]
+          },
+          "text_samples": 427,
+          "dit_steps": 8,
+          "window_seconds": null
+        },
+        {
+          "prompt_id": "8a5ce5ba-ea1a-4752-9419-880ddfa41a5c",
+          "mode": "window_text",
+          "regions": {},
+          "text_samples": 427,
+          "dit_steps": 8,
+          "window_seconds": 0.4010758469812572
+        }
+      ]
+    },
+    "baseline-repeat": {
+      "runs": [
+        {
+          "file": "cached-0.json",
+          "prompt_id": "04a77e19-2f97-4886-aa07-22435168fcbc",
+          "status": "success",
+          "seconds": 21.39,
+          "nodes": {
+            "TextGenerate": 11.820495351,
+            "SwitchNode": 0.000182861,
+            "PreviewAny": 6.2723e-05,
+            "TextEncodeQwenImage21": 0.350050779,
+            "KSampler": 8.103433404,
+            "VAEDecode": 0.656901293,
+            "SaveImageAdvanced": 0.444726748
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.74598622322083,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "cached-1.json",
+          "prompt_id": "0903265f-b11e-4bb0-baab-dabe11067aff",
+          "status": "success",
+          "seconds": 9.218,
+          "nodes": {
+            "KSampler": 8.104526442,
+            "VAEDecode": 0.65551364,
+            "SaveImageAdvanced": 0.44980307
+          },
+          "fallback": {},
+          "peak_gib": 76.74598622322083,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "cached-2.json",
+          "prompt_id": "81bf011e-af33-4eb1-8e36-deb8e8f49ef8",
+          "status": "success",
+          "seconds": 9.226,
+          "nodes": {
+            "KSampler": 8.112015465,
+            "VAEDecode": 0.656548104,
+            "SaveImageAdvanced": 0.449187617
+          },
+          "fallback": {},
+          "peak_gib": 76.74598622322083,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "cached-3.json",
+          "prompt_id": "0ed0dd1b-e93c-404c-a535-cda5d589ba62",
+          "status": "success",
+          "seconds": 9.219,
+          "nodes": {
+            "KSampler": 8.108378091,
+            "VAEDecode": 0.656934075,
+            "SaveImageAdvanced": 0.446170527
+          },
+          "fallback": {},
+          "peak_gib": 76.74598622322083,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-0.json",
+          "prompt_id": "271193a0-d456-4bf9-990f-0e71cae2ad24",
+          "status": "success",
+          "seconds": 65.144,
+          "nodes": {
+            "VAELoader": 0.477896089,
+            "ResolutionSelector": 0.000165635,
+            "EmptyLatentImage": 0.000664462,
+            "CLIPLoader": 6.385512091,
+            "UNETLoader": 1.072244192,
+            "QwenImage21Cache": 0.001990723,
+            "StringMultiline": 0.000122411,
+            "TextGenerate": 27.541197968,
+            "SwitchNode": 0.000119256,
+            "PreviewAny": 6.5918e-05,
+            "TextEncodeQwenImage21": 0.405504457,
+            "KSampler": 12.402345671,
+            "VAEDecode": 0.822992213,
+            "SaveImageAdvanced": 0.445940379
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 75.37777054309845,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "f9e6bbfc-fc88-40a0-a46b-53bd80381c02",
+          "status": "success",
+          "seconds": 20.686,
+          "nodes": {
+            "TextGenerate": 11.083974776,
+            "SwitchNode": 0.000116021,
+            "PreviewAny": 7.1846e-05,
+            "TextEncodeQwenImage21": 0.388501515,
+            "KSampler": 8.097577395,
+            "VAEDecode": 0.656275441,
+            "SaveImageAdvanced": 0.445404371
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.60728311538696,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-2.json",
+          "prompt_id": "85222ef5-70ae-450a-8e98-f72e23d8db69",
+          "status": "success",
+          "seconds": 20.872,
+          "nodes": {
+            "TextGenerate": 11.304990161,
+            "SwitchNode": 0.000111395,
+            "PreviewAny": 6.11e-05,
+            "TextEncodeQwenImage21": 0.35917031,
+            "KSampler": 8.090287095,
+            "VAEDecode": 0.656991201,
+            "SaveImageAdvanced": 0.445273489
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.70024085044861,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-3.json",
+          "prompt_id": "c4dd9d98-5c96-49b1-9ae1-1d3382b0e2f9",
+          "status": "success",
+          "seconds": 20.79,
+          "nodes": {
+            "TextGenerate": 11.208576449,
+            "SwitchNode": 0.000111555,
+            "PreviewAny": 6.3023e-05,
+            "TextEncodeQwenImage21": 0.367771784,
+            "KSampler": 8.096287169,
+            "VAEDecode": 0.657002538,
+            "SaveImageAdvanced": 0.44625868
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.70024085044861,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "official-0.json",
+          "prompt_id": "8c1d0ff6-7242-4ae6-a904-1b7cbe0ca705",
+          "status": "success",
+          "seconds": 21.183,
+          "nodes": {
+            "TextGenerate": 11.629174952,
+            "SwitchNode": 0.000111596,
+            "PreviewAny": 6.1962e-05,
+            "ManualSigmas": 0.000283953,
+            "KSamplerSelect": 0.000119107,
+            "TextEncodeQwenImage21": 0.323505486,
+            "CFGGuider": 0.000204795,
+            "RandomNoise": 0.000127229,
+            "SamplerCustomAdvanced": 8.091006222,
+            "VAEDecode": 0.656420472,
+            "SaveImageAdvanced": 0.463512312
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 79.20107996463776,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "seed2-0.json",
+          "prompt_id": "34459230-3616-4d8c-9771-e1e3ebc989d1",
+          "status": "success",
+          "seconds": 26.226,
+          "nodes": {
+            "TextGenerate": 14.461830022,
+            "SwitchNode": 0.000109913,
+            "PreviewAny": 6.1792e-05,
+            "TextEncodeQwenImage21": 0.365665246,
+            "KSampler": 10.261507544,
+            "VAEDecode": 0.65678016,
+            "SaveImageAdvanced": 0.465216333
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 498,
+          "token_sha256": "4d0ddbdaefa609c6b53bf4985eb1c47a9730055c4f60dbb4f15b529f36876637",
+          "fallback": {},
+          "peak_gib": 76.88651192188263,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "size1024-0.json",
+          "prompt_id": "9117f1aa-af4b-41e4-88cb-dc61163c99d3",
+          "status": "success",
+          "seconds": 20.132,
+          "nodes": {
+            "TextGenerate": 12.294260166,
+            "SwitchNode": 0.000108471,
+            "PreviewAny": 6.5828e-05,
+            "ResolutionSelector": 0.000126207,
+            "EmptyLatentImage": 0.000177644,
+            "TextEncodeQwenImage21": 0.370878728,
+            "KSampler": 6.545421688,
+            "VAEDecode": 0.538874466,
+            "SaveImageAdvanced": 0.36517467
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.88651192188263,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "size512-0.json",
+          "prompt_id": "973111eb-e8e4-4bd6-b850-9175cff8a8f9",
+          "status": "success",
+          "seconds": 14.613,
+          "nodes": {
+            "TextGenerate": 12.270925732,
+            "SwitchNode": 0.000110073,
+            "PreviewAny": 6.3755e-05,
+            "ResolutionSelector": 0.000122392,
+            "EmptyLatentImage": 8.3935e-05,
+            "TextEncodeQwenImage21": 0.34495016,
+            "KSampler": 1.734968029,
+            "VAEDecode": 0.14904263,
+            "SaveImageAdvanced": 0.096363376
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.88651192188263,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "thinking-0.json",
+          "prompt_id": "5c5052b7-ec90-4281-b5cf-75e4581a2fa7",
+          "status": "success",
+          "seconds": 60.468,
+          "nodes": {
+            "TextGenerate": 49.999065057,
+            "SwitchNode": 0.000124796,
+            "PreviewAny": 6.3425e-05,
+            "ResolutionSelector": 0.000123404,
+            "EmptyLatentImage": 0.000180669,
+            "TextEncodeQwenImage21": 0.511337391,
+            "KSampler": 8.846429483,
+            "VAEDecode": 0.655971337,
+            "SaveImageAdvanced": 0.43847594
+          },
+          "input_tokens": {
+            "qwen35_9b": 2802
+          },
+          "output_tokens": 1877,
+          "token_sha256": "e2a27e7179ccdc5d6cd369a8039915a9045d537f455b46f3982b198e65db369e",
+          "fallback": {},
+          "peak_gib": 79.20107996463776,
+          "end_gib": 48.75116240978241
+        }
+      ],
+      "warm_full": {
+        "count": 3,
+        "median": 20.79,
+        "range": [
+          20.686,
+          20.872
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.367771784,
+          "KSampler": 8.096287169,
+          "VAEDecode": 0.656991201,
+          "SwitchNode": 0.000111555,
+          "PreviewAny": 6.3023e-05,
+          "TextGenerate": 11.208576449,
+          "SaveImageAdvanced": 0.445404371
+        }
+      },
+      "cached_text": {
+        "count": 3,
+        "median": 9.219,
+        "range": [
+          9.218,
+          9.226
+        ],
+        "nodes": {
+          "VAEDecode": 0.656548104,
+          "SaveImageAdvanced": 0.449187617,
+          "KSampler": 8.108378091
+        }
+      }
+    },
+    "block-capture": {
+      "runs": [
+        {
+          "file": "capture-0.json",
+          "prompt_id": "40f7b4f8-e5d1-4818-b1ab-a22027f5d3d8",
+          "status": "success",
+          "seconds": 21.3,
+          "nodes": {
+            "TextGenerate": 11.10142697,
+            "SwitchNode": 0.000119946,
+            "PreviewAny": 0.000109851,
+            "TextEncodeQwenImage21": 0.369127708,
+            "KSampler": 8.71750511,
+            "VAEDecode": 0.656189387,
+            "SaveImageAdvanced": 0.442374155
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.7063193321228,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-0.json",
+          "prompt_id": "9778f80d-e8f9-4c6b-b621-226d03a37c81",
+          "status": "success",
+          "seconds": 55.457,
+          "nodes": {
+            "VAELoader": 0.540577714,
+            "ResolutionSelector": 0.000223269,
+            "EmptyLatentImage": 0.000729509,
+            "CLIPLoader": 6.435939636,
+            "UNETLoader": 1.125585744,
+            "QwenImage21Cache": 0.002042446,
+            "StringMultiline": 0.000119887,
+            "TextGenerate": 27.539214295,
+            "SwitchNode": 0.000110051,
+            "PreviewAny": 6.415e-05,
+            "TextEncodeQwenImage21": 0.404335975,
+            "KSampler": 12.445773047,
+            "VAEDecode": 0.825659685,
+            "SaveImageAdvanced": 0.445288149
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 75.47266089916229,
+          "end_gib": 48.75116240978241
+        }
+      ],
+      "diagnostics": [
+        {
+          "prompt_id": "40f7b4f8-e5d1-4818-b1ab-a22027f5d3d8",
+          "mode": "capture",
+          "regions": {},
+          "text_samples": 427,
+          "dit_steps": 8,
+          "window_seconds": null
+        }
+      ]
+    },
+    "final-product": {
+      "runs": [
+        {
+          "file": "cached-0.json",
+          "prompt_id": "28e6c2c8-eb0a-43f5-8e0a-8e48bf9d9212",
+          "status": "success",
+          "seconds": 16.062,
+          "nodes": {
+            "TextGenerate": 10.576173609,
+            "SwitchNode": 0.000115139,
+            "PreviewAny": 6.8741e-05,
+            "TextEncodeQwenImage21": 0.373491135,
+            "KSampler": 3.996709113,
+            "VAEDecode": 0.655300393,
+            "SaveImageAdvanced": 0.44643887
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.33518576622009,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-1.json",
+          "prompt_id": "18ac2ac3-86ae-4b38-a91d-5e8f4e564618",
+          "status": "success",
+          "seconds": 5.119,
+          "nodes": {
+            "KSampler": 4.008595721,
+            "VAEDecode": 0.655365097,
+            "SaveImageAdvanced": 0.447164062
+          },
+          "fallback": {},
+          "peak_gib": 60.33518576622009,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-2.json",
+          "prompt_id": "4f4379cf-0c0d-439f-be69-65ed08ab5c9d",
+          "status": "success",
+          "seconds": 5.119,
+          "nodes": {
+            "KSampler": 4.009503517,
+            "VAEDecode": 0.654996516,
+            "SaveImageAdvanced": 0.445956574
+          },
+          "fallback": {},
+          "peak_gib": 60.33518576622009,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-3.json",
+          "prompt_id": "8279bbb5-1045-43f5-baa7-447f4e104b09",
+          "status": "success",
+          "seconds": 5.134,
+          "nodes": {
+            "KSampler": 4.022028422,
+            "VAEDecode": 0.656954543,
+            "SaveImageAdvanced": 0.446459182
+          },
+          "fallback": {},
+          "peak_gib": 60.33518576622009,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-4.json",
+          "prompt_id": "ef9e709d-4b9d-4770-9d0d-b9bbadf702d1",
+          "status": "success",
+          "seconds": 5.13,
+          "nodes": {
+            "KSampler": 4.017053387,
+            "VAEDecode": 0.655452109,
+            "SaveImageAdvanced": 0.448385951
+          },
+          "fallback": {},
+          "peak_gib": 60.33518576622009,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-5.json",
+          "prompt_id": "c7968a8d-b216-4acd-8d16-5a70158d57a1",
+          "status": "success",
+          "seconds": 5.131,
+          "nodes": {
+            "KSampler": 4.01865141,
+            "VAEDecode": 0.65527614,
+            "SaveImageAdvanced": 0.448559568
+          },
+          "fallback": {},
+          "peak_gib": 60.33518576622009,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-0.json",
+          "prompt_id": "f4ba97d6-3ad3-4835-9842-580856ef1232",
+          "status": "success",
+          "seconds": 50.01,
+          "nodes": {
+            "VAELoader": 0.318705652,
+            "ResolutionSelector": 0.000180734,
+            "EmptyLatentImage": 0.000762472,
+            "CLIPLoader": 6.177390619,
+            "UNETLoader": 1.031371295,
+            "QwenImage21Cache": 0.002146842,
+            "StringMultiline": 0.000133745,
+            "TextGenerate": 27.020771315,
+            "SwitchNode": 0.000110772,
+            "PreviewAny": 0.000138262,
+            "TextEncodeQwenImage21": 0.400661702,
+            "KSampler": 8.498348427,
+            "VAEDecode": 0.820912525,
+            "SaveImageAdvanced": 0.458007734
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.747679591178894,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "9db5876a-1146-4287-acfb-2c750810ce3d",
+          "status": "success",
+          "seconds": 16.087,
+          "nodes": {
+            "TextGenerate": 10.590362711,
+            "SwitchNode": 0.000112304,
+            "PreviewAny": 6.9511e-05,
+            "TextEncodeQwenImage21": 0.373858853,
+            "KSampler": 4.005081522,
+            "VAEDecode": 0.654946065,
+            "SaveImageAdvanced": 0.448481545
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.26699364185333,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-2.json",
+          "prompt_id": "9b34be64-85b4-4124-9a95-2adb32667c28",
+          "status": "success",
+          "seconds": 15.905,
+          "nodes": {
+            "TextGenerate": 10.486110797,
+            "SwitchNode": 0.000182928,
+            "PreviewAny": 6.5276e-05,
+            "TextEncodeQwenImage21": 0.296517422,
+            "KSampler": 4.006088394,
+            "VAEDecode": 0.654615003,
+            "SaveImageAdvanced": 0.44670143
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.26699364185333,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-3.json",
+          "prompt_id": "433a67f8-61db-462b-85da-146f2df8ab54",
+          "status": "success",
+          "seconds": 16.147,
+          "nodes": {
+            "TextGenerate": 10.696071478,
+            "SwitchNode": 0.00011555,
+            "PreviewAny": 6.3604e-05,
+            "TextEncodeQwenImage21": 0.328369195,
+            "KSampler": 4.006086099,
+            "VAEDecode": 0.655371343,
+            "SaveImageAdvanced": 0.446486682
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.26699364185333,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-4.json",
+          "prompt_id": "e0f84e7b-61f5-416f-b4f9-0a120781815d",
+          "status": "success",
+          "seconds": 16.079,
+          "nodes": {
+            "TextGenerate": 10.598260498,
+            "SwitchNode": 0.000233202,
+            "PreviewAny": 6.2632e-05,
+            "TextEncodeQwenImage21": 0.353820562,
+            "KSampler": 4.008013803,
+            "VAEDecode": 0.655860205,
+            "SaveImageAdvanced": 0.448844249
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.33518576622009,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-5.json",
+          "prompt_id": "08cb0732-a978-48e1-9762-c93ef433ba65",
+          "status": "success",
+          "seconds": 16.067,
+          "nodes": {
+            "TextGenerate": 10.592967658,
+            "SwitchNode": 0.000118434,
+            "PreviewAny": 6.7429e-05,
+            "TextEncodeQwenImage21": 0.352576497,
+            "KSampler": 4.00473989,
+            "VAEDecode": 0.655119145,
+            "SaveImageAdvanced": 0.447070232
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.33518576622009,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "official-0.json",
+          "prompt_id": "a2281222-5e49-4bf3-b89b-6530848af75c",
+          "status": "success",
+          "seconds": 16.445,
+          "nodes": {
+            "TextGenerate": 10.88342337,
+            "SwitchNode": 0.000112005,
+            "PreviewAny": 6.3984e-05,
+            "ManualSigmas": 0.00029144,
+            "KSamplerSelect": 0.000121629,
+            "TextEncodeQwenImage21": 0.352768719,
+            "CFGGuider": 0.000195719,
+            "RandomNoise": 0.000121779,
+            "SamplerCustomAdvanced": 4.075181107,
+            "VAEDecode": 0.655656287,
+            "SaveImageAdvanced": 0.45889914
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 61.155516386032104,
+          "end_gib": 51.199504256248474
+        },
+        {
+          "file": "seed2-0.json",
+          "prompt_id": "b168d6e0-936c-4cf1-aa0b-cf814dd789f9",
+          "status": "success",
+          "seconds": 18.616,
+          "nodes": {
+            "TextGenerate": 12.558594589,
+            "SwitchNode": 0.000133476,
+            "PreviewAny": 6.3032e-05,
+            "TextEncodeQwenImage21": 0.369849055,
+            "KSampler": 4.546286865,
+            "VAEDecode": 0.655161858,
+            "SaveImageAdvanced": 0.471060696
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 498,
+          "token_sha256": "4d0ddbdaefa609c6b53bf4985eb1c47a9730055c4f60dbb4f15b529f36876637",
+          "fallback": {},
+          "peak_gib": 60.52044975757599,
+          "end_gib": 50.890541315078735
+        },
+        {
+          "file": "size1024-0.json",
+          "prompt_id": "3b41f271-efcf-476a-8311-49a8fc6a3515",
+          "status": "success",
+          "seconds": 15.144,
+          "nodes": {
+            "TextGenerate": 10.67361772,
+            "SwitchNode": 0.000110934,
+            "PreviewAny": 6.107e-05,
+            "ResolutionSelector": 0.000123602,
+            "EmptyLatentImage": 0.000174968,
+            "TextEncodeQwenImage21": 0.357863775,
+            "KSampler": 3.18574653,
+            "VAEDecode": 0.547393791,
+            "SaveImageAdvanced": 0.36354717
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.52044975757599,
+          "end_gib": 50.890541315078735
+        },
+        {
+          "file": "size512-0.json",
+          "prompt_id": "4df2348a-00be-4693-aedb-17e9277f6248",
+          "status": "success",
+          "seconds": 12.798,
+          "nodes": {
+            "TextGenerate": 10.585817825,
+            "SwitchNode": 0.000111564,
+            "PreviewAny": 6.3063e-05,
+            "ResolutionSelector": 0.00013578,
+            "EmptyLatentImage": 8.5596e-05,
+            "TextEncodeQwenImage21": 0.369547453,
+            "KSampler": 1.584258406,
+            "VAEDecode": 0.146473871,
+            "SaveImageAdvanced": 0.095797258
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.52044975757599,
+          "end_gib": 50.890541315078735
+        },
+        {
+          "file": "thinking-0.json",
+          "prompt_id": "0e3f10b1-29ae-4345-ad24-be539faa528b",
+          "status": "success",
+          "seconds": 52.518,
+          "nodes": {
+            "TextGenerate": 46.503037002,
+            "SwitchNode": 0.000156921,
+            "PreviewAny": 7.1735e-05,
+            "ResolutionSelector": 0.000127848,
+            "EmptyLatentImage": 0.000204051,
+            "TextEncodeQwenImage21": 0.513599056,
+            "KSampler": 4.389390322,
+            "VAEDecode": 0.656193203,
+            "SaveImageAdvanced": 0.43900004
+          },
+          "input_tokens": {
+            "qwen35_9b": 2802
+          },
+          "output_tokens": 1877,
+          "token_sha256": "e2a27e7179ccdc5d6cd369a8039915a9045d537f455b46f3982b198e65db369e",
+          "fallback": {},
+          "peak_gib": 61.155516386032104,
+          "end_gib": 51.199504256248474
+        }
+      ],
+      "warm_full": {
+        "count": 5,
+        "median": 16.079,
+        "range": [
+          15.905,
+          16.147
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.352576497,
+          "KSampler": 4.006086099,
+          "VAEDecode": 0.655119145,
+          "SwitchNode": 0.000118434,
+          "PreviewAny": 6.5276e-05,
+          "TextGenerate": 10.592967658,
+          "SaveImageAdvanced": 0.447070232
+        }
+      },
+      "cached_text": {
+        "count": 5,
+        "median": 5.13,
+        "range": [
+          5.119,
+          5.134
+        ],
+        "nodes": {
+          "VAEDecode": 0.655365097,
+          "SaveImageAdvanced": 0.447164062,
+          "KSampler": 4.017053387
+        }
+      }
+    },
+    "mask-eager": {
+      "runs": [
+        {
+          "file": "full-0.json",
+          "prompt_id": "c1ef9d3d-17c4-4cd1-955e-39d71ce5cf3d",
+          "status": "success",
+          "seconds": 49.673,
+          "nodes": {
+            "VAELoader": 0.309708702,
+            "ResolutionSelector": 0.000168304,
+            "EmptyLatentImage": 0.000626956,
+            "CLIPLoader": 6.195067948,
+            "UNETLoader": 1.029926467,
+            "QwenImage21Cache": 0.00200046,
+            "StringMultiline": 0.000121012,
+            "TextGenerate": 26.708393541,
+            "SwitchNode": 0.000182836,
+            "PreviewAny": 0.0001058,
+            "TextEncodeQwenImage21": 0.37674549,
+            "KSampler": 8.495648352,
+            "VAEDecode": 0.839496989,
+            "SaveImageAdvanced": 0.448430038
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.620418190956116,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "86a10454-cddb-4514-be8a-0e15b9bd6e6e",
+          "status": "success",
+          "seconds": 16.022,
+          "nodes": {
+            "TextGenerate": 10.513067767,
+            "SwitchNode": 0.00011281,
+            "PreviewAny": 6.7041e-05,
+            "TextEncodeQwenImage21": 0.389440249,
+            "KSampler": 4.004334599,
+            "VAEDecode": 0.655631238,
+            "SaveImageAdvanced": 0.444430306
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.303589940071106,
+          "end_gib": 50.84407937526703
+        }
+      ],
+      "warm_full": {
+        "count": 1,
+        "median": 16.022,
+        "range": [
+          16.022,
+          16.022
+        ],
+        "nodes": {
+          "VAEDecode": 0.655631238,
+          "SwitchNode": 0.00011281,
+          "PreviewAny": 6.7041e-05,
+          "TextGenerate": 10.513067767,
+          "TextEncodeQwenImage21": 0.389440249,
+          "SaveImageAdvanced": 0.444430306,
+          "KSampler": 4.004334599
+        }
+      }
+    },
+    "native-rope": {
+      "runs": [
+        {
+          "file": "cached-0.json",
+          "prompt_id": "fc453f80-a160-42e6-8efe-9088c139b5de",
+          "status": "success",
+          "seconds": 16.598,
+          "nodes": {
+            "TextGenerate": 11.669599689,
+            "SwitchNode": 0.000231537,
+            "PreviewAny": 9.8282e-05,
+            "TextEncodeQwenImage21": 0.333511687,
+            "KSampler": 3.476168909,
+            "VAEDecode": 0.655104214,
+            "SaveImageAdvanced": 0.449735827
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.819475293159485,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-1.json",
+          "prompt_id": "d8f2a6de-3b41-4b98-b27a-2a7e61d50f9e",
+          "status": "success",
+          "seconds": 4.602,
+          "nodes": {
+            "KSampler": 3.491398725,
+            "VAEDecode": 0.655100592,
+            "SaveImageAdvanced": 0.44796092
+          },
+          "fallback": {},
+          "peak_gib": 59.819475293159485,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-2.json",
+          "prompt_id": "51c9008e-770c-4683-ba1e-39cb8eab152b",
+          "status": "success",
+          "seconds": 4.598,
+          "nodes": {
+            "KSampler": 3.488190537,
+            "VAEDecode": 0.65472107,
+            "SaveImageAdvanced": 0.447955878
+          },
+          "fallback": {},
+          "peak_gib": 59.819475293159485,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-0.json",
+          "prompt_id": "9a8d13cd-1e30-4826-bb60-b7703bb3697b",
+          "status": "success",
+          "seconds": 51.062,
+          "nodes": {
+            "VAELoader": 0.309987559,
+            "ResolutionSelector": 0.000173108,
+            "EmptyLatentImage": 0.000600372,
+            "CLIPLoader": 6.202096367,
+            "UNETLoader": 1.030055188,
+            "QwenImage21Cache": 0.001974804,
+            "StringMultiline": 0.000120928,
+            "TextGenerate": 27.467249606,
+            "SwitchNode": 0.000118894,
+            "PreviewAny": 6.2447e-05,
+            "TextEncodeQwenImage21": 0.353811767,
+            "KSampler": 9.143272591,
+            "VAEDecode": 0.82168328,
+            "SaveImageAdvanced": 0.450373172
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.168943643569946,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "001ca70f-962d-48e5-80f4-67fa65444374",
+          "status": "success",
+          "seconds": 16.449,
+          "nodes": {
+            "TextGenerate": 11.447147315,
+            "SwitchNode": 0.00011026,
+            "PreviewAny": 7.0369e-05,
+            "TextEncodeQwenImage21": 0.399704571,
+            "KSampler": 3.485102725,
+            "VAEDecode": 0.655494841,
+            "SaveImageAdvanced": 0.447781296
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.819475293159485,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-2.json",
+          "prompt_id": "6d764c5c-cbcc-4c0c-b27f-72e9de0852c0",
+          "status": "success",
+          "seconds": 15.917,
+          "nodes": {
+            "TextGenerate": 11.030025458,
+            "SwitchNode": 0.000182152,
+            "PreviewAny": 6.0143e-05,
+            "TextEncodeQwenImage21": 0.294706294,
+            "KSampler": 3.47484523,
+            "VAEDecode": 0.6548289,
+            "SaveImageAdvanced": 0.447444718
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.819475293159485,
+          "end_gib": 50.84407937526703
+        }
+      ],
+      "warm_full": {
+        "count": 2,
+        "median": 16.183,
+        "range": [
+          15.917,
+          16.449
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.3472054325,
+          "KSampler": 3.4799739775000003,
+          "VAEDecode": 0.6551618705,
+          "SwitchNode": 0.000146206,
+          "PreviewAny": 6.5256e-05,
+          "TextGenerate": 11.2385863865,
+          "SaveImageAdvanced": 0.447613007
+        }
+      },
+      "cached_text": {
+        "count": 2,
+        "median": 4.6,
+        "range": [
+          4.598,
+          4.602
+        ],
+        "nodes": {
+          "VAEDecode": 0.654910831,
+          "SaveImageAdvanced": 0.447958399,
+          "KSampler": 3.4897946309999996
+        }
+      }
+    },
+    "pairwise": {
+      "runs": [
+        {
+          "file": "cached-0.json",
+          "prompt_id": "0a44af0d-3db9-44da-ac97-cdbec4c8adcd",
+          "status": "success",
+          "seconds": 17.72,
+          "nodes": {
+            "TextGenerate": 10.595551723,
+            "SwitchNode": 0.000182305,
+            "PreviewAny": 6.3365e-05,
+            "TextEncodeQwenImage21": 0.361573106,
+            "KSampler": 5.647853585,
+            "VAEDecode": 0.656152268,
+            "SaveImageAdvanced": 0.44506419
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 62.480350852012634,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-1.json",
+          "prompt_id": "ce60ec33-86bb-49ff-b5d1-10981adda947",
+          "status": "success",
+          "seconds": 6.767,
+          "nodes": {
+            "KSampler": 5.658257335,
+            "VAEDecode": 0.656109377,
+            "SaveImageAdvanced": 0.445319651
+          },
+          "fallback": {},
+          "peak_gib": 62.480350852012634,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-2.json",
+          "prompt_id": "ae4ba3fd-d3bc-4a8b-ac20-9d1b9d1b102c",
+          "status": "success",
+          "seconds": 6.766,
+          "nodes": {
+            "KSampler": 5.657812283,
+            "VAEDecode": 0.656020407,
+            "SaveImageAdvanced": 0.445188711
+          },
+          "fallback": {},
+          "peak_gib": 62.480350852012634,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-0.json",
+          "prompt_id": "8c5d71b5-a9d5-4624-bccd-a70d9176edda",
+          "status": "success",
+          "seconds": 51.965,
+          "nodes": {
+            "VAELoader": 0.325070767,
+            "ResolutionSelector": 0.000175665,
+            "EmptyLatentImage": 0.000624813,
+            "CLIPLoader": 6.193781075,
+            "UNETLoader": 1.022093871,
+            "QwenImage21Cache": 0.002024366,
+            "StringMultiline": 0.000122905,
+            "TextGenerate": 26.717171551,
+            "SwitchNode": 0.000240022,
+            "PreviewAny": 6.4858e-05,
+            "TextEncodeQwenImage21": 0.318837178,
+            "KSampler": 10.810724209,
+            "VAEDecode": 0.84187372,
+            "SaveImageAdvanced": 0.452628281
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 61.764238595962524,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "b1fa9b6b-8741-49ff-ae87-79d744d24acb",
+          "status": "success",
+          "seconds": 17.675,
+          "nodes": {
+            "TextGenerate": 10.539149373,
+            "SwitchNode": 0.000576861,
+            "PreviewAny": 7.8128e-05,
+            "TextEncodeQwenImage21": 0.361505471,
+            "KSampler": 5.657394187,
+            "VAEDecode": 0.656794959,
+            "SaveImageAdvanced": 0.445505308
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 62.4195111989975,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-2.json",
+          "prompt_id": "59b15b56-7f1a-4be9-af07-fb1ba227ad31",
+          "status": "success",
+          "seconds": 17.911,
+          "nodes": {
+            "TextGenerate": 10.758671108,
+            "SwitchNode": 0.00011295,
+            "PreviewAny": 6.1983e-05,
+            "TextEncodeQwenImage21": 0.388819559,
+            "KSampler": 5.649256199,
+            "VAEDecode": 0.655058913,
+            "SaveImageAdvanced": 0.445154116
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 62.480350852012634,
+          "end_gib": 50.84407937526703
+        }
+      ],
+      "warm_full": {
+        "count": 2,
+        "median": 17.793,
+        "range": [
+          17.675,
+          17.911
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.375162515,
+          "KSampler": 5.653325193000001,
+          "VAEDecode": 0.655926936,
+          "SwitchNode": 0.0003449055,
+          "PreviewAny": 7.00555e-05,
+          "TextGenerate": 10.648910240500001,
+          "SaveImageAdvanced": 0.445329712
+        }
+      },
+      "cached_text": {
+        "count": 2,
+        "median": 6.766500000000001,
+        "range": [
+          6.766,
+          6.767
+        ],
+        "nodes": {
+          "VAEDecode": 0.6560648920000001,
+          "SaveImageAdvanced": 0.445254181,
+          "KSampler": 5.658034809
+        }
+      }
+    },
+    "product-quality": {
+      "runs": [
+        {
+          "file": "full-0.json",
+          "prompt_id": "80047731-44ec-448d-87c9-70fe0374c39d",
+          "status": "success",
+          "seconds": 52.255,
+          "nodes": {
+            "VAELoader": 0.330894893,
+            "ResolutionSelector": 0.00016785,
+            "EmptyLatentImage": 0.000628245,
+            "CLIPLoader": 6.194744995,
+            "UNETLoader": 1.025829093,
+            "QwenImage21Cache": 0.001938735,
+            "StringMultiline": 0.000122592,
+            "TextGenerate": 26.766931282,
+            "SwitchNode": 0.000115311,
+            "PreviewAny": 6.5207e-05,
+            "TextEncodeQwenImage21": 0.396455154,
+            "KSampler": 10.044084423,
+            "VAEDecode": 0.784102989,
+            "SaveImageAdvanced": 0.444718599
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 62.64933216571808,
+          "end_gib": 50.84407937526703
+        }
+      ]
+    },
+    "rope-only": {
+      "runs": [
+        {
+          "file": "full-0.json",
+          "prompt_id": "9a494176-a94d-4934-b702-5c7e06b5dffb",
+          "status": "success",
+          "seconds": 50.994,
+          "nodes": {
+            "VAELoader": 0.313975287,
+            "ResolutionSelector": 0.00017211,
+            "EmptyLatentImage": 0.000638834,
+            "CLIPLoader": 6.184174311,
+            "UNETLoader": 1.020147593,
+            "QwenImage21Cache": 0.001938455,
+            "StringMultiline": 0.000122616,
+            "TextGenerate": 26.726021013,
+            "SwitchNode": 0.00010596,
+            "PreviewAny": 0.000122785,
+            "TextEncodeQwenImage21": 0.323171415,
+            "KSampler": 9.893786463,
+            "VAEDecode": 0.798207983,
+            "SaveImageAdvanced": 0.445483892
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 72.37064969539642,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "f6103901-031a-4ed6-b503-192a5806fef9",
+          "status": "success",
+          "seconds": 17.979,
+          "nodes": {
+            "TextGenerate": 10.917760357,
+            "SwitchNode": 0.000114703,
+            "PreviewAny": 7.8278e-05,
+            "TextEncodeQwenImage21": 0.351086476,
+            "KSampler": 5.595922195,
+            "VAEDecode": 0.655430539,
+            "SaveImageAdvanced": 0.44491049
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 73.48178935050964,
+          "end_gib": 48.75116240978241
+        }
+      ],
+      "warm_full": {
+        "count": 1,
+        "median": 17.979,
+        "range": [
+          17.979,
+          17.979
+        ],
+        "nodes": {
+          "VAEDecode": 0.655430539,
+          "SwitchNode": 0.000114703,
+          "PreviewAny": 7.8278e-05,
+          "TextGenerate": 10.917760357,
+          "TextEncodeQwenImage21": 0.351086476,
+          "SaveImageAdvanced": 0.44491049,
+          "KSampler": 5.595922195
+        }
+      }
+    },
+    "sdpa-only": {
+      "runs": [
+        {
+          "file": "full-0.json",
+          "prompt_id": "dcbaa024-f001-4166-a5b2-d0b29402c298",
+          "status": "success",
+          "seconds": 52.692,
+          "nodes": {
+            "VAELoader": 0.324548693,
+            "ResolutionSelector": 0.000171499,
+            "EmptyLatentImage": 0.000623191,
+            "CLIPLoader": 6.198043667,
+            "UNETLoader": 1.012480366,
+            "QwenImage21Cache": 0.001972346,
+            "StringMultiline": 0.000127673,
+            "TextGenerate": 26.76703076,
+            "SwitchNode": 0.000117528,
+            "PreviewAny": 6.3937e-05,
+            "TextEncodeQwenImage21": 0.38761348,
+            "KSampler": 11.447928114,
+            "VAEDecode": 0.823629815,
+            "SaveImageAdvanced": 0.459679496
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.78125238418579,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "c22cddbb-d8a6-44c5-b22b-d62cdfe1c427",
+          "status": "success",
+          "seconds": 18.485,
+          "nodes": {
+            "TextGenerate": 10.518464182,
+            "SwitchNode": 0.000114052,
+            "PreviewAny": 9.8649e-05,
+            "TextEncodeQwenImage21": 0.365164057,
+            "KSampler": 6.490509444,
+            "VAEDecode": 0.654888323,
+            "SaveImageAdvanced": 0.442525574
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.42597937583923,
+          "end_gib": 50.84407937526703
+        }
+      ],
+      "warm_full": {
+        "count": 1,
+        "median": 18.485,
+        "range": [
+          18.485,
+          18.485
+        ],
+        "nodes": {
+          "VAEDecode": 0.654888323,
+          "SwitchNode": 0.000114052,
+          "PreviewAny": 9.8649e-05,
+          "TextGenerate": 10.518464182,
+          "TextEncodeQwenImage21": 0.365164057,
+          "SaveImageAdvanced": 0.442525574,
+          "KSampler": 6.490509444
+        }
+      }
+    },
+    "split-qkv-sdpa": {
+      "runs": [
+        {
+          "file": "cached-0.json",
+          "prompt_id": "c78bd9d2-9fa4-4adb-934e-773b9b67703c",
+          "status": "success",
+          "seconds": 18.96,
+          "nodes": {
+            "TextGenerate": 11.19722367,
+            "SwitchNode": 0.000179798,
+            "PreviewAny": 0.000102633,
+            "TextEncodeQwenImage21": 0.370980701,
+            "KSampler": 6.271379706,
+            "VAEDecode": 0.655852903,
+            "SaveImageAdvanced": 0.44928333
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 61.08080840110779,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-1.json",
+          "prompt_id": "067274d1-37dc-4072-b57b-3453572e913f",
+          "status": "success",
+          "seconds": 7.395,
+          "nodes": {
+            "KSampler": 6.280904564,
+            "VAEDecode": 0.656109781,
+            "SaveImageAdvanced": 0.448944838
+          },
+          "fallback": {},
+          "peak_gib": 61.08080840110779,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-2.json",
+          "prompt_id": "4310c943-73bd-4d9d-bc40-70d2fd0bebf5",
+          "status": "success",
+          "seconds": 7.397,
+          "nodes": {
+            "KSampler": 6.284150545,
+            "VAEDecode": 0.655663467,
+            "SaveImageAdvanced": 0.4489514
+          },
+          "fallback": {},
+          "peak_gib": 61.08080840110779,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-0.json",
+          "prompt_id": "807451c8-ace5-4dda-bc16-5b9e81676523",
+          "status": "success",
+          "seconds": 62.215,
+          "nodes": {
+            "VAELoader": 0.315778858,
+            "ResolutionSelector": 0.000171456,
+            "EmptyLatentImage": 0.000622991,
+            "CLIPLoader": 8.114014263,
+            "UNETLoader": 1.256090265,
+            "QwenImage21Cache": 0.002134129,
+            "StringMultiline": 0.000122133,
+            "TextGenerate": 31.594128654,
+            "SwitchNode": 0.000119358,
+            "PreviewAny": 0.000126128,
+            "TextEncodeQwenImage21": 0.412535917,
+            "KSampler": 12.916519326,
+            "VAEDecode": 0.892294008,
+            "SaveImageAdvanced": 0.630528639
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.312551379203796,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "2780becd-1bbb-494a-be63-2a843e30e4e5",
+          "status": "success",
+          "seconds": 19.05,
+          "nodes": {
+            "TextGenerate": 11.306786275,
+            "SwitchNode": 0.000185167,
+            "PreviewAny": 7.2949e-05,
+            "TextEncodeQwenImage21": 0.359549072,
+            "KSampler": 6.268446457,
+            "VAEDecode": 0.655883496,
+            "SaveImageAdvanced": 0.444031966
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.9409716129303,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-2.json",
+          "prompt_id": "8d1d499b-1bae-4b2d-91d8-38b70aef0898",
+          "status": "success",
+          "seconds": 19.324,
+          "nodes": {
+            "TextGenerate": 11.548828091,
+            "SwitchNode": 0.000161482,
+            "PreviewAny": 6.2093e-05,
+            "TextEncodeQwenImage21": 0.390695181,
+            "KSampler": 6.268754329,
+            "VAEDecode": 0.655652612,
+            "SaveImageAdvanced": 0.445746045
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 60.942808628082275,
+          "end_gib": 50.84407937526703
+        }
+      ],
+      "warm_full": {
+        "count": 2,
+        "median": 19.187,
+        "range": [
+          19.05,
+          19.324
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.3751221265,
+          "KSampler": 6.268600393,
+          "VAEDecode": 0.6557680539999999,
+          "SwitchNode": 0.0001733245,
+          "PreviewAny": 6.752099999999999e-05,
+          "TextGenerate": 11.427807183,
+          "SaveImageAdvanced": 0.4448890055
+        }
+      },
+      "cached_text": {
+        "count": 2,
+        "median": 7.396,
+        "range": [
+          7.395,
+          7.397
+        ],
+        "nodes": {
+          "VAEDecode": 0.655886624,
+          "SaveImageAdvanced": 0.448948119,
+          "KSampler": 6.2825275545
+        }
+      }
+    },
+    "splitrope-combined": {
+      "runs": [
+        {
+          "file": "cached-0.json",
+          "prompt_id": "e442ee86-4ba6-40e0-9fdd-23b189053908",
+          "status": "success",
+          "seconds": 16.123,
+          "nodes": {
+            "TextGenerate": 10.5819996,
+            "SwitchNode": 0.000116266,
+            "PreviewAny": 7.1338e-05,
+            "TextEncodeQwenImage21": 0.317038208,
+            "KSampler": 4.104951151,
+            "VAEDecode": 0.655441401,
+            "SaveImageAdvanced": 0.448858967
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.75652551651001,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-1.json",
+          "prompt_id": "029ab05b-990e-4e5b-9493-b4a27fc4f355",
+          "status": "success",
+          "seconds": 5.228,
+          "nodes": {
+            "KSampler": 4.115380854,
+            "VAEDecode": 0.6557509,
+            "SaveImageAdvanced": 0.448383556
+          },
+          "fallback": {},
+          "peak_gib": 59.75652551651001,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-2.json",
+          "prompt_id": "9a0498d2-e994-4b1a-a23d-518cc8ae6aac",
+          "status": "success",
+          "seconds": 5.234,
+          "nodes": {
+            "KSampler": 4.121215007,
+            "VAEDecode": 0.656516199,
+            "SaveImageAdvanced": 0.448409363
+          },
+          "fallback": {},
+          "peak_gib": 59.75652551651001,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-3.json",
+          "prompt_id": "7d275e87-a34d-4d9f-a41e-83ae037be016",
+          "status": "success",
+          "seconds": 5.229,
+          "nodes": {
+            "KSampler": 4.115422639,
+            "VAEDecode": 0.655472871,
+            "SaveImageAdvanced": 0.450531388
+          },
+          "fallback": {},
+          "peak_gib": 59.75652551651001,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-4.json",
+          "prompt_id": "c9aceb6b-284f-48d3-bd66-2cf3855d294f",
+          "status": "success",
+          "seconds": 5.226,
+          "nodes": {
+            "KSampler": 4.111884171,
+            "VAEDecode": 0.655602783,
+            "SaveImageAdvanced": 0.450834012
+          },
+          "fallback": {},
+          "peak_gib": 59.75652551651001,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "cached-5.json",
+          "prompt_id": "fa045eca-a39b-42cc-9293-9bc80676ee5d",
+          "status": "success",
+          "seconds": 5.232,
+          "nodes": {
+            "KSampler": 4.118368185,
+            "VAEDecode": 0.655257742,
+            "SaveImageAdvanced": 0.450433904
+          },
+          "fallback": {},
+          "peak_gib": 59.75652551651001,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-0.json",
+          "prompt_id": "5dcb43dc-ac5e-4b17-ad23-6f6dc96a7b61",
+          "status": "success",
+          "seconds": 50.04,
+          "nodes": {
+            "VAELoader": 0.336994543,
+            "ResolutionSelector": 0.00017175,
+            "EmptyLatentImage": 0.0006279,
+            "CLIPLoader": 6.23983072,
+            "UNETLoader": 1.023216131,
+            "QwenImage21Cache": 0.002178635,
+            "StringMultiline": 0.000190999,
+            "TextGenerate": 26.702142779,
+            "SwitchNode": 0.00023819,
+            "PreviewAny": 6.5709e-05,
+            "TextEncodeQwenImage21": 0.40372701,
+            "KSampler": 8.766879379,
+            "VAEDecode": 0.822190131,
+            "SaveImageAdvanced": 0.447532511
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.06187081336975,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "4b6d9fff-e6e5-4c2d-b0bd-6dc9f7e2e7fd",
+          "status": "success",
+          "seconds": 16.095,
+          "nodes": {
+            "TextGenerate": 10.522110287,
+            "SwitchNode": 0.000185731,
+            "PreviewAny": 0.000104818,
+            "TextEncodeQwenImage21": 0.349376632,
+            "KSampler": 4.107215676,
+            "VAEDecode": 0.655265053,
+            "SaveImageAdvanced": 0.446346734
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.69203424453735,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-2.json",
+          "prompt_id": "2729d2c9-4778-4863-9e9d-cf15367db2c1",
+          "status": "success",
+          "seconds": 16.438,
+          "nodes": {
+            "TextGenerate": 10.84467919,
+            "SwitchNode": 0.000233152,
+            "PreviewAny": 6.2144e-05,
+            "TextEncodeQwenImage21": 0.362573967,
+            "KSampler": 4.111052648,
+            "VAEDecode": 0.656708691,
+            "SaveImageAdvanced": 0.447382706
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.69242513179779,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-3.json",
+          "prompt_id": "ce699d27-b392-4dc1-8c0c-a0c50d4d67c0",
+          "status": "success",
+          "seconds": 16.168,
+          "nodes": {
+            "TextGenerate": 10.569117627,
+            "SwitchNode": 0.000115345,
+            "PreviewAny": 6.0661e-05,
+            "TextEncodeQwenImage21": 0.367766452,
+            "KSampler": 4.109280272,
+            "VAEDecode": 0.654949401,
+            "SaveImageAdvanced": 0.45143555
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.75652551651001,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-4.json",
+          "prompt_id": "a1d56642-0542-4fba-9b4d-7c5b7767f596",
+          "status": "success",
+          "seconds": 15.988,
+          "nodes": {
+            "TextGenerate": 10.412590109,
+            "SwitchNode": 0.000120042,
+            "PreviewAny": 6.1833e-05,
+            "TextEncodeQwenImage21": 0.346453945,
+            "KSampler": 4.109157064,
+            "VAEDecode": 0.654437867,
+            "SaveImageAdvanced": 0.450631545
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.75652551651001,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "full-5.json",
+          "prompt_id": "8a3e85f0-8891-408b-b86b-18817e91dc42",
+          "status": "success",
+          "seconds": 16.301,
+          "nodes": {
+            "TextGenerate": 10.696992706,
+            "SwitchNode": 0.000181585,
+            "PreviewAny": 0.000124948,
+            "TextEncodeQwenImage21": 0.365604869,
+            "KSampler": 4.119272225,
+            "VAEDecode": 0.655495369,
+            "SaveImageAdvanced": 0.449090234
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.75652551651001,
+          "end_gib": 50.84407937526703
+        },
+        {
+          "file": "stages-0.json",
+          "prompt_id": "94829184-087f-43f4-86e2-5e91a39156ff",
+          "status": "success",
+          "seconds": 52.324,
+          "nodes": {
+            "TextGenerate": 44.963647321,
+            "SwitchNode": 0.000279712,
+            "PreviewAny": 0.000138349,
+            "TextEncodeQwenImage21": 0.376511521,
+            "KSampler": 5.859904766,
+            "VAEDecode": 0.654659983,
+            "SaveImageAdvanced": 0.450658838
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 59.75652551651001,
+          "end_gib": 50.84407937526703
+        }
+      ],
+      "warm_full": {
+        "count": 5,
+        "median": 16.168,
+        "range": [
+          15.988,
+          16.438
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.362573967,
+          "KSampler": 4.109280272,
+          "VAEDecode": 0.655265053,
+          "SwitchNode": 0.000181585,
+          "PreviewAny": 6.2144e-05,
+          "TextGenerate": 10.569117627,
+          "SaveImageAdvanced": 0.449090234
+        }
+      },
+      "cached_text": {
+        "count": 5,
+        "median": 5.229,
+        "range": [
+          5.226,
+          5.234
+        ],
+        "nodes": {
+          "VAEDecode": 0.655602783,
+          "SaveImageAdvanced": 0.450433904,
+          "KSampler": 4.115422639
+        }
+      },
+      "diagnostics": [
+        {
+          "prompt_id": "94829184-087f-43f4-86e2-5e91a39156ff",
+          "mode": "stages",
+          "regions": {
+            "prefill_GDN": [
+              24,
+              0.38959837303264067
+            ],
+            "prefill_attention": [
+              8,
+              0.07716319500468671
+            ],
+            "text_prefill": [
+              1,
+              0.6146917180158198
+            ],
+            "text_lm_head": [
+              427,
+              0.6920871564361732
+            ],
+            "text_sampling": [
+              427,
+              0.7756064966379199
+            ],
+            "decode_GDN": [
+              10224,
+              12.946794575807871
+            ],
+            "decode_MLP": [
+              13632,
+              7.305535915045766
+            ],
+            "decode_attention": [
+              3408,
+              8.418422287184512
+            ],
+            "text_decode": [
+              426,
+              41.987278285087086
+            ],
+            "dit_sequence": [
+              8,
+              0.08384376298636198
+            ],
+            "dit_modulation": [
+              576,
+              0.676429929328151
+            ],
+            "dit_sdpa": [
+              288,
+              1.6388910551613662
+            ],
+            "dit_attention_with_projections": [
+              288,
+              3.4159874996112194
+            ],
+            "dit_residual": [
+              576,
+              0.43889251217478886
+            ],
+            "dit_ffn": [
+              288,
+              1.0946552564564627
+            ],
+            "dit_forward": [
+              8,
+              5.814712674036855
+            ]
+          },
+          "text_samples": 427,
+          "dit_steps": 8,
+          "window_seconds": null
+        }
+      ]
+    },
+    "text-delta1": {
+      "runs": [
+        {
+          "file": "full-0.json",
+          "prompt_id": "2de4fd99-9b49-4360-89d1-24baf109e03a",
+          "status": "success",
+          "seconds": 55.2,
+          "nodes": {
+            "VAELoader": 0.314145001,
+            "ResolutionSelector": 0.000167029,
+            "EmptyLatentImage": 0.000656281,
+            "CLIPLoader": 6.38173787,
+            "UNETLoader": 1.146561254,
+            "QwenImage21Cache": 0.00209473,
+            "StringMultiline": 0.000135593,
+            "TextGenerate": 25.333223647,
+            "SwitchNode": 0.000110619,
+            "PreviewAny": 6.3963e-05,
+            "TextEncodeQwenImage21": 0.392328382,
+            "KSampler": 14.37783192,
+            "VAEDecode": 0.824523846,
+            "SaveImageAdvanced": 0.459151003
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 331,
+          "token_sha256": "17abe191b42e628e08188b5e94932484a632c55453c4a3b9f0a24eab7cbdf0e5",
+          "fallback": {},
+          "peak_gib": 75.02783501148224,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "c93d6bc7-41fe-4b94-b9fe-494e28ee08ee",
+          "status": "success",
+          "seconds": 19.311,
+          "nodes": {
+            "TextGenerate": 7.861636904,
+            "SwitchNode": 0.00023554,
+            "PreviewAny": 0.000102635,
+            "TextEncodeQwenImage21": 0.328239155,
+            "KSampler": 9.994817897,
+            "VAEDecode": 0.655906528,
+            "SaveImageAdvanced": 0.456105303
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 331,
+          "token_sha256": "17abe191b42e628e08188b5e94932484a632c55453c4a3b9f0a24eab7cbdf0e5",
+          "fallback": {},
+          "peak_gib": 76.27286422252655,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-2.json",
+          "prompt_id": "93b6ec6e-c04a-45a8-80f4-c312cf773bd8",
+          "status": "success",
+          "seconds": 19.218,
+          "nodes": {
+            "TextGenerate": 7.819446013,
+            "SwitchNode": 0.000227747,
+            "PreviewAny": 5.9896e-05,
+            "TextEncodeQwenImage21": 0.302677022,
+            "KSampler": 9.978741342,
+            "VAEDecode": 0.656130753,
+            "SaveImageAdvanced": 0.446585624
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 331,
+          "token_sha256": "17abe191b42e628e08188b5e94932484a632c55453c4a3b9f0a24eab7cbdf0e5",
+          "fallback": {},
+          "peak_gib": 76.33899760246277,
+          "end_gib": 48.75116240978241
+        }
+      ],
+      "warm_full": {
+        "count": 2,
+        "median": 19.264499999999998,
+        "range": [
+          19.218,
+          19.311
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.3154580885,
+          "KSampler": 9.9867796195,
+          "VAEDecode": 0.6560186405,
+          "SwitchNode": 0.00023164350000000003,
+          "PreviewAny": 8.12655e-05,
+          "TextGenerate": 7.840541458500001,
+          "SaveImageAdvanced": 0.45134546350000004
+        }
+      }
+    },
+    "text-delta1none": {
+      "runs": [
+        {
+          "file": "full-0.json",
+          "prompt_id": "2c81a175-13df-4487-857b-a59e1ce1ae9b",
+          "status": "error",
+          "seconds": 29.01,
+          "nodes": {
+            "VAELoader": 0.312171597,
+            "ResolutionSelector": 0.000167478,
+            "EmptyLatentImage": 0.000619505,
+            "CLIPLoader": 6.228777288,
+            "UNETLoader": 1.041077666,
+            "QwenImage21Cache": 0.002170643,
+            "StringMultiline": 0.000132915,
+            "TextGenerate": 16.20938272
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "fallback": {},
+          "peak_gib": 39.50019288063049,
+          "end_gib": 34.567959904670715
+        }
+      ]
+    },
+    "text-probability": {
+      "runs": [
+        {
+          "file": "full-0.json",
+          "prompt_id": "56e6f5f2-6790-4324-ad52-9cbfe4f55c35",
+          "status": "success",
+          "seconds": 53.822,
+          "nodes": {
+            "VAELoader": 0.312263321,
+            "ResolutionSelector": 0.000166878,
+            "EmptyLatentImage": 0.000615777,
+            "CLIPLoader": 6.223531714,
+            "UNETLoader": 1.041719911,
+            "QwenImage21Cache": 0.001980132,
+            "StringMultiline": 0.000122777,
+            "TextGenerate": 26.867662894,
+            "SwitchNode": 0.000184644,
+            "PreviewAny": 6.4333e-05,
+            "TextEncodeQwenImage21": 0.402502358,
+            "KSampler": 12.376419391,
+            "VAEDecode": 0.817512022,
+            "SaveImageAdvanced": 0.448699369
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 75.47378718852997,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "4cd10e28-8d50-4d3a-bc69-993303b13f24",
+          "status": "success",
+          "seconds": 19.86,
+          "nodes": {
+            "TextGenerate": 10.362263579,
+            "SwitchNode": 0.000235805,
+            "PreviewAny": 7.0092e-05,
+            "TextEncodeQwenImage21": 0.294008483,
+            "KSampler": 8.088317224,
+            "VAEDecode": 0.655615757,
+            "SaveImageAdvanced": 0.44482681
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.7253931760788,
+          "end_gib": 48.75116240978241
+        },
+        {
+          "file": "full-2.json",
+          "prompt_id": "5dcf8fa7-6583-4024-95d9-c48f1eb983c0",
+          "status": "success",
+          "seconds": 19.832,
+          "nodes": {
+            "TextGenerate": 10.259455321,
+            "SwitchNode": 0.000115554,
+            "PreviewAny": 6.5404e-05,
+            "TextEncodeQwenImage21": 0.355185375,
+            "KSampler": 8.097671787,
+            "VAEDecode": 0.656026463,
+            "SaveImageAdvanced": 0.449160867
+          },
+          "input_tokens": {
+            "qwen35_9b": 2804
+          },
+          "output_tokens": 427,
+          "token_sha256": "bdacbcb3183ad7df75713e85e2f20c0ad696da2003b418757cbbef77c8263884",
+          "fallback": {},
+          "peak_gib": 76.73536288738251,
+          "end_gib": 48.75116240978241
+        }
+      ],
+      "warm_full": {
+        "count": 2,
+        "median": 19.846,
+        "range": [
+          19.832,
+          19.86
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.32459692900000003,
+          "KSampler": 8.0929945055,
+          "VAEDecode": 0.65582111,
+          "SwitchNode": 0.0001756795,
+          "PreviewAny": 6.7748e-05,
+          "TextGenerate": 10.31085945,
+          "SaveImageAdvanced": 0.4469938385
+        }
+      }
+    }
+  },
+  "model-manifest.json": [
+    {
+      "name": "qwen_image_2.1_turbo_bf16.safetensors",
+      "bytes": 14230280616,
+      "dtypes": {
+        "BF16": 265
+      }
+    },
+    {
+      "name": "qwen3vl_8b_bf16.safetensors",
+      "bytes": 17534334616,
+      "dtypes": {
+        "BF16": 750
+      }
+    },
+    {
+      "name": "qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors",
+      "bytes": 18819722496,
+      "dtypes": {
+        "BF16": 760
+      }
+    },
+    {
+      "name": "qwen_image_2.1_vae_bf16.safetensors",
+      "bytes": 675509688,
+      "dtypes": {
+        "BF16": 238
+      }
+    }
+  ],
+  "release-quality.json": [
+    {
+      "case": "full-1",
+      "shape": [
+        1504,
+        832,
+        4
+      ],
+      "image_exact": true,
+      "text_equal": true,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "tokens": 427,
+      "token_hash_equal": true
+    },
+    {
+      "case": "seed2-0",
+      "shape": [
+        1504,
+        832,
+        4
+      ],
+      "image_exact": true,
+      "text_equal": true,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "tokens": 498,
+      "token_hash_equal": true
+    },
+    {
+      "case": "size512-0",
+      "shape": [
+        512,
+        512,
+        4
+      ],
+      "image_exact": true,
+      "text_equal": true,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "tokens": 427,
+      "token_hash_equal": true
+    },
+    {
+      "case": "size1024-0",
+      "shape": [
+        1024,
+        1024,
+        4
+      ],
+      "image_exact": true,
+      "text_equal": true,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "tokens": 427,
+      "token_hash_equal": true
+    },
+    {
+      "case": "thinking-0",
+      "shape": [
+        1504,
+        832,
+        4
+      ],
+      "image_exact": true,
+      "text_equal": true,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "tokens": 1877,
+      "token_hash_equal": true
+    },
+    {
+      "case": "official-0",
+      "shape": [
+        1504,
+        832,
+        4
+      ],
+      "image_exact": true,
+      "text_equal": true,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "tokens": 427,
+      "token_hash_equal": true
+    }
+  ],
+  "rounding-comparisons.json": {
+    "mask-eager": {
+      "exact": true,
+      "mae": 0.0,
+      "max_abs": 0.0
+    },
+    "rope-only": {
+      "exact": true,
+      "mae": 0.0,
+      "max_abs": 0.0
+    },
+    "sdpa-only": {
+      "exact": false,
+      "mae": 1.6955364620627045,
+      "max_abs": 210.0
+    },
+    "pairwise": {
+      "exact": false,
+      "mae": 1.6955364620627045,
+      "max_abs": 210.0
+    },
+    "final-product": {
+      "exact": true,
+      "mae": 0.0,
+      "max_abs": 0.0
+    }
+  },
+  "image-comparisons.json": {
+    "split-qkv-sdpa": {
+      "mae": 0.8178645007543985,
+      "max": 187.0,
+      "equal": false
+    },
+    "native-rope": {
+      "mae": 0.851060233607815,
+      "max": 146.0,
+      "equal": false
+    },
+    "splitrope-combined": {
+      "mae": 1.6955364620627045,
+      "max": 210.0,
+      "equal": false
+    },
+    "text-probability": {
+      "mae": 0.0,
+      "max": 0.0,
+      "equal": true
+    }
+  },
+  "text-delta1-quality.json": {
+    "shape": [
+      427,
+      248320
+    ],
+    "top1_equal": 421,
+    "rrmse": 0.009845572523772717,
+    "kl_mean": 0.00058026984333992,
+    "max_abs": 0.46875
+  },
+  "block_trials": {
+    "block-split": {
+      "trial": "qkv+sdpa",
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "cold": 0.582768677995773,
+      "seconds": [
+        0.023790346400346607,
+        0.02380042729782872,
+        0.023799500497989356,
+        0.023770606497419067,
+        0.0237811304978095
+      ],
+      "median": 0.023790346400346607,
+      "rrmse_to_baseline": 0.000886299375089932,
+      "baseline_fp64_error": 0.0040057549191731,
+      "candidate_fp64_error": 0.004007617380551472,
+      "fp64_error_ratio": 1.0004649464123374,
+      "finite": true
+    },
+    "block-product": {
+      "trial": "",
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "cold": 0.4709467689972371,
+      "seconds": [
+        0.0150520183990011,
+        0.015118522100965492,
+        0.015114724400336853,
+        0.015099566700519063,
+        0.015089288298622706
+      ],
+      "median": 0.015099566700519063,
+      "rrmse_to_baseline": 0.0,
+      "baseline_fp64_error": 0.0040057549191731,
+      "candidate_fp64_error": 0.0040057549191731,
+      "fp64_error_ratio": 1.0,
+      "finite": true
+    },
+    "block-rope32": {
+      "trial": "rope32+sdpa",
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "cold": 0.7338741570129059,
+      "seconds": [
+        0.012909267799113878,
+        0.012942091099102982,
+        0.012941510099335574,
+        0.012937904600403272,
+        0.012914222400286234
+      ],
+      "median": 0.012937904600403272,
+      "rrmse_to_baseline": 0.003894086004635058,
+      "baseline_fp64_error": 0.0040057549191731,
+      "candidate_fp64_error": 0.004370104546029914,
+      "fp64_error_ratio": 1.0909565448232728,
+      "finite": true
+    },
+    "block-functional": {
+      "trial": "functional+sdpa",
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "cold": 0.7295540279883426,
+      "seconds": [
+        0.019219913400593213,
+        0.01923819000076037,
+        0.019256146100815386,
+        0.019253651498002,
+        0.01923962100117933
+      ],
+      "median": 0.01923962100117933,
+      "rrmse_to_baseline": 0.003893887146004693,
+      "baseline_fp64_error": 0.0040057549191731,
+      "candidate_fp64_error": 0.004367584883864339,
+      "fp64_error_ratio": 1.0903275342581196,
+      "finite": true
+    },
+    "block-heads": {
+      "trial": "rope+heads",
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "cold": 2.920859437988838,
+      "seconds": [
+        0.013842823501909152,
+        0.01387526229955256,
+        0.01388204550021328,
+        0.013860715599730612,
+        0.013885224799741991
+      ],
+      "median": 0.01387526229955256,
+      "rrmse_to_baseline": 0.003893887146004693,
+      "baseline_fp64_error": 0.0040057549191731,
+      "candidate_fp64_error": 0.004367584883864339,
+      "fp64_error_ratio": 1.0903275342581196,
+      "finite": true
+    },
+    "block-splitrope": {
+      "trial": "splitrope+sdpa",
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "cold": 0.44571349100442603,
+      "seconds": [
+        0.015496067597996443,
+        0.01552506239968352,
+        0.01551828219962772,
+        0.015520652598934249,
+        0.015525115400669165
+      ],
+      "median": 0.015520652598934249,
+      "rrmse_to_baseline": 0.0,
+      "baseline_fp64_error": 0.0040057549191731,
+      "candidate_fp64_error": 0.0040057549191731,
+      "fp64_error_ratio": 1.0,
+      "finite": true
+    },
+    "block-pairwise": {
+      "trial": "pairwise",
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "cold": 0.5111758559942245,
+      "seconds": [
+        0.021528065198799594,
+        0.02154578999907244,
+        0.02156060329871252,
+        0.021551685899612493,
+        0.02155827580136247
+      ],
+      "median": 0.021551685899612493,
+      "rrmse_to_baseline": 0.0,
+      "baseline_fp64_error": 0.0040057549191731,
+      "candidate_fp64_error": 0.0040057549191731,
+      "fp64_error_ratio": 1.0,
+      "finite": true
+    },
+    "block-rope": {
+      "trial": "rope+sdpa",
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "cold": 0.7070635029813275,
+      "seconds": [
+        0.013055985601386055,
+        0.013077315301052295,
+        0.013087373098824174,
+        0.013078032797784545,
+        0.01307561510184314
+      ],
+      "median": 0.013077315301052295,
+      "rrmse_to_baseline": 0.003893887146004693,
+      "baseline_fp64_error": 0.0040057549191731,
+      "candidate_fp64_error": 0.004367584883864339,
+      "fp64_error_ratio": 1.0903275342581196,
+      "finite": true
+    },
+    "block-reference": {
+      "trial": "",
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "cold": 0.3903962619951926,
+      "seconds": [
+        0.030897818700759673,
+        0.030954012501752004,
+        0.030983489501522854,
+        0.03092407250078395,
+        0.03093185840116348
+      ],
+      "median": 0.03093185840116348,
+      "rrmse_to_baseline": 0.0,
+      "baseline_fp64_error": 0.0040057549191731,
+      "candidate_fp64_error": 0.0040057549191731,
+      "fp64_error_ratio": 1.0,
+      "finite": true
+    }
+  },
+  "text_windows": {
+    "text-main-profile": [
+      {
+        "mode": "warm",
+        "seconds": 26.870135110017145,
+        "window_seconds": 0.4236731830169447,
+        "tokens": 427
+      },
+      {
+        "mode": "plain",
+        "seconds": 11.763120969990268,
+        "window_seconds": 0.4203968890069518,
+        "tokens": 427
+      },
+      {
+        "mode": "profile",
+        "seconds": 73.72028962097829,
+        "window_seconds": 0.5313912539859302,
+        "tokens": 427
+      },
+      {
+        "mode": "plain",
+        "seconds": 11.812686562014278,
+        "window_seconds": 0.42411048797657713,
+        "tokens": 427
+      }
+    ],
+    "text-teacher-baseline": [
+      {
+        "mode": "warm",
+        "seconds": 27.28565339400666,
+        "window_seconds": 0.45761909801512957,
+        "tokens": 427
+      },
+      {
+        "mode": "plain",
+        "seconds": 11.7658370930003,
+        "window_seconds": 0.4350786290015094,
+        "tokens": 427
+      },
+      {
+        "mode": "plain",
+        "seconds": 12.078770615975372,
+        "window_seconds": 0.43208362100995146,
+        "tokens": 427
+      },
+      {
+        "mode": "plain",
+        "seconds": 11.960454518994084,
+        "window_seconds": 0.4202238759899046,
+        "tokens": 427
+      },
+      {
+        "mode": "logits",
+        "seconds": 13.031266211008187,
+        "window_seconds": 0.4716521929949522,
+        "tokens": 427
+      }
+    ],
+    "text-teacher-delta1": [
+      {
+        "mode": "warm",
+        "seconds": 26.097808916994836,
+        "window_seconds": 0.35570319200633094,
+        "tokens": 427
+      },
+      {
+        "mode": "plain",
+        "seconds": 9.908793852984672,
+        "window_seconds": 0.3551701729884371,
+        "tokens": 427
+      },
+      {
+        "mode": "plain",
+        "seconds": 9.937887328007491,
+        "window_seconds": 0.3545672159816604,
+        "tokens": 427
+      },
+      {
+        "mode": "plain",
+        "seconds": 9.918050943000708,
+        "window_seconds": 0.3539628660073504,
+        "tokens": 427
+      },
+      {
+        "mode": "logits",
+        "seconds": 12.228670167998644,
+        "window_seconds": 0.43263584800297394,
+        "tokens": 427
+      }
+    ]
+  },
+  "live_blocks": [
+    {
+      "layer": 0,
+      "step": 0,
+      "target": false,
+      "shape": [
+        1,
+        435,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    },
+    {
+      "layer": 0,
+      "step": 0,
+      "target": true,
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    },
+    {
+      "layer": 16,
+      "step": 0,
+      "target": false,
+      "shape": [
+        1,
+        435,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    },
+    {
+      "layer": 16,
+      "step": 0,
+      "target": true,
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    },
+    {
+      "layer": 31,
+      "step": 0,
+      "target": false,
+      "shape": [
+        1,
+        435,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    },
+    {
+      "layer": 31,
+      "step": 0,
+      "target": true,
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    },
+    {
+      "layer": 0,
+      "step": 4,
+      "target": true,
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    },
+    {
+      "layer": 16,
+      "step": 4,
+      "target": true,
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    },
+    {
+      "layer": 31,
+      "step": 4,
+      "target": true,
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    },
+    {
+      "layer": 0,
+      "step": 7,
+      "target": true,
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    },
+    {
+      "layer": 16,
+      "step": 7,
+      "target": true,
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    },
+    {
+      "layer": 31,
+      "step": 7,
+      "target": true,
+      "shape": [
+        1,
+        4888,
+        4096
+      ],
+      "exact": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "rrmse": 0.0
+    }
+  ],
+  "notes": [
+    "Warm full requests invalidate PE, encoding, sampling and decoding nodes while retaining loader outputs.",
+    "First cached request can recompute text after fingerprint transition and is excluded from cached-text medians.",
+    "HTTP-thread profiler attempt was terminated after a history timeout. Main-thread trace succeeded.",
+    "The 16-token profile window had about 26% instrumentation overhead. Device-event gaps are not a proven removable budget.",
+    "Per-module synchronization inflated the detailed decode diagnostic and is excluded from performance comparisons.",
+    "GDN expansion changed fixed logits and natural text, and its no-decomposition variant failed lowering.",
+    "Compiled masked-prefix attention changed image details. The accepted path compiles unmasked attention.",
+    "Sampling compilation is restricted to temperature 1.0 after three BF16 non-unit-temperature exactness regressions."
+  ],
+  "product_sha256": {
+    "comfy/ldm/qwen_image21/model.py": "d5387119630ad20639f5681db20766499a1d016e3fd3d0e1075da4645447aaf8",
+    "comfy/text_encoders/llama.py": "fd7cc8556b7c3a7affb1999e4dc1965cba1e389e68593ece21d80eb48b23ce66",
+    "tests-unit/comfy_test/hpu_qwen21_block_test.py": "11a27c062e09cedad08383ebc6c421759e00f65df023f4e84978d34420a18489",
+    "tests-unit/comfy_test/hpu_textgen_test.py": "72e0d6e05bc601614cb1b01005287c3c80869b22f21292421fef16f369e0e28c"
+  },
+  "normal_service": {
+    "cold": {
+      "status": "success",
+      "seconds": 49.833
+    },
+    "new-seed": {
+      "status": "success",
+      "seconds": 18.267
+    },
+    "reload": {
+      "status": "success",
+      "seconds": 42.926
+    },
+    "free": [
+      [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 64262428032,
+          "torch_vram_total": 37339568768,
+          "torch_vram_free": 0
+        }
+      ],
+      [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 81329092992,
+          "torch_vram_total": 20272903808,
+          "torch_vram_free": 0
+        }
+      ],
+      [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 97629997312,
+          "torch_vram_total": 3971999488,
+          "torch_vram_free": 0
+        }
+      ],
+      [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 98218344192,
+          "torch_vram_total": 3383652608,
+          "torch_vram_free": 0
+        }
+      ],
+      [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 98218344192,
+          "torch_vram_total": 3383652608,
+          "torch_vram_free": 0
+        }
+      ],
+      [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 98218344192,
+          "torch_vram_total": 3383652608,
+          "torch_vram_free": 0
+        }
+      ]
+    ],
+    "queue": {
+      "queue_running": [],
+      "queue_pending": []
+    }
+  }
+}

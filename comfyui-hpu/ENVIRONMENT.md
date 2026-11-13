@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-最近部署为`9f2ff96e`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+最近部署为`ed9552e5`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 ```bash
 export PT_HPU_LAZY_MODE=0
@@ -93,3 +93,10 @@ export GC_KERNEL_PATH=/usr/lib/habanalabs/libtpc_kernels.so
 匹配文生图增强器已下载到共享 text_encoders，文件名为 `qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors`。HPU 工作流使用同源本地解码文件 `qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors`。主模型实际为 `qwen_image_2.1_turbo_bf16.safetensors`，复用已有 Qwen3-VL 8B 和 Qwen Image 2.1 VAE。
 
 导入本仓库 `workflows/qwen21-turbo-hpu.json`，默认 1024²/8 步/CFG1，启用 refine_prompt 即使用 thinking 增强器。API 版本为 `qwen21-turbo-direct-api.json` 和 `qwen21-turbo-enhanced-api.json`，原 INT8 增强器复验使用 `qwen21-turbo-enhanced-int8-api.json`。详细耗时、精度变化与候选取舍见 [首版记录](QWEN21_FIRST.md)。
+
+
+## 当前全BF16工作流
+
+用户当前图保存为 `workflows/qwen21-user-bf16.json` 和对应API图，基础编码器为已有 `qwen3vl_8b_bf16.safetensors`。832×1504、8步Euler/simple、CFG1、thinking关闭、PE开启作为本轮基线。优化自动通过原节点入口生效，详情见 [全BF16记录](QWEN21_BF16.md)。
+
+调查入口 `probes/qwen21_deep_jobs.py` 使用独立8190服务和强制计算fingerprint，普通服务验收使用 `probes/qwen21_deep_normal.py`。HPU任务继续串行，`/free`后观察稳定内存再确认卸载，本轮全BF16模型约40秒后稳定。服务现为 `ed9552e5`，原始ComfyUI目录遵循只读约束。

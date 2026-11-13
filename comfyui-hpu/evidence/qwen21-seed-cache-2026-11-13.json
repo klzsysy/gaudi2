@@ -1,0 +1,136 @@
+{
+  "date": "2026-11-13",
+  "source": "server history last 12 requests",
+  "workflow": "base T2I subgraph with KSampler, changed to Turbo weights and 8 steps",
+  "seed_control": "fixed",
+  "shared_seed_targets": [
+    "KSampler.seed",
+    "TextGenerate.sampling_mode.seed"
+  ],
+  "thinking": false,
+  "sampler": "euler",
+  "scheduler": "simple",
+  "steps": 8,
+  "runs": [
+    {
+      "prompt_id": "61556cd1-aac4-47d1-b3a9-feaf4d305d3d",
+      "seed": 447606998181262,
+      "pe_seed": 447606998181262,
+      "pe_enabled": false,
+      "pe_cached": false,
+      "sampler_cached": false,
+      "seconds": 10.25,
+      "base_encoder": "qwen3vl_8b_fp8_scaled.safetensors"
+    },
+    {
+      "prompt_id": "d5062e64-35dd-419a-87f6-6e69fe92ebba",
+      "seed": 447606998181262,
+      "pe_seed": 447606998181262,
+      "pe_enabled": false,
+      "pe_cached": false,
+      "sampler_cached": false,
+      "seconds": 11.303,
+      "base_encoder": "qwen3vl_8b_fp8_scaled.safetensors"
+    },
+    {
+      "prompt_id": "53a9a379-d2ba-4214-a7eb-5deced054044",
+      "seed": 447606998181262,
+      "pe_seed": 447606998181262,
+      "pe_enabled": false,
+      "pe_cached": false,
+      "sampler_cached": false,
+      "seconds": 11.216,
+      "base_encoder": "qwen3vl_8b_fp8_scaled.safetensors"
+    },
+    {
+      "prompt_id": "c9c1f41b-8823-4682-a076-e8a73c30f641",
+      "seed": 447606998181262,
+      "pe_seed": 447606998181262,
+      "pe_enabled": true,
+      "pe_cached": false,
+      "sampler_cached": false,
+      "seconds": 35.614,
+      "base_encoder": "qwen3vl_8b_fp8_scaled.safetensors"
+    },
+    {
+      "prompt_id": "c891deef-8198-4385-af64-b45f6f56a559",
+      "seed": 447606998181262,
+      "pe_seed": 447606998181262,
+      "pe_enabled": true,
+      "pe_cached": true,
+      "sampler_cached": false,
+      "seconds": 14.813,
+      "base_encoder": "qwen3vl_8b_bf16.safetensors"
+    },
+    {
+      "prompt_id": "7447f2a6-9153-4b80-9b24-8f00c62614b2",
+      "seed": 447606998181262,
+      "pe_seed": 447606998181262,
+      "pe_enabled": true,
+      "pe_cached": true,
+      "sampler_cached": true,
+      "seconds": 0.005,
+      "base_encoder": "qwen3vl_8b_bf16.safetensors"
+    },
+    {
+      "prompt_id": "7140fe03-d678-4506-a310-79fcfa5efdaf",
+      "seed": 447606998181262,
+      "pe_seed": 447606998181262,
+      "pe_enabled": true,
+      "pe_cached": true,
+      "sampler_cached": true,
+      "seconds": 0.004,
+      "base_encoder": "qwen3vl_8b_bf16.safetensors"
+    },
+    {
+      "prompt_id": "4a42e526-833d-4b61-a4a8-ba75813c5d85",
+      "seed": 447606998181262,
+      "pe_seed": 447606998181262,
+      "pe_enabled": true,
+      "pe_cached": true,
+      "sampler_cached": true,
+      "seconds": 0.005,
+      "base_encoder": "qwen3vl_8b_bf16.safetensors"
+    },
+    {
+      "prompt_id": "09da7889-8e6f-455e-bc58-35feb6734756",
+      "seed": 0,
+      "pe_seed": 0,
+      "pe_enabled": true,
+      "pe_cached": false,
+      "sampler_cached": false,
+      "seconds": 27.116,
+      "base_encoder": "qwen3vl_8b_bf16.safetensors"
+    },
+    {
+      "prompt_id": "e7705f63-db57-4756-aa1d-7e124167da01",
+      "seed": 0,
+      "pe_seed": 0,
+      "pe_enabled": true,
+      "pe_cached": true,
+      "sampler_cached": true,
+      "seconds": 0.005,
+      "base_encoder": "qwen3vl_8b_bf16.safetensors"
+    },
+    {
+      "prompt_id": "40145322-be49-4581-92e4-f9912359aabb",
+      "seed": 0,
+      "pe_seed": 0,
+      "pe_enabled": true,
+      "pe_cached": true,
+      "sampler_cached": true,
+      "seconds": 0.004,
+      "base_encoder": "qwen3vl_8b_bf16.safetensors"
+    },
+    {
+      "prompt_id": "3513fd62-be7f-46c1-9ebf-8b8f0ec843b0",
+      "seed": 1,
+      "pe_seed": 1,
+      "pe_enabled": true,
+      "pe_cached": false,
+      "sampler_cached": false,
+      "seconds": 21.288,
+      "base_encoder": "qwen3vl_8b_bf16.safetensors"
+    }
+  ]
+}

@@ -59,3 +59,12 @@ FFN 路径直接图进程 allocator 峰值 44.36 GiB，含增强器与尺寸切�
 
 
 普通 `start-hpu.sh` 服务最终验收直接图三次成功，17.389/7.712/7.733 秒，后两次改变 noise seed 并复用节点文本缓存。首次启用增强器完整图 69.834 秒，最终可见扩写文本与观测服务 BF16 warm 完全相同。服务保持在 `http://192.168.10.21:8189`，队列为空。通过 userdata API 读回已安装 UI 工作流，与本仓库交付文件逐字节一致。
+
+
+## 外层 seed 与 PE 缓存核查
+
+2026-11-13 用户截图对应的最近12次请求来自带 KSampler 的基础文生图子图，主模型改为 Turbo BF16、8步 Euler/simple，基础编码器后改为 Qwen3-VL BF16，PE使用BF16解码权重，thinking关闭。子图 KSampler 的 `control_after_generate` 为 fixed，外层 seed 同时连到 KSampler.seed 和 TextGenerate.sampling_mode.seed。0是可复现的固定种子，前端需在实际种子来源上启用 randomize 才会每次提交新值。
+
+历史显示首次 seed=0 完整执行27.116秒，随后两次相同输入为0.005/0.004秒，TextGenerate和KSampler均在execution_cached内。最后 seed=1 完整执行21.288秒，两个节点均重新执行。切换基础编码器为BF16的那次，PE命中缓存、编码与采样重算。PE执行由其输入及依赖变化触发，模型精度选择沿节点依赖传播。
+
+原始请求保存在忽略目录 `results/qwen21-seed-2026-11-13`，去除提示词后的摘要见 `evidence/qwen21-seed-cache-2026-11-13.json`。此处为用户当前图的核查，首版固定Turbo调度的性能数据仍按前文条件解释。

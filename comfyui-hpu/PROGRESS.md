@@ -1,6 +1,14 @@
 # 当前状态与未决问题
 
-截至2026-11-13，产品分支`codex/gaudi2-hpu`，最终提交`9f2ff96ecc4e036b1d7a8f55f7b93defb01beb1f`。本文件提供交接快照，测试过程和候选取舍集中于 [主题索引](README.md)。
+截至2026-11-13，产品分支`codex/gaudi2-hpu`，最终提交`ed9552e581acfa37c6be2ac6f1a86a629f21d542`。本文件提供交接快照，测试过程和候选取舍集中于 [主题索引](README.md)。
+
+## Qwen Image 2.1 全BF16优化
+
+当前组件为Turbo BF16、Qwen3-VL 8B BF16、匹配文生图PE的BF16解码文件和Qwen Image 2.1 VAE BF16。`17b4b231`接入原生RoPE与无mask attention编译，`ed9552e5`编译temperature=1.0的HPU采样概率。投影/RMSNorm保留原舍入边界，有mask前缀采用原数学执行。
+
+用户832×1504、8步Euler/simple、CFG1、PE开启且thinking关闭，五次完整warm中位21.028→16.079s，PE11.416→10.593s，DiT8.089→4.006s。复用文本结果后的整图9.2185→5.130s，进程峰值76.645→60.335GiB。回退原数学路径复验为20.790s，收益可复现。
+
+12组真实block逐元素一致，六组完整扩写token与RGBA PNG逐元素一致，含不同seed、512²/1024²、thinking开启与官方Turbo调度。159项回归通过、1项跳过。普通8189首次49.833s、换seed18.267s、重载42.926s成功，清理稳定占用约3.15GiB。当前验证范围为batch1文生图，2K及编辑另验。[深入记录](QWEN21_BF16.md) · [证据](evidence/qwen21-bf16-2026-11-13.json)
 
 ## Qwen Image 2.1 Turbo 首版
 
