@@ -1,6 +1,12 @@
 # 当前状态与未决问题
 
-截至2026-11-13，产品分支`codex/gaudi2-hpu`，最终提交`34e2649e9b9bd6e1e48c23f76e1c93d35e559596`。本文件提供交接快照，测试过程和候选取舍集中于 [主题索引](README.md)。
+截至2026-11-13，产品分支`codex/gaudi2-hpu`，最终提交`9f2ff96ecc4e036b1d7a8f55f7b93defb01beb1f`。本文件提供交接快照，测试过程和候选取舍集中于 [主题索引](README.md)。
+
+## Qwen Image 2.1 Turbo 首版
+
+`0c764d59`修复官方增强器 presence penalty 的 HPU 布尔 mask 更新，`9f2ff96e`接入普通 BF16 FFN 区域编译。使用官方基础文生图结构与 Turbo 8 步调度，复用已有 BF16 主模型、Qwen3-VL 8B、Qwen Image 2.1 VAE。新文生图增强器已下载并校验，默认 HPU 图使用它的本地 BF16 解码文件。
+
+1024²直接图五次 warm 中位 7.726s，基线8.262s。开启 thinking 增强器的完整图为42.340/42.229s，2548输入/1316输出tokens。原 INT8 同提示词自然生成1124 tokens，完整热运行161.042s。512²及卸载重载通过，清理稳定后约0.849GiB。80项回归通过、1项跳过。九组真实 block 相对 eager RRMSE 为0.00180%–0.01142%，九组 FFN 抽样对CPU FP64的误差比0.99988–1.00228。相同seed图像细节存在变化，本轮覆盖512²和1024²。普通8189最终直接图17.389/7.712/7.733s、首次增强图69.834s成功，工作流已安装，队列为空。[首版记录](QWEN21_FIRST.md) · [证据](evidence/qwen21-first-2026-11-13.json)
 
 ## 当前接受的实现
 
@@ -15,7 +21,7 @@
 | GDN | `60da4e33`区域编译、prefill分桶、`41f01e68`并行递推、`a8f42df2`八行扩区 | [GDN](optimization/TEXT_GDN.md) |
 | 运行时 | `441d459d`初始化后恢复SIGPIPE忽略策略，独立eager环境 | [运行时](optimization/RUNTIME.md) |
 
-## 最近一轮验收
+## 最近一轮 MOSS 验收
 
 各项为自己的同轮五次warm中位数。
 

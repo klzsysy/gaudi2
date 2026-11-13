@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-最近部署为`34e2649e`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+最近部署为`9f2ff96e`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 ```bash
 export PT_HPU_LAZY_MODE=0
@@ -86,3 +86,10 @@ export GC_KERNEL_PATH=/usr/lib/habanalabs/libtpc_kernels.so
 ## 原始性能资料
 
 固定MTP程序位于`performance-2026-11-11-completion/mtp-record-298/program.pt`，最新三阶段资料在`performance-2026-11-12-three-stage`，长序列修复在`performance-2026-11-12-resolution-fix`。其它目录、probe与证据入口见各主题末尾。完整流程、文本单独、混合shape和带logits诊断的卸载值分别对照，避免把保留诊断对象计为产品泄漏。
+
+
+## Qwen Image 2.1 Turbo 首版
+
+匹配文生图增强器已下载到共享 text_encoders，文件名为 `qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors`。HPU 工作流使用同源本地解码文件 `qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors`。主模型实际为 `qwen_image_2.1_turbo_bf16.safetensors`，复用已有 Qwen3-VL 8B 和 Qwen Image 2.1 VAE。
+
+导入本仓库 `workflows/qwen21-turbo-hpu.json`，默认 1024²/8 步/CFG1，启用 refine_prompt 即使用 thinking 增强器。API 版本为 `qwen21-turbo-direct-api.json` 和 `qwen21-turbo-enhanced-api.json`，原 INT8 增强器复验使用 `qwen21-turbo-enhanced-int8-api.json`。详细耗时、精度变化与候选取舍见 [首版记录](QWEN21_FIRST.md)。

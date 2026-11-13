@@ -1,0 +1,1408 @@
+{
+  "date": "2026-11-13",
+  "base_product": "34e2649e",
+  "product": "9f2ff96e",
+  "tests": {
+    "passed": 80,
+    "skipped": 1
+  },
+  "runs": {
+    "baseline": [
+      {
+        "run": 0,
+        "prompt_id": "d59dbd67-f3e3-478c-b843-98184565edbf",
+        "status": "success",
+        "seconds": 33.697,
+        "images": [
+          {
+            "filename": "qwen21_baseline_0_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000457633,
+          "PreviewAny": 0.000145691,
+          "VAELoader": 1.171011747,
+          "ResolutionSelector": 0.000187664,
+          "EmptyLatentImage": 0.000738949,
+          "ManualSigmas": 0.000324892,
+          "KSamplerSelect": 0.000138449,
+          "CLIPLoader": 15.847166308,
+          "TextEncodeQwenImage21": 0.619611022,
+          "UNETLoader": 4.109169561,
+          "QwenImage21Cache": 0.00263704,
+          "CFGGuider": 0.000283299,
+          "RandomNoise": 0.000173432,
+          "SamplerCustomAdvanced": 10.776436968,
+          "VAEDecode": 0.783645253,
+          "SaveImageAdvanced": 0.356609356
+        },
+        "fallback_counts": {},
+        "peak_gib": 41.57086384296417,
+        "end_gib": 23.43955373764038
+      },
+      {
+        "run": 1,
+        "prompt_id": "d878bcc6-6bf4-4483-9549-1d882f020721",
+        "status": "success",
+        "seconds": 8.223,
+        "images": [
+          {
+            "filename": "qwen21_baseline_1_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.473737467,
+          "CFGGuider": 0.000209627,
+          "SamplerCustomAdvanced": 6.873205382,
+          "VAEDecode": 0.539083698,
+          "SaveImageAdvanced": 0.325768932
+        },
+        "fallback_counts": {},
+        "peak_gib": 42.91971170902252,
+        "end_gib": 23.43955373764038
+      },
+      {
+        "run": 2,
+        "prompt_id": "20de5ecf-4e95-4bb3-a573-759a5e3ac99e",
+        "status": "success",
+        "seconds": 8.273,
+        "images": [
+          {
+            "filename": "qwen21_baseline_2_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.516016507,
+          "CFGGuider": 0.000262827,
+          "SamplerCustomAdvanced": 6.883619232,
+          "VAEDecode": 0.536250778,
+          "SaveImageAdvanced": 0.325561733
+        },
+        "fallback_counts": {},
+        "peak_gib": 42.91971170902252,
+        "end_gib": 23.43955373764038
+      },
+      {
+        "run": 3,
+        "prompt_id": "793c89a0-5c25-4090-ad93-23b102804180",
+        "status": "success",
+        "seconds": 8.262,
+        "images": [
+          {
+            "filename": "qwen21_baseline_3_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "TextEncodeQwenImage21": 0.511009283,
+          "CFGGuider": 0.000332412,
+          "SamplerCustomAdvanced": 6.876318169,
+          "VAEDecode": 0.536902031,
+          "SaveImageAdvanced": 0.325823672
+        },
+        "fallback_counts": {},
+        "peak_gib": 42.91971170902252,
+        "end_gib": 23.43955373764038
+      }
+    ],
+    "compiled": [
+      {
+        "run": 0,
+        "prompt_id": "d5af1671-b0b4-44a4-8490-d62b0c1139bf",
+        "status": "success",
+        "seconds": 31.064,
+        "images": [
+          {
+            "filename": "qwen21_compiled_0_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000209266,
+          "PreviewAny": 7.6636e-05,
+          "VAELoader": 0.652409551,
+          "ResolutionSelector": 0.000195896,
+          "EmptyLatentImage": 0.000575509,
+          "ManualSigmas": 0.000345893,
+          "KSamplerSelect": 0.000153292,
+          "CLIPLoader": 14.315507944,
+          "TextEncodeQwenImage21": 0.522980138,
+          "UNETLoader": 1.790333408,
+          "QwenImage21Cache": 0.001971139,
+          "CFGGuider": 0.00015198,
+          "RandomNoise": 0.000137568,
+          "SamplerCustomAdvanced": 12.70282197,
+          "VAEDecode": 0.713541496,
+          "SaveImageAdvanced": 0.337045948
+        },
+        "fallback_counts": {},
+        "peak_gib": 32.581740498542786,
+        "end_gib": 24.792095184326172
+      },
+      {
+        "run": 1,
+        "prompt_id": "5e32e77b-9b8e-4004-8c5c-0fc68495c56b",
+        "status": "success",
+        "seconds": 6.184,
+        "images": [
+          {
+            "filename": "qwen21_compiled_1_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000292652,
+          "PreviewAny": 7.1938e-05,
+          "TextEncodeQwenImage21": 0.372695052,
+          "CFGGuider": 0.000231009,
+          "SamplerCustomAdvanced": 4.93365625,
+          "VAEDecode": 0.538565892,
+          "SaveImageAdvanced": 0.325715791
+        },
+        "fallback_counts": {},
+        "peak_gib": 33.05871605873108,
+        "end_gib": 24.792095184326172
+      },
+      {
+        "run": 2,
+        "prompt_id": "8698ced3-531d-45f1-8c01-adde9cd9abc7",
+        "status": "success",
+        "seconds": 6.215,
+        "images": [
+          {
+            "filename": "qwen21_compiled_2_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000367595,
+          "PreviewAny": 7.6135e-05,
+          "TextEncodeQwenImage21": 0.40364907,
+          "CFGGuider": 0.000247283,
+          "SamplerCustomAdvanced": 4.937479557,
+          "VAEDecode": 0.537784272,
+          "SaveImageAdvanced": 0.32236399
+        },
+        "fallback_counts": {},
+        "peak_gib": 33.070382475852966,
+        "end_gib": 24.792095184326172
+      },
+      {
+        "run": 3,
+        "prompt_id": "7a27aa7f-1cde-4188-8b8b-96d4c6e320fb",
+        "status": "success",
+        "seconds": 6.325,
+        "images": [
+          {
+            "filename": "qwen21_compiled_3_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000334445,
+          "PreviewAny": 0.000113202,
+          "TextEncodeQwenImage21": 0.507884611,
+          "CFGGuider": 0.000244038,
+          "SamplerCustomAdvanced": 4.939605935,
+          "VAEDecode": 0.53847795,
+          "SaveImageAdvanced": 0.324520799
+        },
+        "fallback_counts": {},
+        "peak_gib": 33.0709753036499,
+        "end_gib": 24.792095184326172
+      }
+    ],
+    "enhanced": [
+      {
+        "run": 0,
+        "prompt_id": "9c7a5a3b-847b-4817-b891-041acae2e4db",
+        "status": "error",
+        "seconds": 18.229,
+        "images": [],
+        "nodes": {
+          "StringMultiline": 0.000310328,
+          "CLIPLoader": 4.360261901,
+          "TextGenerate": 13.856255253
+        },
+        "fallback_counts": {},
+        "peak_gib": 59.74704658985138,
+        "end_gib": 33.90330743789673
+      }
+    ],
+    "enhanced-bf16": [
+      {
+        "run": 0,
+        "prompt_id": "5e27f4ca-db9b-4e14-acd8-fe3c5f877ced",
+        "status": "success",
+        "seconds": 70.569,
+        "images": [
+          {
+            "filename": "qwen21_enhanced-bf16_0_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "StringMultiline": 0.000149996,
+          "CLIPLoader": 12.172850565,
+          "TextGenerate": 50.258250842,
+          "SwitchNode": 0.00012648,
+          "PreviewAny": 8.7732e-05,
+          "TextEncodeQwenImage21": 0.535081504,
+          "CFGGuider": 0.000250085,
+          "SamplerCustomAdvanced": 6.682302701,
+          "VAEDecode": 0.552988857,
+          "SaveImageAdvanced": 0.34862701
+        },
+        "generated_tokens": 1316,
+        "generated_text": "I first separate what is fixed from what is open: the request is in English and fixes a realistic product photograph. It fixes one blue ceramic teapot, one matching cup, an oak table, and placement beside a sunny window. It leaves the room, camera angle, exact ceramic glaze, background props, light quality, shadows, and aspect ratio for me to design.\n\nFor the canvas, I choose a horizontal frame because the teapot, cup, tabletop, and window need room to relate laterally. Since no ratio is stated, I settle on 3:2 as the natural default for a horizontal product still life. This lets the objects sit low and central while the window explains the sunlight above them.\n\nMy opening sentence needs to carry the horizontal orientation, realistic style, still-life photograph medium, and tea setting by the window. I want the first line to establish warm wood against cool daylight, so the palette starts with oak browns and pale blues. I keep the subject compact at first, then let the walk add handles, spout, glaze, and atmosphere.\n\nBefore writing I settle the inventory: window in the upper left, blurred greenery beyond it, plant slightly left of center behind the tea. A beige woven runner goes across the lower-left foreground, the teapot occupies the middle-right, and the mug sits just right of center in front. The oak surface fills the lower half, wall shadow reaches into the upper right, and there are no legible text elements.\n\nI walk the frame as a divided still-life scene because the window, background prop, tabletop, and two vessels occupy distinct regions. I begin with the window and its soft exterior blur, then place a small plant between the window and ceramics for depth. Across the lower-left area, I lay the woven runner diagonally so the tabletop has texture and directional movement. In the center-right, I build the teapot first: rounded body, short spout pointing left, arched handle on the right, lid, knob, glossy cobalt glaze, speckles, streaks, and bright reflections. In front of it, slightly right of center, I make the mug smaller but related, with its right-side handle turned away from the teapot. Along the lower edge, I emphasize polished oak grain, knots, seams, bevels, and sunlit amber-brown warmth under both ceramics.\n\nNothing in this image is meant to be read, so there is no text to set, and inventing labels or signage would be wrong.\n\nFor the light, I use strong direct sun entering from the left through the nearby window. It is warm but natural, creating hard-edged highlights on glossy ceramic and softer shadows across the table. I give the lighting its own sentence because it drives the mood, reflections, window-frame shadow, and calm afternoon feeling.\n\nI close on the balance between the large teapot and smaller cup rather than repeating every object. The final impression should feel intimate, quiet, handcrafted, and sunlit, with cool blue ceramics anchored by warm oak. The composition adds up to a cozy domestic product photograph with shallow focus and restrained natural elegance.\n</think>\n\nA realistic still-life photograph shows a blue-glazed ceramic teapot and matching teacup arranged on a warm wooden tabletop beside a sunlit window. The composition is viewed from a slightly elevated three-quarter angle, with the main objects occupying the middle-right portion of the frame and the window creating a bright natural light source from the left. In the upper-left area, a white-framed window admits strong morning or afternoon sunlight; beyond the glass, the outdoor view is softly blurred into pale green and cream bokeh, suggesting foliage outside. The window trim is painted off-white, with vertical mullions and beveled edges catching highlights and casting angular shadows across the tabletop. Slightly left of center in the background, a small potted houseplant sits near the window. Its terracotta-colored pot is partially visible and softly out of focus, with fresh green oval leaves extending upward and outward. The plant lies behind the teapot, adding depth and a gentle domestic atmosphere. Across the lower-left foreground, a woven beige fabric runner or placemat stretches diagonally over the wooden table. It has a coarse linen-like texture, frayed uneven edges, and a muted taupe-beige color that contrasts with the glossy ceramic surfaces. The wooden table fills most of the lower half of the image, showing rich golden-brown grain lines, knots, plank seams, and polished highlights from the sunlight. Strong directional light creates crisp reflections on the ceramics and long, soft-edged shadows that fall toward the right side of the table. The central object is a rounded teapot made of glossy deep blue ceramic, positioned just right of center and slightly behind the cup. Its body is bulbous and smooth, with darker navy-blue speckling, irregular brushlike streaks, and reflective highlights that reveal a handmade stoneware texture. The teapot has a short curved spout projecting toward the left, a domed lid with a small spherical knob on top, and a tall arched handle on the right. The handle is thick, elegant, and loop-shaped, with bright specular highlights along its inner curve. The lid ring and rim are clearly defined, layered over the body with subtle shadows indicating the raised form. In front of the teapot, slightly right of center, sits a matching blue glazed mug or teacup. It is smaller, cylindrical with gently rounded sides, and has a smooth glossy finish covered in similar dark blue mottled patterns and lighter mineral-like streaks. The cup’s right-side handle curves outward in a rounded C-shape, placed closer to the right edge of the image and partly overlapping the teapot’s shadowed area. Both vessels share the same saturated cobalt-blue ceramic glaze, making them visually paired despite their different sizes. The cup is empty or not visibly filled, with the interior catching darker blue reflections. The overall scene feels quiet, intimate, and sun-warmed, emphasizing handcrafted tableware, natural materials, and calm domestic comfort. The photographic style is commercial lifestyle realism with shallow depth of field, warm color grading, high dynamic range highlights, and crisp detail on the main ceramic forms while the plant and exterior background remain softly blurred. The image uses the contrast between glossy blue ceramics, rustic wood, woven fabric, green foliage, and bright window light to create a cozy, artisanal tea setting.",
+        "fallback_counts": {},
+        "peak_gib": 62.93217349052429,
+        "end_gib": 40.96669816970825
+      },
+      {
+        "run": 1,
+        "prompt_id": "7bc21a13-a991-4f3a-adbe-14831f0f1493",
+        "status": "success",
+        "seconds": 42.34,
+        "images": [
+          {
+            "filename": "qwen21_enhanced-bf16_1_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "TextGenerate": 34.369859154,
+          "SwitchNode": 0.000157367,
+          "PreviewAny": 9.7757e-05,
+          "TextEncodeQwenImage21": 0.494377928,
+          "CFGGuider": 0.000243676,
+          "SamplerCustomAdvanced": 6.568963704,
+          "VAEDecode": 0.539292912,
+          "SaveImageAdvanced": 0.349640682
+        },
+        "generated_tokens": 1316,
+        "generated_text": "I first separate what is fixed from what is open: the request is in English and fixes a realistic product photograph. It fixes one blue ceramic teapot, one matching cup, an oak table, and placement beside a sunny window. It leaves the room, camera angle, exact ceramic glaze, background props, light quality, shadows, and aspect ratio for me to design.\n\nFor the canvas, I choose a horizontal frame because the teapot, cup, tabletop, and window need room to relate laterally. Since no ratio is stated, I settle on 3:2 as the natural default for a horizontal product still life. This lets the objects sit low and central while the window explains the sunlight above them.\n\nMy opening sentence needs to carry the horizontal orientation, realistic style, still-life photograph medium, and tea setting by the window. I want the first line to establish warm wood against cool daylight, so the palette starts with oak browns and pale blues. I keep the subject compact at first, then let the walk add handles, spout, glaze, and atmosphere.\n\nBefore writing I settle the inventory: window in the upper left, blurred greenery beyond it, plant slightly left of center behind the tea. A beige woven runner goes across the lower-left foreground, the teapot occupies the middle-right, and the mug sits just right of center in front. The oak surface fills the lower half, wall shadow reaches into the upper right, and there are no legible text elements.\n\nI walk the frame as a divided still-life scene because the window, background prop, tabletop, and two vessels occupy distinct regions. I begin with the window and its soft exterior blur, then place a small plant between the window and ceramics for depth. Across the lower-left area, I lay the woven runner diagonally so the tabletop has texture and directional movement. In the center-right, I build the teapot first: rounded body, short spout pointing left, arched handle on the right, lid, knob, glossy cobalt glaze, speckles, streaks, and bright reflections. In front of it, slightly right of center, I make the mug smaller but related, with its right-side handle turned away from the teapot. Along the lower edge, I emphasize polished oak grain, knots, seams, bevels, and sunlit amber-brown warmth under both ceramics.\n\nNothing in this image is meant to be read, so there is no text to set, and inventing labels or signage would be wrong.\n\nFor the light, I use strong direct sun entering from the left through the nearby window. It is warm but natural, creating hard-edged highlights on glossy ceramic and softer shadows across the table. I give the lighting its own sentence because it drives the mood, reflections, window-frame shadow, and calm afternoon feeling.\n\nI close on the balance between the large teapot and smaller cup rather than repeating every object. The final impression should feel intimate, quiet, handcrafted, and sunlit, with cool blue ceramics anchored by warm oak. The composition adds up to a cozy domestic product photograph with shallow focus and restrained natural elegance.\n</think>\n\nA realistic still-life photograph shows a blue-glazed ceramic teapot and matching teacup arranged on a warm wooden tabletop beside a sunlit window. The composition is viewed from a slightly elevated three-quarter angle, with the main objects occupying the middle-right portion of the frame and the window creating a bright natural light source from the left. In the upper-left area, a white-framed window admits strong morning or afternoon sunlight; beyond the glass, the outdoor view is softly blurred into pale green and cream bokeh, suggesting foliage outside. The window trim is painted off-white, with vertical mullions and beveled edges catching highlights and casting angular shadows across the tabletop. Slightly left of center in the background, a small potted houseplant sits near the window. Its terracotta-colored pot is partially visible and softly out of focus, with fresh green oval leaves extending upward and outward. The plant lies behind the teapot, adding depth and a gentle domestic atmosphere. Across the lower-left foreground, a woven beige fabric runner or placemat stretches diagonally over the wooden table. It has a coarse linen-like texture, frayed uneven edges, and a muted taupe-beige color that contrasts with the glossy ceramic surfaces. The wooden table fills most of the lower half of the image, showing rich golden-brown grain lines, knots, plank seams, and polished highlights from the sunlight. Strong directional light creates crisp reflections on the ceramics and long, soft-edged shadows that fall toward the right side of the table. The central object is a rounded teapot made of glossy deep blue ceramic, positioned just right of center and slightly behind the cup. Its body is bulbous and smooth, with darker navy-blue speckling, irregular brushlike streaks, and reflective highlights that reveal a handmade stoneware texture. The teapot has a short curved spout projecting toward the left, a domed lid with a small spherical knob on top, and a tall arched handle on the right. The handle is thick, elegant, and loop-shaped, with bright specular highlights along its inner curve. The lid ring and rim are clearly defined, layered over the body with subtle shadows indicating the raised form. In front of the teapot, slightly right of center, sits a matching blue glazed mug or teacup. It is smaller, cylindrical with gently rounded sides, and has a smooth glossy finish covered in similar dark blue mottled patterns and lighter mineral-like streaks. The cup’s right-side handle curves outward in a rounded C-shape, placed closer to the right edge of the image and partly overlapping the teapot’s shadowed area. Both vessels share the same saturated cobalt-blue ceramic glaze, making them visually paired despite their different sizes. The cup is empty or not visibly filled, with the interior catching darker blue reflections. The overall scene feels quiet, intimate, and sun-warmed, emphasizing handcrafted tableware, natural materials, and calm domestic comfort. The photographic style is commercial lifestyle realism with shallow depth of field, warm color grading, high dynamic range highlights, and crisp detail on the main ceramic forms while the plant and exterior background remain softly blurred. The image uses the contrast between glossy blue ceramics, rustic wood, woven fabric, green foliage, and bright window light to create a cozy, artisanal tea setting.",
+        "fallback_counts": {},
+        "peak_gib": 62.987327098846436,
+        "end_gib": 40.96669816970825
+      },
+      {
+        "run": 2,
+        "prompt_id": "52bc4b46-2583-455d-9472-1e442ef70dc6",
+        "status": "success",
+        "seconds": 42.229,
+        "images": [
+          {
+            "filename": "qwen21_enhanced-bf16_2_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "TextGenerate": 34.259321231,
+          "SwitchNode": 0.000162925,
+          "PreviewAny": 9.8669e-05,
+          "TextEncodeQwenImage21": 0.490223482,
+          "CFGGuider": 0.000242885,
+          "SamplerCustomAdvanced": 6.572547385,
+          "VAEDecode": 0.539033456,
+          "SaveImageAdvanced": 0.350525332
+        },
+        "generated_tokens": 1316,
+        "generated_text": "I first separate what is fixed from what is open: the request is in English and fixes a realistic product photograph. It fixes one blue ceramic teapot, one matching cup, an oak table, and placement beside a sunny window. It leaves the room, camera angle, exact ceramic glaze, background props, light quality, shadows, and aspect ratio for me to design.\n\nFor the canvas, I choose a horizontal frame because the teapot, cup, tabletop, and window need room to relate laterally. Since no ratio is stated, I settle on 3:2 as the natural default for a horizontal product still life. This lets the objects sit low and central while the window explains the sunlight above them.\n\nMy opening sentence needs to carry the horizontal orientation, realistic style, still-life photograph medium, and tea setting by the window. I want the first line to establish warm wood against cool daylight, so the palette starts with oak browns and pale blues. I keep the subject compact at first, then let the walk add handles, spout, glaze, and atmosphere.\n\nBefore writing I settle the inventory: window in the upper left, blurred greenery beyond it, plant slightly left of center behind the tea. A beige woven runner goes across the lower-left foreground, the teapot occupies the middle-right, and the mug sits just right of center in front. The oak surface fills the lower half, wall shadow reaches into the upper right, and there are no legible text elements.\n\nI walk the frame as a divided still-life scene because the window, background prop, tabletop, and two vessels occupy distinct regions. I begin with the window and its soft exterior blur, then place a small plant between the window and ceramics for depth. Across the lower-left area, I lay the woven runner diagonally so the tabletop has texture and directional movement. In the center-right, I build the teapot first: rounded body, short spout pointing left, arched handle on the right, lid, knob, glossy cobalt glaze, speckles, streaks, and bright reflections. In front of it, slightly right of center, I make the mug smaller but related, with its right-side handle turned away from the teapot. Along the lower edge, I emphasize polished oak grain, knots, seams, bevels, and sunlit amber-brown warmth under both ceramics.\n\nNothing in this image is meant to be read, so there is no text to set, and inventing labels or signage would be wrong.\n\nFor the light, I use strong direct sun entering from the left through the nearby window. It is warm but natural, creating hard-edged highlights on glossy ceramic and softer shadows across the table. I give the lighting its own sentence because it drives the mood, reflections, window-frame shadow, and calm afternoon feeling.\n\nI close on the balance between the large teapot and smaller cup rather than repeating every object. The final impression should feel intimate, quiet, handcrafted, and sunlit, with cool blue ceramics anchored by warm oak. The composition adds up to a cozy domestic product photograph with shallow focus and restrained natural elegance.\n</think>\n\nA realistic still-life photograph shows a blue-glazed ceramic teapot and matching teacup arranged on a warm wooden tabletop beside a sunlit window. The composition is viewed from a slightly elevated three-quarter angle, with the main objects occupying the middle-right portion of the frame and the window creating a bright natural light source from the left. In the upper-left area, a white-framed window admits strong morning or afternoon sunlight; beyond the glass, the outdoor view is softly blurred into pale green and cream bokeh, suggesting foliage outside. The window trim is painted off-white, with vertical mullions and beveled edges catching highlights and casting angular shadows across the tabletop. Slightly left of center in the background, a small potted houseplant sits near the window. Its terracotta-colored pot is partially visible and softly out of focus, with fresh green oval leaves extending upward and outward. The plant lies behind the teapot, adding depth and a gentle domestic atmosphere. Across the lower-left foreground, a woven beige fabric runner or placemat stretches diagonally over the wooden table. It has a coarse linen-like texture, frayed uneven edges, and a muted taupe-beige color that contrasts with the glossy ceramic surfaces. The wooden table fills most of the lower half of the image, showing rich golden-brown grain lines, knots, plank seams, and polished highlights from the sunlight. Strong directional light creates crisp reflections on the ceramics and long, soft-edged shadows that fall toward the right side of the table. The central object is a rounded teapot made of glossy deep blue ceramic, positioned just right of center and slightly behind the cup. Its body is bulbous and smooth, with darker navy-blue speckling, irregular brushlike streaks, and reflective highlights that reveal a handmade stoneware texture. The teapot has a short curved spout projecting toward the left, a domed lid with a small spherical knob on top, and a tall arched handle on the right. The handle is thick, elegant, and loop-shaped, with bright specular highlights along its inner curve. The lid ring and rim are clearly defined, layered over the body with subtle shadows indicating the raised form. In front of the teapot, slightly right of center, sits a matching blue glazed mug or teacup. It is smaller, cylindrical with gently rounded sides, and has a smooth glossy finish covered in similar dark blue mottled patterns and lighter mineral-like streaks. The cup’s right-side handle curves outward in a rounded C-shape, placed closer to the right edge of the image and partly overlapping the teapot’s shadowed area. Both vessels share the same saturated cobalt-blue ceramic glaze, making them visually paired despite their different sizes. The cup is empty or not visibly filled, with the interior catching darker blue reflections. The overall scene feels quiet, intimate, and sun-warmed, emphasizing handcrafted tableware, natural materials, and calm domestic comfort. The photographic style is commercial lifestyle realism with shallow depth of field, warm color grading, high dynamic range highlights, and crisp detail on the main ceramic forms while the plant and exterior background remain softly blurred. The image uses the contrast between glossy blue ceramics, rustic wood, woven fabric, green foliage, and bright window light to create a cozy, artisanal tea setting.",
+        "fallback_counts": {},
+        "peak_gib": 62.987327098846436,
+        "end_gib": 40.96669816970825
+      }
+    ],
+    "enhanced-fixed": [
+      {
+        "run": 0,
+        "prompt_id": "260b2131-8d2a-4d69-ab32-984a134dc21a",
+        "status": "success",
+        "seconds": 193.54,
+        "images": [
+          {
+            "filename": "qwen21_enhanced-fixed_0_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "VAELoader": 0.300139547,
+          "ResolutionSelector": 0.000185419,
+          "EmptyLatentImage": 0.000621414,
+          "ManualSigmas": 0.000350176,
+          "KSamplerSelect": 0.000136495,
+          "CLIPLoader": 4.048076802,
+          "UNETLoader": 1.046935119,
+          "QwenImage21Cache": 0.002046409,
+          "RandomNoise": 0.000151197,
+          "StringMultiline": 0.000132269,
+          "TextGenerate": 170.584841908,
+          "SwitchNode": 0.000247412,
+          "PreviewAny": 0.000145719,
+          "TextEncodeQwenImage21": 0.509783843,
+          "CFGGuider": 0.00023925,
+          "SamplerCustomAdvanced": 12.701572928,
+          "VAEDecode": 0.726743766,
+          "SaveImageAdvanced": 0.402473961
+        },
+        "generated_tokens": 1124,
+        "generated_text": "I first separate what is fixed from what is open: the request is in English and fixes a realistic product photograph. It fixes one blue ceramic teapot, one matching cup, an oak table, and placement beside a sunny window. It leaves the room, camera angle, exact ceramic finish, props, light behavior, depth of field, and aspect ratio for me to design.\n\nFor the canvas, I choose a horizontal frame because the teapot, cup, tabletop, and window need room to relate laterally. Since no ratio is stated, I settle on 3:2 as the natural default for a close product still life.\n\nMy opening sentence needs to carry the horizontal feeling, warm realistic style, product-photography medium, and the tea setting by the window. I keep the palette anchored in blue-and-white ceramic, honey-toned wood, and golden daylight rather than adding a busy background.\n\nBefore writing I settle the inventory: the window occupies the upper left, blurred greenery sits beyond it, and the sill runs behind the objects. The teapot goes slightly left of centre in the foreground, the cup lands right and slightly back, and the oak tabletop fills the lower half. In the upper right I add leafy stems, with stacked books or notebooks beneath them; there are no legible text elements.\n\nI walk the frame as a divided close-up still life, because the scene has background, object area, and tabletop regions. I begin with the sunlit window and outdoor blur, then bring attention down to the polished wooden surface. On the left-centre foreground, I give the teapot enough scale to dominate, with glossy cobalt decoration, rounded form, lid, spout, handle, rim, foot, and reflected highlights. To the right, I place the smaller cup so it echoes the glaze and pattern without competing with the teapot. Along the lower edge, I describe oak grain, knots, seams, reflections, and contact shadows. At the far upper right, I use plant leaves and pale stacked notebooks to complete the corner while keeping them secondary.\n\nNothing in this image is meant to be read, so there is no text to set, and inventing signage would be wrong.\n\nFor the light, I choose low golden daylight entering from the left through the window, directional but softened by glass. It creates bright ceramic highlights, diagonal warmth on the tabletop, gentle shadows, and a shallow-focus glow outside, so it earns its own sentence.\n\nI close on the whole frame as calm domestic product photography rather than merely a pair of objects. The last movement steps back to balance, artisanal detail, cozy morning mood, realistic rendering, and the contrast between cool blue glaze and warm wood.\n</think>\n\nA warm, realistic still-life product photograph shows an elegant blue-and-white ceramic tea setting arranged on a honey-brown wooden table beside a sunlit window. In the upper-left area, a white-painted window frame and deep window sill run diagonally into the scene, with strong golden daylight streaming through the glass. Outside the window, the background is softly blurred into pale cream, yellow-green, and muted olive bokeh, suggesting foliage illuminated by late-afternoon sunlight. The light falls across the tabletop from left to right, creating long soft shadows and bright specular highlights on the ceramic surfaces. In the foreground slightly left of center, a medium-to-large teapot dominates the composition, occupying roughly one-third of the image width. It has a rounded bulbous body, a fitted domed lid with a smooth spherical knob, a curved tapered spout pointing toward the left front edge, and a large arched handle on the right side. The teapot is glossy white porcelain covered with intricate cobalt-blue floral ornamentation. The decoration includes dense clusters of small blossoms, branching stems, dark vine lines, shaded petal details, and fine hand-painted texture that gives the pattern a traditional porcelain appearance. The lid top also features blue botanical motifs, while the rim, foot ring, handle, and spout edge are defined by clean circular contours and reflective highlights. To the right of the teapot, set slightly farther back and closer to the window, a matching teacup sits on the same tabletop. The cup is smaller, rounded, and glossy, with a flared rim, a slender curved handle extending to the right, and blue floral patterns wrapped around its exterior. Its base catches warm sunlight, producing bright gold reflections against the blue glaze. Both objects rest directly on a richly grained wooden surface with visible plank seams, knots, darker streaks, and a polished texture. The cup and teapot cast elongated, soft-edged shadows toward the lower right, emphasizing the low-angle sunlight. In the upper-right background, a potted plant with thin brown stems and oval green leaves rises from the corner of the frame. The leaves are partially out of focus, with some sharply lit edges and deeper shadowed interiors. Beneath and around the plant are two or more stacked books or notebooks with pale pages and muted covers, including a darker cover near the bottom, forming a quiet decorative backdrop. The overall composition is a close-up, three-quarter view with shallow depth of field, placing sharp emphasis on the teapot’s detailed ceramic finish while gently softening the window plants and background. The color palette combines warm amber wood tones, creamy sunlight, cobalt blue ceramics, and natural green foliage, creating a calm, cozy, artisanal atmosphere suitable for tea, home decor, lifestyle, or porcelain product imagery.",
+        "fallback_counts": {},
+        "peak_gib": 45.64762616157532,
+        "end_gib": 33.733754992485046
+      },
+      {
+        "run": 1,
+        "prompt_id": "b089cbd7-ca45-4db0-a371-8ca264f42f2e",
+        "status": "success",
+        "seconds": 161.042,
+        "images": [
+          {
+            "filename": "qwen21_enhanced-fixed_1_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "TextGenerate": 154.578403927,
+          "SwitchNode": 0.00020573,
+          "PreviewAny": 0.000100451,
+          "TextEncodeQwenImage21": 0.478421357,
+          "CFGGuider": 0.000270757,
+          "SamplerCustomAdvanced": 5.034029102,
+          "VAEDecode": 0.53976573,
+          "SaveImageAdvanced": 0.388473955
+        },
+        "generated_tokens": 1124,
+        "generated_text": "I first separate what is fixed from what is open: the request is in English and fixes a realistic product photograph. It fixes one blue ceramic teapot, one matching cup, an oak table, and placement beside a sunny window. It leaves the room, camera angle, exact ceramic finish, props, light behavior, depth of field, and aspect ratio for me to design.\n\nFor the canvas, I choose a horizontal frame because the teapot, cup, tabletop, and window need room to relate laterally. Since no ratio is stated, I settle on 3:2 as the natural default for a close product still life.\n\nMy opening sentence needs to carry the horizontal feeling, warm realistic style, product-photography medium, and the tea setting by the window. I keep the palette anchored in blue-and-white ceramic, honey-toned wood, and golden daylight rather than adding a busy background.\n\nBefore writing I settle the inventory: the window occupies the upper left, blurred greenery sits beyond it, and the sill runs behind the objects. The teapot goes slightly left of centre in the foreground, the cup lands right and slightly back, and the oak tabletop fills the lower half. In the upper right I add leafy stems, with stacked books or notebooks beneath them; there are no legible text elements.\n\nI walk the frame as a divided close-up still life, because the scene has background, object area, and tabletop regions. I begin with the sunlit window and outdoor blur, then bring attention down to the polished wooden surface. On the left-centre foreground, I give the teapot enough scale to dominate, with glossy cobalt decoration, rounded form, lid, spout, handle, rim, foot, and reflected highlights. To the right, I place the smaller cup so it echoes the glaze and pattern without competing with the teapot. Along the lower edge, I describe oak grain, knots, seams, reflections, and contact shadows. At the far upper right, I use plant leaves and pale stacked notebooks to complete the corner while keeping them secondary.\n\nNothing in this image is meant to be read, so there is no text to set, and inventing signage would be wrong.\n\nFor the light, I choose low golden daylight entering from the left through the window, directional but softened by glass. It creates bright ceramic highlights, diagonal warmth on the tabletop, gentle shadows, and a shallow-focus glow outside, so it earns its own sentence.\n\nI close on the whole frame as calm domestic product photography rather than merely a pair of objects. The last movement steps back to balance, artisanal detail, cozy morning mood, realistic rendering, and the contrast between cool blue glaze and warm wood.\n</think>\n\nA warm, realistic still-life product photograph shows an elegant blue-and-white ceramic tea setting arranged on a honey-brown wooden table beside a sunlit window. In the upper-left area, a white-painted window frame and deep window sill run diagonally into the scene, with strong golden daylight streaming through the glass. Outside the window, the background is softly blurred into pale cream, yellow-green, and muted olive bokeh, suggesting foliage illuminated by late-afternoon sunlight. The light falls across the tabletop from left to right, creating long soft shadows and bright specular highlights on the ceramic surfaces. In the foreground slightly left of center, a medium-to-large teapot dominates the composition, occupying roughly one-third of the image width. It has a rounded bulbous body, a fitted domed lid with a smooth spherical knob, a curved tapered spout pointing toward the left front edge, and a large arched handle on the right side. The teapot is glossy white porcelain covered with intricate cobalt-blue floral ornamentation. The decoration includes dense clusters of small blossoms, branching stems, dark vine lines, shaded petal details, and fine hand-painted texture that gives the pattern a traditional porcelain appearance. The lid top also features blue botanical motifs, while the rim, foot ring, handle, and spout edge are defined by clean circular contours and reflective highlights. To the right of the teapot, set slightly farther back and closer to the window, a matching teacup sits on the same tabletop. The cup is smaller, rounded, and glossy, with a flared rim, a slender curved handle extending to the right, and blue floral patterns wrapped around its exterior. Its base catches warm sunlight, producing bright gold reflections against the blue glaze. Both objects rest directly on a richly grained wooden surface with visible plank seams, knots, darker streaks, and a polished texture. The cup and teapot cast elongated, soft-edged shadows toward the lower right, emphasizing the low-angle sunlight. In the upper-right background, a potted plant with thin brown stems and oval green leaves rises from the corner of the frame. The leaves are partially out of focus, with some sharply lit edges and deeper shadowed interiors. Beneath and around the plant are two or more stacked books or notebooks with pale pages and muted covers, including a darker cover near the bottom, forming a quiet decorative backdrop. The overall composition is a close-up, three-quarter view with shallow depth of field, placing sharp emphasis on the teapot’s detailed ceramic finish while gently softening the window plants and background. The color palette combines warm amber wood tones, creamy sunlight, cobalt blue ceramics, and natural green foliage, creating a calm, cozy, artisanal atmosphere suitable for tea, home decor, lifestyle, or porcelain product imagery.",
+        "fallback_counts": {},
+        "peak_gib": 61.48261773586273,
+        "end_gib": 33.733754992485046
+      }
+    ],
+    "ffn": [
+      {
+        "run": 0,
+        "prompt_id": "496d64cb-e098-4206-962a-10e018915c4c",
+        "status": "success",
+        "seconds": 19.015,
+        "images": [
+          {
+            "filename": "qwen21_ffn_0_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000179038,
+          "PreviewAny": 6.5949e-05,
+          "VAELoader": 0.88961805,
+          "ResolutionSelector": 0.000167472,
+          "EmptyLatentImage": 0.000680632,
+          "ManualSigmas": 0.000316015,
+          "KSamplerSelect": 0.000122744,
+          "CLIPLoader": 4.307483654,
+          "TextEncodeQwenImage21": 0.430959103,
+          "UNETLoader": 1.437654267,
+          "QwenImage21Cache": 0.002033595,
+          "CFGGuider": 0.000177136,
+          "RandomNoise": 0.000140671,
+          "SamplerCustomAdvanced": 10.853742209,
+          "VAEDecode": 0.72092784,
+          "SaveImageAdvanced": 0.345147303
+        },
+        "fallback_counts": {},
+        "peak_gib": 42.86545658111572,
+        "end_gib": 23.43955385684967
+      },
+      {
+        "run": 1,
+        "prompt_id": "96179a80-709c-4f2a-9f3d-088b6871bb8d",
+        "status": "success",
+        "seconds": 7.748,
+        "images": [
+          {
+            "filename": "qwen21_ffn_1_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000307873,
+          "PreviewAny": 7.0216e-05,
+          "TextEncodeQwenImage21": 0.494879182,
+          "CFGGuider": 0.000274462,
+          "SamplerCustomAdvanced": 6.377729875,
+          "VAEDecode": 0.537089621,
+          "SaveImageAdvanced": 0.323667387
+        },
+        "fallback_counts": {},
+        "peak_gib": 44.351308822631836,
+        "end_gib": 23.43955385684967
+      },
+      {
+        "run": 2,
+        "prompt_id": "ea526deb-6210-4bdc-a5c5-846ba296cf32",
+        "status": "success",
+        "seconds": 7.726,
+        "images": [
+          {
+            "filename": "qwen21_ffn_2_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000202564,
+          "PreviewAny": 0.000242074,
+          "TextEncodeQwenImage21": 0.473065424,
+          "CFGGuider": 0.000449034,
+          "SamplerCustomAdvanced": 6.376300909,
+          "VAEDecode": 0.537163304,
+          "SaveImageAdvanced": 0.323636106
+        },
+        "fallback_counts": {},
+        "peak_gib": 44.36174547672272,
+        "end_gib": 23.43955385684967
+      },
+      {
+        "run": 3,
+        "prompt_id": "f6fd2dbf-ea47-4a53-9a29-59d2853a99e2",
+        "status": "success",
+        "seconds": 7.718,
+        "images": [
+          {
+            "filename": "qwen21_ffn_3_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000308864,
+          "PreviewAny": 0.000103516,
+          "TextEncodeQwenImage21": 0.487274825,
+          "CFGGuider": 0.000237556,
+          "SamplerCustomAdvanced": 6.360062114,
+          "VAEDecode": 0.53558082,
+          "SaveImageAdvanced": 0.32262269
+        },
+        "fallback_counts": {},
+        "peak_gib": 44.36174547672272,
+        "end_gib": 23.43955385684967
+      },
+      {
+        "run": 4,
+        "prompt_id": "4108ab2a-9043-458d-9285-a095ec9daf55",
+        "status": "success",
+        "seconds": 7.746,
+        "images": [
+          {
+            "filename": "qwen21_ffn_4_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000187812,
+          "PreviewAny": 0.000105659,
+          "TextEncodeQwenImage21": 0.496162069,
+          "CFGGuider": 0.000242885,
+          "SamplerCustomAdvanced": 6.376409272,
+          "VAEDecode": 0.538477944,
+          "SaveImageAdvanced": 0.322498438
+        },
+        "fallback_counts": {},
+        "peak_gib": 44.36174547672272,
+        "end_gib": 23.43955385684967
+      },
+      {
+        "run": 5,
+        "prompt_id": "c539edcd-ee9b-4a56-a48d-a632e99dc8bd",
+        "status": "success",
+        "seconds": 7.714,
+        "images": [
+          {
+            "filename": "qwen21_ffn_5_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000190016,
+          "PreviewAny": 9.4101e-05,
+          "TextEncodeQwenImage21": 0.46477569,
+          "CFGGuider": 0.000239019,
+          "SamplerCustomAdvanced": 6.376905964,
+          "VAEDecode": 0.537498175,
+          "SaveImageAdvanced": 0.321642168
+        },
+        "fallback_counts": {},
+        "peak_gib": 44.36174547672272,
+        "end_gib": 23.43955385684967
+      }
+    ],
+    "normal-enhanced": [
+      {
+        "run": 0,
+        "prompt_id": "43dc8aa8-6e6a-41fc-b238-9946995160c0",
+        "status": "success",
+        "seconds": 69.834,
+        "images": [
+          {
+            "filename": "qwen21_normal-enhanced_0_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {}
+      }
+    ],
+    "normal-service": [
+      {
+        "run": 0,
+        "prompt_id": "1ebbab4f-2fc5-4f17-95af-fff10025886f",
+        "status": "success",
+        "seconds": 17.389,
+        "images": [
+          {
+            "filename": "qwen21_normal-service_0_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {}
+      },
+      {
+        "run": 1,
+        "prompt_id": "cd7bab54-83c3-439b-94db-4d5929287d21",
+        "status": "success",
+        "seconds": 7.712,
+        "images": [
+          {
+            "filename": "qwen21_normal-service_1_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {}
+      },
+      {
+        "run": 2,
+        "prompt_id": "b81a4250-5077-4511-ac17-03830ab8a7bc",
+        "status": "success",
+        "seconds": 7.733,
+        "images": [
+          {
+            "filename": "qwen21_normal-service_2_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {}
+      }
+    ],
+    "product": [
+      {
+        "run": 0,
+        "prompt_id": "d1477339-5343-4e99-bf99-5287f0fcb4e1",
+        "status": "success",
+        "seconds": 7.807,
+        "images": [
+          {
+            "filename": "qwen21_product_0_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000354853,
+          "PreviewAny": 0.000135473,
+          "TextEncodeQwenImage21": 0.497567282,
+          "CFGGuider": 0.000258679,
+          "SamplerCustomAdvanced": 6.434733724,
+          "VAEDecode": 0.536199366,
+          "SaveImageAdvanced": 0.324116685
+        },
+        "fallback_counts": {},
+        "peak_gib": 61.48261773586273,
+        "end_gib": 33.733754992485046
+      },
+      {
+        "run": 1,
+        "prompt_id": "2d8e5b54-fc9c-4394-80a1-2786c38d2e18",
+        "status": "success",
+        "seconds": 7.656,
+        "images": [
+          {
+            "filename": "qwen21_product_1_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000355074,
+          "PreviewAny": 0.000135824,
+          "TextEncodeQwenImage21": 0.418940845,
+          "CFGGuider": 0.000250607,
+          "SamplerCustomAdvanced": 6.35486754,
+          "VAEDecode": 0.540289962,
+          "SaveImageAdvanced": 0.327268165
+        },
+        "fallback_counts": {},
+        "peak_gib": 61.48261773586273,
+        "end_gib": 33.733754992485046
+      },
+      {
+        "run": 2,
+        "prompt_id": "0264207a-a127-48df-a088-867459195004",
+        "status": "success",
+        "seconds": 7.706,
+        "images": [
+          {
+            "filename": "qwen21_product_2_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000311007,
+          "PreviewAny": 0.000125349,
+          "TextEncodeQwenImage21": 0.462566783,
+          "CFGGuider": 0.00025978,
+          "SamplerCustomAdvanced": 6.363853021,
+          "VAEDecode": 0.539450897,
+          "SaveImageAdvanced": 0.326103937
+        },
+        "fallback_counts": {},
+        "peak_gib": 61.48261773586273,
+        "end_gib": 33.733754992485046
+      },
+      {
+        "run": 3,
+        "prompt_id": "88694bf5-db1e-43df-bb15-48e15a77fe97",
+        "status": "success",
+        "seconds": 7.721,
+        "images": [
+          {
+            "filename": "qwen21_product_3_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000369716,
+          "PreviewAny": 0.000271318,
+          "TextEncodeQwenImage21": 0.482775315,
+          "CFGGuider": 0.00022626,
+          "SamplerCustomAdvanced": 6.359357321,
+          "VAEDecode": 0.539229011,
+          "SaveImageAdvanced": 0.32549277
+        },
+        "fallback_counts": {},
+        "peak_gib": 61.48261773586273,
+        "end_gib": 33.733754992485046
+      },
+      {
+        "run": 4,
+        "prompt_id": "47c611c8-25fa-436c-a305-61e666b53c1f",
+        "status": "success",
+        "seconds": 7.733,
+        "images": [
+          {
+            "filename": "qwen21_product_4_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000350767,
+          "PreviewAny": 7.7987e-05,
+          "TextEncodeQwenImage21": 0.492815944,
+          "CFGGuider": 0.000232089,
+          "SamplerCustomAdvanced": 6.363756814,
+          "VAEDecode": 0.538028865,
+          "SaveImageAdvanced": 0.324694103
+        },
+        "fallback_counts": {},
+        "peak_gib": 61.48261773586273,
+        "end_gib": 33.733754992485046
+      },
+      {
+        "run": 5,
+        "prompt_id": "13cfa877-58ec-4d13-8673-bfa3ebd9b9f0",
+        "status": "success",
+        "seconds": 7.742,
+        "images": [
+          {
+            "filename": "qwen21_product_5_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000284487,
+          "PreviewAny": 9.7998e-05,
+          "TextEncodeQwenImage21": 0.491066973,
+          "CFGGuider": 0.000237167,
+          "SamplerCustomAdvanced": 6.373308482,
+          "VAEDecode": 0.538822936,
+          "SaveImageAdvanced": 0.325010511
+        },
+        "fallback_counts": {},
+        "peak_gib": 61.48261773586273,
+        "end_gib": 33.733754992485046
+      }
+    ],
+    "quality": [
+      {
+        "run": 0,
+        "prompt_id": "86ca2d2e-9378-44d5-bc0f-e176b1dba602",
+        "status": "success",
+        "seconds": 23.718,
+        "images": [
+          {
+            "filename": "qwen21_quality_0_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000205206,
+          "PreviewAny": 6.5027e-05,
+          "VAELoader": 0.311087751,
+          "ResolutionSelector": 0.000169163,
+          "EmptyLatentImage": 0.00059766,
+          "ManualSigmas": 0.000323021,
+          "KSamplerSelect": 0.000123043,
+          "CLIPLoader": 3.547937732,
+          "TextEncodeQwenImage21": 0.563907252,
+          "UNETLoader": 1.099117932,
+          "QwenImage21Cache": 0.002115731,
+          "CFGGuider": 0.000196492,
+          "RandomNoise": 0.000152237,
+          "SamplerCustomAdvanced": 17.159044192,
+          "VAEDecode": 0.676596632,
+          "SaveImageAdvanced": 0.33114907
+        },
+        "fallback_counts": {},
+        "peak_gib": 42.832377552986145,
+        "end_gib": 23.439553141593933
+      }
+    ],
+    "reload": [
+      {
+        "run": 0,
+        "prompt_id": "4fbb58a6-e555-4d98-b824-028cffba17a1",
+        "status": "success",
+        "seconds": 19.251,
+        "images": [
+          {
+            "filename": "qwen21_reload_0_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 1024,
+              "height": 1024
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000563917,
+          "PreviewAny": 0.000105689,
+          "VAELoader": 0.489156741,
+          "ResolutionSelector": 0.00021295,
+          "EmptyLatentImage": 0.000198789,
+          "ManualSigmas": 0.000198148,
+          "KSamplerSelect": 0.000155944,
+          "CLIPLoader": 5.509782153,
+          "TextEncodeQwenImage21": 0.492922313,
+          "UNETLoader": 1.779891906,
+          "QwenImage21Cache": 0.002216138,
+          "CFGGuider": 0.000162364,
+          "RandomNoise": 0.000136034,
+          "SamplerCustomAdvanced": 9.939726465,
+          "VAEDecode": 0.690485508,
+          "SaveImageAdvanced": 0.322637547
+        },
+        "fallback_counts": {},
+        "peak_gib": 62.987327098846436,
+        "end_gib": 23.439574360847473
+      }
+    ],
+    "size512": [
+      {
+        "run": 0,
+        "prompt_id": "970adff5-eb40-43cf-b9f4-27129ca334cc",
+        "status": "success",
+        "seconds": 2.77,
+        "images": [
+          {
+            "filename": "qwen21_size512_0_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 512,
+              "height": 512
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000268173,
+          "PreviewAny": 0.000314252,
+          "ResolutionSelector": 0.000170906,
+          "EmptyLatentImage": 0.000197867,
+          "TextEncodeQwenImage21": 0.49824534,
+          "CFGGuider": 0.000223847,
+          "SamplerCustomAdvanced": 2.031330547,
+          "VAEDecode": 0.148973696,
+          "SaveImageAdvanced": 0.073327591
+        },
+        "fallback_counts": {},
+        "peak_gib": 62.987327098846436,
+        "end_gib": 40.96669816970825
+      },
+      {
+        "run": 1,
+        "prompt_id": "07457db3-493d-4323-9e2e-db7df61a1a50",
+        "status": "success",
+        "seconds": 2.581,
+        "images": [
+          {
+            "filename": "qwen21_size512_1_00001.png",
+            "subfolder": "gaudi",
+            "type": "output",
+            "metadata": {
+              "kind": "image",
+              "width": 512,
+              "height": 512
+            }
+          }
+        ],
+        "nodes": {
+          "SwitchNode": 0.000208022,
+          "PreviewAny": 0.000115443,
+          "TextEncodeQwenImage21": 0.456088677,
+          "CFGGuider": 0.000416997,
+          "SamplerCustomAdvanced": 1.881363744,
+          "VAEDecode": 0.152886352,
+          "SaveImageAdvanced": 0.072243523
+        },
+        "fallback_counts": {},
+        "peak_gib": 62.987327098846436,
+        "end_gib": 40.96669816970825
+      }
+    ]
+  },
+  "notes": [
+    "compiled and product folders are rejected attention-plus-FFN prototypes that reached Dynamo recompilation limits",
+    "enhanced-fixed run 0 overlaps CPU BF16 conversion and is excluded from timing comparisons",
+    "INT8 and BF16 natural text outputs have different token counts",
+    "quality runs include diagnostic replay and CPU FP64 work",
+    "normal-service warm requests change noise seed and reuse text node cache"
+  ],
+  "source_sha256": {
+    "comfy/ldm/qwen_image21/model.py": "719e48affec7ec940e26c95ba68457c82585d3a8ede05945fb3a6afe64683741",
+    "comfy/text_encoders/llama.py": "915e17a6219b4a5eae3cc3f42633df59514332c39425f27fbd05fb2c79b45368",
+    "comfy/text_encoders/qwen35.py": "ae12e8dfaea14e5e37168f9918e957159f8e03a278b837ee9fd8f29f228ff10a"
+  },
+  "workflow_sha256": {
+    "qwen21-official-t2i.json": "5f2b50eeaf27e56a45456681ad5319df1ae51243d9653ac3f92c7dc05d1e1503",
+    "qwen21-cpu-te.json": "80e0b4e8384fbddbad16ee5487a0579a66c2f01d4307ecf28cb2924314788bab",
+    "qwen21-turbo-1024-api.json": "458fb200da113002a08d0129e14aa5130df364dd89b4c82407018dadb0f52c28",
+    "qwen21-turbo-enhanced-api.json": "a0055a600ca07a5eca0e4eff906fd718154bbc535ed3d804f5314f01b15c3d3b",
+    "qwen21-turbo-hpu.json": "1d17221854fc74231a8a17008e60e23984ab641b662bf1fd100299a28a062a9c",
+    "qwen21-reload-api.json": "17b3a7a38608eee4a7999c5af985b86bb091ce5a1b6f0046ce5de6865de9e281",
+    "qwen21-cache-off.json": "69359f0aab3bb4f6731eea5a11731f1d148e34640aa466b75961acce11ed9f38",
+    "qwen21-official-turbo-t2i.json": "3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403",
+    "qwen21-turbo-enhanced-int8-api.json": "6980c44660952668b2cf62d48c9b5b5c3ced97cb7110e164a73c73c6bd5cddef",
+    "qwen21-turbo-direct-api.json": "938b083ad51ed934d0d4667e4bf66fc7ab018d557e9f00e779a121b7b4d44144"
+  },
+  "quality.jsonl": [
+    {
+      "kind": "ffn_fp64",
+      "block": 0,
+      "step": 0,
+      "rows": [
+        0,
+        585,
+        1170,
+        1755,
+        2340,
+        2925,
+        3510,
+        4095
+      ],
+      "eager_rrmse": 0.0018353775812507537,
+      "compiled_rrmse": 0.0018352648039820908,
+      "ratio": 0.9999385536415967
+    },
+    {
+      "block": 0,
+      "step": 0,
+      "shape": [
+        1,
+        4096,
+        4096
+      ],
+      "finite": true,
+      "rrmse": 1.79506000226304e-05,
+      "maximum": 0.25
+    },
+    {
+      "kind": "ffn_fp64",
+      "block": 16,
+      "step": 0,
+      "rows": [
+        0,
+        585,
+        1170,
+        1755,
+        2340,
+        2925,
+        3510,
+        4095
+      ],
+      "eager_rrmse": 0.0033193752758782576,
+      "compiled_rrmse": 0.0033189619566167364,
+      "ratio": 0.9998754828161417
+    },
+    {
+      "block": 16,
+      "step": 0,
+      "shape": [
+        1,
+        4096,
+        4096
+      ],
+      "finite": true,
+      "rrmse": 0.00010761862096133578,
+      "maximum": 1.0
+    },
+    {
+      "kind": "ffn_fp64",
+      "block": 31,
+      "step": 0,
+      "rows": [
+        0,
+        585,
+        1170,
+        1755,
+        2340,
+        2925,
+        3510,
+        4095
+      ],
+      "eager_rrmse": 0.0019997976198702252,
+      "compiled_rrmse": 0.0019997652494660903,
+      "ratio": 0.9999838131599851
+    },
+    {
+      "block": 31,
+      "step": 0,
+      "shape": [
+        1,
+        4096,
+        4096
+      ],
+      "finite": true,
+      "rrmse": 9.145236037533021e-05,
+      "maximum": 2.0
+    },
+    {
+      "kind": "ffn_fp64",
+      "block": 0,
+      "step": 4,
+      "rows": [
+        0,
+        585,
+        1170,
+        1755,
+        2340,
+        2925,
+        3510,
+        4095
+      ],
+      "eager_rrmse": 0.0018597288492064742,
+      "compiled_rrmse": 0.0018601347205218538,
+      "ratio": 1.00021824219996
+    },
+    {
+      "block": 0,
+      "step": 4,
+      "shape": [
+        1,
+        4096,
+        4096
+      ],
+      "finite": true,
+      "rrmse": 2.6804764043001108e-05,
+      "maximum": 0.5
+    },
+    {
+      "kind": "ffn_fp64",
+      "block": 16,
+      "step": 4,
+      "rows": [
+        0,
+        585,
+        1170,
+        1755,
+        2340,
+        2925,
+        3510,
+        4095
+      ],
+      "eager_rrmse": 0.0028911355700604784,
+      "compiled_rrmse": 0.002891616086670153,
+      "ratio": 1.0001662034166265
+    },
+    {
+      "block": 16,
+      "step": 4,
+      "shape": [
+        1,
+        4096,
+        4096
+      ],
+      "finite": true,
+      "rrmse": 0.00011184387303859252,
+      "maximum": 0.5
+    },
+    {
+      "kind": "ffn_fp64",
+      "block": 31,
+      "step": 4,
+      "rows": [
+        0,
+        585,
+        1170,
+        1755,
+        2340,
+        2925,
+        3510,
+        4095
+      ],
+      "eager_rrmse": 0.001876162790728303,
+      "compiled_rrmse": 0.001880445320950082,
+      "ratio": 1.0022826005520111
+    },
+    {
+      "block": 31,
+      "step": 4,
+      "shape": [
+        1,
+        4096,
+        4096
+      ],
+      "finite": true,
+      "rrmse": 6.221217561001035e-05,
+      "maximum": 2.0
+    },
+    {
+      "kind": "ffn_fp64",
+      "block": 0,
+      "step": 7,
+      "rows": [
+        0,
+        585,
+        1170,
+        1755,
+        2340,
+        2925,
+        3510,
+        4095
+      ],
+      "eager_rrmse": 0.001764249082371786,
+      "compiled_rrmse": 0.00176419904512049,
+      "ratio": 0.999971638216057
+    },
+    {
+      "block": 0,
+      "step": 7,
+      "shape": [
+        1,
+        4096,
+        4096
+      ],
+      "finite": true,
+      "rrmse": 3.199450750350394e-05,
+      "maximum": 1.0
+    },
+    {
+      "kind": "ffn_fp64",
+      "block": 16,
+      "step": 7,
+      "rows": [
+        0,
+        585,
+        1170,
+        1755,
+        2340,
+        2925,
+        3510,
+        4095
+      ],
+      "eager_rrmse": 0.0027457271864848904,
+      "compiled_rrmse": 0.002745989191994755,
+      "ratio": 1.0000954229943726
+    },
+    {
+      "block": 16,
+      "step": 7,
+      "shape": [
+        1,
+        4096,
+        4096
+      ],
+      "finite": true,
+      "rrmse": 0.00011416426334282557,
+      "maximum": 0.5
+    },
+    {
+      "kind": "ffn_fp64",
+      "block": 31,
+      "step": 7,
+      "rows": [
+        0,
+        585,
+        1170,
+        1755,
+        2340,
+        2925,
+        3510,
+        4095
+      ],
+      "eager_rrmse": 0.001780733372509367,
+      "compiled_rrmse": 0.0017807047562049547,
+      "ratio": 0.9999839300454217
+    },
+    {
+      "block": 31,
+      "step": 7,
+      "shape": [
+        1,
+        4096,
+        4096
+      ],
+      "finite": true,
+      "rrmse": 5.9186231902174085e-05,
+      "maximum": 2.0
+    }
+  ],
+  "pe-conversion.json": {
+    "source": "/home/sonny/ComfyUI-Models/models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors",
+    "destination": "/home/sonny/ComfyUI-Models/models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors",
+    "converted_weights": 310,
+    "copied_unquantized_int8": [],
+    "removed_metadata_or_scales": 620,
+    "destination_bytes": 18819722496,
+    "elapsed_seconds": 41.488
+  },
+  "free-stable.json": [
+    [
+      {
+        "name": "hpu:0 GAUDI2",
+        "type": "hpu",
+        "index": 0,
+        "vram_total": 101601996800,
+        "vram_free": 87268029952,
+        "torch_vram_total": 14333966848,
+        "torch_vram_free": 0
+      }
+    ],
+    [
+      {
+        "name": "hpu:0 GAUDI2",
+        "type": "hpu",
+        "index": 0,
+        "vram_total": 101601996800,
+        "vram_free": 100690400384,
+        "torch_vram_total": 911596416,
+        "torch_vram_free": 0
+      }
+    ],
+    [
+      {
+        "name": "hpu:0 GAUDI2",
+        "type": "hpu",
+        "index": 0,
+        "vram_total": 101601996800,
+        "vram_free": 100690400384,
+        "torch_vram_total": 911596416,
+        "torch_vram_free": 0
+      }
+    ]
+  ],
+  "image-comparison.json": {
+    "rgb_mae": 12.691934585571289,
+    "rgb_max": 250.0
+  }
+}
