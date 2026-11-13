@@ -4411,5 +4411,5 @@
     }
   },
   "disposition": "Rejected by the user for quality changes. Product reverted to 0995638a. Measurements below describe the withdrawn candidate.",
-  "superseded_by": "MOSS_QUALITY_PRESERVING_OPTIMIZATION_2026-11-12.md"
+  "superseded_by": "optimization/TEXT_GDN.md"
 }

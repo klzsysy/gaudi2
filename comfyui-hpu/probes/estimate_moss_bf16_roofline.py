@@ -1,7 +1,7 @@
 """CPU-only arithmetic for the 2026-11-10 MOSS roofline investigation.
 
 These are optimistic work/peak estimates, not a device benchmark. See
-MOSS_HARDWARE_LIMIT_AND_5090_2026-11-10.md for evidence and exclusions.
+optimization/BOTTLENECKS.md for evidence and measurement boundaries.
 Run from any directory with Python 3; no third-party dependencies.
 """
 import json

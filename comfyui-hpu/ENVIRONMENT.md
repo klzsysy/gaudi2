@@ -1,18 +1,17 @@
 # 独立环境与复现
 
-本文件只保留可操作的环境约束、启动方式和模型路径。验证结论见 `PROGRESS.md`；性能调查的测量契约见 `MOSS_HPU_PERFORMANCE_PLAN_2026-11-06.md`。
+当前验证环境为Gaudi2 HL-225、Habana1.24.2、Python3.10、Habana torch `2.13.0a0+git2469d18`、eager。最近验收版本与质量范围见 [状态](PROGRESS.md)，实验方法见 [测量](optimization/MEASUREMENT.md)。
 
-## 服务器与安全边界
+## 服务器与目录
 
-- 服务器：`sonny@192.168.10.21`；产品测试 checkout：`/home/sonny/ComfyUI-Gaudi`。
-- **禁止修改 `/home/sonny/ComfyUI`**，包括 venv、代码、配置、输出和模型；只允许通过独立配置只读复用模型。
-- 基础运行时：`/opt/gaudi-install/venv-1.24.2-481-ubuntu2204`；不要用普通 pip resolver 替换 Habana torch。测试依赖安装到独立 `.venv`。
-- 当前验证环境：Gaudi2 HL-225、Habana 1.24.2、Python 3.10、Habana torch `2.13.0a0+git2469d18`、eager（`PT_HPU_LAZY_MODE=0`）。
-- 模型下载先使用服务器已有 `HF_ENDPOINT`、`HF_TOKEN` 和 shell 代理；不把令牌或代理凭据写入命令、脚本、日志或文档。已有 VAE 优先复用。
+- 服务器为`sonny@192.168.10.21`，独立产品checkout为`/home/sonny/ComfyUI-Gaudi`，调查目录为`/home/sonny/gaudi2/comfyui-hpu`。
+- 原始`/home/sonny/ComfyUI`只读，代码、venv、配置、输出和模型操作均遵守AGENTS约束。
+- 基础运行时为`/opt/gaudi-install/venv-1.24.2-481-ubuntu2204`。测试依赖安装到独立`.venv`并保留厂商torch。
+- 下载先使用已有HF_ENDPOINT、HF_TOKEN及shell代理，记录必要的实际失败后再改来源，凭据不进入日志。已有模型尤其VAE先核对再复用。
 
-## 内核、驱动和设备检查
+## 内核与依赖
 
-2026-11-12证据调查时实际内核为`5.15.0-203-generic`，驱动`1.24.2-52a555d`，设备Operational。此前双内核验收覆盖`5.15.0-186-generic`和`5.15.0-202-generic`。重启前检查目标内核的DKMS：
+2026-11-12实测内核为`5.15.0-203-generic`，驱动`1.24.2-52a555d`。此前186/202双内核DKMS、重启及HPU算子已通过。重启前可用既有安装脚本只读verify，脚本检查当前和全部有效启动内核。
 
 ```bash
 sudo bash /home/sonny/gaudi2/gaudi2-single-card-driver/scripts/install-gaudi2.sh \
@@ -20,11 +19,7 @@ sudo bash /home/sonny/gaudi2/gaudi2-single-card-driver/scripts/install-gaudi2.sh
 hl-smi
 ```
 
-驱动脚本现在枚举当前内核和 `/boot` 中的有效内核镜像，校验五个 Habana 模块、vermagic、Gaudi2 PCI alias、DKMS 路径和补丁字符串；审查补丁保存在 `patches/install-gaudi2-all-boot-kernels.patch`。完整重启、BF16 matmul、双内核 verify 和 19 项模拟回归已通过。未配置开机自启。
-
-## Python 环境
-
-在 `/home/sonny/ComfyUI-Gaudi` 执行，禁止在原始 checkout 中安装：
+独立venv的建立与已验证依赖安装方式如下，在`/home/sonny/ComfyUI-Gaudi`执行。
 
 ```bash
 /opt/gaudi-install/venv-1.24.2-481-ubuntu2204/bin/python -m venv .venv
@@ -40,18 +35,9 @@ http_proxy_enable
 .venv/bin/python -m pip check
 ```
 
-`pip check` 预期保留继承的 torchvision 0.16.2 / Habana torch 声明冲突；不要为消除该 warning 替换 Habana torch。
+`pip check`保留继承的torchvision0.16.2/Habana torch声明冲突。曾出现CUDA torch2.14.1遮蔽厂商版本，冲突包备份于独立checkout的`.run/torch-cu130-backup-2026-11-12`，恢复通过`gaudi-base.pth`引用厂商包。故障根因与验证见 [运行时](optimization/RUNTIME.md)。
 
-## Smoke、回归和服务
-
-```bash
-export PT_HPU_LAZY_MODE=0
-export GC_KERNEL_PATH=/usr/lib/habanalabs/libtpc_kernels.so
-.venv/bin/python -m scripts.gaudi.smoke
-.venv/bin/python -m pytest tests-unit/comfy_test/model_management_test.py -q
-```
-
-HPU 服务与独立 smoke/probe 必须串行占卡。用户试用服务：
+## 服务与单卡执行
 
 ```bash
 ssh sonny@192.168.10.21
@@ -62,49 +48,29 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为 `34e2649e`，监听 `http://192.168.10.21:8189`。根目录脚本负责 PID、端口和同目录进程校验，`scripts/gaudi/start.sh` 仍是前台开发入口。停止服务会终止其正在执行的任务。
+最近部署为`34e2649e`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
-应用入口在 HPU 初始化后恢复 Python 的 SIGPIPE 忽略策略，避免浏览器取消文件下载使 Synapse 进入 fatal 状态。遇到 `synStatus 31` 时先检查最早的 DFA 原因，不能仅凭后续 `Host malloc failed` 判定主机内存不足。详见 `HPU_SIGPIPE_RECOVERY_2026-11-10.md`。
-
-当前优化由`--disable-comfy-compiler`统一关闭区域编译。首次shape/recipe有编译成本，自然caption和图像细节会受舍入及MTP调度影响。
-
-- `ef16c195`对N≥8192的FP8 attention使用1536行query批次，padding采用floor division，14次长序列调用仅产生2份动态图。QK分数仍分配DRAM，概率tile供AV在SRAM中消费。
-- `34e2649e`在现有Kitchen RoPE入口注册HPU短步实现，覆盖BF16激活、64维旋转部分及1–8行。非原地公式采用`decomposition_mode=none`保留原生addcmul舍入。关闭编译、训练／梯度、prefill及其它dtype走既有实现。
-- 三阶段原始资料位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-three-stage`。正式对照为每进程固定实现，运行中热替换custom-op kernel的结果已排除。默认Auto扩写在原始文本回退版也出现未请求文字标签，详情见`MOSS_THREE_STAGE_EXECUTION_2026-11-12.md`。
-
-- Qwen3.5 deferred conv/GDN、KV attention/tree merge使用HPU编译。普通BF16模型另外启用短步MLP、完整attention、norm及八行GDN投影扩区。GDN prefill覆盖BF16扩写和原有FP32普通编码，按至少64及2的幂分桶。
-- 八行GDN扩区要求标准LinearKV、普通operations、decode、无hooks/梯度。四行激活在编译递推外clone。KV分支行搬移先clone源行，相关状态回归已验收。
-- MOSS采用attention/投影与FFN分区及局部静态recipe。BF16、batch1、24×128 heads、N≥4096、默认无mask/参考KV的推理编译路径按head独立调用原dispatcher。
-- 条件text_embedder和FP32 RoPE由本次conditioning持有。BLOCKWISE经四系数语义检查启用，一般矩阵使用PAIRWISE。CPU/训练/梯度/动态hooks/不适用options按相应门控分流。
-- 参数、状态及临时tensor由既有模型/执行生命周期管理。完整pipeline卸载稳定约2.50GiB，文本单独卸载约94MiB，各用同工作流基线验证。
-
-当前产品条件和验收范围见 [最新报告](MOSS_THREE_STAGE_EXECUTION_2026-11-12.md)，算法及历史失败见 [复盘索引](MOSS_OPTIMIZATION_STRATEGY_2026-11-09.md)。
-
-## 共享模型路径
-
-两个 checkout 的 `extra_model_paths.yaml` 使用同一配置：
-
-```yaml
-shared_models:
-  base_path: /home/sonny/ComfyUI-Models
-  checkpoints: models/checkpoints
-  configs: models/configs
-  clip: models/clip
-  diffusion_models: |
-    models/diffusion_models
-    models/unet
-  loras: models/loras
-  text_encoders: |
-    models/text_encoders
-    models/clip
-  vae: models/vae
+```bash
+export PT_HPU_LAZY_MODE=0
+export GC_KERNEL_PATH=/usr/lib/habanalabs/libtpc_kernels.so
+.venv/bin/python -m scripts.gaudi.smoke
+.venv/bin/python -m pytest tests-unit/comfy_test/model_management_test.py -q
 ```
 
-`models/<分类>` symlink 保留旧式直接路径兼容性。Qwen 2.1 Turbo、MOSS、Qwen3.5/Qwen3VL 和 VAE 已在共享目录；迁移验证和旧配置备份见 `MODEL_STORAGE_PLAN_2026-11-06.md`。
+默认32个PyTorch CPU线程。`--disable-comfy-compiler`关闭区域编译，新shape/recipe有首次成本。普通服务使用厂商TPC库和已验配置，32MiB SRAM及自写GDN TPC为历史调查候选。应用初始化后恢复SIGPIPE忽略策略，`synStatus31`先查最早DFA原因。
 
-## API 工作流与验证边界
+## 模型与工作流
 
-服务器独立 checkout 可提交：
+共享根目录为`/home/sonny/ComfyUI-Models/models`，两个checkout使用分类symlink及相同base_path配置。历史布局、验证与备份见 [模型存储](MODEL_STORAGE.md)。
+
+| 组件 | 已验证文件/来源 |
+|---|---|
+| BF16 DiT | MOSS SFT BF16 |
+| FP8 DiT | `Moody-Moss-Mix-V4.1_00001__clean-fp8.safetensors`，UNETLoader/default自动选择原生E4M3 |
+| 文本 | `qwen3.5_9b_int8_convrot.safetensors`、`qwen3.5_9b_bf16_from_int8.safetensors`、`qwen3.5_9b_fp8_from_int8.safetensors` |
+| VAE | 已有Flux2 VAE，251个张量核对后复用 |
+
+文本衍生文件在`models/text_encoders`，FP8转换入口为产品`scripts/gaudi/convert_qwen35_fp8.py`。普通CLIPLoader识别量化metadata，FP8来源和保留精度见 [文本精度](optimization/TEXT_PRECISION.md)。模型forward的`transformer_options["fp8_attention"] = False`可关闭混合FP8 attention请求。
 
 ```bash
 .venv/bin/python -m scripts.gaudi.submit scripts/gaudi/krea2-api.json \
@@ -115,38 +81,8 @@ shared_models:
   --url http://192.168.10.21:8189 --result test-results/moss.json
 ```
 
-已验证的 MOSS 基础工作流为 25 步 `er_sde/simple`、cfg2.5；基础图关闭 prompt enhancer、SLG 和编辑 LoRA。官方 TextGenerate 扩写图也已验证，但自回归仍明显慢于直接文本编码。编辑/控制 LoRA、SLG、完整批量/多卡、lazy/通用全模型编译/HPU Graph、超大分辨率和其它 custom nodes 未验证。
+基础MOSS流程为25步er_sde/simple、CFG2.5。官方TextGenerate扩写图另有验收，Auto/固定树的复现条件见测量专题。各优化的dtype、shape、hooks、训练/梯度和回退门控由对应主题记录。
 
-## 性能复现资料
+## 原始性能资料
 
-质量回退基线为`0995638a`，同轮固定298-token完整MTP基线为16.036s（5 warm中位数）。上一轮GDN候选15.751s因质量变化被用户拒绝。质量保值试验位于`/home/sonny/gaudi2/comfyui-hpu/performance-2026-11-12-quality-preserving`。固定MTP程序位于`performance-2026-11-11-completion/mtp-record-298/program.pt`，此前数据保留在各轮目录。当前`69fe4a54`的长序列验证位于`performance-2026-11-12-resolution-fix`，原用户1088×1936固定caption中位29.572s。
-
-服务使用既有启动脚本和默认32个PyTorch CPU线程，改16线程的完整流程复验无收益。当前lazy/Graph单独试验成本高于eager，lazy＋`hpu_backend`出现`GraphStorage::get()`符号缺失，诊断见预算报告。
-
-## FP8主模型
-
-`Moody-Moss-Mix-V4.1_00001__clean-fp8.safetensors`通过普通UNETLoader/default加载，HPU MixedPrecision Linear自动使用原生E4M3量化/GEMM。FP8安全范围重编码由加载器持有，原模型文件保持原始编码。BF16/FP32激活使用原生入口，FP16/梯度/动态patch沿用浮点路径。已验证文本组合包括现有BF16与新转换FP8。性能和质量范围见 [FP8适配](MOSS_FP8_ADAPTATION_2026-11-11.md)。
-
-## FP8文本模型
-
-CLIPLoader可选择`qwen3.5_9b_fp8_from_int8.safetensors`，位置为共享模型目录`models/text_encoders`。产品自动识别E4M3量化格式并启用HPU原生计算和已有Qwen区域编译。文件为混合精度，201个语言Linear为FP8，MTP、embedding、vision、GDN门控/卷积/norm保留源精度。转换脚本为产品仓库`scripts/gaudi/convert_qwen35_fp8.py`。
-
-文本适配阶段的完整同工作量warm18.933s、峰值27.267GiB。该文件主要节省显存，自然扩写长度与图像细节会变化，cold比BF16文本基线更长。当前采用默认异步eager pipeline，动态FP8 Linear额外编译候选已撤回。验收与复现见 [全流程记录](MOSS_FP8_SYSTEM_OPTIMIZATION_2026-11-12.md)。
-
-## FP8 attention与环境恢复
-
-`f67e7f3f`在原生HPU FP8 MOSS模型的forward中默认请求`fp8_attention`，由原attention dispatcher在已支持形状上选择BF16 QK＋融合FP8概率量化＋FP8 AV。用户传入的`transformer_options["fp8_attention"] = False`可关闭此请求。该路径的选择条件和精度数据见进一步优化报告。
-
-`69fe4a54`移除8192总序列上限，现行长度条件为N≥4096。8192／8193／8629／16385已做原生分支回归，BF16长度8193逐元素对照通过。真实1088×1936的18组block对FP32参考误差0.44%–3.97%。16385-token分散随机压力输入误差8.83%。大尺寸启用现有FP8算法会改变图像细节。
-
-2026-11-12发现测试venv中CUDA版torch2.14.1遮蔽了Gaudi安装。对应`torch`、`torchgen`及dist-info已移动到`/home/sonny/ComfyUI-Gaudi/.run/torch-cu130-backup-2026-11-12`，现通过原`gaudi-base.pth`使用Habana torch2.13.0a0。HPU矩阵、266项回归和正常服务已验证。安装来源尚未确认。
-
-## FP8 block扩区
-
-`0995638a`将MOSS Q/K归一化改为native FP32 RMSNorm。FP8 block在HPU BF16推理、无hooks/attention override/reference/mask时扩大编译区域，attention与FFN的调制方法保留graph break边界。`--disable-comfy-compiler`继续控制编译路径。287项回归、18组真实输入、自然图片和卸载重载通过，九份源码/测试文件哈希一致。正常服务cold79.030s、缓存10.696s、768²/MTP off 14.295s。舍入变化和显存成本见融合报告。
-
-## GDN候选已撤回
-
-用户要求质量保值优先，GDN候选的FP8 logits漂移及茶壶双把手样本不予接受。产品代码和启动脚本已恢复`0995638a`。扩展源码及构建产物分别移至调查目录`performance-2026-11-12-optimization/rejected-product-source`和`rejected-product-build`，本仓库保留完整撤回补丁。
-
-回退后1033×248320 logits与基线逐元素一致。32MiB SRAM预算仅作为独立调查进程的实验配置，因完整收益未确认，普通启动采用原设置。8189正常入口cold79.338s、缓存10.693s、768²／MTP off14.213s，队列为空。自然图的历史复现差异和完整验收见`MOSS_QUALITY_PRESERVING_OPTIMIZATION_2026-11-12.md`。
+固定MTP程序位于`performance-2026-11-11-completion/mtp-record-298/program.pt`，最新三阶段资料在`performance-2026-11-12-three-stage`，长序列修复在`performance-2026-11-12-resolution-fix`。其它目录、probe与证据入口见各主题末尾。完整流程、文本单独、混合shape和带logits诊断的卸载值分别对照，避免把保留诊断对象计为产品泄漏。

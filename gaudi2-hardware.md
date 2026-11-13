@@ -1,6 +1,6 @@
 # Gaudi2 硬件能力与软件路径边界
 
-复核日期：2026-11-09。原文将 INT8 写成与 FP8 同量级峰值，且把所有数据类型都归为 MME 原生计算；此推断没有依据，已更正。
+硬件规格复核于2026-11-09，AIP口径更新于2026-11-13。原文将 INT8 写成与 FP8 同量级峰值，且把所有数据类型都归为 MME 原生计算；此推断没有依据，已更正。
 
 | 项目 | 已确认能力 | 对本项目的含义 |
 |---|---|---|
@@ -15,7 +15,7 @@
 
 Gaudi2 的 FP8 数值范围和跨平台 checkpoint 的字节/scale 约定需要单独处理。本项目曾遇到 E4M3FN 高编码转 float 的 inf/nan；生产解量化使用完整解码表，原生 FP8 计算则必须按 Gaudi 的量化 API 和 scale contract 校准。不能仅凭 dtype 名称假定与其它平台逐字节等价。
 
-`hl-smi utilization.aip` 是粗粒度活动指标，不等于 MME FLOPs 利用率。官方 hl-smi 文档使用 1000 ms 活动窗口描述；本机 HLML 头文件另注明 OAM compute utilization 可大于 100%。因此需用 trace 核实设备活动，不从此百分比直接推算剩余加速倍数。`utilization.memory` 在本机头文件定义为已占用内存，不是 HBM 带宽利用率。
+本机1.24.2驱动的`hl-smi utilization.aip`已通过加载模块反汇编及531组功率配对确认采用功率公式，详见 [AIP与计数器](comfyui-hpu/optimization/BOTTLENECKS.md)。此前按通用文档活动窗口解释的判断据此修正。`utilization.memory`描述内存占用，算力与HBM效率使用实际shape吞吐、设备时间线和经校准字节计算。
 
 来源：
 
