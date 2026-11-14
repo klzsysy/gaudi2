@@ -4,6 +4,8 @@
 
 ## 2026-11-15 Qwen Image 2.1 最新2MP工作流
 
+后续隔离试验复用已有Qwen3.5的243M参数MTP头。固定512-token窗口三次warm，单步42.03→四行验证58.57 tokens/s，吞吐提高39.35%。完整自然扩写两次warm为1784 tokens/41.507秒→1911 tokens/31.279秒，约61.10 tokens/s。相同前缀首个根token的单行/四行验证logits仍有2.022% RRMSE，完整图片和正常loader接入尚待验收。候选只在调查进程运行，线上使用`dfca7cd6`。实验后原2MP图94.763秒成功且像素一致，队列为空。[候选与边界](optimization/QWEN21_TEXT_NEXT.md) · [证据](evidence/qwen21-text-draft-2026-11-15.json)
+
 已冻结最后一次用户请求，实际1088×1920、8步官方Turbo调度、CFG1.2、thinking开启、匹配PE的BF16文件，2803输入/1784输出tokens。原请求66.274秒。三次完整warm初始基线中位62.250秒，回退原产品三次为61.563秒，最终三次为60.689秒。按回退基线，完整耗时减少1.42%，PE42.575→41.713秒，约41.9→42.8 tokens/s。DiT约16.59秒，文本缓存图约18.47秒。
 
 接入单token普通BF16的conv/delta联合编译及MLP残差融合，GDN两端投影维持原执行边界。16-token cProfile中recipe提交2720→2336、eager add1024→512、Python调用389151→313781。固定427-token全logits逐元素一致，五组不同seed/尺寸/thinking/官方调度的token和RGBA图片逐元素一致。初始组合另有五次完整warm中位60.713秒。157项回归通过、1项跳过，最终含新增单token hooks的39项专项通过，两组测试有重叠。
