@@ -1,6 +1,6 @@
 # ComfyUI Gaudi2优化与适配记录
 
-更新于2026-11-13（Asia/Shanghai）。产品基线为`ed9552e5`，单卡Gaudi2、Habana1.24.2、eager＋区域编译。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
+更新于2026-11-14（Asia/Shanghai）。产品基线为`ed9552e5`，单卡Gaudi2、Habana1.24.2、eager＋区域编译。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
 
 ## 按问题查找
 
@@ -13,6 +13,7 @@
 | [FP8 DiT](optimization/DIT_FP8.md) | 原生Linear接入、范围/scale、block融合、V量化和SiTU候选 |
 | [DiT attention](optimization/ATTENTION.md) | BF16/FP8精度、head布局、8192断点、长序列query批次、SRAM调查 |
 | [文本权重与量化](optimization/TEXT_PRECISION.md) | INT8/ConvRot、BF16常驻、FP8文本、W4A8及输出头路径 |
+| [原生INT8 MME验证](optimization/INT8_NATIVE_MME.md) | HAL与直接Synapse验证阴性，按用户条件停止开发，原计划归档 |
 | [文本decode与KV](optimization/TEXT_DECODE.md) | 采样、MLP/norm、KV状态、短步RoPE、前缀缓存边界 |
 | [GDN递推](optimization/TEXT_GDN.md) | prefill分桶、并行递推、八行扩区、四行clone及TPC候选撤回 |
 | [运行时与故障](optimization/RUNTIME.md) | lazy/Graph、SIGPIPE、异步输入、段错误、驱动和依赖恢复 |

@@ -2,6 +2,18 @@
 
 截至2026-11-13，产品分支`codex/gaudi2-hpu`，最终提交`ed9552e581acfa37c6be2ac6f1a86a629f21d542`。本文件提供交接快照，测试过程和候选取舍集中于 [主题索引](README.md)。
 
+## 2026-11-14 原生INT8 MME验证与开发终止
+
+用户明确要求有原生INT8 MME才继续，能力核验阴性后已停止并放弃通用INT8开发。服务器安装库`Gaudi2HalReader::getSupportedMmeTypes()`返回`0x7906`，INT8位为零。直接Synapse的默认、inference、inference＋quantization模式共9组INT8 GEMM均在节点创建阶段失败，3组BF16对照编译成功。
+
+本轮验证范围为已安装HAL与直接SDK建图/编译，INT8在执行前被拒绝。验证前后普通服务PID相同、队列为空。[验证结果](optimization/INT8_NATIVE_MME.md) · [证据](evidence/int8-native-mme-2026-11-14.json) · [历史计划](optimization/INT8_DEVELOPMENT_PLAN.md)
+
+## 2026-11-14 INT8扩写慢调查
+
+已核对普通8189最后一次120.523秒请求，Qwen Image 2.1 PE选择原INT8 ConvRot文件，文本循环约102秒、进度737、平均7.23 tokens/s。此前同提示词/文本seed的同源BF16扩写进度456、平均39.12 tokens/s，中段约42 tokens/s。thinking关闭，两个文件均无MTP权重。
+
+部署源码确认INT8使用`full_precision_mm=True`，每次量化Linear调用先反量化/ConvRot还原为BF16，同时跳过短步MLP及完整attention区域编译。生成长度增长进一步增加耗时。已存在的同源BF16文件提供预先解码及编译路径。本轮完成只读历史、源码和模型header核查，各算子独立耗时尚未profile。[调查](optimization/TEXT_PRECISION.md) · [证据](evidence/qwen21-int8-slow-2026-11-14.json)
+
 ## Qwen Image 2.1 全BF16优化
 
 当前组件为Turbo BF16、Qwen3-VL 8B BF16、匹配文生图PE的BF16解码文件和Qwen Image 2.1 VAE BF16。`17b4b231`接入原生RoPE与无mask attention编译，`ed9552e5`编译temperature=1.0的HPU采样概率。投影/RMSNorm保留原舍入边界，有mask前缀采用原数学执行。

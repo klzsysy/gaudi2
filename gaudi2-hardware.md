@@ -1,5 +1,7 @@
 # Gaudi2 硬件能力与软件路径边界
 
+2026-11-14原生INT8 MME验证已完成。Synapse1.24.2安装库的`Gaudi2HalReader::getSupportedMmeTypes()`返回`0x7906`，INT8位为零。直接Synapse的9组INT8 GEMM在节点创建阶段失败，3组BF16对照编译成功。按用户设定的条件，通用INT8开发已停止并放弃。[验证记录](comfyui-hpu/optimization/INT8_NATIVE_MME.md)
+
 硬件规格复核于2026-11-09，AIP口径更新于2026-11-13。原文将 INT8 写成与 FP8 同量级峰值，且把所有数据类型都归为 MME 原生计算；此推断没有依据，已更正。
 
 | 项目 | 已确认能力 | 对本项目的含义 |

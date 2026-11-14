@@ -2,6 +2,12 @@
 
 本篇合并2026-11-10的官方接口调查及JChen补充审查，并标出后续本机验证。外部结论绑定以下源码快照，后续升级应重新核对schema、shape与ABI。目录检索仅证明已审查文件的内容。
 
+## 2026-11-14 INT8硬件前提复核
+
+后续实测已确认当前Gaudi2/Synapse栈的原生INT8 MME能力为阴性。安装库HAL的`getSupportedMmeTypes()`返回`0x7906`，INT8位为零。直接Synapse的9组INT8 GEMM在节点创建阶段失败，3组BF16对照编译成功，开发已按用户条件停止并放弃。[完整验证](INT8_NATIVE_MME.md)
+
+Gaudi2官方架构列出的MME类型为FP32/TF32/BF16/FP16/FP8，累加为FP32。白皮书另在TPC部分列INT8。官方PyTorch算子表的Integer Types中，`mm`和`matmul`的INT8栏为No。本机SDK头文件含`syn_type_int8`枚举，设备通用类型与MME类型通过HAL分别核对，结果与官方资料一致。原[INT8计划](INT8_DEVELOPMENT_PLAN.md)已归档。[官方架构](https://docs.habana.ai/en/latest/Gaudi_Overview/Gaudi_Architecture.html) · [算子支持表](https://docs.habana.ai/en/latest/PyTorch/Reference/Pytorch_Operators/Pytorch_Operators.html) · [既有硬件记录](../../gaudi2-hardware.md)
+
 ## 官方入口与本机执行
 
 | 入口 | 能力与实测边界 |

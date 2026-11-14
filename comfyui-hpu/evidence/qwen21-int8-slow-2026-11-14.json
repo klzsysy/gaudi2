@@ -1,0 +1,244 @@
+{
+  "investigated_on": "2026-11-14 Asia/Shanghai",
+  "server": "sonny@192.168.10.21",
+  "checkout": "/home/sonny/ComfyUI-Gaudi",
+  "deployed_version": "ed9552e581acfa37c6be2ac6f1a86a629f21d542",
+  "queue_counts": {
+    "queue_running": 0,
+    "queue_pending": 0
+  },
+  "requests": [
+    {
+      "prompt_id": "615dc407-26c6-4b12-a863-eff145faf1b8",
+      "number": 11,
+      "started_shanghai": "2026-11-14T22:43:03.577000+08:00",
+      "total_seconds": 52.325,
+      "text_generate": {
+        "max_length": 4096,
+        "sampling_mode": "on",
+        "sampling_mode.temperature": 1.0,
+        "sampling_mode.top_k": 20,
+        "sampling_mode.top_p": 0.95,
+        "sampling_mode.min_p": 0.0,
+        "sampling_mode.repetition_penalty": 1.0,
+        "sampling_mode.seed": 1,
+        "sampling_mode.presence_penalty": 1.5,
+        "thinking": false,
+        "use_default_template": true,
+        "mtp": "auto",
+        "clip": [
+          "493",
+          0
+        ],
+        "prompt_sha256": "dd3bf751252bac0247eaa48c521fd6a0c69d831a9ae845e9f4575976c7626bc2"
+      },
+      "pe_model": "qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors",
+      "resolution_settings": {
+        "aspect_ratio": "9:16 (Portrait Widescreen)",
+        "megapixels": 1.2,
+        "multiple": 8
+      },
+      "status": "success",
+      "cached_nodes": [],
+      "changes_from_previous": [],
+      "text_progress_final": "Generating tokens:  11%|█         | 456/4096 [00:11<01:33, 39.12it/s]",
+      "text_progress_midpoint": "Generating tokens:   5%|▌         | 223/4096 [00:06<01:32, 42.00it/s]",
+      "sampler_progress_final": "100%|██████████| 8/8 [00:03<00:00,  2.20it/s]",
+      "info_log": [
+        "[INFO] Model storage policy: fast_disk=True paths=['/home/sonny/ComfyUI-Models/models/vae/qwen_image_2.1_vae_bf16.safetensors']",
+        "[INFO] Using pytorch attention in VAE",
+        "[INFO] Using pytorch attention in VAE",
+        "[INFO] VAE load device: hpu:0, offload device: cpu, dtype: torch.bfloat16",
+        "[INFO] Model storage policy: fast_disk=True paths=['/home/sonny/ComfyUI-Models/models/text_encoders/qwen3vl_8b_bf16.safetensors']",
+        "[INFO] Requested to load QwenImage21TEModel_",
+        "[INFO] loaded completely;  16721.96 MB loaded, full load: True",
+        "[INFO] CLIP/text encoder model load device: hpu:0, offload device: cpu, current: hpu:0, dtype: torch.bfloat16",
+        "[INFO] model weight dtype torch.bfloat16, manual cast: None",
+        "[INFO] model_type FLUX",
+        "[INFO] Model storage policy: fast_disk=True paths=['/home/sonny/ComfyUI-Models/models/diffusion_models/qwen_image_2.1_turbo_bf16.safetensors']",
+        "[INFO] Model storage policy: fast_disk=True paths=['/home/sonny/ComfyUI-Models/models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors']",
+        "[INFO] Requested to load Qwen35TEModel_",
+        "[INFO] loaded completely;  17947.79 MB loaded, full load: True",
+        "[INFO] CLIP/text encoder model load device: hpu:0, offload device: cpu, current: hpu:0, dtype: torch.bfloat16",
+        "[INFO] Requested to load QwenImage21",
+        "[INFO] loaded completely; 47264.89 MB usable, 13571.02 MB loaded, full load: True",
+        "[INFO] Requested to load WanVAE",
+        "[INFO] loaded completely; 35944.96 MB usable, 644.19 MB loaded, full load: True",
+        "[INFO] Prompt executed in 52.33 seconds"
+      ]
+    },
+    {
+      "prompt_id": "b3c5f537-af6b-4cfa-9dc5-ca66465c8c68",
+      "number": 12,
+      "started_shanghai": "2026-11-14T22:44:11.025000+08:00",
+      "total_seconds": 10.492,
+      "text_generate": {
+        "max_length": 4096,
+        "sampling_mode": "on",
+        "sampling_mode.temperature": 1.0,
+        "sampling_mode.top_k": 20,
+        "sampling_mode.top_p": 0.95,
+        "sampling_mode.min_p": 0.0,
+        "sampling_mode.repetition_penalty": 1.0,
+        "sampling_mode.seed": 1,
+        "sampling_mode.presence_penalty": 1.5,
+        "thinking": false,
+        "use_default_template": true,
+        "mtp": "auto",
+        "clip": [
+          "493",
+          0
+        ],
+        "prompt_sha256": "dd3bf751252bac0247eaa48c521fd6a0c69d831a9ae845e9f4575976c7626bc2"
+      },
+      "pe_model": "qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors",
+      "resolution_settings": {
+        "aspect_ratio": "9:16 (Portrait Widescreen)",
+        "megapixels": 2.0,
+        "multiple": 8
+      },
+      "status": "success",
+      "cached_nodes": [
+        "484",
+        "485",
+        "486",
+        "487",
+        "491",
+        "492",
+        "493",
+        "494",
+        "495",
+        "496"
+      ],
+      "changes_from_previous": [
+        {
+          "node": "13",
+          "field": "megapixels",
+          "before": 1.2,
+          "after": 2.0
+        },
+        {
+          "node": "490",
+          "field": "seed",
+          "before": 568170177328508,
+          "after": 296569455258744
+        }
+      ],
+      "text_progress_final": null,
+      "text_progress_midpoint": null,
+      "sampler_progress_final": "100%|██████████| 8/8 [00:07<00:00,  1.04it/s]",
+      "info_log": [
+        "[INFO] Prompt executed in 10.49 seconds"
+      ]
+    },
+    {
+      "prompt_id": "4da456e9-127e-40ba-9082-aa494b08678e",
+      "number": 13,
+      "started_shanghai": "2026-11-14T22:45:45.559000+08:00",
+      "total_seconds": 120.523,
+      "text_generate": {
+        "max_length": 4096,
+        "sampling_mode": "on",
+        "sampling_mode.temperature": 1.0,
+        "sampling_mode.top_k": 20,
+        "sampling_mode.top_p": 0.95,
+        "sampling_mode.min_p": 0.0,
+        "sampling_mode.repetition_penalty": 1.0,
+        "sampling_mode.seed": 1,
+        "sampling_mode.presence_penalty": 1.5,
+        "thinking": false,
+        "use_default_template": true,
+        "mtp": "auto",
+        "clip": [
+          "493",
+          0
+        ],
+        "prompt_sha256": "dd3bf751252bac0247eaa48c521fd6a0c69d831a9ae845e9f4575976c7626bc2"
+      },
+      "pe_model": "qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors",
+      "resolution_settings": {
+        "aspect_ratio": "9:16 (Portrait Widescreen)",
+        "megapixels": 2.0,
+        "multiple": 8
+      },
+      "status": "success",
+      "cached_nodes": [
+        "13",
+        "484",
+        "486",
+        "487",
+        "488",
+        "495",
+        "496"
+      ],
+      "changes_from_previous": [
+        {
+          "node": "490",
+          "field": "seed",
+          "before": 296569455258744,
+          "after": 713191368099449
+        },
+        {
+          "node": "493",
+          "field": "clip_name",
+          "before": "qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors",
+          "after": "qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors"
+        }
+      ],
+      "text_progress_final": "Generating tokens:  18%|█▊        | 737/4096 [01:41<07:44,  7.23it/s]",
+      "text_progress_midpoint": "Generating tokens:   9%|▉         | 369/4096 [00:51<08:32,  7.27it/s]",
+      "sampler_progress_final": "100%|██████████| 8/8 [00:07<00:00,  1.08it/s]",
+      "info_log": [
+        "[INFO] Found quantization metadata version 1",
+        "[INFO] Using MixedPrecisionOps for text encoder",
+        "[INFO] Model storage policy: fast_disk=True paths=['/home/sonny/ComfyUI-Models/models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors']",
+        "[INFO] Requested to load Qwen35TEModel_",
+        "[INFO] loaded completely;  9032.15 MB loaded, full load: True",
+        "[INFO] CLIP/text encoder model load device: hpu:0, offload device: cpu, current: hpu:0, dtype: torch.bfloat16",
+        "[INFO] Prompt executed in 120.52 seconds"
+      ]
+    }
+  ],
+  "models": [
+    {
+      "name": "qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors",
+      "bytes": 18819722496,
+      "metadata": {
+        "format": "pt",
+        "source": "qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors",
+        "conversion": "int8_convrot_to_bf16"
+      },
+      "dtypes": {
+        "BF16": 760
+      },
+      "quantized_layers": 0,
+      "quant_configs": {},
+      "mtp_tensor_count": 0
+    },
+    {
+      "name": "qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors",
+      "bytes": 9471072252,
+      "metadata": {},
+      "dtypes": {
+        "F32": 310,
+        "BF16": 450,
+        "I8": 310,
+        "U8": 310
+      },
+      "quantized_layers": 310,
+      "quant_configs": {
+        "{\"format\": \"int8_tensorwise\", \"convrot\": true, \"convrot_groupsize\": 256}": 202,
+        "{\"format\": \"int8_tensorwise\", \"convrot\": true, \"convrot_groupsize\": 64}": 81,
+        "{\"format\": \"int8_tensorwise\", \"convrot\": true, \"convrot_groupsize\": 16}": 27
+      },
+      "mtp_tensor_count": 0
+    }
+  ],
+  "source_sha256": {
+    "comfy/ops.py": "a8b1e24ceb78455b3cd16f5e0309eaed88093d8b7501e41c33006b3f60b02940",
+    "comfy/sd1_clip.py": "9eb20b561ed3746d760087d3407ce5ce527ff772e94ceae36da43264a88d516e",
+    "comfy/text_encoders/qwen35.py": "ae12e8dfaea14e5e37168f9918e957159f8e03a278b837ee9fd8f29f228ff10a",
+    "comfy/text_encoders/llama.py": "fd7cc8556b7c3a7affb1999e4dc1965cba1e389e68593ece21d80eb48b23ce66"
+  },
+  "method": "Read-only API history, server log, source and safetensors headers. No fresh inference or profiler run. Progress counters and seconds are rounded tqdm values."
+}

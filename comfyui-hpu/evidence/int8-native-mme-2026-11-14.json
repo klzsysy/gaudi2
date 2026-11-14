@@ -1,0 +1,1489 @@
+{
+  "date": "2026-11-14",
+  "timezone": "Asia/Shanghai",
+  "server": "sonny@192.168.10.21",
+  "hardware": "Gaudi2 HL-225",
+  "synapse_version": "1.24.2",
+  "synapse_commit": "79e284b",
+  "mme_commit": "e90bf0c",
+  "scal_commit": "d93c3e2",
+  "probe": "comfyui-hpu/probes/int8_synapse_capability.cpp",
+  "shape_MNK": [
+    128,
+    128,
+    128
+  ],
+  "method": "Target-specific Synapse graph creation and compilation. The probe never acquires a device or launches a recipe. Read-only disassembly of installed HAL type capability methods.",
+  "hal": {
+    "mme_mask": "0x7906",
+    "all_types_mask": "0x7f3f",
+    "mme_types": {
+      "int8": false,
+      "bf16": true,
+      "fp32": true,
+      "int16": false,
+      "int32": false,
+      "uint8": false,
+      "fp16": true,
+      "tf32": true,
+      "hb_float": true,
+      "fp8_143": true,
+      "fp8_152": true
+    },
+    "disassembly": "\n/usr/lib/habanalabs/libSynapse.so:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000001804ad0 <Gaudi2HalReader::getSupportedTypes() const@@Base>:\n 1804ad0:\tf3 0f 1e fa          \tendbr64 \n 1804ad4:\tb8 3f 7f 00 00       \tmov    $0x7f3f,%eax\n 1804ad9:\tc3                   \tret    \n 1804ada:\t66 0f 1f 44 00 00    \tnopw   0x0(%rax,%rax,1)\n\n0000000001804ae0 <Gaudi2HalReader::getSupportedMmeTypes() const@@Base>:\n 1804ae0:\tf3 0f 1e fa          \tendbr64 \n 1804ae4:\tb8 06 79 00 00       \tmov    $0x7906,%eax\n 1804ae9:\tc3                   \tret    \n 1804aea:\t66 0f 1f 44 00 00    \tnopw   0x0(%rax,%rax,1)\n"
+  },
+  "sha256": {
+    "/usr/lib/habanalabs/libSynapse.so": "b2cc69367001ac417a2f7b213aba46168e78492df902870b78fc34c73894bf50",
+    "/usr/include/habanalabs/synapse_common_types.h": "92951d97ebd0350eb3c1ba383659ef2e96e9c1ed64fd6b331e37d2452dd65fbd",
+    "/home/sonny/gaudi2/comfyui-hpu/performance-int8-native-2026-11-14/int8_synapse_capability.cpp": "02d3d5eb248778059a2f978bc7cd5d77c3b2ff6b521e9602d838c1752cb662a9",
+    "/home/sonny/gaudi2/comfyui-hpu/performance-int8-native-2026-11-14/int8_synapse_capability": "d2282448f7d3979fe6c8af161dc9e044f5b848f94b18a669d47024e103221be8"
+  },
+  "cases": [
+    {
+      "case": "bf16-default",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_compile",
+          "status": 0,
+          "description": "Success"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "case": "int8_int32-default",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 26,
+          "description": "Generic failure"
+        },
+        {
+          "failed_at": "node_create_gemm"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "case": "int8_bf16-default",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 26,
+          "description": "Generic failure"
+        },
+        {
+          "failed_at": "node_create_gemm"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "case": "int8_int8-default",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 26,
+          "description": "Generic failure"
+        },
+        {
+          "failed_at": "node_create_gemm"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "case": "bf16-inference",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "set_graph_attributes",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_compile",
+          "status": 0,
+          "description": "Success"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "case": "int8_int32-inference",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "set_graph_attributes",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 26,
+          "description": "Generic failure"
+        },
+        {
+          "failed_at": "node_create_gemm"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "case": "int8_bf16-inference",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "set_graph_attributes",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 26,
+          "description": "Generic failure"
+        },
+        {
+          "failed_at": "node_create_gemm"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "case": "int8_int8-inference",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "set_graph_attributes",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 26,
+          "description": "Generic failure"
+        },
+        {
+          "failed_at": "node_create_gemm"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "case": "bf16-quantized",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "set_graph_attributes",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_compile",
+          "status": 0,
+          "description": "Success"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "case": "int8_int32-quantized",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "set_graph_attributes",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 26,
+          "description": "Generic failure"
+        },
+        {
+          "failed_at": "node_create_gemm"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "case": "int8_bf16-quantized",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "set_graph_attributes",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 26,
+          "description": "Generic failure"
+        },
+        {
+          "failed_at": "node_create_gemm"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "case": "int8_int8-quantized",
+      "events": [
+        {
+          "operation": "initialize",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "graph_create_gaudi2",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "set_graph_attributes",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "section_persistent",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_create",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_geometry",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_dtype",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "tensor_section",
+          "status": 0,
+          "description": "Success"
+        },
+        {
+          "operation": "node_create_gemm",
+          "status": 26,
+          "description": "Generic failure"
+        },
+        {
+          "failed_at": "node_create_gemm"
+        }
+      ],
+      "stderr": ""
+    }
+  ],
+  "runtime_error_lines": [
+    "[23:29:32.105806][SYN_API       ][error][tid:1B50AD] _createGenericNode: Can not add gemm generic node (native_type_probe) to graph",
+    "[23:29:32.105834][SYN_API       ][error][tid:1B50AD] synNodeCreate: SYN_API_CALL failed status: 26[synFail]. graphHandle 0x5615c04fb380 numberInputs 2 numberOutputs 1",
+    "[23:29:32.241009][SYN_API       ][error][tid:1B50B1] _createGenericNode: Can not add gemm generic node (native_type_probe) to graph",
+    "[23:29:32.241047][SYN_API       ][error][tid:1B50B1] synNodeCreate: SYN_API_CALL failed status: 26[synFail]. graphHandle 0x560a46d5b380 numberInputs 2 numberOutputs 1",
+    "[23:29:41.617190][SYN_API       ][error][tid:1B50E1] _createGenericNode: Can not add gemm generic node (native_type_probe) to graph",
+    "[23:29:41.617222][SYN_API       ][error][tid:1B50E1] synNodeCreate: SYN_API_CALL failed status: 26[synFail]. graphHandle 0x559a1503c380 numberInputs 2 numberOutputs 1",
+    "[23:29:41.735393][SYN_API       ][error][tid:1B50E5] _createGenericNode: Can not add gemm generic node (native_type_probe) to graph",
+    "[23:29:41.735436][SYN_API       ][error][tid:1B50E5] synNodeCreate: SYN_API_CALL failed status: 26[synFail]. graphHandle 0x55f794292380 numberInputs 2 numberOutputs 1",
+    "[23:29:41.853526][SYN_API       ][error][tid:1B50E9] _createGenericNode: Can not add gemm generic node (native_type_probe) to graph",
+    "[23:29:41.853560][SYN_API       ][error][tid:1B50E9] synNodeCreate: SYN_API_CALL failed status: 26[synFail]. graphHandle 0x55f6b7e7b380 numberInputs 2 numberOutputs 1",
+    "[23:29:42.131578][SYN_API       ][error][tid:1B50F1] _createGenericNode: Can not add gemm generic node (native_type_probe) to graph",
+    "[23:29:42.131617][SYN_API       ][error][tid:1B50F1] synNodeCreate: SYN_API_CALL failed status: 26[synFail]. graphHandle 0x5652eb120380 numberInputs 2 numberOutputs 1",
+    "[23:29:42.271418][SYN_API       ][error][tid:1B50F5] _createGenericNode: Can not add gemm generic node (native_type_probe) to graph",
+    "[23:29:42.271452][SYN_API       ][error][tid:1B50F5] synNodeCreate: SYN_API_CALL failed status: 26[synFail]. graphHandle 0x5650a3db9380 numberInputs 2 numberOutputs 1",
+    "[23:29:42.387264][SYN_API       ][error][tid:1B50F9] _createGenericNode: Can not add gemm generic node (native_type_probe) to graph",
+    "[23:29:42.387307][SYN_API       ][error][tid:1B50F9] synNodeCreate: SYN_API_CALL failed status: 26[synFail]. graphHandle 0x55c3e365d380 numberInputs 2 numberOutputs 1",
+    "[23:30:44.395942][SYN_API       ][error][tid:1B51A1] _createGenericNode: Can not add gemm generic node (native_type_probe) to graph",
+    "[23:30:44.395997][SYN_API       ][error][tid:1B51A1] synNodeCreate: SYN_API_CALL failed status: 26[synFail]. graphHandle 0x561825934380 numberInputs 2 numberOutputs 1"
+  ],
+  "service_after": {
+    "pid": "1701354",
+    "queue_counts": {
+      "queue_running": 0,
+      "queue_pending": 0
+    }
+  },
+  "decision": "Native INT8 MME unsupported on the verified Gaudi2/Synapse stack. Stop and abandon INT8 development under the user condition.",
+  "public_sources": [
+    "https://docs.habana.ai/en/latest/Gaudi_Overview/Gaudi_Architecture.html",
+    "https://docs.habana.ai/en/latest/PyTorch/Reference/Pytorch_Operators/Pytorch_Operators.html"
+  ]
+}
