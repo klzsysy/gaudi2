@@ -20,11 +20,13 @@ parser.add_argument('--capture',action='store_true')
 parser.add_argument('--stages',action='store_true')
 parser.add_argument('--quality-cases',action='store_true')
 parser.add_argument('--free',action='store_true')
+parser.add_argument('--workflow',type=Path)
+parser.add_argument('--output-root',type=Path)
 a=parser.parse_args()
 base=Path('/home/sonny/gaudi2/comfyui-hpu')
-root=base/'performance-qwen21-bf16-2026-11-13'/a.label
+root=(a.output_root or base/'performance-qwen21-bf16-2026-11-13')/a.label
 root.mkdir(parents=True,exist_ok=True)
-workflow=json.loads((base/'workflows/qwen21-user-bf16-api.json').read_text())
+workflow=json.loads((a.workflow or base/'workflows/qwen21-user-bf16-api.json').read_text())
 env=dict(os.environ,PT_HPU_LAZY_MODE='0',GC_KERNEL_PATH='/usr/lib/habanalabs/libtpc_kernels.so',
          PYTHONPATH=str(Path.cwd()),QWEN_DEEP_DIR=str(root),MOSS_EVENTS=str(root/'events.jsonl'),QWEN21_TRIAL=a.trial)
 url='http://127.0.0.1:8190'

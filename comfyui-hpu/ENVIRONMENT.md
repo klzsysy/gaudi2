@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-最近部署为`ed9552e5`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+最近部署为`dfca7cd6`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 ```bash
 export PT_HPU_LAZY_MODE=0
@@ -99,4 +99,11 @@ export GC_KERNEL_PATH=/usr/lib/habanalabs/libtpc_kernels.so
 
 用户当前图保存为 `workflows/qwen21-user-bf16.json` 和对应API图，基础编码器为已有 `qwen3vl_8b_bf16.safetensors`。832×1504、8步Euler/simple、CFG1、thinking关闭、PE开启作为本轮基线。优化自动通过原节点入口生效，详情见 [全BF16记录](QWEN21_BF16.md)。
 
-调查入口 `probes/qwen21_deep_jobs.py` 使用独立8190服务和强制计算fingerprint，普通服务验收使用 `probes/qwen21_deep_normal.py`。HPU任务继续串行，`/free`后观察稳定内存再确认卸载，本轮全BF16模型约40秒后稳定。服务现为 `ed9552e5`，原始ComfyUI目录遵循只读约束。
+调查入口 `probes/qwen21_deep_jobs.py` 使用独立8190服务和强制计算fingerprint，普通服务验收使用 `probes/qwen21_deep_normal.py`。HPU任务继续串行，`/free`后观察稳定内存再确认卸载，本轮全BF16模型约40秒后稳定。服务现为 `dfca7cd6`，原始ComfyUI目录遵循只读约束。
+
+
+## 2026-11-15 最新2MP工作流
+
+最后一次用户API图为`workflows/qwen21-latest-2026-11-15-api.json`，1088×1920、CFG1.2、8步官方Turbo调度、thinking开启。产品`dfca7cd6`启用单token普通BF16的GDN核心和MLP残差联合编译。
+
+新调查目录为`/home/sonny/gaudi2/comfyui-hpu/performance-qwen21-2026-11-15`。`qwen21_deep_jobs.py --workflow <API文件> --output-root <调查根目录>`支持保存本轮完整/缓存工作流。普通服务重载验证入口为`probes/qwen21_normal_next.py`。运行任何HPU probe或回归均需显式设置`PT_HPU_LAZY_MODE=0`和`GC_KERNEL_PATH=/usr/lib/habanalabs/libtpc_kernels.so`。本轮对照确认eager流水线关闭会显著变慢，普通服务继续使用默认开启状态。完整条件、候选和数值边界见[本轮记录](QWEN21_PERFORMANCE_2026-11-15.md)。

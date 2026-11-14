@@ -1,6 +1,6 @@
 # ComfyUI Gaudi2优化与适配记录
 
-更新于2026-11-14（Asia/Shanghai）。产品基线为`ed9552e5`，单卡Gaudi2、Habana1.24.2、eager＋区域编译。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
+更新于2026-11-15（Asia/Shanghai）。产品版本为`dfca7cd6`，单卡Gaudi2、Habana1.24.2、eager＋区域编译。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
 
 ## 按问题查找
 
@@ -19,6 +19,7 @@
 | [运行时与故障](optimization/RUNTIME.md) | lazy/Graph、SIGPIPE、异步输入、段错误、驱动和依赖恢复 |
 | [算子与外部源码](optimization/KERNEL_REFERENCES.md) | 官方bridge、TPC接口、vLLM/INC/1Cat/JChen固定版本核查 |
 | [Qwen Image 2.1 全BF16深入优化](QWEN21_BF16.md) | PE/DiT分项、trace、舍入边界、完整图保值与性能验收 |
+| [Qwen Image 2.1 最新2MP工作流](QWEN21_PERFORMANCE_2026-11-15.md) | 1784-token扩写、2MP/CFG1.2耗时、GDN/MLP提交优化与回退复测 |
 | [Qwen Image 2.1 Turbo 首版](QWEN21_FIRST.md) | 官方文生图、匹配增强器、BF16 常驻、FFN 编译与首版验收 |
 | [后端与模型正确性](ADAPTATION.md) | HPU接入、Krea2 E4M3解码、Qwen VAE原地布局问题、MOSS组合 |
 | [模型共享与生命周期](MODEL_STORAGE.md) | 共享目录、历史备份、组件复用及量化文件所有权 |

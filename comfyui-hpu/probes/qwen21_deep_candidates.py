@@ -45,6 +45,9 @@ def qkv(module, x, pe, native=False, fp32_norm=False, functional=False):
 
 def install(mode):
     global native_rope
+    if mode.startswith('next:'):
+        from qwen21_next_candidates import install as install_next
+        return install_next(mode[5:])
     parts = mode.split('+')
     if 'pairwise' in parts:
         native_rope = torch.compile(apply_rope1, backend='hpu_backend', dynamic=None, options={'force_static_compile':True,'decomposition_mode':'none'})
