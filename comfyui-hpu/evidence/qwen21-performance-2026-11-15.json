@@ -2505,5 +2505,61 @@
         }
       ]
     ]
+  },
+  "roofline_followup": {
+    "scope": "Qwen Image 2.1 current BF16 batch1 workflow. Stage-specific idealized ratios, no unified end-to-end efficiency established.",
+    "sources": {
+      "bf16_peak": "https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf",
+      "hbm_peak": "https://docs.habana.ai/en/latest/Gaudi_Overview/Gaudi_Architecture.html"
+    },
+    "hardware": {
+      "dense_bf16_tflops": 432,
+      "hbm_spec_tb_s": 2.45,
+      "historical_copy_tb_s": 2.148
+    },
+    "text": {
+      "tokens_per_second_including_prefill": 42.76847205632258,
+      "logical_weight_bytes_per_step": 15873360896,
+      "spec_weight_only_tps": 154.34664505217586,
+      "copy_weight_only_tps": 135.3210586008464,
+      "percent_of_spec_weight_only_ceiling": 27.709362935530592,
+      "percent_of_copy_weight_only_ceiling": 31.605185843598672,
+      "actual_hbm_bytes_measured": false
+    },
+    "dit_block": {
+      "query_tokens": 8160,
+      "key_tokens": 8607,
+      "prefix_tokens": 447,
+      "hidden_size": 4096,
+      "ffn_hidden_size": 12288,
+      "heads": 32,
+      "fma_flops": 2,
+      "linear_formula": "2*N*(4*d*d+3*d*f)",
+      "attention_formula": "4*N*Nk*d",
+      "linear_flops": 3559454146560,
+      "attention_flops": 1150699438080,
+      "seconds": 0.031060186302056536,
+      "effective_matrix_tflops": 151.646018437698,
+      "percent_of_dense_bf16_peak": 35.10324500872639,
+      "matrix_only_ideal_ms": 10.903133297777776,
+      "matrix_kernel_data_types": {
+        "GEMM_bf16_events": 100,
+        "BatchGemm_bf16_events": 64
+      },
+      "scope": "One captured real target block. Excludes normalization, softmax, rotary and other non-matrix arithmetic from FLOP count. Whole DiT extrapolation not validated."
+    },
+    "trace_exclusive_ms": {
+      "idle": 0.29533056640625,
+      "other": 7.934294921875,
+      "other+qk": 0.04290673828125,
+      "qk": 4.05164453125,
+      "qk+softmax": 1.98122509765625,
+      "softmax": 4.9045771484375,
+      "av+softmax": 4.9954765625,
+      "av": 1.02395068359375,
+      "linear": 5.3419892578125,
+      "linear+other": 0.48284765625
+    },
+    "trace_caveat": "MME timestamp intervals are activity observations. Their duration is not calibrated as complete per-GEMM execution time and is not used as a standalone FLOP/s denominator."
   }
 }

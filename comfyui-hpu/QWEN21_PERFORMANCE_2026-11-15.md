@@ -123,3 +123,21 @@
 后续重测应针对已定位的GEMM lowering/舍入边界、能够减少提交且保留状态语义的执行结构，或同精度attention片上数据流。历史INT8终止结论、lazy/Graph ABI限制和TPC累积舍入失败继续参考对应专题。本轮选择沿用历史质量保值标准，较快且改变输出的候选均保留原型与误差证据。
 
 紧凑证据保存在`evidence/qwen21-performance-2026-11-15.json`。大型trace、logits、block、生成源码、原/中间/最终产品快照及所有失败日志位于本篇开头的服务器调查目录。
+
+## 硬件上限百分比的补充核算
+
+针对当前BF16性能达峰比例的追问，重新读取真实block捕获、trace和已验节点计时，并核对Intel规格。Gaudi2稠密BF16 MME峰值432TF/s，HBM规格约2.45TB/s，产品对照表另列2.46TB/s，以下采用2.45TB/s。[Intel产品对照表](https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf) · [Gaudi2架构](https://docs.habana.ai/en/latest/Gaudi_Overview/Gaudi_Architecture.html)
+
+| 阶段 | 实测值 | 理想参照 | 推算比例 |
+|---|---|---|---|
+| 文本PE，含prefill的节点平均 | 42.768 tokens/s | 15.873GB权重/步，按2.45TB/s得到154.347 tokens/s | 27.71% |
+| 同一文本PE | 42.768 tokens/s | 按同机2.148TB/s历史copy速率得到135.321 tokens/s | 31.61% |
+| 2MP真实DiT代表block | 31.060ms，主要矩阵4.710TFLOP | 432TF/s，矩阵部分理想10.903ms | 35.10% |
+
+文本比例依赖每步读取一次decoder与输出头权重的简化模型，省略KV/GDN、非线性、布局、同步和调度，prefill已计入实测节点时间。实际HBM事务计数尚未校准，这些比例仅评价相对纯权重读取参照的吞吐。
+
+DiT捕获为batch1、8160个query、8607个key（447个缓存前缀）、32 heads、隐藏宽度4096、FFN宽度12288。FMA计2 FLOPs，六个Linear矩阵合计`2*N*(4*d*d+3*d*f)=3.559454TFLOP`，QK/AV合计`4*N*Nk*d=1.150699TFLOP`。以完整block壁钟计算有效矩阵吞吐151.646TF/s，约稠密BF16峰值的35.1%。trace中的GEMM和BatchGemm均标记BF16。该估算覆盖一个代表block，完整DiT和整图统一达峰率仍需完整计算量与数据流测量。
+
+该block的kernel活动并集占窗口99.05%，可见MME事件覆盖57.71%，softmax活动11.881ms且与MME重叠，另有7.934ms仅其它kernel活动。MME事件区间尚未校准为每个GEMM的完整执行时长，因此算力达峰估算采用整个block的壁钟。文本trace有显著采集扰动，54%空档仅限该trace窗口。
+
+最终工作流的PE占68.73%、DiT占27.33%，余下主要为编码、VAE和保存。文本瓶颈集中在小M矩阵权重访问、GDN/KV细碎操作、每token约146次recipe提交及主机控制。DiT主要受attention/softmax与norm、RoPE、布局转换等设备数据流限制，单纯减少其主机提交最多只能覆盖已观测到的小段空档。设备活动率、峰值矩阵算力达成率和HBM饱和率各有独立口径。
