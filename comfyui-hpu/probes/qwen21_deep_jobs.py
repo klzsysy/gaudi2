@@ -22,16 +22,20 @@ parser.add_argument('--quality-cases',action='store_true')
 parser.add_argument('--free',action='store_true')
 parser.add_argument('--workflow',type=Path)
 parser.add_argument('--output-root',type=Path)
+parser.add_argument('--case-graphs',type=Path)
+parser.add_argument('--teacher',type=Path)
+parser.add_argument('--reload',action='store_true')
 a=parser.parse_args()
 base=Path('/home/sonny/gaudi2/comfyui-hpu')
 root=(a.output_root or base/'performance-qwen21-bf16-2026-11-13')/a.label
 root.mkdir(parents=True,exist_ok=True)
 workflow=json.loads((a.workflow or base/'workflows/qwen21-user-bf16-api.json').read_text())
-env=dict(os.environ,PT_HPU_LAZY_MODE='0',GC_KERNEL_PATH='/usr/lib/habanalabs/libtpc_kernels.so',
-         PYTHONPATH=str(Path.cwd()),QWEN_DEEP_DIR=str(root),MOSS_EVENTS=str(root/'events.jsonl'),QWEN21_TRIAL=a.trial)
+teacher=json.loads(a.teacher.read_text()) if a.teacher else None
+env=dict(os.environ,PT_HPU_LAZY_MODE='0',GC_KERNEL_PATH=os.environ.get('GC_KERNEL_PATH','/usr/lib/habanalabs/libtpc_kernels.so'),
+         PYTHONPATH=os.pathsep.join((str(Path.cwd()),str(Path(__file__).parent))),QWEN_DEEP_DIR=str(root),MOSS_EVENTS=str(root/'events.jsonl'),QWEN21_TRIAL=a.trial)
 url='http://127.0.0.1:8190'
 log=(root/'server.log').open('w')
-server=subprocess.Popen([sys.executable,str(Path(__file__).with_name('qwen21_deep_server.py')),
+server=subprocess.Popen([sys.executable,'-c','import qwen21_deep_server; qwen21_deep_server.main()',
     '--disable-dynamic-vram','--disable-pinned-memory','--disable-async-offload','--disable-xformers',
     '--use-pytorch-cross-attention','--disable-all-custom-nodes','--listen','127.0.0.1','--port','8190'],env=env,stdout=log,stderr=subprocess.STDOUT)
 
@@ -53,6 +57,10 @@ try:
         except urllib.error.URLError:time.sleep(1)
     else:raise RuntimeError('server unavailable')
     sequence=[('full',i,'') for i in range(a.runs)]+[('cached',i,'') for i in range(a.cached)]
+    cases=json.loads(a.case_graphs.read_text()) if a.case_graphs else {}
+    sequence += [(label,0,'') for label in cases]
+    if a.reload:
+        sequence += [('reload',0,'')]
     if a.quality_cases:
         sequence += [(label,0,'') for label in ('seed2','size512','size1024','thinking','official')]
     if a.stages:
@@ -62,7 +70,14 @@ try:
     if a.diagnostics:
         sequence += [('stages',0,'stages'),('window_text',0,'window_text'),('trace_text',0,'trace_text'),('trace_dit',0,'trace_dit')]
     for label,index,profile in sequence:
-        graph=copy.deepcopy(workflow)
+        if label=='reload':
+            request('/free',dict(unload_models=True,free_memory=True))
+            samples=[]
+            for _ in range(4):
+                time.sleep(10)
+                samples.append(request('/system_stats')['devices'])
+            (root/'reload-free.json').write_text(json.dumps(samples,indent=2))
+        graph=copy.deepcopy(cases.get(label,workflow))
         if label=='seed2':
             graph['459:458']['inputs']['seed']=2
             graph['459:471']['inputs']['sampling_mode.seed']=2
@@ -79,7 +94,8 @@ try:
         graph['461']['inputs']['filename_prefix']=f'gaudi/qwen21_bf16/{a.label}_{label}_{index}'
         nodes=['KSampler','SamplerCustomAdvanced','VAEDecode']
         if label!='cached' and profile not in ('trace_dit','capture'):nodes+=['TextGenerate','TextEncodeQwenImage21']
-        pid=request('/prompt',dict(prompt=graph,extra_data=dict(moss_recompute_nodes=nodes,qwen_profile=profile)))['prompt_id']
+        pid=request('/prompt',dict(prompt=graph,extra_data=dict(moss_recompute_nodes=nodes,qwen_profile=profile,
+                    qwen_teacher=teacher if label=='full' else None)))['prompt_id']
         print(a.label,label,index,pid,flush=True)
         while True:
             if server.poll() is not None:raise RuntimeError('server exited during execution')

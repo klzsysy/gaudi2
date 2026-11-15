@@ -21,11 +21,15 @@ p.add_argument('--teacher',type=Path)
 p.add_argument('--logits',action='store_true')
 p.add_argument('--workflow',type=Path)
 p.add_argument('--plain-only',action='store_true')
+p.add_argument('--plain-runs',type=int,default=5)
 p.add_argument('--window-tokens',type=int)
 p.add_argument('--cpu-profile',action='store_true')
 p.add_argument('--quality-only',action='store_true')
+p.add_argument('--native',action='store_true')
 a=p.parse_args()
 a.output.mkdir(parents=True,exist_ok=True)
+if a.native:
+    from moss_native_profile import NativeProfile
 if a.trial:
     from qwen21_deep_candidates import install
     install(a.trial)
@@ -54,28 +58,31 @@ def sampled(self,*values,**kwargs):
     counter+=1
     if a.window_tokens and counter == a.window_tokens:
         result = torch.full_like(result, self.model.config.stop_tokens[0])
-    if counter==32:
+    if counter==(512 if a.native else 32):
         torch.hpu.synchronize()
         if mode=='profile':
-            active=torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU,torch.profiler.ProfilerActivity.HPU])
+            active=NativeProfile(a.output) if a.native else torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU,torch.profiler.ProfilerActivity.HPU])
             active.__enter__()
         if mode=='cpu_profile':
             cpu_profile.enable()
         window_start=time.perf_counter()
-    if counter==48:
+    if counter==(528 if a.native else 48):
         torch.hpu.synchronize()
         window_seconds=time.perf_counter()-window_start
         if mode=='cpu_profile':
             cpu_profile.disable()
         if active:
             active.__exit__(None,None,None)
-            finished,active=active,None
+            finished,active=None if a.native else active,None
+        if a.native and mode in ('plain','profile'):
+            (a.output/('window.json' if mode=='profile' else 'plain-window.json')).write_text(
+                json.dumps(dict(seconds=window_seconds,inter_token_intervals=16,forwards=16)))
     return result
 BaseGenerate.sample_token=sampled
 
 def labelled(function,label):
     def call(*values,**kwargs):
-        if active:
+        if not a.native and active:
             with torch.profiler.record_function(label):return function(*values,**kwargs)
         return function(*values,**kwargs)
     return call
@@ -93,7 +100,7 @@ def logits(self,*values,**kwargs):
 BaseGenerate.logits=logits
 sequence=['warm','plain','plain','plain','logits'] if a.logits else ['warm','plain','profile','plain']
 if a.plain_only:
-    sequence=['warm']+['plain']*5
+    sequence=['warm']+['plain']*a.plain_runs
 if a.quality_only:
     sequence=['warm','logits']
 if a.cpu_profile:
@@ -119,3 +126,9 @@ for mode in sequence:
 if saved_logits:torch.save(torch.cat(saved_logits),a.output/'logits.pt')
 if a.cpu_profile:
     cpu_profile.dump_stats(str(a.output/'cpu-profile.pstats'))
+
+torch.hpu.synchronize()
+torch._dynamo.reset()
+comfy.model_management.unload_all_models()
+del clip
+gc.collect()

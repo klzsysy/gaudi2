@@ -1,0 +1,1149 @@
+{
+  "date": "2026-11-15",
+  "baseline_product": "dfca7cd672240da975983214c11d3057ec5b74b6",
+  "candidate": "gdn_direct+sdpa+whole",
+  "mtp": false,
+  "screen": {
+    "bucket": {
+      "runs": [
+        {
+          "mode": "warm",
+          "seconds": 26.458175489038695,
+          "window_seconds": 0.36770211602561176,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 10.413810569967609,
+          "window_seconds": 0.36757736501749605,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 10.116629375028424,
+          "window_seconds": 0.3625523340306245,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 10.078695986012463,
+          "window_seconds": 0.36198507697554305,
+          "tokens": 427
+        },
+        {
+          "mode": "logits",
+          "seconds": 11.072781130031217,
+          "window_seconds": 0.3950616890215315,
+          "tokens": 427
+        }
+      ],
+      "median_seconds": 10.116629375028424,
+      "tokens": [
+        427,
+        427,
+        427
+      ],
+      "median_tokens_per_second": 42.207733838109526,
+      "logits": {
+        "shape": [
+          427,
+          248320
+        ],
+        "finite": true,
+        "rrmse": 0.0,
+        "max_abs": 0.0,
+        "exact_rows": 427,
+        "top1_same": 427,
+        "mean_kl_reference_to_candidate": 0.0
+      }
+    },
+    "gdn_direct": {
+      "runs": [
+        {
+          "mode": "warm",
+          "seconds": 23.974708264984656,
+          "window_seconds": 0.33317857299698517,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 9.347152741975151,
+          "window_seconds": 0.3285980329965241,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 9.352844050968997,
+          "window_seconds": 0.3480244979728013,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 9.296835947025102,
+          "window_seconds": 0.33298344403738156,
+          "tokens": 427
+        },
+        {
+          "mode": "logits",
+          "seconds": 10.110881731961854,
+          "window_seconds": 0.35118240903830156,
+          "tokens": 427
+        }
+      ],
+      "median_seconds": 9.347152741975151,
+      "tokens": [
+        427,
+        427,
+        427
+      ],
+      "median_tokens_per_second": 45.68236037081924,
+      "logits": {
+        "shape": [
+          427,
+          248320
+        ],
+        "finite": true,
+        "rrmse": 0.009851117514631887,
+        "max_abs": 0.40625,
+        "exact_rows": 1,
+        "top1_same": 422,
+        "mean_kl_reference_to_candidate": 0.0005471289170953931
+      }
+    },
+    "gdn_native": {
+      "runs": [
+        {
+          "mode": "warm",
+          "seconds": 24.740847687993664,
+          "window_seconds": 0.3694372829631902,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 9.641491435002536,
+          "window_seconds": 0.34082916303304955,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 9.784677982970607,
+          "window_seconds": 0.36570510698948056,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 9.55018394102808,
+          "window_seconds": 0.3420219999970868,
+          "tokens": 427
+        },
+        {
+          "mode": "logits",
+          "seconds": 10.39935574203264,
+          "window_seconds": 0.3622268410399556,
+          "tokens": 427
+        }
+      ],
+      "median_seconds": 9.641491435002536,
+      "tokens": [
+        427,
+        427,
+        427
+      ],
+      "median_tokens_per_second": 44.28775391012809,
+      "logits": {
+        "shape": [
+          427,
+          248320
+        ],
+        "finite": true,
+        "rrmse": 0.009861427677270466,
+        "max_abs": 0.375,
+        "exact_rows": 1,
+        "top1_same": 421,
+        "mean_kl_reference_to_candidate": 0.0005263822410578471
+      }
+    },
+    "reference": {
+      "runs": [
+        {
+          "mode": "warm",
+          "seconds": 25.74296093999874,
+          "window_seconds": 0.36660483200103045,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 10.261677948001307,
+          "window_seconds": 0.36335355101618916,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 10.22834806801984,
+          "window_seconds": 0.3664794719661586,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 10.211137889011297,
+          "window_seconds": 0.3654266450321302,
+          "tokens": 427
+        },
+        {
+          "mode": "logits",
+          "seconds": 11.12721127801342,
+          "window_seconds": 0.4044801970012486,
+          "tokens": 427
+        }
+      ],
+      "median_seconds": 10.22834806801984,
+      "tokens": [
+        427,
+        427,
+        427
+      ],
+      "median_tokens_per_second": 41.746721675914294,
+      "logits": {
+        "shape": [
+          427,
+          248320
+        ],
+        "finite": true,
+        "rrmse": 0.0,
+        "max_abs": 0.0,
+        "exact_rows": 427,
+        "top1_same": 427,
+        "mean_kl_reference_to_candidate": 0.0
+      }
+    },
+    "sdpa": {
+      "runs": [
+        {
+          "mode": "warm",
+          "seconds": 25.461108434014022,
+          "window_seconds": 0.36038613598793745,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 10.175222757970914,
+          "window_seconds": 0.3598605670267716,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 10.121091777982656,
+          "window_seconds": 0.3608585909823887,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 10.168607926985715,
+          "window_seconds": 0.371182379021775,
+          "tokens": 427
+        },
+        {
+          "mode": "logits",
+          "seconds": 11.10267373098759,
+          "window_seconds": 0.3901159170200117,
+          "tokens": 427
+        }
+      ],
+      "median_seconds": 10.168607926985715,
+      "tokens": [
+        427,
+        427,
+        427
+      ],
+      "median_tokens_per_second": 41.99198189821208,
+      "logits": {
+        "shape": [
+          427,
+          248320
+        ],
+        "finite": true,
+        "rrmse": 0.009750328409055644,
+        "max_abs": 0.4375,
+        "exact_rows": 1,
+        "top1_same": 423,
+        "mean_kl_reference_to_candidate": 0.0004899173045849354
+      }
+    }
+  },
+  "combined": {
+    "gdn_direct-sdpa": {
+      "runs": [
+        {
+          "mode": "warm",
+          "seconds": 23.942632747988682,
+          "window_seconds": 0.3306670289603062,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 9.31310344900703,
+          "window_seconds": 0.3334907909738831,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 9.4188429810456,
+          "window_seconds": 0.3703917889506556,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 10.156358628999442,
+          "window_seconds": 0.37261534098070115,
+          "tokens": 427
+        },
+        {
+          "mode": "logits",
+          "seconds": 10.107021595991682,
+          "window_seconds": 0.3550130020012148,
+          "tokens": 427
+        }
+      ],
+      "median_seconds": 9.4188429810456,
+      "tokens": [
+        427,
+        427,
+        427
+      ],
+      "median_tokens_per_second": 45.3346553137462,
+      "logits": {
+        "shape": [
+          427,
+          248320
+        ],
+        "finite": true,
+        "rrmse": 0.010034335293501374,
+        "max_abs": 0.328125,
+        "exact_rows": 1,
+        "top1_same": 422,
+        "mean_kl_reference_to_candidate": 0.0005738782255847086
+      }
+    },
+    "gdn_direct-sdpa-whole": {
+      "runs": [
+        {
+          "mode": "warm",
+          "seconds": 47.05428615398705,
+          "window_seconds": 0.22969494701828808,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 6.58022499398794,
+          "window_seconds": 0.23028796899598092,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 6.533289771003183,
+          "window_seconds": 0.22991188400192186,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 6.403449989971705,
+          "window_seconds": 0.22526761901099235,
+          "tokens": 427
+        },
+        {
+          "mode": "logits",
+          "seconds": 6.539011064043734,
+          "window_seconds": 0.2285193619900383,
+          "tokens": 427
+        }
+      ],
+      "median_seconds": 6.533289771003183,
+      "tokens": [
+        427,
+        427,
+        427
+      ],
+      "median_tokens_per_second": 65.3575786421049,
+      "logits": {
+        "shape": [
+          427,
+          248320
+        ],
+        "finite": true,
+        "rrmse": 0.009883253407268821,
+        "max_abs": 0.5,
+        "exact_rows": 1,
+        "top1_same": 419,
+        "mean_kl_reference_to_candidate": 0.0006010690665819117
+      }
+    },
+    "gdn_direct-whole": {
+      "runs": [
+        {
+          "mode": "warm",
+          "seconds": 48.51056757802144,
+          "window_seconds": 0.2302281649899669,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 6.6444237569812685,
+          "window_seconds": 0.23419273598119617,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 6.6196550949825905,
+          "window_seconds": 0.23444252798799425,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 6.702645123004913,
+          "window_seconds": 0.2345969129819423,
+          "tokens": 427
+        },
+        {
+          "mode": "logits",
+          "seconds": 6.758496820984874,
+          "window_seconds": 0.23773566604359075,
+          "tokens": 427
+        }
+      ],
+      "median_seconds": 6.6444237569812685,
+      "tokens": [
+        427,
+        427,
+        427
+      ],
+      "median_tokens_per_second": 64.26441413393492,
+      "logits": {
+        "shape": [
+          427,
+          248320
+        ],
+        "finite": true,
+        "rrmse": 0.009829374799463126,
+        "max_abs": 0.328125,
+        "exact_rows": 1,
+        "top1_same": 420,
+        "mean_kl_reference_to_candidate": 0.0005978157092758239
+      }
+    },
+    "whole": {
+      "runs": [
+        {
+          "mode": "warm",
+          "seconds": 161.33721763297217,
+          "window_seconds": 0.35710680700140074,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 9.874915210006293,
+          "window_seconds": 0.35605533700436354,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 9.92662843997823,
+          "window_seconds": 0.35806952201528475,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 9.908900292997714,
+          "window_seconds": 0.3557100010220893,
+          "tokens": 427
+        },
+        {
+          "mode": "logits",
+          "seconds": 10.01861187099712,
+          "window_seconds": 0.35950037400471047,
+          "tokens": 427
+        }
+      ],
+      "median_seconds": 9.908900292997714,
+      "tokens": [
+        427,
+        427,
+        427
+      ],
+      "median_tokens_per_second": 43.092572068945586,
+      "logits": {
+        "shape": [
+          427,
+          248320
+        ],
+        "finite": true,
+        "rrmse": 0.009845571914390786,
+        "max_abs": 0.46875,
+        "exact_rows": 1,
+        "top1_same": 421,
+        "mean_kl_reference_to_candidate": 0.0005802698460662742
+      }
+    }
+  },
+  "workflow": {
+    "gdn_direct-sdpa-whole": {
+      "runs": [
+        {
+          "file": "full-0.json",
+          "prompt_id": "e6e56706-937d-4e59-9348-4d782c8db28b",
+          "status": "success",
+          "seconds": 111.894,
+          "nodes": {
+            "VAELoader": 0.324675716,
+            "ResolutionSelector": 0.000165878,
+            "EmptyLatentImage": 0.000705432,
+            "ManualSigmas": 0.000318806,
+            "KSamplerSelect": 0.000129172,
+            "CLIPLoader": 6.241291679,
+            "UNETLoader": 0.989696798,
+            "QwenImage21Cache": 0.001990309,
+            "RandomNoise": 0.000122984,
+            "StringMultiline": 0.000121331,
+            "TextGenerate": 73.35943789,
+            "SwitchNode": 0.000191726,
+            "PreviewAny": 0.00010054,
+            "TextEncodeQwenImage21": 0.509234094,
+            "CFGGuider": 0.000257734,
+            "SamplerCustomAdvanced": 22.954805884,
+            "VAEDecode": 1.259979705,
+            "SaveImageAdvanced": 0.771430653
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 1784,
+          "token_sha256": "954f5022fa7b8cd1c6b424b1720c0e9bd11fffe3776e84596662a95c88d45fe7",
+          "fallback": {},
+          "peak_gib": 72.56126296520233,
+          "end_gib": 56.98264706134796
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "d844ec15-9d73-4ad0-957b-13792ec9a601",
+          "status": "success",
+          "seconds": 44.236,
+          "nodes": {
+            "TextGenerate": 25.229207963,
+            "SwitchNode": 0.000112619,
+            "PreviewAny": 6.5658e-05,
+            "TextEncodeQwenImage21": 0.537067578,
+            "CFGGuider": 0.0002139,
+            "SamplerCustomAdvanced": 16.585616532,
+            "VAEDecode": 1.097663586,
+            "SaveImageAdvanced": 0.770339539
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 1784,
+          "token_sha256": "954f5022fa7b8cd1c6b424b1720c0e9bd11fffe3776e84596662a95c88d45fe7",
+          "fallback": {},
+          "peak_gib": 72.9170708656311,
+          "end_gib": 56.724132657051086
+        },
+        {
+          "file": "full-2.json",
+          "prompt_id": "2e0e528b-abc0-497c-bd66-a781b4180c8f",
+          "status": "success",
+          "seconds": 44.12,
+          "nodes": {
+            "TextGenerate": 25.136937509,
+            "SwitchNode": 0.000112008,
+            "PreviewAny": 6.3555e-05,
+            "TextEncodeQwenImage21": 0.519720867,
+            "CFGGuider": 0.000196334,
+            "SamplerCustomAdvanced": 16.580732583,
+            "VAEDecode": 1.097827502,
+            "SaveImageAdvanced": 0.768527926
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 1784,
+          "token_sha256": "954f5022fa7b8cd1c6b424b1720c0e9bd11fffe3776e84596662a95c88d45fe7",
+          "fallback": {},
+          "peak_gib": 72.92373919487,
+          "end_gib": 56.724132657051086
+        },
+        {
+          "file": "paired_seed_01-0.json",
+          "prompt_id": "1cf11bf6-9f20-4192-9ab3-cb56097b8aa1",
+          "status": "success",
+          "seconds": 45.285,
+          "nodes": {
+            "TextGenerate": 26.181652888,
+            "SwitchNode": 0.000110745,
+            "PreviewAny": 6.3545e-05,
+            "TextEncodeQwenImage21": 0.52188913,
+            "CFGGuider": 0.000195052,
+            "SamplerCustomAdvanced": 16.673797332,
+            "VAEDecode": 1.096964579,
+            "SaveImageAdvanced": 0.794177822
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 1867,
+          "token_sha256": "a238e54de7c482a9cee7f81eb4924ac960ccbfc6d1d1ea07803aa409157418f7",
+          "fallback": {},
+          "peak_gib": 73.04756104946136,
+          "end_gib": 56.724132657051086
+        },
+        {
+          "file": "paired_seed_02-0.json",
+          "prompt_id": "32c7933c-dca4-4a1c-9afe-3e7b27fd59bc",
+          "status": "success",
+          "seconds": 49.222,
+          "nodes": {
+            "TextGenerate": 30.067729834,
+            "SwitchNode": 0.000194532,
+            "PreviewAny": 9.9249e-05,
+            "TextEncodeQwenImage21": 0.550239232,
+            "CFGGuider": 0.000195834,
+            "RandomNoise": 0.000116905,
+            "SamplerCustomAdvanced": 16.711484477,
+            "VAEDecode": 1.097425666,
+            "SaveImageAdvanced": 0.776981696
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 2115,
+          "token_sha256": "5abd8c08696303672fb06e56ff00dd1206822152913cd5dcf14e8bb464888938",
+          "fallback": {},
+          "peak_gib": 73.04756104946136,
+          "end_gib": 56.81793987751007
+        },
+        {
+          "file": "paired_seed_03-0.json",
+          "prompt_id": "cda13c87-7681-4a64-a13d-0ed431cc04e2",
+          "status": "success",
+          "seconds": 43.261,
+          "nodes": {
+            "TextGenerate": 24.329136623,
+            "SwitchNode": 0.000231237,
+            "PreviewAny": 6.2264e-05,
+            "TextEncodeQwenImage21": 0.469625468,
+            "CFGGuider": 0.000195774,
+            "RandomNoise": 0.000118427,
+            "SamplerCustomAdvanced": 16.594335373,
+            "VAEDecode": 1.098250797,
+            "SaveImageAdvanced": 0.75237962
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 1717,
+          "token_sha256": "97bf52d5f15f62b93d3e22675c3f9f9d7cbb0deacdece9096c75ecd3e7520c60",
+          "fallback": {},
+          "peak_gib": 73.04756104946136,
+          "end_gib": 56.81793987751007
+        },
+        {
+          "file": "reload-0.json",
+          "prompt_id": "c91d8b6b-a659-45a3-8a40-b6f65617688d",
+          "status": "success",
+          "seconds": 71.608,
+          "nodes": {
+            "VAELoader": 0.486259327,
+            "ResolutionSelector": 0.000388714,
+            "EmptyLatentImage": 0.00035276,
+            "ManualSigmas": 0.00035962,
+            "KSamplerSelect": 0.000165588,
+            "CLIPLoader": 12.098989302,
+            "UNETLoader": 1.598957724,
+            "QwenImage21Cache": 0.002206011,
+            "RandomNoise": 0.000124417,
+            "StringMultiline": 0.00011339,
+            "TextGenerate": 26.641713772,
+            "SwitchNode": 0.000180761,
+            "PreviewAny": 6.5078e-05,
+            "TextEncodeQwenImage21": 0.512644543,
+            "CFGGuider": 0.000202755,
+            "SamplerCustomAdvanced": 20.293117158,
+            "VAEDecode": 1.245214373,
+            "SaveImageAdvanced": 0.787449476
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 1867,
+          "token_sha256": "a238e54de7c482a9cee7f81eb4924ac960ccbfc6d1d1ea07803aa409157418f7",
+          "fallback": {},
+          "peak_gib": 73.04756104946136,
+          "end_gib": 56.817538142204285
+        },
+        {
+          "file": "size512-0.json",
+          "prompt_id": "0f0e0173-510c-43dc-aa73-4fdc9766830e",
+          "status": "success",
+          "seconds": 29.329,
+          "nodes": {
+            "TextGenerate": 26.087313593,
+            "SwitchNode": 0.000214082,
+            "PreviewAny": 0.000103916,
+            "ResolutionSelector": 0.000213661,
+            "EmptyLatentImage": 0.000142984,
+            "TextEncodeQwenImage21": 0.517000735,
+            "CFGGuider": 0.000212639,
+            "RandomNoise": 0.000143795,
+            "SamplerCustomAdvanced": 2.455669439,
+            "VAEDecode": 0.145267542,
+            "SaveImageAdvanced": 0.099904064
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 1867,
+          "token_sha256": "a238e54de7c482a9cee7f81eb4924ac960ccbfc6d1d1ea07803aa409157418f7",
+          "fallback": {},
+          "peak_gib": 73.04756104946136,
+          "end_gib": 56.81793987751007
+        }
+      ],
+      "warm_full": {
+        "count": 2,
+        "median": 44.178,
+        "range": [
+          44.12,
+          44.236
+        ],
+        "nodes": {
+          "CFGGuider": 0.000205117,
+          "TextGenerate": 25.183072736,
+          "SamplerCustomAdvanced": 16.5831745575,
+          "SaveImageAdvanced": 0.7694337325,
+          "VAEDecode": 1.097745544,
+          "PreviewAny": 6.460649999999999e-05,
+          "TextEncodeQwenImage21": 0.5283942225,
+          "SwitchNode": 0.0001123135
+        }
+      }
+    },
+    "reference": {
+      "runs": [
+        {
+          "file": "full-0.json",
+          "prompt_id": "8aa7c803-dadc-4157-82df-352858a90f8c",
+          "status": "success",
+          "seconds": 96.804,
+          "nodes": {
+            "VAELoader": 0.308068384,
+            "ResolutionSelector": 0.000166122,
+            "EmptyLatentImage": 0.000736649,
+            "ManualSigmas": 0.000314968,
+            "KSamplerSelect": 0.000119252,
+            "CLIPLoader": 8.07416574,
+            "UNETLoader": 1.03553857,
+            "QwenImage21Cache": 0.001933826,
+            "RandomNoise": 0.000120032,
+            "StringMultiline": 0.000116497,
+            "TextGenerate": 57.965606532,
+            "SwitchNode": 0.000109036,
+            "PreviewAny": 6.6812e-05,
+            "TextEncodeQwenImage21": 0.522439788,
+            "CFGGuider": 0.000190739,
+            "SamplerCustomAdvanced": 21.519772005,
+            "VAEDecode": 1.263130877,
+            "SaveImageAdvanced": 0.772955709
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 1784,
+          "token_sha256": "954f5022fa7b8cd1c6b424b1720c0e9bd11fffe3776e84596662a95c88d45fe7",
+          "fallback": {},
+          "peak_gib": 72.3555657863617,
+          "end_gib": 56.7237309217453
+        },
+        {
+          "file": "full-1.json",
+          "prompt_id": "da87d27b-6684-45e4-bd26-83b4ca38c65d",
+          "status": "success",
+          "seconds": 60.72,
+          "nodes": {
+            "TextGenerate": 41.749779662,
+            "SwitchNode": 0.0001124,
+            "PreviewAny": 6.2595e-05,
+            "TextEncodeQwenImage21": 0.503883089,
+            "CFGGuider": 0.000194235,
+            "SamplerCustomAdvanced": 16.580477597,
+            "VAEDecode": 1.099062226,
+            "SaveImageAdvanced": 0.770736408
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 1784,
+          "token_sha256": "954f5022fa7b8cd1c6b424b1720c0e9bd11fffe3776e84596662a95c88d45fe7",
+          "fallback": {},
+          "peak_gib": 72.88057017326355,
+          "end_gib": 56.7237309217453
+        },
+        {
+          "file": "full-2.json",
+          "prompt_id": "6b2dde0c-ee71-4ff5-b7ee-fce86a45e950",
+          "status": "success",
+          "seconds": 60.603,
+          "nodes": {
+            "TextGenerate": 41.636073308,
+            "SwitchNode": 0.000108144,
+            "PreviewAny": 6.0953e-05,
+            "TextEncodeQwenImage21": 0.494573619,
+            "CFGGuider": 0.000291412,
+            "SamplerCustomAdvanced": 16.584729555,
+            "VAEDecode": 1.098838143,
+            "SaveImageAdvanced": 0.771972994
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 1784,
+          "token_sha256": "954f5022fa7b8cd1c6b424b1720c0e9bd11fffe3776e84596662a95c88d45fe7",
+          "fallback": {},
+          "peak_gib": 72.89038562774658,
+          "end_gib": 56.7237309217453
+        },
+        {
+          "file": "size512-0.json",
+          "prompt_id": "4e9ade43-7fa9-416f-85c7-7370edd9d41b",
+          "status": "success",
+          "seconds": 44.971,
+          "nodes": {
+            "TextGenerate": 41.702872905,
+            "SwitchNode": 0.000114493,
+            "PreviewAny": 6.2304e-05,
+            "ResolutionSelector": 0.000126672,
+            "EmptyLatentImage": 8.7152e-05,
+            "TextEncodeQwenImage21": 0.517651256,
+            "CFGGuider": 0.000195457,
+            "SamplerCustomAdvanced": 2.486095317,
+            "VAEDecode": 0.146747186,
+            "SaveImageAdvanced": 0.098989516
+          },
+          "input_tokens": {
+            "qwen35_9b": 2803
+          },
+          "output_tokens": 1784,
+          "token_sha256": "954f5022fa7b8cd1c6b424b1720c0e9bd11fffe3776e84596662a95c88d45fe7",
+          "fallback": {},
+          "peak_gib": 72.89038562774658,
+          "end_gib": 56.7237309217453
+        }
+      ],
+      "warm_full": {
+        "count": 2,
+        "median": 60.661500000000004,
+        "range": [
+          60.603,
+          60.72
+        ],
+        "nodes": {
+          "CFGGuider": 0.0002428235,
+          "TextGenerate": 41.692926485,
+          "SamplerCustomAdvanced": 16.582603576,
+          "SaveImageAdvanced": 0.7713547009999999,
+          "VAEDecode": 1.0989501845,
+          "PreviewAny": 6.177400000000001e-05,
+          "TextEncodeQwenImage21": 0.499228354,
+          "SwitchNode": 0.00011027199999999999
+        }
+      }
+    }
+  },
+  "gains": {
+    "fixed_427_seconds_before": 10.22834806801984,
+    "fixed_427_seconds_after": 6.533289771003183,
+    "pe_seconds_before": 41.692926485,
+    "pe_seconds_after": 25.183072736,
+    "pe_reduction": 0.3959869249029522,
+    "pe_tokens_per_second_before": 42.7890328265116,
+    "pe_tokens_per_second_after": 70.84123604383335,
+    "full_seconds_before": 60.661500000000004,
+    "full_seconds_after": 44.178,
+    "full_reduction": 0.27172918572735594
+  },
+  "hbm": {
+    "response_counter": {
+      "beat_bytes": 128,
+      "capture_cycles": 16384,
+      "bandwidth_cycles": 256,
+      "read_bytes": 261158674432.0,
+      "write_bytes": 3840778240.0,
+      "read_rounding_envelope": 1732681728.0,
+      "write_rounding_envelope": 1524015104.0,
+      "read_known_ratio": null,
+      "write_known_ratio": null
+    },
+    "plain_window": {
+      "seconds": 0.22664966597221792,
+      "inter_token_intervals": 16,
+      "forwards": 16
+    },
+    "profiled_window_seconds": 0.23465871601365507,
+    "read_gb_per_token": 16.322417152,
+    "write_gb_per_token": 0.24004864,
+    "total_gb_per_token": 16.562465792,
+    "effective_tb_s": 1.169202926178073,
+    "peak_fraction": 0.4772256841543155,
+    "rounding_sensitivity_upper_peak_fraction": 0.48309052409290226
+  },
+  "native_timeline": {
+    "source": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-execution-2026-11-15/hbm/gdn_direct-sdpa-whole/native-events.jsonl",
+    "tokens": 16,
+    "engines": {
+      "PDMA": {
+        "engine_events": 5457,
+        "covered_ms": 5.920578796386719
+      },
+      "TPC": {
+        "engine_events": 363056,
+        "covered_ms": 33.86048602294922
+      },
+      "MME": {
+        "engine_events": 18560,
+        "covered_ms": 117.08616424560547
+      },
+      "EDMA": {
+        "engine_events": 57120,
+        "covered_ms": 7.8757321166992185
+      }
+    },
+    "compute_span_ms": 233.3410210571289,
+    "compute_covered_ms": 148.99324200439452,
+    "compute_uncovered_ms": 84.34777905273438,
+    "recipe_count": 1344,
+    "recipes_per_token": 84.0,
+    "recipe_covered_ms": 211.84990368652345,
+    "recipe_without_compute_events_ms": 62.85666168212891,
+    "unmatched_ends": {},
+    "unmatched_starts": 0,
+    "interpretation": "Instrumented execution-event intervals. Uncovered time includes scheduling, dependencies, and any activity absent from these event classes. It is not a calibrated idle counter."
+  },
+  "lifecycle": {
+    "fixed_caption_exact": true,
+    "fixed_rgba_exact": true,
+    "fresh_reference_matches_prior": true,
+    "reload_caption_exact": true,
+    "reload_rgba_exact": true,
+    "free_samples": [
+      [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 58128448384,
+          "torch_vram_total": 43473548416,
+          "torch_vram_free": 0
+        }
+      ],
+      [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 71415654272,
+          "torch_vram_total": 30186342528,
+          "torch_vram_free": 0
+        }
+      ],
+      [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 86719881728,
+          "torch_vram_total": 14882115072,
+          "torch_vram_free": 0
+        }
+      ],
+      [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 91854279808,
+          "torch_vram_total": 9747716992,
+          "torch_vram_free": 0
+        }
+      ]
+    ]
+  },
+  "quality": {
+    "baseline": "dfca7cd6",
+    "candidate": "gdn_direct+sdpa+whole",
+    "pairs": [
+      {
+        "case": "01",
+        "width": 1088,
+        "height": 1920,
+        "text_seed": 447606998181262,
+        "image_seed": 614878163710363,
+        "caption_exact": false,
+        "rgb_exact": false,
+        "rgb_mae": 54.962545955882355,
+        "runs": {
+          "reference": {
+            "history": "/home/sonny/gaudi2/comfyui-hpu/quality-qwen21-product-ab-2026-11-15/current-01.json",
+            "prompt_id": "8ac1def5-0e60-4eb6-8a15-d3a2a1a7b625",
+            "original": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_product_ab/current/01_00001.png",
+            "file_sha256": "96002c5ef3290fa19014451d5d4a28d9a92d6824c85995374639a9a3c46ba4c5"
+          },
+          "candidate": {
+            "history": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-execution-2026-11-15/workflow/gdn_direct-sdpa-whole/paired_seed_01-0.json",
+            "prompt_id": "1cf11bf6-9f20-4192-9ab3-cb56097b8aa1",
+            "original": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_bf16/gdn_direct-sdpa-whole_paired_seed_01_0_00001.png",
+            "file_sha256": "75b1cdb5f7a592da061bfcbfd6cc06a908d2909f0e77053f56898479f8fc48f6"
+          }
+        }
+      },
+      {
+        "case": "02",
+        "width": 1088,
+        "height": 1920,
+        "text_seed": 447606998181263,
+        "image_seed": 614878163710364,
+        "caption_exact": false,
+        "rgb_exact": false,
+        "rgb_mae": 43.56704819623162,
+        "runs": {
+          "reference": {
+            "history": "/home/sonny/gaudi2/comfyui-hpu/quality-qwen21-product-ab-2026-11-15/current-02.json",
+            "prompt_id": "0d371a73-d0b5-42e0-ace6-08323e65a817",
+            "original": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_product_ab/current/02_00001.png",
+            "file_sha256": "2ec2edc4bfee3beb21982024daf8cff676ae879e563d2aff96d6fa4cbe3e20f3"
+          },
+          "candidate": {
+            "history": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-execution-2026-11-15/workflow/gdn_direct-sdpa-whole/paired_seed_02-0.json",
+            "prompt_id": "32c7933c-dca4-4a1c-9afe-3e7b27fd59bc",
+            "original": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_bf16/gdn_direct-sdpa-whole_paired_seed_02_0_00001.png",
+            "file_sha256": "9e11973fd14cd21947f6c6ce4645a9ae2ec8f12c0676db9bf7ab006726eeb35a"
+          }
+        }
+      },
+      {
+        "case": "03",
+        "width": 1088,
+        "height": 1920,
+        "text_seed": 447606998181264,
+        "image_seed": 614878163710365,
+        "caption_exact": false,
+        "rgb_exact": false,
+        "rgb_mae": 39.70715459686479,
+        "runs": {
+          "reference": {
+            "history": "/home/sonny/gaudi2/comfyui-hpu/quality-qwen21-product-ab-2026-11-15/current-03.json",
+            "prompt_id": "1a74726e-a276-4cac-90f0-1e7bd4aad5bb",
+            "original": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_product_ab/current/03_00001.png",
+            "file_sha256": "a0fc9d35b5820dbf1d572d73b283cf0292473006e37cdf481b0de635b4aa6c94"
+          },
+          "candidate": {
+            "history": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-execution-2026-11-15/workflow/gdn_direct-sdpa-whole/paired_seed_03-0.json",
+            "prompt_id": "cda13c87-7681-4a64-a13d-0ed431cc04e2",
+            "original": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_bf16/gdn_direct-sdpa-whole_paired_seed_03_0_00001.png",
+            "file_sha256": "bbcafc9808db2d17ca08b9362e7fa3cd4021e0e6864e82a2636ea9ee67085afe"
+          }
+        }
+      },
+      {
+        "case": "04",
+        "width": 512,
+        "height": 512,
+        "text_seed": 447606998181262,
+        "image_seed": 614878163710363,
+        "caption_exact": false,
+        "rgb_exact": false,
+        "rgb_mae": 49.924546559651695,
+        "runs": {
+          "reference": {
+            "history": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-execution-2026-11-15/workflow/reference/size512-0.json",
+            "prompt_id": "4e9ade43-7fa9-416f-85c7-7370edd9d41b",
+            "original": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_bf16/reference_size512_0_00001.png",
+            "file_sha256": "42c74ced597d1186e9fc902309a8e747ed043b1a030dfc3dd6a5e14c3ddab6b7"
+          },
+          "candidate": {
+            "history": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-execution-2026-11-15/workflow/gdn_direct-sdpa-whole/size512-0.json",
+            "prompt_id": "0f0e0173-510c-43dc-aa73-4fdc9766830e",
+            "original": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_bf16/gdn_direct-sdpa-whole_size512_0_00001.png",
+            "file_sha256": "52f0874c3c85461105f6d9a3b2ae99c23a0aff270ee60387aa6f300518b79de5"
+          }
+        }
+      }
+    ],
+    "prompt": "风格：精致艺术植物肖像摄影，浪漫空灵幻想，文艺复兴风格的编辑美学，绘画般的超现实主义。\n\n主题：一位身着飘逸灰褐色长裙的优雅亚洲少女，周围环绕着精致的桃色玫瑰、白色花朵、绿色枝叶，以及一只悬停的蓝色蜂鸟。\n\n场景：梦幻植物工作室，背景为柔和的鼠尾草绿色，由开花枝条和郁郁葱葱的花园风格布置所框定。\n\n光线：柔和的漫射自然光，轻柔的高光、细微的阴影，以及温暖的光辉辉光。\n\n主要提示：创作一张图像，描绘一位优雅女性在迷人的盛开花朵和精致枝条布置中优雅地摆姿势。她身穿一件精致的无肩带灰褐色-米色连衣裙，面料柔软褶皱，轮廓飘逸。她的双手轻轻环绕着一束美丽的花卉布置，包括丰盈的桃色、珊瑚色和腮红粉色花园玫瑰、细小的白色花朵，以及新鲜的绿色叶子。开花枝条自然地延伸至她的头部和肩部，形成一个浪漫的植物王冠。一只壮丽的蓝色蜂鸟在她身旁悬停，双翼优雅地展开于飞行中。她的头部微微向后倾斜，带着宁静梦幻的表情和放松优雅的姿势。使用艺术性的鼠尾草绿色背景、复杂的花卉纹理、精致艺术绘画影响、柔和的电影感景深，以及奢华的编辑构图\n"
+  },
+  "source_hashes": {
+    "comfyui-hpu/probes/qwen_execution_review.py": "1b44c8dc83c7dd3a4e3c25d9f46de891bacf99b7a9521edd1ff0986fd49a3f1b",
+    "comfyui-hpu/probes/qwen_execution_jobs.py": "2f80efaec3b2db0a6ed450804d545d2d4d8ef6ecf6f04099ef677d0595d0ad79",
+    "comfyui-hpu/probes/qwen_execution_candidates.py": "efa5f467187a6a0d4d747325bb5281a6b9dd22ee4dcaab040c3cddfef3be1d42",
+    "comfyui-hpu/probes/qwen_execution_summary.py": "bca96a1f65a2df07e510ce2ddd8a27b0e6f9ada7c40d2e7c22ad87215836e45e",
+    "comfyui-hpu/probes/qwen21_deep_jobs.py": "6c9add7ee69849c9b404024db4e87c525b628eb93933f5641f0c69546dc75425",
+    "comfyui-hpu/probes/qwen21_deep_server.py": "daa4e6d58f436ff2f0eb7b243939f81880d1871a415436b82175984fe41047fa",
+    "comfyui-hpu/probes/qwen21_deep_candidates.py": "797a0e228a2aff1ebdcacc16126486d295e733f0ee93edd3e85f61896e385837",
+    "comfyui-hpu/probes/qwen21_text_profile.py": "00bf522415d3528a7839534481d63ef0fe41e1fd29dbee66487e9e4b3d7ed03d"
+  },
+  "restoration": {
+    "deployed": "dfca7cd672240da975983214c11d3057ec5b74b6",
+    "source_hashes_before": {
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/qwen35.py": "1f9d37eb2f6c0991aab2539678c056f717fdca52af60609596f29776ed916033",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/hpu_mlp.py": "a333dc268730044497a0cb4fb18d7ac4b861a6f98838f34ac586c33f03bc6f30",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/hpu_gated_delta.py": "a041b37464fd9234759166aed19d182700242123d5c9deee216b54cf692e6a3c",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/hpu_kv_attention.py": "0833245d72d7289f2a15651f494c841d323bbafa7767eb11192cc28b82155b1e",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/llama.py": "fd7cc8556b7c3a7affb1999e4dc1965cba1e389e68593ece21d80eb48b23ce66"
+    },
+    "source_hashes_after": {
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/qwen35.py": "1f9d37eb2f6c0991aab2539678c056f717fdca52af60609596f29776ed916033",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/hpu_mlp.py": "a333dc268730044497a0cb4fb18d7ac4b861a6f98838f34ac586c33f03bc6f30",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/hpu_gated_delta.py": "a041b37464fd9234759166aed19d182700242123d5c9deee216b54cf692e6a3c",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/hpu_kv_attention.py": "0833245d72d7289f2a15651f494c841d323bbafa7767eb11192cc28b82155b1e",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/llama.py": "fd7cc8556b7c3a7affb1999e4dc1965cba1e389e68593ece21d80eb48b23ce66"
+    },
+    "source_unchanged": true,
+    "queue": {
+      "queue_running": [],
+      "queue_pending": []
+    }
+  },
+  "archive": {
+    "path": "comfyui-hpu/results/qwen21-execution-2026-11-15/qwen21-execution-quality.zip",
+    "bytes": 45607674,
+    "sha256": "5755a7a1959d47b8b78b5e28e82518b2b8d25450f0eceba6e89356629043059b"
+  },
+  "failures": [
+    {
+      "kind": "diagnostic_launcher_main_module",
+      "symptom": "Dynamo could not resolve __main__.mode after nested runpy",
+      "resolution": "Import the diagnostic module under its stable module name"
+    },
+    {
+      "kind": "diagnostic_launcher_import_wait",
+      "symptom": "Prompt worker stopped at a Python lock while service startup was still inside module import",
+      "resolution": "Complete module import, then call main explicitly; full API requests passed on retry",
+      "native_stack": "workflow-failed-import-lock/gdn_direct-sdpa-whole/gdb-stacks.txt",
+      "python_stack_unavailable": "gdb py-bt command was unavailable"
+    },
+    {
+      "kind": "text_probe_shutdown",
+      "symptom": "ModelPatcher.__del__ observed callbacks module globals already cleared at interpreter shutdown",
+      "resolution": "Explicit synchronize, Dynamo reset, unload and collect before exit",
+      "verified": "cleanup/gdn_direct-sdpa-whole.log; exit 0 without ON_DETACH traceback"
+    }
+  ],
+  "limitations": [
+    "Whole execution is an isolated no-MTP, batch-1 PE prototype. Accepted product sources remain dfca7cd6.",
+    "Full workflow timings use one cold and two warm requests per side with an identical 1784-token teacher trajectory. Natural quality runs use real sampling.",
+    "Natural quality covers the original portrait prompt, three paired seeds at 1088x1920 and one 512x512 pair. First three baseline images were reused from the user-accepted comparison, with a fresh seed-1 baseline confirming equality.",
+    "Candidate floating-point results differ. Full fixed-427 logits RRMSE is about 0.988 percent; natural captions and pixels differ. User visual acceptance is pending.",
+    "Whole graph has a cold compilation cost and static KV-capacity guards. Newly encountered shapes can require compilation.",
+    "HBM counters reuse the previously calibrated AXI response-beat formula. Profiled window is distinct from plain timing. Event-uncovered intervals are not hardware idle counters.",
+    "Unload was sampled up to 40 seconds, reaching 9.08 GiB. Same-round baseline stable unload measurement was not collected."
+  ]
+}

@@ -4,6 +4,8 @@
 
 ## 2026-11-15 Qwen Image 2.1 最新2MP工作流
 
+用户要求逐项推进后，在独立调查进程验证9条GDN/attention/整步执行路径。最终候选为单token GDN立即状态更新、BF16 Q/K/V＋FP32 softmax SDPA和整步编译。固定427-token三次warm为10.228→6.533秒。原2MP同1784-token工作量，每侧1 cold＋2 warm，PE41.693→25.183秒，42.79→70.84 tokens/s，整图60.662→44.178秒，耗时降低27.17%。cold96.804→111.894秒。新HBM计数为16.562 GB/token、1.169TB/s、峰值47.72%，recipe306→84/token。完整logits约0.988% RRMSE，4组自然扩写和图片发生变化，检查页已提供，人工质量接受待用户确认。512²及卸载重载通过，重载前后候选扩写和RGBA一致。调查启动器的模块解析与导入等待、独立probe退出析构告警已修复并复测。普通服务最终恢复已接受的`dfca7cd6`，5份产品源文件哈希一致、队列为空。[逐项验证](optimization/QWEN21_EXECUTION_VALIDATION.md) · [证据](evidence/qwen21-execution-2026-11-15.json)
+
 用户人工确认8组版本对照质量正常，接受`dfca7cd6`并要求保持提交。新增根因分析以真实第33步状态重放核心，未插桩20.902ms、主线程CPU17.276ms。已编译MLP及输出头权重有效带宽约2.005/2.200TB/s。修正后的同轮消融基线20.853ms，跳过GDN核心15.796ms，组合跳过GDN核心与完整attention9.566ms。原生晚位置16-token trace为306 recipes/token，执行事件未覆盖的8.370ms/token中约7.751ms位于recipe区间内，具体等待类型仍待归因。消融改变计算工作和执行重叠，不能视为上线收益。后续优先处理GDN/attention执行链，并将有数值差异的候选推进完整质量验证。两次隔离诊断后普通服务恢复、队列为空、源文件哈希相同。[根因报告](optimization/QWEN21_DECODE_ROOT_CAUSE.md) · [证据](evidence/qwen21-decode-root-cause-2026-11-15.json)
 
 按用户确认，产品`dfca7cd6`与上一提交`ed9552e5`各独立生成8张原提示词2MP图，两类seed逐组配对。16份history确认完整重算扩写和采样，8组扩写文字及RGBA像素均逐元素一致。原图、扩写、8张原尺寸并排图、概览和ZIP已保存，供用户人工检查。当前服务恢复`dfca7cd6`，源文件哈希一致、队列为空。[图组记录](optimization/QWEN21_PRODUCT_AB.md) · [证据](evidence/qwen21-product-ab-2026-11-15.json)

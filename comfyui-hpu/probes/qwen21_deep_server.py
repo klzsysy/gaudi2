@@ -1,12 +1,14 @@
 """Qwen BF16 workflow diagnostics, isolated from normal product serving."""
 import collections
 import functools
+import faulthandler
 import gc
 import json
 import inspect
 import os
 from pathlib import Path
 import runpy
+import signal
 import time
 
 import comfy.options
@@ -26,6 +28,7 @@ active_profile = None
 finished_profiles = []
 window_start = 0
 window_seconds = None
+teacher_tokens = None
 
 if os.environ.get('QWEN21_COMPARE_PRODUCT') == '1':
     from qwen21_deep_quality import install
@@ -82,6 +85,8 @@ original_sample = BaseGenerate.sample_token
 def sampled(self, *args, **kwargs):
     global text_index, active_profile, window_start, window_seconds
     result = original_sample(self, *args, **kwargs)
+    if teacher_tokens is not None:
+        result = torch.full_like(result, teacher_tokens[text_index])
     text_index += 1
     if mode in ('trace_text', 'window_text'):
         if text_index == 32:
@@ -137,9 +142,10 @@ dit.QwenImage21TransformerBlock.forward = capture_block
 original_execute = execution.PromptExecutor.execute_async
 
 async def execute(self, prompt, prompt_id, *args, **kwargs):
-    global mode, text_index, dit_index, window_seconds
+    global mode, text_index, dit_index, window_seconds, teacher_tokens
     extra = args[0] if args else kwargs.get('extra_data', {})
     mode = extra.get('qwen_profile', '')
+    teacher_tokens = extra.get('qwen_teacher')
     text_index = dit_index = 0
     window_seconds = None
     regions.clear()
@@ -150,6 +156,7 @@ async def execute(self, prompt, prompt_id, *args, **kwargs):
     try:
         return await original_execute(self, prompt, prompt_id, *args, **kwargs)
     finally:
+        teacher_tokens = None
         if gc_enabled:
             gc.enable()
         if mode:
@@ -161,4 +168,10 @@ async def execute(self, prompt, prompt_id, *args, **kwargs):
             (root/f'{prompt_id}-{label}-operators.txt').write_text(profile.key_averages().table(sort_by='self_cpu_time_total',row_limit=45))
         finished_profiles.clear()
 execution.PromptExecutor.execute_async = execute
-runpy.run_path(str(Path(__file__).with_name('moss_observed_server.py')), run_name='__main__')
+def main():
+    faulthandler.register(signal.SIGUSR1, all_threads=True)
+    runpy.run_path(str(Path(__file__).with_name('moss_observed_server.py')), run_name='__main__')
+
+
+if __name__ == '__main__':
+    main()
