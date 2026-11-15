@@ -49,6 +49,8 @@ AIP = floor(100 × (clamp(curr_power, 60000, 550000) - 60000) / 490000)
 
 ## HBM、SRAM与计数器边界
 
+2026-11-15后续完成计算路径的AXI返回beat校准，大块读写与GEMV读取回算误差约−0.44%至−0.26%。Qwen PE单token实测约18.43 GB读写、0.80 TB/s、峰值约33%。旧请求侧`BMON BW`及大窗口低计问题、取整误差和独立PDMA边界见[新校准](QWEN21_BF16_SINGLE_TOKEN.md)。以下保留2026-11-12的历史采集条件与当时未决问题。
+
 scores落DRAM、FP8概率tile驻SRAM的实际图见 [Attention](ATTENTION.md)。完整scores一次写出/读取逻辑量为
 
 ```text

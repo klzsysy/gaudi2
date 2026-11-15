@@ -1,0 +1,22 @@
+--- a/comfyui-hpu/probes/native_gdn_single/core.c
++++ b/comfyui-hpu/probes/native_gdn_single/core.c
+@@ -45,8 +45,8 @@
+                         float64 pv = v_f32_shuffle_b(previous_values, (unsigned char)(128 + lane), 0, 0);
+                         float64 prediction = v_f32_reduce_add(pk0 * s0 + pk1 * s1);
+                         float64 update = pb * (pv - pd * prediction);
+-                        s0 = s0 * pd + pk0 * update;
+-                        s1 = s1 * pd + pk1 * update;
++                        s0 = v_f32_mac_b(s0, pd, pk0 * update);
++                        s1 = v_f32_mac_b(s1, pd, pk1 * update);
+                     }
+                     state_position[0] = 0;
+                     v_f32_st_tnsr(state_position, committed, s0);
+@@ -55,7 +55,7 @@
+                     float64 v = v_f32_shuffle_b(current_values, (unsigned char)(128 + lane), 0, 0);
+                     float64 prediction = v_f32_reduce_add(k0 * s0 + k1 * s1);
+                     float64 update = b * (v - d * prediction);
+-                    float64 result = d * v_f32_reduce_add(q0 * s0 + q1 * s1) + qk * update;
++                    float64 result = v_f32_mac_b(d, v_f32_reduce_add(q0 * s0 + q1 * s1), qk * update);
+                     int5 output_position = {block * 4 + lane, head, 0, batch, 0};
+                     v_f32_st_tnsr_partial(output_position, output, result, 0, 0);
+                 }

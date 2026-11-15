@@ -57,6 +57,8 @@ def mlp_residual(module, x, norm):
 
 def install(mode):
     parts = mode.split('+')
+    if 'gdn_single' in parts:
+        import native_gdn_single.install
     if 'rope_cache' in parts:
         source = textwrap.dedent(inspect.getsource(llama.BaseGenerate.generate))
         source = source.replace('if decode_buffers is not None and next_pos is None:',

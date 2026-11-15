@@ -1,0 +1,60 @@
+--- a/comfyui-hpu/probes/native_gdn_single/core.c
++++ b/comfyui-hpu/probes/native_gdn_single/core.c
+@@ -45,8 +45,8 @@
+                         float64 pv = v_f32_shuffle_b(previous_values, (unsigned char)(128 + lane), 0, 0);
+                         float64 prediction = v_f32_reduce_add(pk0 * s0 + pk1 * s1);
+                         float64 update = pb * (pv - pd * prediction);
+-                        s0 = s0 * pd + pk0 * update;
+-                        s1 = s1 * pd + pk1 * update;
++                        s0 = v_f32_mac_b(s0, pd, pk0 * update);
++                        s1 = v_f32_mac_b(s1, pd, pk1 * update);
+                     }
+                     state_position[0] = 0;
+                     v_f32_st_tnsr(state_position, committed, s0);
+@@ -55,9 +55,12 @@
+                     float64 v = v_f32_shuffle_b(current_values, (unsigned char)(128 + lane), 0, 0);
+                     float64 prediction = v_f32_reduce_add(k0 * s0 + k1 * s1);
+                     float64 update = b * (v - d * prediction);
+-                    float64 result = d * v_f32_reduce_add(q0 * s0 + q1 * s1) + qk * update;
++                    float64 result = v_f32_mac_b(d, v_f32_reduce_add(q0 * s0 + q1 * s1), qk * update);
+                     int5 output_position = {block * 4 + lane, head, 0, batch, 0};
+-                    v_f32_st_tnsr_partial(output_position, output, result, 0, 0);
++                    float128 rounded_input;
++                    rounded_input.v1 = result;
++                    rounded_input.v2 = result;
++                    v_bf16_st_tnsr_partial(output_position, output, v_convert_f32_to_bf16_all_b(rounded_input, 0), 0, 0);
+                 }
+             }
+         }
+--- a/comfyui-hpu/probes/native_gdn_single/bridge.cpp
++++ b/comfyui-hpu/probes/native_gdn_single/bridge.cpp
+@@ -5,7 +5,7 @@
+ habana::PartialOutputMetaDataVector metadata(const at::Stack& stack) {
+     const auto state = stack.at(0).toTensor();
+     const auto query = stack.at(5).toTensor();
+-    return {{at::kFloat, state.sizes().vec()}, {at::kFloat, {state.size(0), query.size(2), state.size(1), state.size(2)}}};
++    return {{at::kFloat, state.sizes().vec()}, {at::kBFloat16, {state.size(0), query.size(2), state.size(1), state.size(2)}}};
+ }
+ 
+ std::tuple<at::Tensor, at::Tensor> execute(const at::Tensor& state, const at::Tensor& pk, const at::Tensor& pv,
+--- a/comfyui-hpu/probes/native_gdn_single/glue.cpp
++++ b/comfyui-hpu/probes/native_gdn_single/glue.cpp
+@@ -21,6 +21,7 @@
+     out->outputTensors[0]->geometry = p->inputTensors[0]->geometry;
+     auto& shape = out->outputTensors[1]->geometry;
+     shape = p->inputTensors[0]->geometry;
++    shape.dataType = DATA_BF16;
+     shape.maxSizes[0] = shape.minSizes[0] = p->inputTensors[0]->geometry.maxSizes[1];
+     shape.maxSizes[1] = shape.minSizes[1] = p->inputTensors[0]->geometry.maxSizes[2];
+     shape.maxSizes[2] = shape.minSizes[2] = p->inputTensors[5]->geometry.maxSizes[1];
+--- a/comfyui-hpu/probes/native_gdn_single/ops.py
++++ b/comfyui-hpu/probes/native_gdn_single/ops.py
+@@ -8,7 +8,7 @@
+ 
+ @torch.library.register_fake('custom_op::qwen_gdn_single')
+ def metadata(state,pk,pv,pd,pb,q,k,v,d,b,program):
+-    return torch.empty_like(state),state.new_empty((state.shape[0],q.shape[2],state.shape[1],state.shape[2]))
++    return torch.empty_like(state),state.new_empty((state.shape[0],q.shape[2],state.shape[1],state.shape[2]), dtype=torch.bfloat16)
+ 
+ 
+ def core(state,pk,pv,pd,pb,q,k,v,d,b,program,pending=None):

@@ -65,9 +65,10 @@ class NativeProfile:
                             pid=event.engine_type,tid=event.engine_index,id=event.context_id)
                 if event.category==b'SPMU':
                     record['raw_u64']=struct.unpack_from('Q',raw)[0]
-                if event.category==b'BMON BW':
+                if event.category in (b'BMON BW', b'BMON'):
                     record['counter_values']=[v if math.isfinite(v) else None for v in struct.unpack_from('ddd',raw)]
                     record['matches']=struct.unpack_from('H',raw,24)[0]
+                    record['raw_u64']=struct.unpack_from('Q',raw)[0]
                 if event.type==b'M':
                     value=ctypes.c_char_p.from_buffer_copy(raw[:8]).value
                     record['metadata_name']=value.decode() if value else ''
