@@ -1,0 +1,264 @@
+{
+  "date": "2026-11-15",
+  "versions": {
+    "current": {
+      "commit": "dfca7cd672240da975983214c11d3057ec5b74b6",
+      "files": {
+        "comfy/text_encoders/hpu_mlp.py": "a333dc268730044497a0cb4fb18d7ac4b861a6f98838f34ac586c33f03bc6f30",
+        "comfy/text_encoders/qwen35.py": "1f9d37eb2f6c0991aab2539678c056f717fdca52af60609596f29776ed916033",
+        "tests-unit/comfy_test/hpu_gdn_region_test.py": "8d5cce2eddd9890e609c30e1939653f565a564a9da8d55b925a620da77d22e2a",
+        "tests-unit/comfy_test/hpu_mlp_test.py": "e0554a1b3bd932ed6aad9b6a6162c057f21d293ce86ecd40a73fce02aaa646fd"
+      }
+    },
+    "previous": {
+      "commit": "ed9552e581acfa37c6be2ac6f1a86a629f21d542",
+      "files": {
+        "comfy/text_encoders/hpu_mlp.py": "5929376604d538b8a0c16de55b0393bca94ec54de5af8283e4462a86b51f2f36",
+        "comfy/text_encoders/qwen35.py": "ae12e8dfaea14e5e37168f9918e957159f8e03a278b837ee9fd8f29f228ff10a",
+        "tests-unit/comfy_test/hpu_gdn_region_test.py": "191b251c45af71763decd50758c1e742c470ebd3d6624022fb22b408b3338b72",
+        "tests-unit/comfy_test/hpu_mlp_test.py": "38e2d4b4bcbbb1172579f45a6ff0812d8d077d83a1907de0a3de6cf46e853189"
+      }
+    }
+  },
+  "settings": {
+    "workflow": "workflows/qwen21-latest-2026-11-15-api.json",
+    "original_prompt_reused": true,
+    "width": 1088,
+    "height": 1920,
+    "steps": 8,
+    "cfg": 1.2,
+    "thinking": true,
+    "seed_pairs": 8
+  },
+  "pairs": [
+    {
+      "case": "01",
+      "text_seed": 447606998181262,
+      "image_seed": 614878163710363,
+      "rgba_exact": true,
+      "changed_pixels": 0,
+      "rgba_mae": 0.0,
+      "max_abs": 0,
+      "caption_exact": true,
+      "width": 1088,
+      "height": 1920,
+      "pixel_sha256": [
+        "27ab69f87e28c513dabb05b0986b6dfd7fba13745fd0231b0b640a1496a878b3",
+        "27ab69f87e28c513dabb05b0986b6dfd7fba13745fd0231b0b640a1496a878b3"
+      ],
+      "runs": {
+        "current": {
+          "prompt_id": "8ac1def5-0e60-4eb6-8a15-d3a2a1a7b625",
+          "seconds": 95.371
+        },
+        "previous": {
+          "prompt_id": "6ca99784-3126-421c-92b5-ffbff058bd03",
+          "seconds": 96.845
+        }
+      }
+    },
+    {
+      "case": "02",
+      "text_seed": 447606998181263,
+      "image_seed": 614878163710364,
+      "rgba_exact": true,
+      "changed_pixels": 0,
+      "rgba_mae": 0.0,
+      "max_abs": 0,
+      "caption_exact": true,
+      "width": 1088,
+      "height": 1920,
+      "pixel_sha256": [
+        "64504c54f33bc8ebf0b8e2c44820aa4bc3125a8006e895c6eef74fced67dbd12",
+        "64504c54f33bc8ebf0b8e2c44820aa4bc3125a8006e895c6eef74fced67dbd12"
+      ],
+      "runs": {
+        "current": {
+          "prompt_id": "0d371a73-d0b5-42e0-ace6-08323e65a817",
+          "seconds": 62.591
+        },
+        "previous": {
+          "prompt_id": "cf223aca-cbec-43b1-8ffc-a4c02f6a1e93",
+          "seconds": 63.261
+        }
+      }
+    },
+    {
+      "case": "03",
+      "text_seed": 447606998181264,
+      "image_seed": 614878163710365,
+      "rgba_exact": true,
+      "changed_pixels": 0,
+      "rgba_mae": 0.0,
+      "max_abs": 0,
+      "caption_exact": true,
+      "width": 1088,
+      "height": 1920,
+      "pixel_sha256": [
+        "4b4fb75d2023d73ead746328718adf60b5305e434ad34fc95399d1ea53fce929",
+        "4b4fb75d2023d73ead746328718adf60b5305e434ad34fc95399d1ea53fce929"
+      ],
+      "runs": {
+        "current": {
+          "prompt_id": "1a74726e-a276-4cac-90f0-1e7bd4aad5bb",
+          "seconds": 80.747
+        },
+        "previous": {
+          "prompt_id": "f8bd860e-995f-4539-bf69-92d71e7c0b27",
+          "seconds": 47.253
+        }
+      }
+    },
+    {
+      "case": "04",
+      "text_seed": 447606998181265,
+      "image_seed": 614878163710366,
+      "rgba_exact": true,
+      "changed_pixels": 0,
+      "rgba_mae": 0.0,
+      "max_abs": 0,
+      "caption_exact": true,
+      "width": 1088,
+      "height": 1920,
+      "pixel_sha256": [
+        "7903fd84e74bcbcdd7c1c49e5b6d30d332da63d98b5028a2e9214cd940d0b382",
+        "7903fd84e74bcbcdd7c1c49e5b6d30d332da63d98b5028a2e9214cd940d0b382"
+      ],
+      "runs": {
+        "current": {
+          "prompt_id": "b5e82c4b-5000-4151-b0b3-a6c056aadfe2",
+          "seconds": 64.875
+        },
+        "previous": {
+          "prompt_id": "03df5ae7-a39d-4145-8e73-d82383b2207a",
+          "seconds": 65.681
+        }
+      }
+    },
+    {
+      "case": "05",
+      "text_seed": 447606998181266,
+      "image_seed": 614878163710367,
+      "rgba_exact": true,
+      "changed_pixels": 0,
+      "rgba_mae": 0.0,
+      "max_abs": 0,
+      "caption_exact": true,
+      "width": 1088,
+      "height": 1920,
+      "pixel_sha256": [
+        "e43fc5502e0b3d6815a21b07e64b74326b9c72a0e2ed6641f6b231c76b03966d",
+        "e43fc5502e0b3d6815a21b07e64b74326b9c72a0e2ed6641f6b231c76b03966d"
+      ],
+      "runs": {
+        "current": {
+          "prompt_id": "0ef847f4-71b6-400f-8033-a7aed9c45e35",
+          "seconds": 57.137
+        },
+        "previous": {
+          "prompt_id": "737c1526-06ad-42a0-8a8a-bd542a392ea3",
+          "seconds": 58.169
+        }
+      }
+    },
+    {
+      "case": "06",
+      "text_seed": 447606998181267,
+      "image_seed": 614878163710368,
+      "rgba_exact": true,
+      "changed_pixels": 0,
+      "rgba_mae": 0.0,
+      "max_abs": 0,
+      "caption_exact": true,
+      "width": 1088,
+      "height": 1920,
+      "pixel_sha256": [
+        "dd1d1265046e15e33e387eef0638cf23ffb60298f5c60596e5bcf2a63d8f7b94",
+        "dd1d1265046e15e33e387eef0638cf23ffb60298f5c60596e5bcf2a63d8f7b94"
+      ],
+      "runs": {
+        "current": {
+          "prompt_id": "1c5e6f6c-803a-4da5-aeb3-04b05ba31313",
+          "seconds": 55.566
+        },
+        "previous": {
+          "prompt_id": "8de7d46b-eb48-48e7-aacf-588086b0075f",
+          "seconds": 56.172
+        }
+      }
+    },
+    {
+      "case": "07",
+      "text_seed": 447606998181268,
+      "image_seed": 614878163710369,
+      "rgba_exact": true,
+      "changed_pixels": 0,
+      "rgba_mae": 0.0,
+      "max_abs": 0,
+      "caption_exact": true,
+      "width": 1088,
+      "height": 1920,
+      "pixel_sha256": [
+        "6c950cf48441507db904e1abc64bce1acc74dfdde0ad7efc52d7dcb6885c068a",
+        "6c950cf48441507db904e1abc64bce1acc74dfdde0ad7efc52d7dcb6885c068a"
+      ],
+      "runs": {
+        "current": {
+          "prompt_id": "ad9ac743-7a08-4271-bd61-7aa2b3486800",
+          "seconds": 61.27
+        },
+        "previous": {
+          "prompt_id": "27b2ffb9-e6e6-4071-9c31-054409a1d86d",
+          "seconds": 61.787
+        }
+      }
+    },
+    {
+      "case": "08",
+      "text_seed": 447606998181269,
+      "image_seed": 614878163710370,
+      "rgba_exact": true,
+      "changed_pixels": 0,
+      "rgba_mae": 0.0,
+      "max_abs": 0,
+      "caption_exact": true,
+      "width": 1088,
+      "height": 1920,
+      "pixel_sha256": [
+        "c6a424880c8a7fe166d16dd7e39830df3ff97e14d0b5f0d1489737ac0618050f",
+        "c6a424880c8a7fe166d16dd7e39830df3ff97e14d0b5f0d1489737ac0618050f"
+      ],
+      "runs": {
+        "current": {
+          "prompt_id": "7f9b2747-cb70-448e-8ffd-ce025397ec5c",
+          "seconds": 62.574
+        },
+        "previous": {
+          "prompt_id": "94085f69-24e2-4ec9-9193-7777edc1fd84",
+          "seconds": 63.485
+        }
+      }
+    }
+  ],
+  "restoration": {
+    "commit": "dfca7cd672240da975983214c11d3057ec5b74b6",
+    "files": {
+      "comfy/text_encoders/hpu_mlp.py": "a333dc268730044497a0cb4fb18d7ac4b861a6f98838f34ac586c33f03bc6f30",
+      "comfy/text_encoders/qwen35.py": "1f9d37eb2f6c0991aab2539678c056f717fdca52af60609596f29776ed916033",
+      "tests-unit/comfy_test/hpu_gdn_region_test.py": "8d5cce2eddd9890e609c30e1939653f565a564a9da8d55b925a620da77d22e2a",
+      "tests-unit/comfy_test/hpu_mlp_test.py": "e0554a1b3bd932ed6aad9b6a6162c057f21d293ce86ecd40a73fce02aaa646fd"
+    },
+    "queue": {
+      "queue_running": [],
+      "queue_pending": []
+    }
+  },
+  "packaging": {
+    "original_pngs": 16,
+    "full_resolution_pairs": 8,
+    "comparison_panels_verified_exact": true,
+    "archive_bytes": 87133081,
+    "archive_sha256": "b322df957cdd5df7d646fe469cb08867331b8bbf23048abd2d6042742626dec9"
+  },
+  "execution_note": "The initial cache check mistakenly included KSamplerSelect. It was corrected to identify TextGenerate and SamplerCustomAdvanced by class_type. The first two valid results were verified and reused, then generation resumed at current case 03. Current cases 01 and 03 include process-cold costs. All 16 histories confirm text generation and sampling recomputation."
+}
