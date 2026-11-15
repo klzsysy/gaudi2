@@ -21,6 +21,7 @@
 | [Qwen Image 2.1 全BF16深入优化](QWEN21_BF16.md) | PE/DiT分项、trace、舍入边界、完整图保值与性能验收 |
 | [Qwen Image 2.1 最新2MP工作流](QWEN21_PERFORMANCE_2026-11-15.md) | 1784-token扩写、2MP/CFG1.2耗时、GDN/MLP提交优化与回退复测 |
 | [单token BF16硬件利用率](optimization/QWEN21_BF16_SINGLE_TOKEN.md) | AXI返回beat校准、约33% HBM带宽利用率、整步重放与GDN融合数值边界 |
+| [单token解码延迟根因](optimization/QWEN21_DECODE_ROOT_CAUSE.md) | 真实状态消融、MLP/输出头带宽、主线程CPU与306 recipes/token、GDN/attention优先级 |
 | [产品版本8组图像对照](optimization/QWEN21_PRODUCT_AB.md) | dfca7cd6与ed9552e5各8张、原提示词及配对seed、原图和人工检查图组 |
 | [Qwen PE后续文本加速](optimization/QWEN21_TEXT_NEXT.md) | 现有MTP草稿头复用、固定窗口与自然扩写收益、目标验证数值边界 |
 | [Qwen Image 2.1 Turbo 首版](QWEN21_FIRST.md) | 官方文生图、匹配增强器、BF16 常驻、FFN 编译与首版验收 |

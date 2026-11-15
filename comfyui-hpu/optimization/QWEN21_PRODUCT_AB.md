@@ -6,7 +6,7 @@
 
 沿用用户原始植物人像提示词及最新2MP工作流，1088×1920、官方Turbo 8步sigmas、Euler、CFG1.2、thinking开启及现行BF16组件。文本seed从447606998181262至447606998181269，图像seed从614878163710363至614878163710370，两侧逐组配对。
 
-16份history均确认TextGenerate和SamplerCustomAdvanced重新执行。8组扩写文本逐字相同，8对RGBA像素逐元素相同，全部像素MAE与最大绝对差为0。这里记录版本对照的一致性，用户的人工图像质量判断另行补充。
+16份history均确认TextGenerate和SamplerCustomAdvanced重新执行。8组扩写文本逐字相同，8对RGBA像素逐元素相同，全部像素MAE与最大绝对差为0。用户于2026-11-15完成人工检查，确认质量正常，接受产品`dfca7cd6`并要求保持该提交。
 
 实验在独立checkout上用原生`main.py`入口、独立8190进程串行执行。切换的4个文件来自两个git提交，包括2个产品文件及2个测试文件，逐份SHA256核对。每个版本的请求ID、两类seed、源文件哈希和像素哈希保存在[证据](../evidence/qwen21-product-ab-2026-11-15.json)。
 

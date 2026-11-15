@@ -1,0 +1,555 @@
+{
+  "date": "2026-11-15",
+  "product": "dfca7cd672240da975983214c11d3057ec5b74b6",
+  "mtp": false,
+  "input": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-hbm-2026-11-15/text0-c16383-b255-beats/step-33.pt",
+  "iterations_per_group": 16,
+  "groups": 5,
+  "baseline": {
+    "median_ms": 20.902090749586932,
+    "samples_ms": [
+      20.734974001243245,
+      20.926393062836723,
+      20.949924935848685,
+      20.902090749586932,
+      20.842543875915
+    ],
+    "submit_median_ms": 17.688917312625563,
+    "main_thread_cpu_median_ms": 17.275569937500013
+  },
+  "baseline_end": {
+    "median_ms": 20.93213737680344,
+    "samples_ms": [
+      20.897996124404017,
+      20.93213737680344,
+      20.941675935318926,
+      20.94861962541472,
+      20.913020500302082
+    ],
+    "submit_median_ms": 17.453386750275968,
+    "main_thread_cpu_median_ms": 17.052682312500124
+  },
+  "snapshot_logits_exact": true,
+  "captured_calls_per_token": {
+    "norm": 33,
+    "gdn_projection": 72,
+    "gdn_core": 24,
+    "mlp": 32,
+    "attention": 8,
+    "head": 1
+  },
+  "ablations": {
+    "baseline": {
+      "median_ms": 20.85340018675197,
+      "samples_ms": [
+        20.793024563317886,
+        20.85340018675197,
+        20.84579618895077,
+        20.9164163134119,
+        20.955153686372796
+      ],
+      "submit_median_ms": 17.946760312042898,
+      "main_thread_cpu_median_ms": 17.473802312500062,
+      "saved_ms": 0.0,
+      "saved_percent": 0.0
+    },
+    "gdn_core": {
+      "median_ms": 15.79632681387011,
+      "samples_ms": [
+        13.751013000728562,
+        14.139385060843779,
+        15.977521125023486,
+        15.832761437195586,
+        15.79632681387011
+      ],
+      "submit_median_ms": 13.219144748291,
+      "main_thread_cpu_median_ms": 12.952370937500014,
+      "saved_ms": 5.0570733728818595,
+      "saved_percent": 24.25059380049967
+    },
+    "mlp": {
+      "median_ms": 17.31727799779037,
+      "samples_ms": [
+        17.31727799779037,
+        17.251598001166712,
+        17.275673562835436,
+        17.37578156462405,
+        17.33866956055863
+      ],
+      "submit_median_ms": 14.224621747416677,
+      "main_thread_cpu_median_ms": 13.85722056249994,
+      "saved_ms": 3.536122188961599,
+      "saved_percent": 16.957053321252015
+    },
+    "attention": {
+      "median_ms": 18.74323824813473,
+      "samples_ms": [
+        18.621603689098265,
+        18.7423235620372,
+        18.94610562521848,
+        18.74323824813473,
+        18.805324249115074
+      ],
+      "submit_median_ms": 13.230381624453003,
+      "main_thread_cpu_median_ms": 12.899632500000035,
+      "saved_ms": 2.1101619386172388,
+      "saved_percent": 10.119030564415155
+    },
+    "gdn_projection": {
+      "median_ms": 19.414723999943817,
+      "samples_ms": [
+        19.324994813359808,
+        19.398440374061465,
+        19.414723999943817,
+        19.420372875174507,
+        19.523486127582146
+      ],
+      "submit_median_ms": 13.301065624546027,
+      "main_thread_cpu_median_ms": 12.956509250000025,
+      "saved_ms": 1.4386761868081521,
+      "saved_percent": 6.8990005175373454
+    },
+    "head": {
+      "median_ms": 19.99509225061047,
+      "samples_ms": [
+        20.57098193836282,
+        20.102827689697733,
+        19.97120956366416,
+        19.99509225061047,
+        19.99028312638984
+      ],
+      "submit_median_ms": 17.262948687857715,
+      "main_thread_cpu_median_ms": 16.891195937499994,
+      "saved_ms": 0.8583079361415002,
+      "saved_percent": 4.115913608595963
+    },
+    "norm": {
+      "median_ms": 20.545560622849735,
+      "samples_ms": [
+        20.38371437447495,
+        20.634062311728485,
+        20.807037686608965,
+        20.54095343555673,
+        20.545560622849735
+      ],
+      "submit_median_ms": 15.807936997589422,
+      "main_thread_cpu_median_ms": 15.39200412499997,
+      "saved_ms": 0.30783956390223466,
+      "saved_percent": 1.4762080099426815
+    },
+    "gdn_core+attention": {
+      "median_ms": 9.5663317515573,
+      "samples_ms": [
+        9.624787249777,
+        9.47595262186951,
+        9.682636315119453,
+        9.477585626882501,
+        9.5663317515573
+      ],
+      "submit_median_ms": 9.213722059939755,
+      "main_thread_cpu_median_ms": 8.989524124999981,
+      "saved_ms": 11.28706843519467,
+      "saved_percent": 54.12579403892739
+    },
+    "all": {
+      "median_ms": 1.7038363112078514,
+      "samples_ms": [
+        1.6819133124954533,
+        1.6967663104878739,
+        1.7120343145506922,
+        1.7076111253118142,
+        1.7038363112078514
+      ],
+      "submit_median_ms": 0.9901144367177039,
+      "main_thread_cpu_median_ms": 0.9866392500001986,
+      "saved_ms": 19.149563875544118,
+      "saved_percent": 91.82945564776391
+    },
+    "baseline_end": {
+      "median_ms": 20.92544956394704,
+      "samples_ms": [
+        20.7709458154568,
+        20.910503313643858,
+        20.92544956394704,
+        20.96966593671823,
+        20.95813881533104
+      ],
+      "submit_median_ms": 17.815969309594948,
+      "main_thread_cpu_median_ms": 17.382830875000145,
+      "saved_ms": -0.07204937719507143,
+      "saved_percent": -0.3455042177766479
+    }
+  },
+  "components": {
+    "gdn_core": {
+      "execute": {
+        "median_ms": 11.109056689747376,
+        "samples_ms": [
+          11.064983937103534,
+          11.090343748946907,
+          11.109056689747376,
+          11.111380747024668,
+          11.130561750178458
+        ],
+        "submit_median_ms": 2.9170779380365275,
+        "main_thread_cpu_median_ms": 2.779712937500012
+      },
+      "input_clones": {
+        "median_ms": 3.899895313224988,
+        "samples_ms": [
+          4.722322624729713,
+          3.951794064050773,
+          3.899895313224988,
+          3.7848211904929485,
+          3.7675710627809167
+        ],
+        "submit_median_ms": 0.5087872523290571,
+        "main_thread_cpu_median_ms": 0.4426623750000136
+      },
+      "reuse_buffers": {
+        "median_ms": 10.753742812084965,
+        "samples_ms": [
+          10.71427049828344,
+          10.753724625828909,
+          10.753742812084965,
+          10.75675962420064,
+          10.758065185655141
+        ],
+        "submit_median_ms": 4.262764563463861,
+        "main_thread_cpu_median_ms": 4.1591761249999415
+      }
+    },
+    "mlp": {
+      "execute": {
+        "median_ms": 5.190698750084266,
+        "samples_ms": [
+          5.108822999318363,
+          5.133217062393669,
+          5.190698750084266,
+          5.221893497946439,
+          5.19318168881
+        ],
+        "submit_median_ms": 3.1028244993649423,
+        "main_thread_cpu_median_ms": 3.0577754375000765
+      },
+      "input_clones": {
+        "median_ms": 1.6969064381555654,
+        "samples_ms": [
+          2.194971064454876,
+          1.9760812501772307,
+          1.6969064381555654,
+          1.6621501272311434,
+          1.6294154993374832
+        ],
+        "submit_median_ms": 0.5608213141385932,
+        "main_thread_cpu_median_ms": 0.5503863750000448
+      },
+      "reuse_buffers": {
+        "median_ms": 4.8199606862908695,
+        "samples_ms": [
+          4.793265252374113,
+          4.801195940672187,
+          4.820630376343615,
+          4.826150750886882,
+          4.8199606862908695
+        ],
+        "submit_median_ms": 2.218078250734834,
+        "main_thread_cpu_median_ms": 2.154550687500034
+      }
+    },
+    "attention": {
+      "execute": {
+        "median_ms": 7.2130473745346535,
+        "samples_ms": [
+          8.216576876293402,
+          7.185388374637114,
+          7.293794624274597,
+          7.182756813563174,
+          7.2130473745346535
+        ],
+        "submit_median_ms": 4.314443562179804,
+        "main_thread_cpu_median_ms": 4.155603874999914
+      },
+      "input_clones": {
+        "median_ms": 0.4691241883847397,
+        "samples_ms": [
+          0.4948163732478861,
+          0.5096311870147474,
+          0.4691241883847397,
+          0.4577549370878842,
+          0.4487683763727546
+        ],
+        "submit_median_ms": 0.10271844075759873,
+        "main_thread_cpu_median_ms": 0.08988300000001281
+      },
+      "reuse_buffers": {
+        "median_ms": 6.714778563036816,
+        "samples_ms": [
+          6.843800685601309,
+          6.660973500402179,
+          6.64832418988226,
+          6.714778563036816,
+          6.751910812454298
+        ],
+        "submit_median_ms": 3.730876062036259,
+        "main_thread_cpu_median_ms": 3.566091687499995
+      }
+    },
+    "gdn_projection": {
+      "execute": {
+        "median_ms": 8.95524018778815,
+        "samples_ms": [
+          8.973219064500881,
+          8.933601311582606,
+          8.95524018778815,
+          8.896228813682683,
+          8.960035127529409
+        ],
+        "submit_median_ms": 2.8817521888413467,
+        "main_thread_cpu_median_ms": 2.6605373749999384
+      },
+      "input_clones": {
+        "median_ms": 3.763388373045018,
+        "samples_ms": [
+          3.763388373045018,
+          3.8123786252981517,
+          3.8082046230556443,
+          3.762239186471561,
+          3.7490618124138564
+        ],
+        "submit_median_ms": 0.524753937497735,
+        "main_thread_cpu_median_ms": 0.45132893750010616
+      },
+      "reuse_buffers": {
+        "median_ms": 5.502817624801537,
+        "samples_ms": [
+          5.353215376089793,
+          5.509206061105942,
+          5.48989612434525,
+          5.549518376938067,
+          5.502817624801537
+        ],
+        "submit_median_ms": 2.2077463145251386,
+        "main_thread_cpu_median_ms": 2.087975812499865
+      }
+    },
+    "head": {
+      "execute": {
+        "median_ms": 0.9241661900887266,
+        "samples_ms": [
+          0.9053481844603084,
+          0.9067827486433089,
+          0.9257846868422348,
+          0.9241661900887266,
+          0.9243714375770651
+        ],
+        "submit_median_ms": 0.060165497416164726,
+        "main_thread_cpu_median_ms": 0.05994249999985435
+      },
+      "input_clones": {
+        "median_ms": 0.09674062675912865,
+        "samples_ms": [
+          0.1493929376010783,
+          0.11960631309193559,
+          0.0901406237971969,
+          0.09078906077775173,
+          0.09674062675912865
+        ],
+        "submit_median_ms": 0.006379061233019456,
+        "main_thread_cpu_median_ms": 0.006387687499831429
+      },
+      "reuse_buffers": {
+        "median_ms": 0.9246611880371347,
+        "samples_ms": [
+          0.9063765028258786,
+          0.9192792531393934,
+          0.9356036862300243,
+          0.9389822516823187,
+          0.9246611880371347
+        ],
+        "submit_median_ms": 0.04792881372850388,
+        "main_thread_cpu_median_ms": 0.04795693750003771
+      }
+    },
+    "norm": {
+      "execute": {
+        "median_ms": 2.6160673769481946,
+        "samples_ms": [
+          3.673855997476494,
+          3.0233369398047216,
+          2.555627124820603,
+          2.5632159995438997,
+          2.6160673769481946
+        ],
+        "submit_median_ms": 1.3315553114807699,
+        "main_thread_cpu_median_ms": 1.3014411875000853
+      },
+      "input_clones": {
+        "median_ms": 1.7211909980687778,
+        "samples_ms": [
+          1.7236538114957511,
+          1.722996687021805,
+          1.6577651877014432,
+          1.7131313725258224,
+          1.7211909980687778
+        ],
+        "submit_median_ms": 0.23062468608259223,
+        "main_thread_cpu_median_ms": 0.21571362500005797
+      },
+      "reuse_buffers": {
+        "median_ms": 1.024629622406792,
+        "samples_ms": [
+          1.0497909970581532,
+          1.024629622406792,
+          1.0640676227922086,
+          1.0085550020448864,
+          1.0200300639553461
+        ],
+        "submit_median_ms": 1.0192200606979895,
+        "main_thread_cpu_median_ms": 1.012234250000077
+      }
+    }
+  },
+  "raw_eager_gemv": {
+    "gdn_projection": {
+      "median_ms": 5.127010437718127,
+      "samples_ms": [
+        5.087045439722715,
+        5.184992813155986,
+        5.128818564116955,
+        5.108247438329272,
+        5.127010437718127
+      ],
+      "submit_median_ms": 0.9757803127286024,
+      "main_thread_cpu_median_ms": 0.8894966874999355,
+      "count": 72,
+      "weight_bytes": 3221225472,
+      "effective_tb_s": 0.6282853353100774,
+      "shapes": {
+        "(8192, 4096)": 24,
+        "(4096, 4096)": 48
+      }
+    },
+    "mlp": {
+      "median_ms": 7.381958501355257,
+      "samples_ms": [
+        7.030676624708576,
+        7.381958501355257,
+        7.390432438114658,
+        7.431775560689857,
+        7.371310122834984
+      ],
+      "submit_median_ms": 1.288835937884869,
+      "main_thread_cpu_median_ms": 1.1606918750000084,
+      "count": 96,
+      "weight_bytes": 9663676416,
+      "effective_tb_s": 1.3090938419967872,
+      "shapes": {
+        "(12288, 4096)": 64,
+        "(4096, 12288)": 32
+      }
+    },
+    "attention_projection": {
+      "median_ms": 2.34427475152188,
+      "samples_ms": [
+        2.4581779362051748,
+        2.34427475152188,
+        2.3627248156117275,
+        2.328427250176901,
+        2.315826186531922
+      ],
+      "submit_median_ms": 0.4674101874115877,
+      "main_thread_cpu_median_ms": 0.40869268749998966,
+      "count": 32,
+      "weight_bytes": 939524096,
+      "effective_tb_s": 0.40077388343242204,
+      "shapes": {
+        "(8192, 4096)": 8,
+        "(1024, 4096)": 16,
+        "(4096, 4096)": 8
+      }
+    },
+    "head": {
+      "median_ms": 0.918364374228986,
+      "samples_ms": [
+        0.8917359373299405,
+        0.8971780589490663,
+        0.9265385633625556,
+        0.918364374228986,
+        0.9196719365718309
+      ],
+      "submit_median_ms": 0.0158969996846281,
+      "main_thread_cpu_median_ms": 0.015911375000010608,
+      "count": 1,
+      "weight_bytes": 2034237440,
+      "effective_tb_s": 2.215065715836208,
+      "shapes": {
+        "(248320, 4096)": 1
+      }
+    }
+  },
+  "compiled_mlp_weight_tb_s": 2.004928472442903,
+  "head_weight_tb_s": 2.1999814270546674,
+  "native_timeline": {
+    "source": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-hbm-2026-11-15/text0-c16383-b255-confirm/native-events.jsonl",
+    "tokens": 16,
+    "engines": {
+      "PDMA": {
+        "engine_events": 20048,
+        "covered_ms": 24.034401733398436
+      },
+      "MME": {
+        "engine_events": 127104,
+        "covered_ms": 132.9629320678711
+      },
+      "EDMA": {
+        "engine_events": 224089,
+        "covered_ms": 21.253502685546874
+      },
+      "TPC": {
+        "engine_events": 910464,
+        "covered_ms": 122.03547229003907
+      }
+    },
+    "compute_span_ms": 394.6554631958008,
+    "compute_covered_ms": 260.7315009765625,
+    "compute_uncovered_ms": 133.9239622192383,
+    "recipe_count": 4896,
+    "recipes_per_token": 306.0,
+    "recipe_covered_ms": 384.74363104248044,
+    "recipe_without_compute_events_ms": 124.01213006591797,
+    "unmatched_ends": {},
+    "unmatched_starts": 0,
+    "interpretation": "Instrumented execution-event intervals. Uncovered time includes scheduling, dependencies, and any activity absent from these event classes. It is not a calibrated idle counter."
+  },
+  "restoration": {
+    "source_hashes_before": {
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/qwen35.py": "1f9d37eb2f6c0991aab2539678c056f717fdca52af60609596f29776ed916033",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/hpu_mlp.py": "a333dc268730044497a0cb4fb18d7ac4b861a6f98838f34ac586c33f03bc6f30",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/hpu_gated_delta.py": "a041b37464fd9234759166aed19d182700242123d5c9deee216b54cf692e6a3c",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/llama.py": "fd7cc8556b7c3a7affb1999e4dc1965cba1e389e68593ece21d80eb48b23ce66"
+    },
+    "source_hashes_after": {
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/qwen35.py": "1f9d37eb2f6c0991aab2539678c056f717fdca52af60609596f29776ed916033",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/hpu_mlp.py": "a333dc268730044497a0cb4fb18d7ac4b861a6f98838f34ac586c33f03bc6f30",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/hpu_gated_delta.py": "a041b37464fd9234759166aed19d182700242123d5c9deee216b54cf692e6a3c",
+      "/home/sonny/ComfyUI-Gaudi/comfy/text_encoders/llama.py": "fd7cc8556b7c3a7affb1999e4dc1965cba1e389e68593ece21d80eb48b23ce66"
+    },
+    "source_unchanged": true,
+    "queue": {
+      "queue_running": [],
+      "queue_pending": []
+    },
+    "deployed": "dfca7cd672240da975983214c11d3057ec5b74b6",
+    "elapsed_seconds": 57.44325590133667
+  },
+  "limitations": [
+    "Fixed real step 33 with full original KV capacity. Cache prepare, RoPE, embedding, sampling and natural token progression are outside the core replay.",
+    "Ablations intentionally omit computation. MLP uses identity bypass. Other groups return saved outputs. Their speedups are counterfactual diagnostic results and are not deployable improvements.",
+    "Independent category timings change scheduling and overlap. They cannot be added or subtracted to derive exact inclusive workflow shares.",
+    "Reused MLP buffers evolve numerically during the component timing. Tensor shapes and operations are fixed.",
+    "Main-thread CPU time overlaps device work. Native event coverage is profiled and does not calibrate true hardware idle time.",
+    "Initial ablation used eager clone placeholders, producing 9.94 ms with all groups skipped. Corrected bypass gives 1.70 ms. Initial run retained only as diagnostic history.",
+    "No newly optimized implementation or end-to-end performance gain was delivered during this root-cause analysis."
+  ]
+}

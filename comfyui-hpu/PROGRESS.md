@@ -4,6 +4,8 @@
 
 ## 2026-11-15 Qwen Image 2.1 最新2MP工作流
 
+用户人工确认8组版本对照质量正常，接受`dfca7cd6`并要求保持提交。新增根因分析以真实第33步状态重放核心，未插桩20.902ms、主线程CPU17.276ms。已编译MLP及输出头权重有效带宽约2.005/2.200TB/s。修正后的同轮消融基线20.853ms，跳过GDN核心15.796ms，组合跳过GDN核心与完整attention9.566ms。原生晚位置16-token trace为306 recipes/token，执行事件未覆盖的8.370ms/token中约7.751ms位于recipe区间内，具体等待类型仍待归因。消融改变计算工作和执行重叠，不能视为上线收益。后续优先处理GDN/attention执行链，并将有数值差异的候选推进完整质量验证。两次隔离诊断后普通服务恢复、队列为空、源文件哈希相同。[根因报告](optimization/QWEN21_DECODE_ROOT_CAUSE.md) · [证据](evidence/qwen21-decode-root-cause-2026-11-15.json)
+
 按用户确认，产品`dfca7cd6`与上一提交`ed9552e5`各独立生成8张原提示词2MP图，两类seed逐组配对。16份history确认完整重算扩写和采样，8组扩写文字及RGBA像素均逐元素一致。原图、扩写、8张原尺寸并排图、概览和ZIP已保存，供用户人工检查。当前服务恢复`dfca7cd6`，源文件哈希一致、队列为空。[图组记录](optimization/QWEN21_PRODUCT_AB.md) · [证据](evidence/qwen21-product-ab-2026-11-15.json)
 
 用户要求先推进无MTP的BF16路径。本轮以AXI返回beat完成HBM有效载荷校准，128/512/2048 MiB copy及GEMV读取回算误差约−0.43%至−0.26%。真实解码约17.168 GB读取和1.261 GB写入/token，16轮无profiler为0.36819s，约0.801 TB/s，即峰值32.69%，取整敏感性上沿33.38%。整步eager编译与持久HPUGraph将decoder核心20.871→约17.8ms，存在0.79%–0.93% logits差异。GDN单tokenTPC使固定427-token耗时10.220→9.567s，但完整logits仍有0.986%误差，两个舍入修订也未对齐。普通服务最终运行`dfca7cd6`，原2MP图100.598s成功且像素一致、队列为空。DMA校准首版的地址使用错误曾触发设备自动复位，已恢复并以独立Synapse控制完成补测。[完整校准与验证](optimization/QWEN21_BF16_SINGLE_TOKEN.md) · [证据](evidence/qwen21-bf16-single-token-2026-11-15.json)
