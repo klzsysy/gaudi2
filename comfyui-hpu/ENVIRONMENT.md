@@ -50,6 +50,8 @@ cat .run/deployed-version
 
 最近部署为`92d15ff7`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
+后续优化默认在验证后暂存两个仓库的相关改动，再部署环境并交付人工验收。验收前以基线提交、暂存差异或快照及部署文件SHA256标识运行版本，记录“已部署，待人工验收”，用户明确验收通过后提交并关联最终commit。用户特别说明优先。[交付流程](optimization/MEASUREMENT.md#默认交付与人工验收)
+
 ```bash
 export PT_HPU_LAZY_MODE=0
 export GC_KERNEL_PATH=/usr/lib/habanalabs/libtpc_kernels.so

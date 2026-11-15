@@ -2,6 +2,10 @@
 
 更新于2026-11-15（Asia/Shanghai）。产品版本为`92d15ff7`，单卡Gaudi2、Habana1.24.2、eager＋区域编译及符合条件的Qwen整步编译。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
 
+## 默认优化交付流程
+
+除用户特别说明外，后续优化任务按“实现与验证 → 两个仓库暂存 → 部署环境并验证运行 → 等待用户人工验收 → 验收通过后提交”执行。人工验收前，`gaudi2`与`ComfyUI-Gaudi`本轮改动统一保留在暂存区，创建或修改提交以用户明确验收通过为条件。[完整流程](optimization/MEASUREMENT.md#默认交付与人工验收)
+
 ## 按问题查找
 
 | 主题 | 内容 |
