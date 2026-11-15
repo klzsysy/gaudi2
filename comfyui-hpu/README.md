@@ -1,6 +1,6 @@
 # ComfyUI Gaudi2优化与适配记录
 
-更新于2026-11-15（Asia/Shanghai）。产品版本为`dfca7cd6`，单卡Gaudi2、Habana1.24.2、eager＋区域编译。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
+更新于2026-11-15（Asia/Shanghai）。产品版本为`92d15ff7`，单卡Gaudi2、Habana1.24.2、eager＋区域编译及符合条件的Qwen整步编译。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
 
 ## 按问题查找
 
@@ -23,6 +23,7 @@
 | [单token BF16硬件利用率](optimization/QWEN21_BF16_SINGLE_TOKEN.md) | AXI返回beat校准、约33% HBM带宽利用率、整步重放与GDN融合数值边界 |
 | [单token解码延迟根因](optimization/QWEN21_DECODE_ROOT_CAUSE.md) | 真实状态消融、MLP/输出头带宽、主线程CPU与306 recipes/token、GDN/attention优先级 |
 | [无MTP执行优化逐项验证](optimization/QWEN21_EXECUTION_VALIDATION.md) | 9条单项/组合路径、PE 41.69→25.18秒、整图60.66→44.18秒、4组自然图与HBM复测 |
+| [无MTP执行优化上线](optimization/QWEN21_EXECUTION_DEPLOYMENT.md) | 产品92d15ff7、生成调用级cache、候选logits一致、普通API出图与重载验收 |
 | [产品版本8组图像对照](optimization/QWEN21_PRODUCT_AB.md) | dfca7cd6与ed9552e5各8张、原提示词及配对seed、原图和人工检查图组 |
 | [Qwen PE后续文本加速](optimization/QWEN21_TEXT_NEXT.md) | 现有MTP草稿头复用、固定窗口与自然扩写收益、目标验证数值边界 |
 | [Qwen Image 2.1 Turbo 首版](QWEN21_FIRST.md) | 官方文生图、匹配增强器、BF16 常驻、FFN 编译与首版验收 |

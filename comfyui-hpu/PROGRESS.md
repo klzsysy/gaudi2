@@ -1,6 +1,10 @@
 # 当前状态与未决问题
 
-截至2026-11-15，产品分支`codex/gaudi2-hpu`，最新提交`dfca7cd672240da975983214c11d3057ec5b74b6`。本文件提供交接快照，测试过程和候选取舍集中于 [主题索引](README.md)。
+截至2026-11-15，产品分支`codex/gaudi2-hpu`，最新提交`92d15ff701f932e7d349387f8f46ca960baf83d8`。本文件提供交接快照，测试过程和候选取舍集中于 [主题索引](README.md)。
+
+## 2026-11-15 Qwen执行优化上线
+
+用户要求先部署体验，已将候选接入普通产品入口，主实现`28794c4b`、最终版本`92d15ff7`。适用于常驻普通BF16、HPU、batch1、无MTP头的Qwen，生成调用持有独立cache代理，入口兼顾hooks、在线权重变换、低显存、attention配置及中断。155项回归及末次19项专项通过，有17项重叠。固定427-token产品logits与实验候选逐元素一致，三次warm中位6.4555秒。普通8189接口两组自然图103.705/49.905秒、卸载后重载83.915秒、最终提交重启预热107.747秒，扩写及RGBA均匹配对应候选图。MOSS BF16固定tree3s1三组扩写匹配此前基线。最终源文件哈希与提交一致，队列为空，原工作流已预热。新KV容量仍有首次编译成本。[上线记录](optimization/QWEN21_EXECUTION_DEPLOYMENT.md) · [证据](evidence/qwen21-execution-deployment-2026-11-15.json)
 
 ## 2026-11-15 Qwen Image 2.1 最新2MP工作流
 
@@ -58,6 +62,7 @@
 | Attention | `700bdb6d`单head、`f67e7f3f`混合AV、`69fe4a54`移除8192上限、`ef16c195`长序列分批 | [Attention](optimization/ATTENTION.md) |
 | 文本精度 | INT8解码BF16、`148b252a`原生FP8文本 | [量化](optimization/TEXT_PRECISION.md) |
 | 文本执行 | KV行clone、MLP/norm/attention编译、`34e2649e`短步RoPE | [decode](optimization/TEXT_DECODE.md) |
+| Qwen单token上线试用 | `28794c4b`直接GDN状态、SDPA与整步编译，`92d15ff7`可选norm兼容 | [上线](optimization/QWEN21_EXECUTION_DEPLOYMENT.md) |
 | GDN | `60da4e33`区域编译、prefill分桶、`41f01e68`并行递推、`a8f42df2`八行扩区 | [GDN](optimization/TEXT_GDN.md) |
 | 运行时 | `441d459d`初始化后恢复SIGPIPE忽略策略，独立eager环境 | [运行时](optimization/RUNTIME.md) |
 

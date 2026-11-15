@@ -1,0 +1,215 @@
+{
+  "date": "2026-11-15",
+  "version": {
+    "commit": "92d15ff701f932e7d349387f8f46ca960baf83d8",
+    "parent": "28794c4bec4c9bb38fe4a8ea802e856d36e07096",
+    "files": {
+      "comfy/text_encoders/qwen35.py": "68068048fc0543b61ba7e86deb092ae3c16eefa06f077b5e06acb4537fac88fd",
+      "comfy/text_encoders/llama.py": "7eb7678ea291850b96379afcc12140305b467115931e54408d7bf828c91f6bb4",
+      "comfy/text_encoders/hpu_mlp.py": "29e24295c7fee9e522167f082905636d47df4a415b580460d74b3ece10a0a880",
+      "comfy/text_encoders/hpu_kv_attention.py": "b63ef42b787ac657a2ccdc8891670eebdbf8850657de04dc94776f034745fba3",
+      "tests-unit/comfy_test/hpu_qwen_generation_test.py": "f40273047fb43fb1e1efd54cc83f131456e5511903a29976c1df6140478b337f"
+    },
+    "implementation_commit": "28794c4bec4c9bb38fe4a8ea802e856d36e07096"
+  },
+  "text_validation": {
+    "product-text": {
+      "runs": [
+        {
+          "mode": "warm",
+          "seconds": 45.91722665698035,
+          "window_seconds": 0.22705690399743617,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 6.400536164990626,
+          "window_seconds": 0.22190318297361955,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 6.4555109980283305,
+          "window_seconds": 0.22277128999121487,
+          "tokens": 427
+        },
+        {
+          "mode": "plain",
+          "seconds": 6.60114922298817,
+          "window_seconds": 0.24041456799022853,
+          "tokens": 427
+        },
+        {
+          "mode": "logits",
+          "seconds": 6.659079810953699,
+          "window_seconds": 0.22797256300691515,
+          "tokens": 427
+        }
+      ],
+      "median_seconds": 6.4555109980283305,
+      "tokens": [
+        427,
+        427,
+        427
+      ],
+      "median_tokens_per_second": 66.14503485942727,
+      "logits": {
+        "shape": [
+          427,
+          248320
+        ],
+        "finite": true,
+        "rrmse": 0.0,
+        "max_abs": 0.0,
+        "exact_rows": 427,
+        "top1_same": 427,
+        "mean_kl_reference_to_candidate": 0.0
+      }
+    }
+  },
+  "online": {
+    "commit": "92d15ff701f932e7d349387f8f46ca960baf83d8",
+    "files": {
+      "comfy/text_encoders/qwen35.py": "68068048fc0543b61ba7e86deb092ae3c16eefa06f077b5e06acb4537fac88fd",
+      "comfy/text_encoders/llama.py": "7eb7678ea291850b96379afcc12140305b467115931e54408d7bf828c91f6bb4",
+      "comfy/text_encoders/hpu_mlp.py": "29e24295c7fee9e522167f082905636d47df4a415b580460d74b3ece10a0a880",
+      "comfy/text_encoders/hpu_kv_attention.py": "b63ef42b787ac657a2ccdc8891670eebdbf8850657de04dc94776f034745fba3",
+      "tests-unit/comfy_test/hpu_qwen_generation_test.py": "f40273047fb43fb1e1efd54cc83f131456e5511903a29976c1df6140478b337f"
+    },
+    "queue": {
+      "queue_running": [],
+      "queue_pending": []
+    },
+    "runs": [
+      {
+        "case": 1,
+        "prompt_id": "6b8f7c67-ced2-427a-9581-0642e653f744",
+        "seconds": 103.705,
+        "caption_exact": true,
+        "rgba_exact": true,
+        "size": [
+          1088,
+          1920
+        ],
+        "output": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_execution_deployed/seed01_00001.png",
+        "reference": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_bf16/gdn_direct-sdpa-whole_paired_seed_01_0_00001.png"
+      },
+      {
+        "case": 2,
+        "prompt_id": "104d08f9-ea08-4163-8c53-6998b3c0a21d",
+        "seconds": 49.905,
+        "caption_exact": true,
+        "rgba_exact": true,
+        "size": [
+          1088,
+          1920
+        ],
+        "output": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_execution_deployed/seed02_00001.png",
+        "reference": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_bf16/gdn_direct-sdpa-whole_paired_seed_02_0_00001.png"
+      },
+      {
+        "case": "reload",
+        "prompt_id": "4311e3e4-39cc-445d-9bca-130da0603a92",
+        "seconds": 83.915,
+        "caption_exact": true,
+        "rgba_exact": true,
+        "size": [
+          1088,
+          1920
+        ],
+        "output": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_execution_deployed/reload_00001.png",
+        "reference": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_bf16/gdn_direct-sdpa-whole_paired_seed_01_0_00001.png"
+      },
+      {
+        "case": "final",
+        "prompt_id": "7c7209fb-50fb-4f1b-9631-1f38dcb9f94c",
+        "seconds": 107.747,
+        "caption_exact": true,
+        "rgba_exact": true,
+        "size": [
+          1088,
+          1920
+        ],
+        "output": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_execution_deployed/final_00001.png",
+        "reference": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_bf16/gdn_direct-sdpa-whole_paired_seed_01_0_00001.png"
+      }
+    ]
+  },
+  "unload_samples": [
+    [
+      {
+        "name": "hpu:0 GAUDI2",
+        "type": "hpu",
+        "index": 0,
+        "vram_total": 101601996800,
+        "vram_free": 58125660288,
+        "torch_vram_total": 43476336512,
+        "torch_vram_free": 0
+      }
+    ],
+    [
+      {
+        "name": "hpu:0 GAUDI2",
+        "type": "hpu",
+        "index": 0,
+        "vram_total": 101601996800,
+        "vram_free": 73999026304,
+        "torch_vram_total": 27602970496,
+        "torch_vram_free": 0
+      }
+    ],
+    [
+      {
+        "name": "hpu:0 GAUDI2",
+        "type": "hpu",
+        "index": 0,
+        "vram_total": 101601996800,
+        "vram_free": 89538457088,
+        "torch_vram_total": 12063539712,
+        "torch_vram_free": 0
+      }
+    ],
+    [
+      {
+        "name": "hpu:0 GAUDI2",
+        "type": "hpu",
+        "index": 0,
+        "vram_total": 101601996800,
+        "vram_free": 91854279808,
+        "torch_vram_total": 9747716992,
+        "torch_vram_free": 0
+      }
+    ]
+  ],
+  "mtp_regression": [
+    {
+      "case": "teapot",
+      "text_exact": true,
+      "mtp": "tree3s1"
+    },
+    {
+      "case": "poster",
+      "text_exact": true,
+      "mtp": "tree3s1"
+    },
+    {
+      "case": "person",
+      "text_exact": true,
+      "mtp": "tree3s1"
+    }
+  ],
+  "tests": {
+    "regression_passed": 155,
+    "final_focused_passed": 19,
+    "overlap": 17,
+    "final_focus_includes_interrupt": true,
+    "intermediate_focused_passed": 18,
+    "final_focus_includes_optional_norm": true
+  },
+  "scope": "Ordinary resident BF16 HPU Qwen, batch 1, no MTP head. Existing compiler-off, hooks, online weight functions, custom attention, low-memory and other dtype/device paths use existing execution.",
+  "validation_note": "The full 427-token numeric comparison preceded the interruption check and optional-final-norm compatibility branch. Both preserve the measured math. The final focused tests and final ordinary API image comparison used the committed source.",
+  "service": "http://192.168.10.21:8189",
+  "server_root": "/home/sonny/ComfyUI-Gaudi",
+  "rollback_sources": "/home/sonny/gaudi2/comfyui-hpu/deploy-qwen-execution-2026-11-15/baseline",
+  "rollback_product": "dfca7cd672240da975983214c11d3057ec5b74b6"
+}

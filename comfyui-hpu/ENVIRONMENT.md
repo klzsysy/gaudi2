@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-最近部署为`dfca7cd6`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+最近部署为`92d15ff7`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 ```bash
 export PT_HPU_LAZY_MODE=0
@@ -108,4 +108,6 @@ export GC_KERNEL_PATH=/usr/lib/habanalabs/libtpc_kernels.so
 
 新调查目录为`/home/sonny/gaudi2/comfyui-hpu/performance-qwen21-2026-11-15`。`qwen21_deep_jobs.py --workflow <API文件> --output-root <调查根目录>`支持保存本轮完整/缓存工作流。普通服务重载验证入口为`probes/qwen21_normal_next.py`。运行任何HPU probe或回归均需显式设置`PT_HPU_LAZY_MODE=0`和`GC_KERNEL_PATH=/usr/lib/habanalabs/libtpc_kernels.so`。本轮对照确认eager流水线关闭会显著变慢，普通服务继续使用默认开启状态。完整条件、候选和数值边界见[本轮记录](QWEN21_PERFORMANCE_2026-11-15.md)。
 
-后续无MTP执行候选保存在`performance-qwen-execution-2026-11-15`，采用相同模型、驱动和eager环境。`qwen_execution_jobs.py`在空队列时串行管理文本/完整工作流/原生计数，并在finally恢复8189。调查API启动器采用稳定模块导入后显式调用`qwen21_deep_server.main()`，避免Dynamo解析main模块和导入锁等待。最终普通部署仍为`dfca7cd6`。[验证结果与复现参数](optimization/QWEN21_EXECUTION_VALIDATION.md)
+后续无MTP执行候选保存在`performance-qwen-execution-2026-11-15`，采用相同模型、驱动和eager环境。`qwen_execution_jobs.py`在空队列时串行管理文本/完整工作流/原生计数，并在finally恢复8189。调查API启动器采用稳定模块导入后显式调用`qwen21_deep_server.main()`，避免Dynamo解析main模块和导入锁等待。该调查轮恢复了`dfca7cd6`。[验证结果与复现参数](optimization/QWEN21_EXECUTION_VALIDATION.md)
+
+随后按用户要求上线为`92d15ff7`。现有BF16 PE工作流自动选择符合条件的单token快路径，普通main.py入口运行。产品实现与已验候选427-token logits相同，普通API图片和重载验收通过。部署、回退备份及源文件哈希位于`deploy-qwen-execution-2026-11-15`，最后服务队列为空且原工作流已预热。[上线记录](optimization/QWEN21_EXECUTION_DEPLOYMENT.md)
