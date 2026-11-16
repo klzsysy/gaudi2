@@ -1,0 +1,197 @@
+{
+  "13": {
+    "inputs": {
+      "aspect_ratio": "9:16 (Portrait Widescreen)",
+      "megapixels": 2.0,
+      "multiple": 8
+    },
+    "class_type": "ResolutionSelector",
+    "_meta": {
+      "title": "分辨率选择器"
+    }
+  },
+  "461": {
+    "inputs": {
+      "filename_prefix": "Qwen_image_2.1",
+      "format": "png",
+      "format.bit_depth": "8-bit",
+      "format.input_color_space": "sRGB",
+      "images": [
+        "459:457",
+        0
+      ]
+    },
+    "class_type": "SaveImageAdvanced",
+    "_meta": {
+      "title": "保存图像（高级）"
+    }
+  },
+  "459:451": {
+    "inputs": {
+      "unet_name": "qwen_image_2.1_turbo_fp8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "UNet加载器"
+    }
+  },
+  "459:452": {
+    "inputs": {
+      "prompt": "A refined fine-art botanical portrait shows an elegant young East Asian woman in a dreamy floral studio setting, rendered with romantic ethereal fantasy, Renaissance-inspired editorial composition, and painterly surrealism. She wears a flowing gray-brown-beige strapless gown with soft draped folds, sheer fabric edges, and a lightweight, airy silhouette. Her hands gently cradle an abundant bouquet of peach, coral, blush-pink garden roses, small white flowers, fresh green leaves, and delicate wildflowers. Branches with blossoms arc naturally around her head and shoulders like a romantic botanical crown, while a blue hummingbird hovers beside her with wings extended in flight. The background is a muted sage-green surface with soft natural diffusion, warm glowing highlights, gentle shadows, cinematic depth of field, complex floral texture, and luxurious editorial balance. Soft diffuse natural light creates gentle highlights and subtle shadows with a warm glow.\n\nThe frame is vertical 2:3, suited to a fashion-editorial portrait because the woman, bouquet, cascading branches, dress folds, and hovering bird need height and graceful diagonal movement. No aspect ratio was stated by the user, so the default vertical portrait ratio is chosen.\n\nMy opening sentence needs to carry the vertical orientation, the fine-art photographic style, the portrait medium, and the sage-green botanical setting. I will name the image as a vertical fine-art botanical portrait rather than starting with the figure alone, because the environment is equally important. The palette should appear immediately through muted sage, ivory, dusty rose, copper, beige, brown, olive green, turquoise, and deep royal blue.\n\nBefore writing I settle the inventory across the frame: a smooth matte sage-green backdrop fills the whole rear plane; blurred flowering branches cross the upper left; larger blossoms and leaves occupy the top center; dark foliage sits near the top right edge; a thin branch reaches inward from the far right; the woman stands slightly right of center; her tilted face turns toward the upper left; her updo rises behind her head; loose strands fall over one shoulder; the bouquet fills the lower left and center foreground; her folded arms wrap around it; gauzy dress fabric spreads along the lower frame; the hummingbird hovers on the right beside her shoulder and cheek; additional blurred leaves frame the lower-left foreground; soft bokeh-like flowers recede into both sides. There are no pieces of legible text.\n\nOne subject fills the frame, so I walk the subject while keeping the surrounding botanical installation locatable. I begin with the background: a matte plaster or painted wall in muted sage green, softly varied but uncluttered, giving space for the woman’s profile and the hovering bird. Across the upper-left and top-center areas, I place woody stems with pale pink, cream, and peach blossoms, making them partly sharp near the subject and increasingly blurred toward the edges. At the top-right, I add darker leaf clusters and a slender branch reaching inward, so the arch feels organic rather than symmetrical. In the center-right, I set the young adult woman in three-quarter view, slim and poised, with fair-to-light skin, dark eyes, dark brows, and an oval face lifted in calm profile. Around her head, I build a loose romantic updo with wispy hair escaping, then thread small white blossoms and buds into it like a floral crown. On her body, I keep the strapless gown classical and Grecian in feeling, with taupe-gray-beige translucent layers, gathered drapery, visible folds, and semi-sheer material catching soft light. Along the lower-left and central foreground, I make the bouquet large and tactile, with layered rose petals, creamy clusters, tiny filler flowers, muted foliage, and irregular stems overlapping her forearms. On the right side of her face and shoulder area, I position the hummingbird in mid-hover, angled upward, with turquoise-blue iridescence, darker wing tips, a long beak pointed toward her hairline, and feet tucked beneath its body. Along the bottom and lower corners, I let extra stems, leaves, and blurred flowers frame the composition without stealing attention from the woman’s expression, the bouquet, and the bird.\n\nNothing in this image is meant to be read, so there is no text to set, and inventing signage would be wrong.\n\nFor the light, I choose soft directional natural illumination that seems to enter from the left front, diffused enough to avoid hard shadows. It catches the woman’s forehead, nose bridge, cheekbone, lips, collarbone, fingers, flower petals, and hummingbird feathers, leaving only mild shadow under the bouquet and fabric folds. This lighting deserves its own explicit sentence because the request emphasizes softness, glow, highlights, and subtle shadow.\n\nI close on the whole frame by returning to balance, palette, style, and mood rather than adding new objects. The image should add up to a luxurious, painterly botanical portrait with realistic photographic detail, shallow-focus elegance, warm romance, and a quiet springtime atmosphere. The final impression is serene, ornate, editorial, and slightly fantastical, with the woman, flowers, branches, and hummingbird forming one cohesive dreamlike arrangement.",
+      "negative_prompt": "畸形人体、不符合真实人体结构，人体解剖结构错误、解剖结构错误、扭曲的肢体、异常的肢体、多余肢体、四肢不健全、畸形、变形、丑陋、诡异的外观、比例失调、透视错误、身体扭曲、肢体漂浮、肢体分离、身体漂浮、关节反向弯曲、姿势冲突、非人体结构、不符合人体解剖学、肢体融合、肢体断裂、肢体错位、身体不对称、手部错误、多余的手指、手指缺失、手指多余、手指畸形、手指融合、手指错位、手指弯折异常、手掌畸形、手部穿模、腿部错误、膝盖错误、脚部错误、脚趾错误、脚踝错误、腿部扭曲、腿部漂浮、脚趾畸形、脚趾多余、脚趾缺失、脚踝错位、膝盖反向、腿部融合、腿脚穿模、躯干畸形、脊柱扭曲、骨盆错位、胸腔畸形、腰腹比例失调、关节畸形、关节脱位、关节错位、坐姿错误、坐姿不自然、臀部悬空、脸部畸形、眼睛不对称、斜视、五官错位、五官畸形、脖子过长、脖子畸形、五官比例失调、低质量、最差质量、低质量图像、低分辨率、色彩丑陋、色调错误、噪点、网格感、JPEG压缩条纹、画面颗粒感、画质模糊、画面发灰、色彩断层、AI感、AI生成痕迹、AI绘画违和感、皮肤粗糙、痘痘、毛孔粗大、脏污皮肤、皮肤纹理错乱、痔疮、皮肤穿模、皮肤畸形、光线错误、阴影错误、阴影错位、背景杂乱、构图错误、姿势不自然、头发杂乱、画面失衡、主体出框、画面裁切、错误透视、错误光影、水印、文字、乱码、意义不明的字符、logo、签名、二维码、画面杂物、多余元素、穿模、衣物穿模、物体穿模、背景穿模，对比度过低",
+      "resolution": 1024,
+      "clip": [
+        "459:453",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImage21",
+    "_meta": {
+      "title": "文本编码 Qwen Image 2.1"
+    }
+  },
+  "459:453": {
+    "inputs": {
+      "clip_name": "qwen3vl_8b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "加载CLIP"
+    }
+  },
+  "459:454": {
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "加载VAE"
+    }
+  },
+  "459:456": {
+    "inputs": {
+      "width": [
+        "13",
+        0
+      ],
+      "height": [
+        "13",
+        1
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "空Latent图像"
+    }
+  },
+  "459:457": {
+    "inputs": {
+      "samples": [
+        "459:486",
+        0
+      ],
+      "vae": [
+        "459:454",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "459:484": {
+    "inputs": {
+      "sigmas": "1.0, 0.978453, 0.95418, 0.926626, 0.89508, 0.845148, 0.704534, 0.414568, 0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "Manual Sigmas (Qwen-Image-2.1-Turbo 8-step schedule)"
+    }
+  },
+  "459:486": {
+    "inputs": {
+      "noise": [
+        "459:488",
+        0
+      ],
+      "guider": [
+        "459:489",
+        0
+      ],
+      "sampler": [
+        "459:487",
+        0
+      ],
+      "sigmas": [
+        "459:484",
+        0
+      ],
+      "latent_image": [
+        "459:456",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "Sampler Custom Advanced"
+    }
+  },
+  "459:487": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSampler Select (euler)"
+    }
+  },
+  "459:488": {
+    "inputs": {
+      "noise_seed": 252045117397701
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "Random Noise"
+    }
+  },
+  "459:489": {
+    "inputs": {
+      "cfg": 1.2,
+      "model": [
+        "459:490",
+        0
+      ],
+      "positive": [
+        "459:452",
+        0
+      ],
+      "negative": [
+        "459:452",
+        1
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "CFG引导器"
+    }
+  },
+  "459:490": {
+    "inputs": {
+      "device": "off",
+      "dtype": "default",
+      "model": [
+        "459:451",
+        0
+      ]
+    },
+    "class_type": "QwenImage21Cache",
+    "_meta": {
+      "title": "Qwen Image 2.1 缓存"
+    }
+  }
+}

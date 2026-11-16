@@ -45,6 +45,9 @@ def qkv(module, x, pe, native=False, fp32_norm=False, functional=False):
 
 def install(mode):
     global native_rope
+    if mode.startswith('fp8:'):
+        from qwen21_fp8_candidates import install as install_fp8
+        return install_fp8(mode[4:])
     if mode.startswith('execution:'):
         from qwen_execution_candidates import install as install_execution
         return install_execution(mode[len('execution:'):])

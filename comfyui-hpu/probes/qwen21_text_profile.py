@@ -26,6 +26,7 @@ p.add_argument('--window-tokens',type=int)
 p.add_argument('--cpu-profile',action='store_true')
 p.add_argument('--quality-only',action='store_true')
 p.add_argument('--native',action='store_true')
+p.add_argument('--profile-start-token', type=int)
 a=p.parse_args()
 a.output.mkdir(parents=True,exist_ok=True)
 if a.native:
@@ -58,7 +59,7 @@ def sampled(self,*values,**kwargs):
     counter+=1
     if a.window_tokens and counter == a.window_tokens:
         result = torch.full_like(result, self.model.config.stop_tokens[0])
-    if counter==(512 if a.native else 32):
+    if counter==(a.profile_start_token if a.profile_start_token is not None else (512 if a.native else 32)):
         torch.hpu.synchronize()
         if mode=='profile':
             active=NativeProfile(a.output) if a.native else torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU,torch.profiler.ProfilerActivity.HPU])
@@ -66,7 +67,7 @@ def sampled(self,*values,**kwargs):
         if mode=='cpu_profile':
             cpu_profile.enable()
         window_start=time.perf_counter()
-    if counter==(528 if a.native else 48):
+    if counter==(a.profile_start_token if a.profile_start_token is not None else (512 if a.native else 32)) + 16:
         torch.hpu.synchronize()
         window_seconds=time.perf_counter()-window_start
         if mode=='cpu_profile':

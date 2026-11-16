@@ -1,0 +1,888 @@
+{
+  "date": "2026-11-15",
+  "environment": "Gaudi2 HL-225 / Habana 1.24.2 / eager / 32 CPU threads",
+  "remote_root": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen21-fp8-2026-11-15",
+  "deployment": {
+    "status": "已部署，待人工验收",
+    "product_baseline": "b89280c0f3977434cf08b74f55c607ecd1346811",
+    "previous_deployment": "92d15ff701f932e7d349387f8f46ca960baf83d8",
+    "product_staged_tree": "743cb53c6394be31fcd1466488b73dfc1315c091",
+    "staged_patch_sha256": "10ed4fb5415aea006421d0fe396a9d0a05216ebd75d895f90f50f1fc48aa9171",
+    "source_hashes": {
+      "comfy/text_encoders/qwen3vl.py": "02bc2c2c12e0a69469c2d04ab36048dfcd9cbed26699d6e20d97069e3b2818f4",
+      "scripts/gaudi/convert_qwen21_fp8.py": "fa3847e8dde7bea0dfde27e1da7e794a095a896fed005290a8ae2b0f9f18af4a",
+      "scripts/gaudi/convert_qwen35_fp8.py": "b440426aecb643211f19a21f6ed7a0bb046ad2978ef945c685c78887d8c9ba12",
+      "comfy/ldm/qwen_image21/model.py": "d5387119630ad20639f5681db20766499a1d016e3fd3d0e1075da4645447aaf8"
+    },
+    "normal_prompt_id": "42d874a0-ec8e-49a6-bddf-21cae173f0a1",
+    "service_url": "http://192.168.10.21:8189",
+    "installed_workflow": "/home/sonny/ComfyUI-Gaudi/user/default/workflows/Qwen-Image-2.1-Turbo-FP8-HPU.json",
+    "investigation_baseline": "912e1013fe562d4fab043e7516325f0de5224e7d"
+  },
+  "configuration": {
+    "width": 1088,
+    "height": 1920,
+    "steps": 8,
+    "cfg": 1.2,
+    "thinking": false,
+    "pe_input_tokens": 2805,
+    "text_seed": 447606998181262,
+    "image_seed": 252045117397701,
+    "dit_kv_cache": "off",
+    "result_cache": "compute fingerprints invalidated each run",
+    "resident_weights_and_compiled_recipes": true,
+    "autoregressive_kv": "fresh per generation"
+  },
+  "workflows": {
+    "bf16": {
+      "cold_seconds": 91.817153594,
+      "warm_samples": 5,
+      "warm_median": 25.021814147,
+      "stage_medians": {
+        "TextGenerate": 6.542885504,
+        "SwitchNode": 0.000168048,
+        "PreviewAny": 7.1902e-05,
+        "TextEncodeQwenImage21": 0.368809222,
+        "CFGGuider": 0.000199933,
+        "SamplerCustomAdvanced": 16.221294896,
+        "VAEDecode": 1.097714615,
+        "SaveImageAdvanced": 0.770126327
+      },
+      "warm_seconds": [
+        24.925249809,
+        25.021814147,
+        24.734366401,
+        25.085643334,
+        25.540698591
+      ],
+      "output_tokens": [
+        432,
+        432,
+        432,
+        432,
+        432,
+        432
+      ],
+      "peak_gib": 71.5392736196518,
+      "resident_gib": 56.12809479236603,
+      "fallback_counts": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ]
+    },
+    "bf16-off": {
+      "cold_seconds": 95.873648605,
+      "warm_samples": 5,
+      "warm_median": 25.425048056,
+      "stage_medians": {
+        "TextGenerate": 6.528644726,
+        "SwitchNode": 0.00014057,
+        "PreviewAny": 9.5847e-05,
+        "TextEncodeQwenImage21": 0.362738918,
+        "CFGGuider": 0.00024636,
+        "SamplerCustomAdvanced": 16.655448676,
+        "VAEDecode": 1.097731386,
+        "SaveImageAdvanced": 0.764253718
+      },
+      "warm_seconds": [
+        25.425048056,
+        25.312471874,
+        25.338585502,
+        25.543078478,
+        25.464084871
+      ],
+      "output_tokens": [
+        432,
+        432,
+        432,
+        432,
+        432,
+        432
+      ],
+      "peak_gib": 66.74786651134491,
+      "resident_gib": 56.12809479236603,
+      "fallback_counts": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ]
+    },
+    "fp8-fixed": {
+      "cold_seconds": 93.797910729,
+      "warm_samples": 3,
+      "warm_median": 40.148573319,
+      "stage_medians": {
+        "TextGenerate": 20.645097925,
+        "SwitchNode": 0.00011994,
+        "PreviewAny": 6.3236e-05,
+        "TextEncodeQwenImage21": 0.459903127,
+        "CFGGuider": 0.000204845,
+        "SamplerCustomAdvanced": 17.205381376,
+        "VAEDecode": 1.098779237,
+        "SaveImageAdvanced": 0.765286448
+      },
+      "warm_seconds": [
+        40.148573319,
+        41.244763206,
+        39.999160402
+      ],
+      "output_tokens": [
+        432,
+        432,
+        432,
+        432
+      ],
+      "peak_gib": 45.3912695646286,
+      "resident_gib": 35.77415645122528,
+      "fallback_counts": [
+        {},
+        {},
+        {},
+        {}
+      ]
+    },
+    "fp8-off": {
+      "cold_seconds": 130.379312452,
+      "warm_samples": 5,
+      "warm_median": 71.50658468,
+      "stage_medians": {
+        "TextGenerate": 50.712910215,
+        "SwitchNode": 0.000113649,
+        "PreviewAny": 6.2589e-05,
+        "TextEncodeQwenImage21": 0.496336343,
+        "CFGGuider": 0.000195399,
+        "SamplerCustomAdvanced": 18.475764209,
+        "VAEDecode": 1.098549322,
+        "SaveImageAdvanced": 0.756946899
+      },
+      "warm_seconds": [
+        72.760242329,
+        71.327258153,
+        71.034886418,
+        73.007372196,
+        71.50658468
+      ],
+      "output_tokens": [
+        1061,
+        1061,
+        1061,
+        1061,
+        1061,
+        1061
+      ],
+      "peak_gib": 46.76940584182739,
+      "resident_gib": 36.376078963279724,
+      "fallback_counts": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ]
+    }
+  },
+  "hardware": {
+    "text": {
+      "read_bytes": 150316646400.0,
+      "write_bytes": 20291739648.0,
+      "ports": {
+        "[D0] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61359,
+          "bytes": 1255555072.0,
+          "rounding_envelope": 264454144.0
+        },
+        "[D0] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61365,
+          "bytes": 9389490176.0,
+          "rounding_envelope": 264200192.0
+        },
+        "[D0] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61355,
+          "bytes": 1258299392.0,
+          "rounding_envelope": 278855680.0
+        },
+        "[D0] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61361,
+          "bytes": 9385123840.0,
+          "rounding_envelope": 255541248.0
+        },
+        "[D0] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61351,
+          "bytes": 1285120000.0,
+          "rounding_envelope": 262086656.0
+        },
+        "[D0] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61356,
+          "bytes": 9382305792.0,
+          "rounding_envelope": 255508480.0
+        },
+        "[D0] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61347,
+          "bytes": 1280335872.0,
+          "rounding_envelope": 275562496.0
+        },
+        "[D0] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61352,
+          "bytes": 9417187328.0,
+          "rounding_envelope": 258768896.0
+        },
+        "[D1] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61347,
+          "bytes": 1265901568.0,
+          "rounding_envelope": 276406272.0
+        },
+        "[D1] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61348,
+          "bytes": 9381052416.0,
+          "rounding_envelope": 253206528.0
+        },
+        "[D1] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61344,
+          "bytes": 1255538688.0,
+          "rounding_envelope": 258187264.0
+        },
+        "[D1] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61345,
+          "bytes": 9388302336.0,
+          "rounding_envelope": 252977152.0
+        },
+        "[D1] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61340,
+          "bytes": 1266163712.0,
+          "rounding_envelope": 268361728.0
+        },
+        "[D1] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61343,
+          "bytes": 9378234368.0,
+          "rounding_envelope": 307978240.0
+        },
+        "[D1] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61337,
+          "bytes": 1282727936.0,
+          "rounding_envelope": 276652032.0
+        },
+        "[D1] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61340,
+          "bytes": 9409265664.0,
+          "rounding_envelope": 256147456.0
+        },
+        "[D2] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61329,
+          "bytes": 1278017536.0,
+          "rounding_envelope": 261431296.0
+        },
+        "[D2] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61331,
+          "bytes": 9406480384.0,
+          "rounding_envelope": 261816320.0
+        },
+        "[D2] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61326,
+          "bytes": 1265721344.0,
+          "rounding_envelope": 251953152.0
+        },
+        "[D2] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61328,
+          "bytes": 9376161792.0,
+          "rounding_envelope": 253083648.0
+        },
+        "[D2] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61326,
+          "bytes": 9403916288.0,
+          "rounding_envelope": 254722048.0
+        },
+        "[D2] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61321,
+          "bytes": 1255243776.0,
+          "rounding_envelope": 264577024.0
+        },
+        "[D2] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61323,
+          "bytes": 9398059008.0,
+          "rounding_envelope": 249012224.0
+        },
+        "[D2] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61318,
+          "bytes": 1264410624.0,
+          "rounding_envelope": 253091840.0
+        },
+        "[D3] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61316,
+          "bytes": 1277321216.0,
+          "rounding_envelope": 260472832.0
+        },
+        "[D3] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61318,
+          "bytes": 9401270272.0,
+          "rounding_envelope": 257794048.0
+        },
+        "[D3] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61314,
+          "bytes": 1291902976.0,
+          "rounding_envelope": 271966208.0
+        },
+        "[D3] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61316,
+          "bytes": 9415311360.0,
+          "rounding_envelope": 250593280.0
+        },
+        "[D3] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61315,
+          "bytes": 9401499648.0,
+          "rounding_envelope": 257220608.0
+        },
+        "[D3] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61312,
+          "bytes": 1280253952.0,
+          "rounding_envelope": 267182080.0
+        },
+        "[D3] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61310,
+          "bytes": 1229225984.0,
+          "rounding_envelope": 240508928.0
+        },
+        "[D3] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 61313,
+          "bytes": 9382985728.0,
+          "rounding_envelope": 251142144.0
+        }
+      },
+      "profiled_seconds": 0.8288737409748137,
+      "plain_seconds": 0.7985505235265009,
+      "profiler_slowdown": 0.037972822701814346,
+      "profiled_TBps": 0.20583157315051695,
+      "plain_estimated_TBps": 0.21364757898419706,
+      "bandwidth_fraction": 0.08720309346293757,
+      "bytes_per_token": 10663024128.0,
+      "fp8_linear_flops": 253738614784,
+      "useful_fp8_TFps": 0.31774898056976775,
+      "fp8_peak_fraction": 0.00036733986193036736
+    },
+    "dit": {
+      "read_bytes": 1195116601344.0,
+      "write_bytes": 696787861504.0,
+      "ports": {
+        "[D0] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79598,
+          "bytes": 43534376960.0,
+          "rounding_envelope": 623181824.0
+        },
+        "[D0] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79603,
+          "bytes": 74566025216.0,
+          "rounding_envelope": 634568704.0
+        },
+        "[D0] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79643,
+          "bytes": 43529363456.0,
+          "rounding_envelope": 623247360.0
+        },
+        "[D0] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79649,
+          "bytes": 74639941632.0,
+          "rounding_envelope": 634077184.0
+        },
+        "[D0] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79639,
+          "bytes": 43543756800.0,
+          "rounding_envelope": 623108096.0
+        },
+        "[D0] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79645,
+          "bytes": 74883801088.0,
+          "rounding_envelope": 634167296.0
+        },
+        "[D0] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79635,
+          "bytes": 43549491200.0,
+          "rounding_envelope": 623288320.0
+        },
+        "[D0] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79641,
+          "bytes": 74738229248.0,
+          "rounding_envelope": 634322944.0
+        },
+        "[D1] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79635,
+          "bytes": 43542953984.0,
+          "rounding_envelope": 623198208.0
+        },
+        "[D1] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79636,
+          "bytes": 74649419776.0,
+          "rounding_envelope": 634036224.0
+        },
+        "[D1] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79632,
+          "bytes": 43545837568.0,
+          "rounding_envelope": 623108096.0
+        },
+        "[D1] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79634,
+          "bytes": 74715717632.0,
+          "rounding_envelope": 633929728.0
+        },
+        "[D1] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79628,
+          "bytes": 43550867456.0,
+          "rounding_envelope": 623198208.0
+        },
+        "[D1] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79631,
+          "bytes": 74707927040.0,
+          "rounding_envelope": 638418944.0
+        },
+        "[D1] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79626,
+          "bytes": 43555561472.0,
+          "rounding_envelope": 623157248.0
+        },
+        "[D1] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79629,
+          "bytes": 74739212288.0,
+          "rounding_envelope": 633864192.0
+        },
+        "[D2] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79621,
+          "bytes": 74772398080.0,
+          "rounding_envelope": 634363904.0
+        },
+        "[D2] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79618,
+          "bytes": 43566579712.0,
+          "rounding_envelope": 623304704.0
+        },
+        "[D2] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79618,
+          "bytes": 74731724800.0,
+          "rounding_envelope": 633888768.0
+        },
+        "[D2] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79615,
+          "bytes": 43559354368.0,
+          "rounding_envelope": 623099904.0
+        },
+        "[D2] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79614,
+          "bytes": 74591191040.0,
+          "rounding_envelope": 634159104.0
+        },
+        "[D2] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79609,
+          "bytes": 43560476672.0,
+          "rounding_envelope": 623329280.0
+        },
+        "[D2] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79611,
+          "bytes": 74629054464.0,
+          "rounding_envelope": 633913344.0
+        },
+        "[D2] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79606,
+          "bytes": 43554340864.0,
+          "rounding_envelope": 623181824.0
+        },
+        "[D3] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79605,
+          "bytes": 43544158208.0,
+          "rounding_envelope": 623198208.0
+        },
+        "[D3] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79607,
+          "bytes": 74837598208.0,
+          "rounding_envelope": 634241024.0
+        },
+        "[D3] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79602,
+          "bytes": 43546427392.0,
+          "rounding_envelope": 623181824.0
+        },
+        "[D3] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79605,
+          "bytes": 74620534784.0,
+          "rounding_envelope": 633921536.0
+        },
+        "[D3] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79600,
+          "bytes": 43550932992.0,
+          "rounding_envelope": 622977024.0
+        },
+        "[D3] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79603,
+          "bytes": 74671513600.0,
+          "rounding_envelope": 633929728.0
+        },
+        "[D3] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79601,
+          "bytes": 74622312448.0,
+          "rounding_envelope": 633929728.0
+        },
+        "[D3] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 79598,
+          "bytes": 43553382400.0,
+          "rounding_envelope": 623108096.0
+        }
+      },
+      "profiled_seconds": 1.076959379017353,
+      "plain_seconds": 1.081181100977119,
+      "profiler_slowdown": -0.0039047315532528826,
+      "profiled_TBps": 1.7567092127227908,
+      "plain_estimated_TBps": 1.7498497348299822,
+      "bandwidth_fraction": 0.7142243815632581,
+      "fp8_linear_flops": 120142046429184,
+      "useful_fp8_TFps": 111.12111219906215,
+      "fp8_peak_fraction": 0.12846371352492736
+    },
+    "clip": {
+      "read_bytes": 252687671296.0,
+      "write_bytes": 137492234240.0,
+      "ports": {
+        "[D0] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35386,
+          "bytes": 8576237568.0,
+          "rounding_envelope": 190996480.0
+        },
+        "[D0] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35392,
+          "bytes": 15757377536.0,
+          "rounding_envelope": 186212352.0
+        },
+        "[D0] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35383,
+          "bytes": 8569724928.0,
+          "rounding_envelope": 191266816.0
+        },
+        "[D0] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35388,
+          "bytes": 15763087360.0,
+          "rounding_envelope": 182288384.0
+        },
+        "[D0] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35378,
+          "bytes": 8580767744.0,
+          "rounding_envelope": 188612608.0
+        },
+        "[D0] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35384,
+          "bytes": 15794814976.0,
+          "rounding_envelope": 183934976.0
+        },
+        "[D0] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35374,
+          "bytes": 8591368192.0,
+          "rounding_envelope": 188997632.0
+        },
+        "[D0] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35379,
+          "bytes": 15801171968.0,
+          "rounding_envelope": 184377344.0
+        },
+        "[D1] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35374,
+          "bytes": 8586117120.0,
+          "rounding_envelope": 193552384.0
+        },
+        "[D1] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35375,
+          "bytes": 15776956416.0,
+          "rounding_envelope": 183115776.0
+        },
+        "[D1] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35371,
+          "bytes": 8574607360.0,
+          "rounding_envelope": 189849600.0
+        },
+        "[D1] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35373,
+          "bytes": 15779741696.0,
+          "rounding_envelope": 182140928.0
+        },
+        "[D1] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35366,
+          "bytes": 8591179776.0,
+          "rounding_envelope": 191504384.0
+        },
+        "[D1] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35369,
+          "bytes": 15759818752.0,
+          "rounding_envelope": 206708736.0
+        },
+        "[D1] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35363,
+          "bytes": 8600354816.0,
+          "rounding_envelope": 189538304.0
+        },
+        "[D1] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35367,
+          "bytes": 15804006400.0,
+          "rounding_envelope": 182476800.0
+        },
+        "[D2] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35356,
+          "bytes": 8613830656.0,
+          "rounding_envelope": 193306624.0
+        },
+        "[D2] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35358,
+          "bytes": 15823822848.0,
+          "rounding_envelope": 185393152.0
+        },
+        "[D2] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35355,
+          "bytes": 15811747840.0,
+          "rounding_envelope": 182435840.0
+        },
+        "[D2] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35352,
+          "bytes": 8616361984.0,
+          "rounding_envelope": 191102976.0
+        },
+        "[D2] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35352,
+          "bytes": 15817089024.0,
+          "rounding_envelope": 183312384.0
+        },
+        "[D2] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35347,
+          "bytes": 8606851072.0,
+          "rounding_envelope": 191078400.0
+        },
+        "[D2] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35349,
+          "bytes": 15782526976.0,
+          "rounding_envelope": 181592064.0
+        },
+        "[D2] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35344,
+          "bytes": 8590876672.0,
+          "rounding_envelope": 188932096.0
+        },
+        "[D3] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35342,
+          "bytes": 8592367616.0,
+          "rounding_envelope": 190824448.0
+        },
+        "[D3] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35345,
+          "bytes": 15805177856.0,
+          "rounding_envelope": 184320000.0
+        },
+        "[D3] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35343,
+          "bytes": 15802294272.0,
+          "rounding_envelope": 181911552.0
+        },
+        "[D3] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35339,
+          "bytes": 8594767872.0,
+          "rounding_envelope": 192036864.0
+        },
+        "[D3] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35341,
+          "bytes": 15806873600.0,
+          "rounding_envelope": 182607872.0
+        },
+        "[D3] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35338,
+          "bytes": 8603983872.0,
+          "rounding_envelope": 189808640.0
+        },
+        "[D3] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35339,
+          "bytes": 15801163776.0,
+          "rounding_envelope": 182026240.0
+        },
+        "[D3] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 35336,
+          "bytes": 8602836992.0,
+          "rounding_envelope": 188268544.0
+        }
+      },
+      "profiled_seconds": 0.4742328079883009,
+      "plain_seconds": 0.5797541579813696,
+      "profiler_slowdown": -0.18201051004184376,
+      "profiled_TBps": 0.822760253958696,
+      "plain_estimated_TBps": 0.673009240493517,
+      "bandwidth_fraction": 0.27469764918102735,
+      "fp8_linear_flops": 20976217620480,
+      "useful_fp8_TFps": 36.181228425366584,
+      "fp8_peak_fraction": 0.04182800974030819
+    }
+  },
+  "clip_work": {
+    "token_lengths": {
+      "prompt": [
+        1063
+      ],
+      "negative_prompt": [
+        447
+      ]
+    },
+    "converted_linears": 252,
+    "fp8_weight_elements": 6945767424,
+    "fp8_linear_flops": 20976217620480
+  },
+  "models": {
+    "dit": {
+      "converted_linears": 192,
+      "preserved_tensors": 73,
+      "max_weight_rrmse": 0.026566529646515846,
+      "files": {
+        "models/diffusion_models/qwen_image_2.1_turbo_bf16.safetensors": {
+          "bytes": 14230280616,
+          "sha256": "8b74237a7f505773e2c66726fa696444b4c704585c93a347cff9044937f7914a"
+        },
+        "models/diffusion_models/qwen_image_2.1_turbo_fp8.safetensors": {
+          "bytes": 7250993016,
+          "sha256": "768caab9b4d553edf6be0aa2da8a804a9273283ec04ce124ce291fd543de0e7b"
+        }
+      },
+      "metadata": {
+        "conversion": "qwen21_transformer_linear_e4m3_range224",
+        "format": "pt",
+        "source": "qwen_image_2.1_turbo_bf16.safetensors",
+        "source_conversion": ""
+      }
+    },
+    "pe": {
+      "converted_linears": 201,
+      "preserved_tensors": 559,
+      "max_weight_rrmse": 0.02924835868179798,
+      "files": {
+        "models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors": {
+          "bytes": 18819722496,
+          "sha256": "c61e0afec7d3b89e5fa452c45c30d82b233feeb233da2254d47ea69c229da717"
+        },
+        "models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.fp8_from_bf16.safetensors": {
+          "bytes": 10890431404,
+          "sha256": "b9099cd312af43e935923f9ff1a3fd1ec6212c26faf588127c9b82628b9092d9"
+        }
+      },
+      "metadata": {
+        "source": "qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors",
+        "format": "pt",
+        "conversion": "qwen35_language_linear_e4m3_range224",
+        "source_conversion": "int8_convrot_to_bf16"
+      }
+    },
+    "reused_files": {
+      "models/text_encoders/qwen3vl_8b_fp8_scaled.safetensors": {
+        "bytes": 10588637512,
+        "sha256": "4ba424cf62e51392e4d1a39933e803706f4e823c1065f36aaf149c6453f66bcd"
+      },
+      "models/vae/qwen_image_2.1_vae_bf16.safetensors": {
+        "bytes": 675509688,
+        "sha256": "bb21f7473051e1ac368515dd3f2e15cd44d7a11748ee8823e1ddca3e4876b7c9"
+      }
+    }
+  },
+  "validation": {
+    "tests_passed": 53,
+    "size512_seconds": 15.181,
+    "reload_seconds": 113.755,
+    "normal": {
+      "prompt_id": "42d874a0-ec8e-49a6-bddf-21cae173f0a1",
+      "seconds": 122.256,
+      "queue": {
+        "queue_running": [],
+        "queue_pending": []
+      },
+      "system_stats": {
+        "system": {
+          "os": "linux",
+          "ram_total": 100939325440,
+          "ram_free": 91267809280,
+          "comfyui_version": "0.44.0",
+          "required_frontend_version": "1.58.5",
+          "installed_templates_version": "0.11.102",
+          "required_templates_version": "0.11.102",
+          "comfy_package_versions": [
+            {
+              "name": "comfyui-frontend-package",
+              "installed": "1.58.5",
+              "required": "1.58.5"
+            },
+            {
+              "name": "comfyui-workflow-templates",
+              "installed": "0.11.102",
+              "required": "0.11.102"
+            },
+            {
+              "name": "comfyui-embedded-docs",
+              "installed": "0.5.16",
+              "required": "0.5.16"
+            },
+            {
+              "name": "comfy-aimdo",
+              "installed": "0.6.0",
+              "required": "0.6.0"
+            },
+            {
+              "name": "comfy-kitchen",
+              "installed": "0.2.41",
+              "required": "0.2.41"
+            }
+          ],
+          "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+          "pytorch_version": "2.13.0a0+git2469d18",
+          "embedded_python": false,
+          "deploy_environment": "local-git",
+          "argv": [
+            "main.py",
+            "--disable-dynamic-vram",
+            "--disable-pinned-memory",
+            "--disable-async-offload",
+            "--disable-xformers",
+            "--use-pytorch-cross-attention",
+            "--disable-all-custom-nodes",
+            "--listen",
+            "127.0.0.1",
+            "--port",
+            "8189",
+            "--listen",
+            "192.168.10.21",
+            "--port",
+            "8189"
+          ]
+        },
+        "devices": [
+          {
+            "name": "hpu:0 GAUDI2",
+            "type": "hpu",
+            "index": 0,
+            "vram_total": 101601996800,
+            "vram_free": 62543479424,
+            "torch_vram_total": 39058517376,
+            "torch_vram_free": 0
+          }
+        ]
+      }
+    },
+    "quality": {
+      "normal_image": "output/gaudi/qwen21_fp8/normal_00001.png",
+      "normal_matches_natural_rgba": true,
+      "pairs": {
+        "fp8_fixed": {
+          "rgb_mae": 4.447162702971814
+        },
+        "fp8_natural": {
+          "rgb_mae": 53.90455011106005
+        }
+      },
+      "image_hashes": {
+        "bf16": "759e6dfc5aee39108beca62931a5acc68ad4fa7c0c99beedc3a2c38173a4e501",
+        "fp8_fixed": "1589415ec408bc3790c73bae6ff88772a20d741f1fd8fca706e6c269c0e427d8",
+        "fp8_natural": "cd73196831c309d4f0654fddae79e217232848bcaffa22e54ca6c84582fdb964",
+        "normal": "193553664071212b370b268093d6c47e6743d78a8c27ea3705538c7cae0e1174"
+      }
+    }
+  }
+}

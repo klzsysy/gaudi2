@@ -25,6 +25,10 @@ parser.add_argument('--output-root',type=Path)
 parser.add_argument('--case-graphs',type=Path)
 parser.add_argument('--teacher',type=Path)
 parser.add_argument('--reload',action='store_true')
+parser.add_argument('--server-module', default='qwen21_deep_server', choices=('qwen21_deep_server', 'qwen21_fp8_server'))
+parser.add_argument('--fp8-diagnostics', action='store_true')
+parser.add_argument('--native-dit', action='store_true')
+parser.add_argument('--native-clip', action='store_true')
 a=parser.parse_args()
 base=Path('/home/sonny/gaudi2/comfyui-hpu')
 root=(a.output_root or base/'performance-qwen21-bf16-2026-11-13')/a.label
@@ -35,7 +39,7 @@ env=dict(os.environ,PT_HPU_LAZY_MODE='0',GC_KERNEL_PATH=os.environ.get('GC_KERNE
          PYTHONPATH=os.pathsep.join((str(Path.cwd()),str(Path(__file__).parent))),QWEN_DEEP_DIR=str(root),MOSS_EVENTS=str(root/'events.jsonl'),QWEN21_TRIAL=a.trial)
 url='http://127.0.0.1:8190'
 log=(root/'server.log').open('w')
-server=subprocess.Popen([sys.executable,'-c','import qwen21_deep_server; qwen21_deep_server.main()',
+server=subprocess.Popen([sys.executable,'-c',f'import {a.server_module}; {a.server_module}.main()',
     '--disable-dynamic-vram','--disable-pinned-memory','--disable-async-offload','--disable-xformers',
     '--use-pytorch-cross-attention','--disable-all-custom-nodes','--listen','127.0.0.1','--port','8190'],env=env,stdout=log,stderr=subprocess.STDOUT)
 
@@ -69,6 +73,12 @@ try:
         sequence += [('capture',0,'capture')]
     if a.diagnostics:
         sequence += [('stages',0,'stages'),('window_text',0,'window_text'),('trace_text',0,'trace_text'),('trace_dit',0,'trace_dit')]
+    if a.fp8_diagnostics:
+        sequence += [('window_text',0,'window_text'),('trace_text',0,'trace_text'),('trace_dit',0,'trace_dit')]
+    if a.native_dit:
+        sequence += [('window_dit',0,'window_dit'),('native_dit',0,'native_dit')]
+    if a.native_clip:
+        sequence += [('window_clip',0,'window_clip'),('native_clip',0,'native_clip')]
     for label,index,profile in sequence:
         if label=='reload':
             request('/free',dict(unload_models=True,free_memory=True))

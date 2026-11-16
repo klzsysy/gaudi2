@@ -1,6 +1,6 @@
 # ComfyUI Gaudi2优化与适配记录
 
-更新于2026-11-15（Asia/Shanghai）。产品版本为`92d15ff7`，单卡Gaudi2、Habana1.24.2、eager＋区域编译及符合条件的Qwen整步编译。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
+更新于2026-11-16（Asia/Shanghai）。产品版本为`07fedda`，已按用户明确指示提交并关联现有部署，单卡Gaudi2、Habana1.24.2、eager＋区域编译及符合条件的Qwen整步编译。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
 
 ## 默认优化交付流程
 
@@ -22,6 +22,9 @@
 | [GDN递推](optimization/TEXT_GDN.md) | prefill分桶、并行递推、八行扩区、四行clone及TPC候选撤回 |
 | [运行时与故障](optimization/RUNTIME.md) | lazy/Graph、SIGPIPE、异步输入、段错误、驱动和依赖恢复 |
 | [算子与外部源码](optimization/KERNEL_REFERENCES.md) | 官方bridge、TPC接口、vLLM/INC/1Cat/JChen固定版本核查 |
+| [Qwen21 PE经FP32直接转FP8](QWEN21_PE_FP32_CONVERSION_2026-11-16.md) | 201层重建误差小幅降低、独立模型/工作流、自然长度与耗时变化 |
+| [Qwen Image 2.1 FP8逐项优化达标](QWEN21_FP8_OPTIMIZATION_2026-11-16.md) | 原生FP8整步解码与FFN编译、23.943秒对BF16 25.526秒、普通服务验收 |
+| [Qwen Image 2.1 FP8转换与瓶颈](QWEN21_FP8_2026-11-15.md) | 本地DiT/PE转换、现有FP8 CLIP、无缓存阶段计时与实测HBM |
 | [Qwen Image 2.1 全BF16深入优化](QWEN21_BF16.md) | PE/DiT分项、trace、舍入边界、完整图保值与性能验收 |
 | [Qwen Image 2.1 最新2MP工作流](QWEN21_PERFORMANCE_2026-11-15.md) | 1784-token扩写、2MP/CFG1.2耗时、GDN/MLP提交优化与回退复测 |
 | [单token BF16硬件利用率](optimization/QWEN21_BF16_SINGLE_TOKEN.md) | AXI返回beat校准、约33% HBM带宽利用率、整步重放与GDN融合数值边界 |

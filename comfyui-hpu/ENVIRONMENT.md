@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-最近部署为`92d15ff7`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+当前部署提交为`07fedda`，已按用户明确指示提交，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 后续优化默认在验证后暂存两个仓库的相关改动，再部署环境并交付人工验收。验收前以基线提交、暂存差异或快照及部署文件SHA256标识运行版本，记录“已部署，待人工验收”，用户明确验收通过后提交并关联最终commit。用户特别说明优先。[交付流程](optimization/MEASUREMENT.md#默认交付与人工验收)
 
@@ -113,3 +113,32 @@ export GC_KERNEL_PATH=/usr/lib/habanalabs/libtpc_kernels.so
 后续无MTP执行候选保存在`performance-qwen-execution-2026-11-15`，采用相同模型、驱动和eager环境。`qwen_execution_jobs.py`在空队列时串行管理文本/完整工作流/原生计数，并在finally恢复8189。调查API启动器采用稳定模块导入后显式调用`qwen21_deep_server.main()`，避免Dynamo解析main模块和导入锁等待。该调查轮恢复了`dfca7cd6`。[验证结果与复现参数](optimization/QWEN21_EXECUTION_VALIDATION.md)
 
 随后按用户要求上线为`92d15ff7`。现有BF16 PE工作流自动选择符合条件的单token快路径，普通main.py入口运行。产品实现与已验候选427-token logits相同，普通API图片和重载验收通过。部署、回退备份及源文件哈希位于`deploy-qwen-execution-2026-11-15`，最后服务队列为空且原工作流已预热。[上线记录](optimization/QWEN21_EXECUTION_DEPLOYMENT.md)
+
+## 2026-11-15 Qwen21 FP8待验收部署
+
+普通8189运行`b89280c0+staged.10ed4fb5415a`，状态为已部署、待人工验收。源文件及模型哈希、暂存树和普通API验收记录见[FP8报告](QWEN21_FP8_2026-11-15.md)及[证据](evidence/qwen21-fp8-2026-11-15.json)。人工验收通过后提交。
+
+UI已安装`user/default/workflows/Qwen-Image-2.1-Turbo-FP8-HPU.json`。主模型为`qwen_image_2.1_turbo_fp8.safetensors`，PE为`qwen3.5_9b_qwen_image_2.1_pe_t2i.fp8_from_bf16.safetensors`，CLIP复用`qwen3vl_8b_fp8_scaled.safetensors`，VAE复用已有BF16。PE的源BF16来自此前INT8解码。转换命令在独立产品checkout执行。
+
+```bash
+.venv/bin/python -m scripts.gaudi.convert_qwen21_fp8 models/diffusion_models/qwen_image_2.1_turbo_bf16.safetensors models/diffusion_models/qwen_image_2.1_turbo_fp8.safetensors
+.venv/bin/python -m scripts.gaudi.convert_qwen35_fp8 models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.bf16_from_int8.safetensors models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.fp8_from_bf16.safetensors
+```
+
+文件已存在时转换器会拒绝覆盖。完整无缓存计时使用强制重算compute nodes和DiT KV off，warm保留常驻模型及recipe。当前全FP8自然流程71.507秒，BF1625.425秒，主要退化来自PE逐层执行和更长自然扩写。512²、卸载重载及普通服务完整图均已通过。
+
+## 2026-11-16 FP8优化后部署
+
+普通8189当前运行`b89280c0+staged.988121fee669`。已有FP8工作流自动启用符合条件的Qwen3.5原生FP8整步解码和Qwen21 FP8 FFN区域编译。三个模型文件及工作流参数沿用首轮转换版本，UI文件仍为`Qwen-Image-2.1-Turbo-FP8-HPU.json`。
+
+完整无缓存warm产品中位23.943秒，同轮BF16为25.526秒，固定432-token轨迹24.129秒。普通API冷启动129.466秒，两次完整重算24.277/24.105秒成功，最后维持原MTP auto设置，队列为空。源文件SHA256、暂存快照和质量边界见[优化报告](QWEN21_FP8_OPTIMIZATION_2026-11-16.md)。两个仓库的改动保持暂存，等待人工验收。
+
+## 2026-11-16 FP32来源PE
+
+普通8189当前暂存部署`b89280c0+staged.d5bda4e78d95`，待人工验收。新增共享模型`text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.fp8_from_int8_fp32.safetensors`及独立UI工作流`Qwen-Image-2.1-Turbo-FP8-PE-From-FP32-HPU.json`。转换器使用`--from-int8-convrot`选择FP32反量化路线，具体命令和模型SHA256见[转换记录](QWEN21_PE_FP32_CONVERSION_2026-11-16.md)。
+
+新模型相对FP32反量化参考的权重误差小幅降低。该提示词自然扩写806 tokens，完整warm30.248秒；固定432-token轨迹24.478秒。普通服务冷启动131.448秒、512²、卸载重载均通过，队列为空。运行时沿用前轮原生FP8整步和FFN优化。
+
+## 2026-11-16 提交关联
+
+用户明确授权提交代码，最终产品提交为`07fedda3278b5c4be8c036fe245dc6991b91dd4a`。该提交的tree与已验证暂存树`d4264962aec7a96f7318ceca52263edf9b6ee5b7`相同，服务器源文件哈希再次核对通过。`.run/deployed-version`使用最终产品commit，`.run/deployed-staged.json`及调查目录的`deployment.json`保留原暂存身份并补充commit关联。

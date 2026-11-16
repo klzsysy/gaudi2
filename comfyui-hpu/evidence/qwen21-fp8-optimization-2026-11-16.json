@@ -1,0 +1,977 @@
+{
+  "date": "2026-11-16",
+  "started": "2026-11-15",
+  "objective": "FP8完整无缓存warm达到同设置BF16水平，保留暂存等待人工验收",
+  "remote_root": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen21-fp8-opt-2026-11-15",
+  "deployment": {
+    "status": "已部署，待人工验收",
+    "product_baseline": "b89280c0f3977434cf08b74f55c607ecd1346811",
+    "previous_deployment": "b89280c0+staged.10ed4fb5415a",
+    "product_staged_tree": "b294c6a6d796176956e3f4b0f49d0a9f107ac75a",
+    "staged_patch_sha256": "988121fee6692e49d6746cd28ee25188f41dbaa9f571a5550dd4b19038a37ce2",
+    "source_hashes": {
+      "comfy/text_encoders/qwen35.py": "06e4300e4da0b893a023eb2da75de9717b6778c07fe2ab7ec057fa17dfe25778",
+      "comfy/text_encoders/qwen3vl.py": "02bc2c2c12e0a69469c2d04ab36048dfcd9cbed26699d6e20d97069e3b2818f4",
+      "comfy/ldm/qwen_image21/model.py": "a9524de9f11a48cf0b1cb7cec2599742bbd8c8e1f84f225f8fab93dea85d0beb",
+      "scripts/gaudi/convert_qwen21_fp8.py": "fa3847e8dde7bea0dfde27e1da7e794a095a896fed005290a8ae2b0f9f18af4a",
+      "scripts/gaudi/convert_qwen35_fp8.py": "b440426aecb643211f19a21f6ed7a0bb046ad2978ef945c685c78887d8c9ba12"
+    },
+    "normal_prompt_id": "eaf05068-de18-4e5b-96ca-00c391a3d8ce",
+    "service_url": "http://192.168.10.21:8189",
+    "installed_workflow": "/home/sonny/ComfyUI-Gaudi/user/default/workflows/Qwen-Image-2.1-Turbo-FP8-HPU.json"
+  },
+  "configuration": {
+    "width": 1088,
+    "height": 1920,
+    "steps": 8,
+    "cfg": 1.2,
+    "thinking": false,
+    "pe_input_tokens": 2805,
+    "text_seed": 447606998181262,
+    "image_seed": 252045117397701,
+    "dit_kv_cache": "off",
+    "result_cache": "compute fingerprints invalidated each run",
+    "resident_weights_and_compiled_recipes": true,
+    "autoregressive_kv": "fresh per generation"
+  },
+  "workflows": {
+    "decode-full": {
+      "cold_seconds": 128.728373866,
+      "warm_samples": 2,
+      "warm_median": 26.1681906055,
+      "stage_medians": {
+        "TextGenerate": 6.529637072,
+        "SwitchNode": 0.00013305550000000001,
+        "PreviewAny": 7.7777e-05,
+        "TextEncodeQwenImage21": 0.502403365,
+        "CFGGuider": 0.00020981150000000002,
+        "SamplerCustomAdvanced": 17.219239962,
+        "VAEDecode": 1.09936007,
+        "SaveImageAdvanced": 0.8012975385000001
+      },
+      "warm_seconds": [
+        26.266059128,
+        26.070322083
+      ],
+      "output_tokens": [
+        420,
+        420,
+        420
+      ],
+      "peak_gib": 45.520957231521606,
+      "resident_gib": 35.77481269836426,
+      "fallback_counts": [
+        {},
+        {},
+        {}
+      ]
+    },
+    "decode-ffn": {
+      "cold_seconds": 128.896946764,
+      "warm_samples": 5,
+      "warm_median": 24.05084129,
+      "stage_medians": {
+        "TextGenerate": 6.454824288,
+        "SwitchNode": 0.000179613,
+        "PreviewAny": 6.2235e-05,
+        "TextEncodeQwenImage21": 0.489726838,
+        "CFGGuider": 0.000205514,
+        "SamplerCustomAdvanced": 15.183901527,
+        "VAEDecode": 1.098758233,
+        "SaveImageAdvanced": 0.798383513
+      },
+      "warm_seconds": [
+        24.371661334,
+        23.832529809,
+        24.341391007,
+        23.988674065,
+        24.05084129
+      ],
+      "output_tokens": [
+        420,
+        420,
+        420,
+        420,
+        420,
+        420
+      ],
+      "peak_gib": 46.080970764160156,
+      "resident_gib": 35.77532625198364,
+      "fallback_counts": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ]
+    },
+    "product": {
+      "cold_seconds": 128.631082225,
+      "warm_samples": 5,
+      "warm_median": 23.942801779,
+      "stage_medians": {
+        "TextGenerate": 6.367509581,
+        "SwitchNode": 0.00011922,
+        "PreviewAny": 6.2284e-05,
+        "TextEncodeQwenImage21": 0.493664739,
+        "CFGGuider": 0.000209467,
+        "SamplerCustomAdvanced": 15.185022022,
+        "VAEDecode": 1.099169233,
+        "SaveImageAdvanced": 0.798633574
+      },
+      "warm_seconds": [
+        23.733711719,
+        23.942801779,
+        24.042750828,
+        24.234727391,
+        23.872771528
+      ],
+      "output_tokens": [
+        420,
+        420,
+        420,
+        420,
+        420,
+        420
+      ],
+      "peak_gib": 46.184263467788696,
+      "resident_gib": 35.77550148963928,
+      "fallback_counts": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ]
+    },
+    "product-fixed": {
+      "cold_seconds": 127.084667562,
+      "warm_samples": 3,
+      "warm_median": 24.128598302,
+      "stage_medians": {
+        "TextGenerate": 6.552872507,
+        "SwitchNode": 0.000121854,
+        "PreviewAny": 6.0692e-05,
+        "TextEncodeQwenImage21": 0.497420001,
+        "CFGGuider": 0.000192882,
+        "SamplerCustomAdvanced": 15.208042707,
+        "VAEDecode": 1.099108977,
+        "SaveImageAdvanced": 0.772569371
+      },
+      "warm_seconds": [
+        24.391344748,
+        24.128598302,
+        24.065244712
+      ],
+      "output_tokens": [
+        432,
+        432,
+        432,
+        432
+      ],
+      "peak_gib": 46.77234482765198,
+      "resident_gib": 35.7749924659729,
+      "fallback_counts": [
+        {},
+        {},
+        {},
+        {}
+      ]
+    },
+    "bf16-confirm": {
+      "cold_seconds": 104.260693911,
+      "warm_samples": 3,
+      "warm_median": 25.526440998,
+      "stage_medians": {
+        "TextGenerate": 6.601304092,
+        "SwitchNode": 0.000174764,
+        "PreviewAny": 9.5925e-05,
+        "TextEncodeQwenImage21": 0.357980138,
+        "CFGGuider": 0.000197007,
+        "SamplerCustomAdvanced": 16.653218165,
+        "VAEDecode": 1.097771621,
+        "SaveImageAdvanced": 0.764462266
+      },
+      "warm_seconds": [
+        25.392897899,
+        25.554401555,
+        25.526440998
+      ],
+      "output_tokens": [
+        432,
+        432,
+        432,
+        432
+      ],
+      "peak_gib": 66.76468968391418,
+      "resident_gib": 56.12809479236603,
+      "fallback_counts": [
+        {},
+        {},
+        {},
+        {}
+      ]
+    }
+  },
+  "hardware": {
+    "text": {
+      "read_bytes": 135616692224.0,
+      "write_bytes": 4098531328.0,
+      "ports": {
+        "[D0] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17484,
+          "bytes": 248455168.0,
+          "rounding_envelope": 88801280.0
+        },
+        "[D0] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17490,
+          "bytes": 8484962304.0,
+          "rounding_envelope": 92758016.0
+        },
+        "[D0] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17481,
+          "bytes": 256892928.0,
+          "rounding_envelope": 89841664.0
+        },
+        "[D0] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17486,
+          "bytes": 8468742144.0,
+          "rounding_envelope": 90652672.0
+        },
+        "[D0] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17476,
+          "bytes": 249208832.0,
+          "rounding_envelope": 89620480.0
+        },
+        "[D0] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17482,
+          "bytes": 8469864448.0,
+          "rounding_envelope": 91095040.0
+        },
+        "[D0] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17472,
+          "bytes": 265445376.0,
+          "rounding_envelope": 90415104.0
+        },
+        "[D0] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17478,
+          "bytes": 8480727040.0,
+          "rounding_envelope": 91815936.0
+        },
+        "[D1] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17474,
+          "bytes": 266158080.0,
+          "rounding_envelope": 90071040.0
+        },
+        "[D1] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17475,
+          "bytes": 8479694848.0,
+          "rounding_envelope": 90685440.0
+        },
+        "[D1] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17471,
+          "bytes": 247062528.0,
+          "rounding_envelope": 88317952.0
+        },
+        "[D1] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17473,
+          "bytes": 8465784832.0,
+          "rounding_envelope": 90259456.0
+        },
+        "[D1] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17467,
+          "bytes": 257777664.0,
+          "rounding_envelope": 88408064.0
+        },
+        "[D1] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17470,
+          "bytes": 8462688256.0,
+          "rounding_envelope": 102178816.0
+        },
+        "[D1] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17464,
+          "bytes": 250052608.0,
+          "rounding_envelope": 90431488.0
+        },
+        "[D1] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17468,
+          "bytes": 8494161920.0,
+          "rounding_envelope": 90554368.0
+        },
+        "[D2] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17460,
+          "bytes": 8481153024.0,
+          "rounding_envelope": 91537408.0
+        },
+        "[D2] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17457,
+          "bytes": 255148032.0,
+          "rounding_envelope": 87031808.0
+        },
+        "[D2] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17456,
+          "bytes": 8479170560.0,
+          "rounding_envelope": 90439680.0
+        },
+        "[D2] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17453,
+          "bytes": 257302528.0,
+          "rounding_envelope": 84762624.0
+        },
+        "[D2] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17453,
+          "bytes": 8474181632.0,
+          "rounding_envelope": 91226112.0
+        },
+        "[D2] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17449,
+          "bytes": 257384448.0,
+          "rounding_envelope": 87310336.0
+        },
+        "[D2] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17450,
+          "bytes": 8478392320.0,
+          "rounding_envelope": 90447872.0
+        },
+        "[D2] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17445,
+          "bytes": 259129344.0,
+          "rounding_envelope": 86589440.0
+        },
+        "[D3] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17445,
+          "bytes": 8477933568.0,
+          "rounding_envelope": 91488256.0
+        },
+        "[D3] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17442,
+          "bytes": 259653632.0,
+          "rounding_envelope": 87326720.0
+        },
+        "[D3] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17441,
+          "bytes": 250576896.0,
+          "rounding_envelope": 90234880.0
+        },
+        "[D3] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17443,
+          "bytes": 8471576576.0,
+          "rounding_envelope": 90267648.0
+        },
+        "[D3] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17442,
+          "bytes": 8474812416.0,
+          "rounding_envelope": 90898432.0
+        },
+        "[D3] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17438,
+          "bytes": 263921664.0,
+          "rounding_envelope": 86310912.0
+        },
+        "[D3] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17440,
+          "bytes": 8472846336.0,
+          "rounding_envelope": 90456064.0
+        },
+        "[D3] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 17436,
+          "bytes": 254361600.0,
+          "rounding_envelope": 84680704.0
+        }
+      },
+      "profiled_seconds": 0.22988403600174934,
+      "plain_seconds": 0.21441311651142314,
+      "profiler_slowdown": 0.07215472514948473,
+      "profiled_TBps": 0.6077639229847905,
+      "plain_estimated_TBps": 0.6516169618035308,
+      "bandwidth_fraction": 0.26596610685858396,
+      "bytes_per_token": 8732201472.0,
+      "fp8_linear_flops": 253738614784,
+      "useful_fp8_TFps": 1.1834099467066967,
+      "fp8_peak_fraction": 0.0013681039846320194
+    },
+    "dit": {
+      "read_bytes": 817041006592.0,
+      "write_bytes": 614357803008.0,
+      "ports": {
+        "[D0] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70044,
+          "bytes": 38400122880.0,
+          "rounding_envelope": 536510464.0
+        },
+        "[D0] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70049,
+          "bytes": 51110559744.0,
+          "rounding_envelope": 548446208.0
+        },
+        "[D0] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70039,
+          "bytes": 38395707392.0,
+          "rounding_envelope": 536969216.0
+        },
+        "[D0] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70045,
+          "bytes": 50962063360.0,
+          "rounding_envelope": 548315136.0
+        },
+        "[D0] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70035,
+          "bytes": 38403031040.0,
+          "rounding_envelope": 536453120.0
+        },
+        "[D0] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70041,
+          "bytes": 51155525632.0,
+          "rounding_envelope": 548356096.0
+        },
+        "[D0] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70031,
+          "bytes": 38399156224.0,
+          "rounding_envelope": 536977408.0
+        },
+        "[D0] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70037,
+          "bytes": 51154100224.0,
+          "rounding_envelope": 548913152.0
+        },
+        "[D1] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70031,
+          "bytes": 38398763008.0,
+          "rounding_envelope": 536887296.0
+        },
+        "[D1] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70032,
+          "bytes": 50931924992.0,
+          "rounding_envelope": 548036608.0
+        },
+        "[D1] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70028,
+          "bytes": 38400794624.0,
+          "rounding_envelope": 537059328.0
+        },
+        "[D1] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70030,
+          "bytes": 51069935616.0,
+          "rounding_envelope": 548167680.0
+        },
+        "[D1] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70024,
+          "bytes": 38402179072.0,
+          "rounding_envelope": 536952832.0
+        },
+        "[D1] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70027,
+          "bytes": 51066503168.0,
+          "rounding_envelope": 554590208.0
+        },
+        "[D1] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70021,
+          "bytes": 38409363456.0,
+          "rounding_envelope": 536543232.0
+        },
+        "[D1] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70024,
+          "bytes": 51172605952.0,
+          "rounding_envelope": 548675584.0
+        },
+        "[D2] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70016,
+          "bytes": 50932891648.0,
+          "rounding_envelope": 548741120.0
+        },
+        "[D2] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70013,
+          "bytes": 38390767616.0,
+          "rounding_envelope": 536977408.0
+        },
+        "[D2] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70013,
+          "bytes": 51104186368.0,
+          "rounding_envelope": 547938304.0
+        },
+        "[D2] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70010,
+          "bytes": 38397542400.0,
+          "rounding_envelope": 537157632.0
+        },
+        "[D2] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70010,
+          "bytes": 51068944384.0,
+          "rounding_envelope": 548896768.0
+        },
+        "[D2] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70005,
+          "bytes": 38388006912.0,
+          "rounding_envelope": 536829952.0
+        },
+        "[D2] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70006,
+          "bytes": 51016261632.0,
+          "rounding_envelope": 548118528.0
+        },
+        "[D2] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70001,
+          "bytes": 38406266880.0,
+          "rounding_envelope": 536666112.0
+        },
+        "[D3] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70002,
+          "bytes": 51143557120.0,
+          "rounding_envelope": 548552704.0
+        },
+        "[D3] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 69999,
+          "bytes": 38380126208.0,
+          "rounding_envelope": 537034752.0
+        },
+        "[D3] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 70000,
+          "bytes": 51118022656.0,
+          "rounding_envelope": 548339712.0
+        },
+        "[D3] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 69996,
+          "bytes": 38388736000.0,
+          "rounding_envelope": 536813568.0
+        },
+        "[D3] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 69998,
+          "bytes": 51066724352.0,
+          "rounding_envelope": 547717120.0
+        },
+        "[D3] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 69995,
+          "bytes": 38393307136.0,
+          "rounding_envelope": 537247744.0
+        },
+        "[D3] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 69996,
+          "bytes": 50967199744.0,
+          "rounding_envelope": 548249600.0
+        },
+        "[D3] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 69992,
+          "bytes": 38403932160.0,
+          "rounding_envelope": 536813568.0
+        }
+      },
+      "profiled_seconds": 0.9463914840016514,
+      "plain_seconds": 0.9499756529694423,
+      "profiler_slowdown": -0.003772906133528209,
+      "profiled_TBps": 1.5124806528769466,
+      "plain_estimated_TBps": 1.5067742053448643,
+      "bandwidth_fraction": 0.6150098797325977,
+      "fp8_linear_flops": 120142046429184,
+      "useful_fp8_TFps": 126.46855322411994,
+      "fp8_peak_fraction": 0.1462064199122774
+    }
+  },
+  "quality": {
+    "logits": {
+      "shape": [
+        432,
+        248320
+      ],
+      "rrmse": 0.05465307447854661,
+      "top1_equal": 419,
+      "kl_mean": 0.00825676029142978,
+      "kl_max": 0.15232688188552856,
+      "max_abs": 2.4375
+    },
+    "ffn": [
+      {
+        "file": "ffn-1.pt",
+        "mode": "eager",
+        "seconds": 0.008216154499677941,
+        "fp64_sample_rrmse": 0.013156176328883851,
+        "finite": true
+      },
+      {
+        "file": "ffn-1.pt",
+        "mode": "compiled",
+        "seconds": 0.004302935994928703,
+        "fp64_sample_rrmse": 0.012430325989591276,
+        "finite": true,
+        "relative_to_eager": 0.0082961181178689
+      },
+      {
+        "file": "ffn-17.pt",
+        "mode": "eager",
+        "seconds": 0.00831065425882116,
+        "fp64_sample_rrmse": 0.024509859009174854,
+        "finite": true
+      },
+      {
+        "file": "ffn-17.pt",
+        "mode": "compiled",
+        "seconds": 0.004283175498130731,
+        "fp64_sample_rrmse": 0.02407995575408821,
+        "finite": true,
+        "relative_to_eager": 0.02179843559861183
+      },
+      {
+        "file": "ffn-32.pt",
+        "mode": "eager",
+        "seconds": 0.008192363500711508,
+        "fp64_sample_rrmse": 0.010289957379519212,
+        "finite": true
+      },
+      {
+        "file": "ffn-32.pt",
+        "mode": "compiled",
+        "seconds": 0.004297041494282894,
+        "fp64_sample_rrmse": 0.00897831894931175,
+        "finite": true,
+        "relative_to_eager": 0.009387289173901081
+      }
+    ],
+    "attention_screen": {
+      "shape": {
+        "q": [
+          1,
+          8160,
+          4096
+        ],
+        "k": [
+          1,
+          9223,
+          4096
+        ],
+        "v": [
+          1,
+          9223,
+          4096
+        ]
+      },
+      "results": [
+        {
+          "name": "ordinary",
+          "seconds": 0.018536610747105442,
+          "rrmse": 4.923391679767519e-05,
+          "fp64_sample_rrmse": 0.0099903638595796,
+          "finite": true
+        },
+        {
+          "name": "mixed",
+          "seconds": 0.012396739752148278,
+          "rrmse": 0.03670172393321991,
+          "fp64_sample_rrmse": 0.051254904864801755,
+          "finite": true
+        },
+        {
+          "name": "fast-32-recomputeFalse",
+          "seconds": 0.011867801003973,
+          "rrmse": 0.027803894132375717,
+          "fp64_sample_rrmse": 0.04881914288729353,
+          "finite": true
+        },
+        {
+          "name": "fp32-32-recomputeFalse",
+          "seconds": 0.06517033050477039,
+          "rrmse": 0.008042844012379646,
+          "fp64_sample_rrmse": 0.003953975997946883,
+          "finite": true
+        }
+      ]
+    },
+    "images": {
+      "paths": {
+        "candidate": "output/gaudi/qwen21_bf16/decode-ffn_full_1_00001.png",
+        "product": "output/gaudi/qwen21_bf16/product_full_1_00001.png",
+        "normal": "output/gaudi/qwen21_fp8/normal_00002.png",
+        "warm-off": "output/gaudi/qwen21_fp8/normal_00003.png",
+        "warm-auto": "output/gaudi/qwen21_fp8/normal_00004.png",
+        "fixed": "output/gaudi/qwen21_bf16/product-fixed_full_1_00001.png",
+        "bf16": "output/gaudi/qwen21_bf16/bf16-confirm_full_1_00001.png"
+      },
+      "images_sha256": {
+        "candidate": "5a9d48b4b0c4214836346ce03e4a561c95d5fbcf579f5e9dbfff8956dc15e9ab",
+        "product": "07560d07f3d9d924aae90beb2e2119261e98cd8701e513f991d6e2b41311e124",
+        "normal": "264c04ff54e345c63c6ac4a19e93efc31604a6afa132a0cc60179b8f18eaf482",
+        "warm-off": "a51fb3463badd865bcef007c874b944d11f8e266b0deb2b60aa0d3013e81c06e",
+        "warm-auto": "264c04ff54e345c63c6ac4a19e93efc31604a6afa132a0cc60179b8f18eaf482",
+        "fixed": "c06b921b6001bcb8381bb61df00be0e12b2a17bdb43cff90f1abe89a4f5b971b",
+        "bf16": "6da34b5be36bec16b8eac1834f66c781febc712ee0e6ad588929633b4d23e636"
+      },
+      "matches_product": {
+        "candidate": {
+          "rgba": true,
+          "caption": true
+        },
+        "product": {
+          "rgba": true,
+          "caption": true
+        },
+        "normal": {
+          "rgba": true,
+          "caption": true
+        },
+        "warm-off": {
+          "rgba": true,
+          "caption": true
+        },
+        "warm-auto": {
+          "rgba": true,
+          "caption": true
+        },
+        "fixed": {
+          "rgba": false,
+          "caption": false
+        },
+        "bf16": {
+          "rgba": false,
+          "caption": false
+        }
+      },
+      "fixed_vs_bf16_rgb_mae": 4.313124553206699
+    }
+  },
+  "validation": {
+    "passed": 203,
+    "skipped": 1,
+    "size512_seconds": 15.204,
+    "reload_seconds": 108.979,
+    "normal": {
+      "prompt_id": "eaf05068-de18-4e5b-96ca-00c391a3d8ce",
+      "seconds": 129.466,
+      "queue": {
+        "queue_running": [],
+        "queue_pending": []
+      },
+      "system_stats": {
+        "system": {
+          "os": "linux",
+          "ram_total": 100939325440,
+          "ram_free": 89525911552,
+          "comfyui_version": "0.44.0",
+          "required_frontend_version": "1.58.5",
+          "installed_templates_version": "0.11.102",
+          "required_templates_version": "0.11.102",
+          "comfy_package_versions": [
+            {
+              "name": "comfyui-frontend-package",
+              "installed": "1.58.5",
+              "required": "1.58.5"
+            },
+            {
+              "name": "comfyui-workflow-templates",
+              "installed": "0.11.102",
+              "required": "0.11.102"
+            },
+            {
+              "name": "comfyui-embedded-docs",
+              "installed": "0.5.16",
+              "required": "0.5.16"
+            },
+            {
+              "name": "comfy-aimdo",
+              "installed": "0.6.0",
+              "required": "0.6.0"
+            },
+            {
+              "name": "comfy-kitchen",
+              "installed": "0.2.41",
+              "required": "0.2.41"
+            }
+          ],
+          "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+          "pytorch_version": "2.13.0a0+git2469d18",
+          "embedded_python": false,
+          "deploy_environment": "local-git",
+          "argv": [
+            "main.py",
+            "--disable-dynamic-vram",
+            "--disable-pinned-memory",
+            "--disable-async-offload",
+            "--disable-xformers",
+            "--use-pytorch-cross-attention",
+            "--disable-all-custom-nodes",
+            "--listen",
+            "127.0.0.1",
+            "--port",
+            "8189",
+            "--listen",
+            "192.168.10.21",
+            "--port",
+            "8189"
+          ]
+        },
+        "devices": [
+          {
+            "name": "hpu:0 GAUDI2",
+            "type": "hpu",
+            "index": 0,
+            "vram_total": 101601996800,
+            "vram_free": 63188532736,
+            "torch_vram_total": 38413464064,
+            "torch_vram_free": 0
+          }
+        ]
+      }
+    },
+    "normal_warm": {
+      "off": {
+        "prompt_id": "5a968884-b491-46e9-87c9-047c188dcd32",
+        "seconds": 24.277,
+        "queue": {
+          "queue_running": [],
+          "queue_pending": []
+        },
+        "system_stats": {
+          "system": {
+            "os": "linux",
+            "ram_total": 100939325440,
+            "ram_free": 89413591040,
+            "comfyui_version": "0.44.0",
+            "required_frontend_version": "1.58.5",
+            "installed_templates_version": "0.11.102",
+            "required_templates_version": "0.11.102",
+            "comfy_package_versions": [
+              {
+                "name": "comfyui-frontend-package",
+                "installed": "1.58.5",
+                "required": "1.58.5"
+              },
+              {
+                "name": "comfyui-workflow-templates",
+                "installed": "0.11.102",
+                "required": "0.11.102"
+              },
+              {
+                "name": "comfyui-embedded-docs",
+                "installed": "0.5.16",
+                "required": "0.5.16"
+              },
+              {
+                "name": "comfy-aimdo",
+                "installed": "0.6.0",
+                "required": "0.6.0"
+              },
+              {
+                "name": "comfy-kitchen",
+                "installed": "0.2.41",
+                "required": "0.2.41"
+              }
+            ],
+            "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+            "pytorch_version": "2.13.0a0+git2469d18",
+            "embedded_python": false,
+            "deploy_environment": "local-git",
+            "argv": [
+              "main.py",
+              "--disable-dynamic-vram",
+              "--disable-pinned-memory",
+              "--disable-async-offload",
+              "--disable-xformers",
+              "--use-pytorch-cross-attention",
+              "--disable-all-custom-nodes",
+              "--listen",
+              "127.0.0.1",
+              "--port",
+              "8189",
+              "--listen",
+              "192.168.10.21",
+              "--port",
+              "8189"
+            ]
+          },
+          "devices": [
+            {
+              "name": "hpu:0 GAUDI2",
+              "type": "hpu",
+              "index": 0,
+              "vram_total": 101601996800,
+              "vram_free": 63188532736,
+              "torch_vram_total": 38413464064,
+              "torch_vram_free": 0
+            }
+          ]
+        }
+      },
+      "auto": {
+        "prompt_id": "c65cd263-62a0-4fbb-b870-7e9d655e2369",
+        "seconds": 24.105,
+        "queue": {
+          "queue_running": [],
+          "queue_pending": []
+        },
+        "system_stats": {
+          "system": {
+            "os": "linux",
+            "ram_total": 100939325440,
+            "ram_free": 89351991296,
+            "comfyui_version": "0.44.0",
+            "required_frontend_version": "1.58.5",
+            "installed_templates_version": "0.11.102",
+            "required_templates_version": "0.11.102",
+            "comfy_package_versions": [
+              {
+                "name": "comfyui-frontend-package",
+                "installed": "1.58.5",
+                "required": "1.58.5"
+              },
+              {
+                "name": "comfyui-workflow-templates",
+                "installed": "0.11.102",
+                "required": "0.11.102"
+              },
+              {
+                "name": "comfyui-embedded-docs",
+                "installed": "0.5.16",
+                "required": "0.5.16"
+              },
+              {
+                "name": "comfy-aimdo",
+                "installed": "0.6.0",
+                "required": "0.6.0"
+              },
+              {
+                "name": "comfy-kitchen",
+                "installed": "0.2.41",
+                "required": "0.2.41"
+              }
+            ],
+            "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+            "pytorch_version": "2.13.0a0+git2469d18",
+            "embedded_python": false,
+            "deploy_environment": "local-git",
+            "argv": [
+              "main.py",
+              "--disable-dynamic-vram",
+              "--disable-pinned-memory",
+              "--disable-async-offload",
+              "--disable-xformers",
+              "--use-pytorch-cross-attention",
+              "--disable-all-custom-nodes",
+              "--listen",
+              "127.0.0.1",
+              "--port",
+              "8189",
+              "--listen",
+              "192.168.10.21",
+              "--port",
+              "8189"
+            ]
+          },
+          "devices": [
+            {
+              "name": "hpu:0 GAUDI2",
+              "type": "hpu",
+              "index": 0,
+              "vram_total": 101601996800,
+              "vram_free": 63188532736,
+              "torch_vram_total": 38413464064,
+              "torch_vram_free": 0
+            }
+          ]
+        }
+      }
+    },
+    "normal_warm_recomputation": "PE文件无MTP头，切换off→auto使标准节点缓存失效；history确认PE/编码/采样/VAE全部重算，扩写与RGBA匹配产品原参数结果"
+  },
+  "speedup_vs_original_bf16": 1.0619078038853442,
+  "speedup_vs_confirmed_bf16": 1.066142602424625,
+  "fixed_speedup_vs_confirmed_bf16": 1.0579330253048365
+}
