@@ -1,6 +1,14 @@
 # DiT attention精度、布局与片上数据流
 
-当前FP8主模型使用BF16 QK、融合softmax/FP8概率量化和FP8 AV。N≥8192时QK采用1536行query批次，softmax与AV保持二维。BF16主模型采用原dispatcher的单head编译。本文合并2026-11-09至11-13的算子、长序列及编译器调查，文本KV attention见 [文本decode](TEXT_DECODE.md)。
+MOSS FP8主模型使用BF16 QK、融合softmax/FP8概率量化和FP8 AV。N≥8192时QK采用1536行query批次，softmax与AV保持二维。BF16主模型采用原dispatcher的单head编译。本文合并2026-11-09至11-13的算子、长序列及编译器调查，文本KV attention见 [文本decode](TEXT_DECODE.md)。
+
+## 2026-11-17 Qwen Image 2.1 D1
+
+Qwen原生FP8候选使用FP32 K中心化、BF16回写、128对齐KV拆分及厂商fast softmax，首层继续采用原路径。仅在编译推理、batch1、32×128 heads、Q/KV均≥4096、无mask及自定义SDPA参数时启用，保留显式关闭、override与preferred attention。新增临时量在本次attention调用内生成。
+
+当前2094-token完整工作流五轮交错中位38.508→34.138秒，固定caption DiT15.243→10.995秒。76组真实层输入、283项回归、连续KV长度/对齐边界、41次普通节点和重载通过。fast近似会改变图像，配对原图及轨迹记录用于人工验收。
+
+负条件HBM流量1.386→0.873TB，时间0.919→0.663秒，有效带宽峰值占比61.59%→53.79%。按新流量达到80%需要≤0.445秒。稳定prefix buffer和编译cat的局部收益≤0.34%，分段KV更慢，当前保留原prefix物化。[D1完整记录](QWEN_D1_ATTENTION_2026-11-17.md)
 
 ## BF16编译与head调度
 

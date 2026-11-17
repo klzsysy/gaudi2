@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署为`a5308be1c7dd56d8ebb694a8a9a630a072089a77`，已人工验收并提交，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+当前产品提交与部署为`22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4`，D1已人工验收并提交，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 后续优化默认在验证后暂存两个仓库的相关改动，再部署环境并交付人工验收。验收前以基线提交、暂存差异或快照及部署文件SHA256标识运行版本，记录“已部署，待人工验收”，用户明确验收通过后提交并关联最终commit。用户特别说明优先。[交付流程](optimization/MEASUREMENT.md#默认交付与人工验收)
 
@@ -168,3 +168,9 @@ UI已安装`user/default/workflows/Qwen-Image-2.1-Turbo-FP8-HPU.json`。主模�
 用户验收后，缓存case已固化为节点输入签名回归和BF16/FP8实际生成入口回归。完整相关集207项通过、1项跳过，普通服务恢复出图142.826秒、caption/RGBA匹配已验版本。七个代码/测试文件哈希与产品提交`a5308be1c7dd56d8ebb694a8a9a630a072089a77`一致，提交tree为`f68d0361edcc01559eacb4f68345c30e9349ccfe`。
 
 `.run/deployed-version`使用正式commit，`.run/deployed-staged.json`保留`07fedda3+staged.44b0b24b6fca`快照、验收指令与commit关联，状态为`accepted_committed`。原始回归日志、验证哈希、恢复图和部署记录位于`/home/sonny/gaudi2/comfyui-hpu/performance-qwen-cache-regression-2026-11-17`。独立补验入口为`probes/qwen_cache_regression_jobs.py`。
+
+## 2026-11-17 D1验收提交
+
+暂存tree为`9d01642e8deff0c4cb461a34b808115968ba8729`，普通`main.py`入口运行Qwen原生FP8 DiT attention优化。显式`transformer_options["hpu_fast_attention"] = False`使用原attention路径。当前验证范围包含1088×1920、512²/1024²、KV auto/off、提示词回切及卸载重载。
+
+资料根目录为`/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d1-2026-11-17`。`product3`保存完整流程、硬件计数及主要回归，`followup`保存最终33项专项和prefix实验，`deployment`保存暂存patch、manifest、回退源文件与七次部署验证及两次恢复后普通history。三份变更文件及1070份Python/shell源码哈希验证通过，普通服务已预热、队列为空。当前status为`accepted_committed`，正式提交为`22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4`，manifest保留暂存身份与人工验收指令。[D1记录](optimization/QWEN_D1_ATTENTION_2026-11-17.md)

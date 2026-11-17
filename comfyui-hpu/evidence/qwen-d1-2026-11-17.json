@@ -1,0 +1,1434 @@
+{
+  "date": "2026-11-17",
+  "status": "accepted_committed",
+  "baseline": "a5308be1c7dd56d8ebb694a8a9a630a072089a77",
+  "staged": {
+    "identity": "a5308be1+staged.319d9026b5e9",
+    "baseline_commit": "a5308be1c7dd56d8ebb694a8a9a630a072089a77",
+    "staged_tree": "9d01642e8deff0c4cb461a34b808115968ba8729",
+    "staged_diff_sha256": "319d9026b5e99d0c6828d164197e6fe3c7658df1a4018813ce1afe7275fd232e",
+    "file_sha256": {
+      "comfy/ldm/modules/attention.py": "8dbaeae6e6f8bfc7d9cb1c103179776da2bb6f596b4e1ff3c042cfcbe6ae5291",
+      "comfy/ldm/qwen_image21/model.py": "77bf24be554ad19afe0d3cad1550acedb77d2a43ee0396534d337cd056dde915",
+      "tests-unit/comfy_test/hpu_fast_attention_test.py": "2cab97bd73c9535f20bc4075c104087114f0c583fa37055086eef5f0f3bf3730"
+    },
+    "status": "accepted_committed",
+    "human_acceptance": true,
+    "created_at": "2026-11-17T14:13:19.759898+08:00",
+    "validation_roots": [
+      "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d1-2026-11-17/product3",
+      "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d1-2026-11-17/followup"
+    ],
+    "human_acceptance_message": "验证通过，提交代码",
+    "human_acceptance_at": "2026-11-17T15:21:11.324861+08:00",
+    "commit": "22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4",
+    "committed_identity": "22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4",
+    "commit_tree": "9d01642e8deff0c4cb461a34b808115968ba8729"
+  },
+  "raw_root": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d1-2026-11-17",
+  "test_results": {
+    "attention": 33,
+    "related": 238,
+    "cache_admission_cpu": 12,
+    "total_passed": 283,
+    "skipped": 1
+  },
+  "real_attention_inputs": 76,
+  "real_prefix_inputs": 6,
+  "automated_workflows": 41,
+  "product_timings": {
+    "baseline": {
+      "warm": {
+        "seconds": {
+          "median": 17.17,
+          "minimum": 17.153,
+          "maximum": 17.179,
+          "samples": [
+            17.179,
+            17.17,
+            17.153,
+            17.162,
+            17.172
+          ]
+        },
+        "SamplerCustomAdvanced": {
+          "median": 15.243371977,
+          "minimum": 15.226117892,
+          "maximum": 15.251176333,
+          "samples": [
+            15.251176333,
+            15.243371977,
+            15.226117892,
+            15.237472688,
+            15.246628338
+          ]
+        },
+        "VAEDecode": {
+          "median": 1.099224769,
+          "minimum": 1.098601725,
+          "maximum": 1.099405508,
+          "samples": [
+            1.099224769,
+            1.098601725,
+            1.099343301,
+            1.099405508,
+            1.098801967
+          ]
+        }
+      },
+      "full": {
+        "seconds": {
+          "median": 38.508,
+          "minimum": 38.249,
+          "maximum": 38.59,
+          "samples": [
+            38.508,
+            38.582,
+            38.502,
+            38.59,
+            38.249
+          ]
+        },
+        "SamplerCustomAdvanced": {
+          "median": 15.225562979,
+          "minimum": 15.219238177,
+          "maximum": 15.236858688,
+          "samples": [
+            15.219238177,
+            15.223693144,
+            15.233463001,
+            15.225562979,
+            15.236858688
+          ]
+        },
+        "TextGenerate": {
+          "median": 20.832163785,
+          "minimum": 20.633142317,
+          "maximum": 20.950131822,
+          "samples": [
+            20.832163785,
+            20.93718969,
+            20.818740848,
+            20.950131822,
+            20.633142317
+          ]
+        },
+        "TextEncodeQwenImage21": {
+          "median": 0.488911718,
+          "minimum": 0.444245209,
+          "maximum": 0.521020453,
+          "samples": [
+            0.521020453,
+            0.488911718,
+            0.512863665,
+            0.47973531,
+            0.444245209
+          ]
+        },
+        "VAEDecode": {
+          "median": 1.098985893,
+          "minimum": 1.097662435,
+          "maximum": 1.100750381,
+          "samples": [
+            1.099224399,
+            1.097662435,
+            1.100750381,
+            1.098776217,
+            1.098985893
+          ]
+        }
+      }
+    },
+    "product": {
+      "warm": {
+        "seconds": {
+          "median": 12.924,
+          "minimum": 12.901,
+          "maximum": 12.934,
+          "samples": [
+            12.901,
+            12.912,
+            12.924,
+            12.934,
+            12.927
+          ]
+        },
+        "SamplerCustomAdvanced": {
+          "median": 10.994671829,
+          "minimum": 10.973872604,
+          "maximum": 11.003932816,
+          "samples": [
+            10.973872604,
+            10.984520438,
+            10.994671829,
+            11.003932816,
+            10.996259172
+          ]
+        },
+        "VAEDecode": {
+          "median": 1.100481392,
+          "minimum": 1.097822238,
+          "maximum": 1.101340608,
+          "samples": [
+            1.097822238,
+            1.099893706,
+            1.101340608,
+            1.100481392,
+            1.100772178
+          ]
+        }
+      },
+      "full": {
+        "seconds": {
+          "median": 34.138,
+          "minimum": 34.09,
+          "maximum": 34.271,
+          "samples": [
+            34.114,
+            34.223,
+            34.09,
+            34.138,
+            34.271
+          ]
+        },
+        "SamplerCustomAdvanced": {
+          "median": 10.967186404,
+          "minimum": 10.954780045,
+          "maximum": 10.986724257,
+          "samples": [
+            10.967186404,
+            10.986724257,
+            10.959633569,
+            10.976638326,
+            10.954780045
+          ]
+        },
+        "TextGenerate": {
+          "median": 20.714699258,
+          "minimum": 20.701990314,
+          "maximum": 20.897480197,
+          "samples": [
+            20.70715827,
+            20.747010595,
+            20.701990314,
+            20.714699258,
+            20.897480197
+          ]
+        },
+        "TextEncodeQwenImage21": {
+          "median": 0.505251713,
+          "minimum": 0.481795259,
+          "maximum": 0.552943387,
+          "samples": [
+            0.505251713,
+            0.552943387,
+            0.493176372,
+            0.510099679,
+            0.481795259
+          ]
+        },
+        "VAEDecode": {
+          "median": 1.098464534,
+          "minimum": 1.098335512,
+          "maximum": 1.098940094,
+          "samples": [
+            1.098940094,
+            1.098464534,
+            1.098335512,
+            1.098430332,
+            1.09869772
+          ]
+        }
+      }
+    }
+  },
+  "product_quality": [
+    {
+      "case": "cold",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "warm-0",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "warm-1",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "warm-2",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "warm-3",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "warm-4",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "full-0",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "full-1",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "full-2",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "full-3",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "full-4",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "seed",
+      "candidate": "product",
+      "rgb_mae": 1.8251353145424836,
+      "max_abs": 234.0,
+      "psnr": 31.69522014811678,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "size512",
+      "candidate": "product",
+      "rgb_mae": 0.0,
+      "max_abs": 0.0,
+      "psnr": null,
+      "pixels_equal": true,
+      "caption_equal": true
+    },
+    {
+      "case": "size1024",
+      "candidate": "product",
+      "rgb_mae": 1.5198418299357097,
+      "max_abs": 172.0,
+      "psnr": 36.06158864557273,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "kv-off",
+      "candidate": "product",
+      "rgb_mae": 2.3641019135518793,
+      "max_abs": 219.0,
+      "psnr": 31.657144647864968,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "trajectory",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "diagnostic",
+      "candidate": "product",
+      "rgb_mae": 1.7695590150122549,
+      "max_abs": 212.0,
+      "psnr": 34.040443169434326,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "blue",
+      "candidate": "product",
+      "rgb_mae": 4.645039158241421,
+      "max_abs": 239.0,
+      "psnr": 26.13662955759017,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "red",
+      "candidate": "product",
+      "rgb_mae": 1.9510660807291667,
+      "max_abs": 232.0,
+      "psnr": 31.313353178709498,
+      "pixels_equal": false,
+      "caption_equal": true
+    },
+    {
+      "case": "blue-return",
+      "candidate": "product",
+      "rgb_mae": 4.645039158241421,
+      "max_abs": 239.0,
+      "psnr": 26.13662955759017,
+      "pixels_equal": false,
+      "caption_equal": true
+    }
+  ],
+  "trajectories": {
+    "baseline": [
+      {
+        "index": 1,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 2,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 3,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 4,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 5,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 6,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 7,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 8,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 9,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 10,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 11,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 12,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 13,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 14,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 15,
+        "rrmse": 0.0,
+        "finite": true
+      },
+      {
+        "index": 16,
+        "rrmse": 0.0,
+        "finite": true
+      }
+    ],
+    "product": [
+      {
+        "index": 1,
+        "rrmse": 0.0201337318867445,
+        "finite": true
+      },
+      {
+        "index": 2,
+        "rrmse": 0.019664837047457695,
+        "finite": true
+      },
+      {
+        "index": 3,
+        "rrmse": 0.02350851520895958,
+        "finite": true
+      },
+      {
+        "index": 4,
+        "rrmse": 0.020275326445698738,
+        "finite": true
+      },
+      {
+        "index": 5,
+        "rrmse": 0.026659920811653137,
+        "finite": true
+      },
+      {
+        "index": 6,
+        "rrmse": 0.07734517753124237,
+        "finite": true
+      },
+      {
+        "index": 7,
+        "rrmse": 0.03319872170686722,
+        "finite": true
+      },
+      {
+        "index": 8,
+        "rrmse": 0.025096407160162926,
+        "finite": true
+      },
+      {
+        "index": 9,
+        "rrmse": 0.031001515686511993,
+        "finite": true
+      },
+      {
+        "index": 10,
+        "rrmse": 0.02729065902531147,
+        "finite": true
+      },
+      {
+        "index": 11,
+        "rrmse": 0.03036555089056492,
+        "finite": true
+      },
+      {
+        "index": 12,
+        "rrmse": 0.02583272010087967,
+        "finite": true
+      },
+      {
+        "index": 13,
+        "rrmse": 0.038513559848070145,
+        "finite": true
+      },
+      {
+        "index": 14,
+        "rrmse": 0.03725934773683548,
+        "finite": true
+      },
+      {
+        "index": 15,
+        "rrmse": 0.05518537759780884,
+        "finite": true
+      },
+      {
+        "index": 16,
+        "rrmse": 0.05527929589152336,
+        "finite": true
+      }
+    ]
+  },
+  "cache_checks": {
+    "baseline": {
+      "returned_caption_equal": true,
+      "returned_pixels_equal": true,
+      "blue_red_caption_differ": true,
+      "blue_red_pixels_differ": true
+    },
+    "product": {
+      "returned_caption_equal": true,
+      "returned_pixels_equal": true,
+      "blue_red_caption_differ": true,
+      "blue_red_pixels_differ": true
+    }
+  },
+  "repeated_images": {
+    "baseline": {
+      "cold-baseline": true,
+      "warm-0-baseline": true,
+      "warm-1-baseline": true,
+      "warm-2-baseline": true,
+      "warm-3-baseline": true,
+      "warm-4-baseline": true,
+      "full-0-baseline": true,
+      "full-1-baseline": true,
+      "full-2-baseline": true,
+      "full-3-baseline": true,
+      "full-4-baseline": true
+    },
+    "product": {
+      "cold-product": true,
+      "warm-0-product": true,
+      "warm-1-product": true,
+      "warm-2-product": true,
+      "warm-3-product": true,
+      "warm-4-product": true,
+      "full-0-product": true,
+      "full-1-product": true,
+      "full-2-product": true,
+      "full-3-product": true,
+      "full-4-product": true
+    }
+  },
+  "hardware": {
+    "native-baseline": {
+      "read_bytes": 790307897344.0,
+      "write_bytes": 596155056128.0,
+      "total_bytes": 1386462953472.0,
+      "plain_seconds": 0.9187566530017648,
+      "plain_samples": [
+        0.9187566530017648,
+        0.9185873630049173,
+        0.9200164100038819
+      ],
+      "profiled_seconds": 0.9158381690067472,
+      "profiler_slowdown": -0.003176558216457348,
+      "ports": {
+        "[D0] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": 37259378688.0,
+        "[D0] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": 49385373696.0,
+        "[D0] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": 37260754944.0,
+        "[D0] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": 49231142912.0,
+        "[D0] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": 37263515648.0,
+        "[D0] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": 49395179520.0,
+        "[D0] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": 37271404544.0,
+        "[D0] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": 49482186752.0,
+        "[D1] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": 37269192704.0,
+        "[D1] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": 49403101184.0,
+        "[D1] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": 37266325504.0,
+        "[D1] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": 49476640768.0,
+        "[D1] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": 37265162240.0,
+        "[D1] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": 49321689088.0,
+        "[D1] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": 37261991936.0,
+        "[D1] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": 49477148672.0,
+        "[D2] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": 37249032192.0,
+        "[D2] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": 49402380288.0,
+        "[D2] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": 37248868352.0,
+        "[D2] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": 49348509696.0,
+        "[D2] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": 49563672576.0,
+        "[D2] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": 37258854400.0,
+        "[D2] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": 49354293248.0,
+        "[D2] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": 37272018944.0,
+        "[D3] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": 37252358144.0,
+        "[D3] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": 49386782720.0,
+        "[D3] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": 37242626048.0,
+        "[D3] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": 49182113792.0,
+        "[D3] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": 49549443072.0,
+        "[D3] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": 37252677632.0,
+        "[D3] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": 49348239360.0,
+        "[D3] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": 37260894208.0
+      },
+      "estimated_TBps": 1.5090643958246654,
+      "hbm_peak_fraction": 0.6159446513570064,
+      "activity": {
+        "device_span_ms": 912.849768081665,
+        "kernel_coverage": 0.9647536194962627,
+        "engine_union_ms": {
+          "TPC": 581.5086845855712,
+          "MME": 543.2491594238281
+        },
+        "operation_union_ms": {
+          "cast_bf16_to_f32": 12.15621257019043,
+          "add_f32": 0.22473648071289062,
+          "n_aa": 35.9120486907959,
+          "rsqrt_fwd_f32": 0.2029723663330078,
+          "mult_fwd_f32": 16.0020359954834,
+          "cast_f32_to_bf16": 11.920936141967774,
+          "gelu_fwd_bf16": 0.012045074462890625,
+          "range_f32": 0.0025680084228515625,
+          "constant_i8": 0.0022590179443359375,
+          "n_ab": 81.22957473754883,
+          "n_ac": 20.747138931274414,
+          "cast_i64_to_f32": 0.020160110473632812,
+          "sub_f32": 0.0038400115966796874,
+          "constant_f32": 0.05299433898925781,
+          "strided_view": 0.013485092163085938,
+          "n_ag": 0.00158001708984375,
+          "n_af": 0.003980026245117187,
+          "n_ae": 0.0020600128173828124,
+          "cast_i32_to_bf16": 0.16736109924316406,
+          "div_bf16": 0.001360015869140625,
+          "constant_bf16": 0.00473004150390625,
+          "div_f32": 0.40541761779785157,
+          "exp_fwd_f32": 0.001279998779296875,
+          "cos_fwd_f32": 0.0018400115966796876,
+          "sin_fwd_f32": 0.002,
+          "n_ad": 24.624564392089844,
+          "tanh_fwd_bf16": 0.0040400238037109374,
+          "add_bf16": 4.27367399597168,
+          "mult_fwd_bf16": 9.575337982177734,
+          "abs_fwd_bf16": 7.760394912719726,
+          "reciprocal_fwd_f32": 0.2315157012939453,
+          "neg_fwd_f32": 0.10903471374511718,
+          "bmm": 193.7189097595215,
+          "softmax_fwd_bf16": 379.55586573791504,
+          "bmm_1": 193.19729722595216,
+          "fusedTPCNode_0_0": 16.821974380493163,
+          "fusedTPCNode_0_1_bundle_6/op_0": 0.9955704956054687,
+          "gate_up": 61.096005783081054,
+          "fusedTPCNode_0_2_bundle_6/op_2": 0.14391795349121095,
+          "fusedTPCNode_0_2_bundle_6/op_4": 0.11886479187011718,
+          "fusedTPCNode_0_2_bundle_6/op_6": 0.11854473876953125,
+          "fusedTPCNode_0_2_bundle_6/op_8": 0.11902474975585937,
+          "fusedTPCNode_0_2_bundle_6/op_10": 0.11918484497070313,
+          "fusedTPCNode_0_2_bundle_6/op_12": 0.11878477478027344,
+          "fusedTPCNode_0_2_bundle_6/op_14": 0.11853271484375,
+          "fusedTPCNode_0_2_bundle_6/op_16": 0.11870477294921875,
+          "fusedTPCNode_0_2_bundle_6/op_18": 0.11902484130859375,
+          "fusedTPCNode_0_2_bundle_6/op_20": 0.11910479736328125,
+          "fusedTPCNode_0_2_bundle_6/op_22": 0.11894474792480468,
+          "fusedTPCNode_0_2_bundle_6/op_24": 0.11885276794433594,
+          "fusedTPCNode_0_2_bundle_6/op_26": 0.11915782165527344,
+          "fusedTPCNode_0_2_bundle_6/op_28": 0.11918479919433594,
+          "fusedTPCNode_0_2_bundle_6/op_30": 0.1185447540283203,
+          "fusedTPCNode_0_2_bundle_6/op_32": 0.11878477478027344,
+          "fusedTPCNode_0_2_bundle_6/op_34": 0.11892984008789062,
+          "fusedTPCNode_0_2_bundle_6/op_36": 0.11862478637695313,
+          "fusedTPCNode_0_2_bundle_6/op_38": 0.1185447540283203,
+          "fusedTPCNode_0_2_bundle_6/op_40": 0.1186097412109375,
+          "fusedTPCNode_0_2_bundle_6/op_42": 0.11852983093261718,
+          "fusedTPCNode_0_2_bundle_6/op_44": 0.11930882263183594,
+          "fusedTPCNode_0_2_bundle_6/op_46": 0.11891773986816406,
+          "fusedTPCNode_0_2_bundle_6/op_48": 0.118384765625,
+          "fusedTPCNode_0_2_bundle_6/op_50": 0.11902484130859375,
+          "fusedTPCNode_0_2_bundle_6/op_52": 0.11902482604980469,
+          "fusedTPCNode_0_2_bundle_6/op_54": 0.1192347412109375,
+          "fusedTPCNode_0_2_bundle_6/op_56": 0.11869273376464844,
+          "fusedTPCNode_0_2_bundle_6/op_58": 0.118704833984375,
+          "fusedTPCNode_0_2_bundle_6/op_60": 0.11902481079101562,
+          "fusedTPCNode_0_2_bundle_6/op_62": 0.11894471740722656,
+          "fusedTPCNode_0_2_bundle_6/op_64": 0.11854473876953125,
+          "fusedTPCNode_0_2_bundle_6/op_66": 0.1187728271484375,
+          "fusedTPCNode_0_2_bundle_6/op_68": 0.11908981323242188,
+          "fusedTPCNode_0_2_bundle_6/op_70": 0.11878471374511719,
+          "fusedTPCNode_0_2_bundle_6/op_72": 0.11846473693847656,
+          "fusedTPCNode_0_2_bundle_6/op_74": 0.1182898406982422,
+          "fusedTPCNode_0_2_bundle_6/op_76": 0.11900979614257813,
+          "fusedTPCNode_0_2_bundle_6/op_78": 0.11921372985839844,
+          "fusedTPCNode_0_2_bundle_6/op_80": 0.11869271850585937,
+          "fusedTPCNode_0_2_bundle_6/op_82": 0.11854484558105469,
+          "fusedTPCNode_0_2_bundle_6/op_84": 0.1189298095703125,
+          "fusedTPCNode_0_2_bundle_6/op_86": 0.1184647216796875,
+          "fusedTPCNode_0_2_bundle_6/op_88": 0.11878474426269531,
+          "fusedTPCNode_0_2_bundle_6/op_90": 0.11861285400390625,
+          "fusedTPCNode_0_2_bundle_6/op_92": 0.11909280395507812,
+          "fusedTPCNode_0_2_bundle_6/op_94": 0.11902476501464844,
+          "fusedTPCNode_0_2_bundle_6/op_96": 0.11870474243164063,
+          "fusedTPCNode_0_2_bundle_6/op_98": 0.11868983459472657,
+          "fusedTPCNode_0_2_bundle_6/op_100": 0.1191697998046875,
+          "fusedTPCNode_0_2_bundle_6/op_102": 0.11918472290039063,
+          "fusedTPCNode_0_2_bundle_6/op_104": 0.11870474243164063,
+          "fusedTPCNode_0_2_bundle_6/op_106": 0.11830484008789062,
+          "fusedTPCNode_0_2_bundle_6/op_108": 0.11884977722167969,
+          "fusedTPCNode_0_2_bundle_6/op_110": 0.11941273498535156,
+          "fusedTPCNode_0_2_bundle_6/op_112": 0.11830473327636719,
+          "fusedTPCNode_0_2_bundle_6/op_114": 0.11846484375,
+          "fusedTPCNode_0_2_bundle_6/op_116": 0.11908978271484374,
+          "fusedTPCNode_0_2_bundle_6/op_118": 0.11886473083496094,
+          "fusedTPCNode_0_2_bundle_6/op_120": 0.11886477661132812,
+          "fusedTPCNode_0_2_bundle_6/op_122": 0.11859783935546875,
+          "fusedTPCNode_0_2_bundle_6/op_124": 0.11886477661132812,
+          "fusedTPCNode_0_2_bundle_6/op_126": 0.11918475341796875,
+          "fusedTPCNode_0_2_bundle_6/op_128": 0.1188377685546875,
+          "fusedTPCNode_0_2_bundle_6/op_130": 0.11838482666015625,
+          "fusedTPCNode_0_2_bundle_6/op_132": 0.11893275451660157,
+          "fusedTPCNode_0_2_bundle_6/op_134": 0.11942472839355468,
+          "fusedTPCNode_0_2_bundle_6/op_136": 0.11870478820800781,
+          "fusedTPCNode_0_2_bundle_6/op_138": 0.11846482849121094,
+          "fusedTPCNode_0_2_bundle_6/op_140": 0.11846479797363281,
+          "fusedTPCNode_0_2_bundle_6/op_142": 0.11918472290039063,
+          "fusedTPCNode_0_2_bundle_6/op_144": 0.11893276977539062,
+          "fusedTPCNode_0_2_bundle_6/op_146": 0.11875784301757812,
+          "fusedTPCNode_0_2_bundle_6/op_148": 0.1187847900390625,
+          "fusedTPCNode_0_2_bundle_6/op_150": 0.118834716796875,
+          "fusedTPCNode_0_2_bundle_6/op_152": 0.1190247802734375,
+          "fusedTPCNode_0_2_bundle_6/op_154": 0.11876986694335938,
+          "fusedTPCNode_0_2_bundle_6/op_156": 0.11868077087402344,
+          "fusedTPCNode_0_2_bundle_6/op_158": 0.11922572326660157,
+          "fusedTPCNode_0_2_bundle_6/op_160": 0.11934477233886719,
+          "fusedTPCNode_0_2_bundle_6/op_162": 0.11854484558105469,
+          "fusedTPCNode_0_2_bundle_6/op_164": 0.11870481872558594,
+          "fusedTPCNode_0_2_bundle_6/op_166": 0.11908969116210938,
+          "fusedTPCNode_0_2_bundle_6/op_168": 0.11886479187011718,
+          "fusedTPCNode_0_2_bundle_6/op_170": 0.11846484375,
+          "fusedTPCNode_0_2_bundle_6/op_172": 0.118289794921875,
+          "fusedTPCNode_0_2_bundle_6/op_174": 0.11886471557617187,
+          "fusedTPCNode_0_2_bundle_6/op_176": 0.11914878845214844,
+          "fusedTPCNode_0_2_bundle_6/op_178": 0.11867782592773438,
+          "fusedTPCNode_0_2_bundle_6/op_180": 0.11852981567382813,
+          "fusedTPCNode_0_2_bundle_6/op_182": 0.11878471374511719,
+          "fusedTPCNode_0_2_bundle_6/op_184": 0.11894477844238281,
+          "fusedTPCNode_0_2_bundle_6/op_186": 0.11902484130859375,
+          "fusedTPCNode_0_2_bundle_6/op_188": 0.11901283264160156,
+          "fusedTPCNode_0_2_bundle_6/op_190": 0.11862471008300782,
+          "fusedTPCNode_0_2_bundle_6/op_192": 0.13547288513183595,
+          "fusedTPCNode_0_0_bundle_7/op_0": 0.5449115600585938,
+          "fusedTPCNode_0_0_bundle_7/op_2": 0.6023109130859375,
+          "fusedTPCNode_0_1_bundle_7/op_1": 0.5855267944335938,
+          "fusedTPCNode_0_1_bundle_7/op_3": 0.7684570007324218,
+          "fusedTPCNode_0_0_bundle_7/op_5": 0.8946598815917969,
+          "fusedTPCNode_0_0_bundle_7/op_8": 0.8930988159179688,
+          "fp8_gemm_bf16": 32.47326905822754,
+          "fusedTPCNode_0_1_bundle_7/op_6": 0.7627059783935547,
+          "fusedTPCNode_0_1_bundle_7/op_9": 0.7649750213623047,
+          "fusedTPCNode_0_0_bundle_7/op_11": 0.8458284912109375,
+          "fusedTPCNode_0_0_bundle_7/op_14": 0.35082530212402346,
+          "fusedTPCNode_0_1_bundle_7/op_12": 0.7596940002441406,
+          "fusedTPCNode_0_1_bundle_7/op_15": 0.2284984588623047,
+          "fusedTPCNode_0_2": 2.3772195587158205
+        },
+        "unmatched_ends": 0,
+        "unmatched_starts": 0,
+        "excluded_hardware_markers": 72
+      }
+    },
+    "native-product": {
+      "read_bytes": 553992323072.0,
+      "write_bytes": 319141117952.0,
+      "total_bytes": 873133441024.0,
+      "plain_seconds": 0.6625450470019132,
+      "plain_samples": [
+        0.6625450470019132,
+        0.662665334995836,
+        0.6610837390035158
+      ],
+      "profiled_seconds": 0.661030485003721,
+      "profiler_slowdown": -0.00228597588201096,
+      "ports": {
+        "[D0] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": 19934052352.0,
+        "[D0] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": 34622414848.0,
+        "[D0] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": 19942703104.0,
+        "[D0] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": 34455863296.0,
+        "[D0] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": 19946708992.0,
+        "[D0] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": 34625167360.0,
+        "[D0] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": 19970154496.0,
+        "[D0] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": 34715475968.0,
+        "[D1] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": 19959685120.0,
+        "[D1] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": 34625339392.0,
+        "[D1] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": 19952934912.0,
+        "[D1] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": 34706980864.0,
+        "[D1] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": 19960659968.0,
+        "[D1] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": 34547564544.0,
+        "[D1] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": 19952001024.0,
+        "[D1] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": 34718367744.0,
+        "[D2] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": 34633031680.0,
+        "[D2] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": 19929088000.0,
+        "[D2] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": 34578030592.0,
+        "[D2] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": 19933618176.0,
+        "[D2] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": 34788704256.0,
+        "[D2] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": 19937107968.0,
+        "[D2] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": 34587508736.0,
+        "[D2] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": 19966148608.0,
+        "[D3] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": 19934224384.0,
+        "[D3] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": 34615615488.0,
+        "[D3] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": 19934896128.0,
+        "[D3] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": 34410807296.0,
+        "[D3] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": 34777030656.0,
+        "[D3] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": 19934986240.0,
+        "[D3] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": 34584420352.0,
+        "[D3] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": 19952148480.0
+      },
+      "estimated_TBps": 1.317847661792993,
+      "hbm_peak_fraction": 0.5378970048134666,
+      "activity": {
+        "device_span_ms": 658.3990885925293,
+        "kernel_coverage": 0.9543230269679908,
+        "engine_union_ms": {
+          "TPC": 391.3497918701172,
+          "MME": 341.0037071685791
+        },
+        "operation_union_ms": {
+          "cast_bf16_to_f32": 12.1164814453125,
+          "add_f32": 0.22411045837402344,
+          "n_aa": 35.97790466308594,
+          "rsqrt_fwd_f32": 0.20282142639160156,
+          "mult_fwd_f32": 15.959136001586915,
+          "cast_f32_to_bf16": 11.83328646850586,
+          "gelu_fwd_bf16": 0.011954071044921875,
+          "range_f32": 0.00264801025390625,
+          "constant_i8": 0.002114013671875,
+          "n_ab": 80.83773127746582,
+          "n_ac": 20.79765197753906,
+          "cast_i64_to_f32": 0.1888012237548828,
+          "sub_f32": 0.003680023193359375,
+          "constant_f32": 0.00372503662109375,
+          "strided_view": 0.013340087890625,
+          "n_ag": 0.0016600189208984375,
+          "n_af": 0.003980026245117187,
+          "n_ae": 0.0020600128173828124,
+          "cast_i32_to_bf16": 0.1667211151123047,
+          "div_bf16": 0.00144000244140625,
+          "constant_bf16": 0.004650039672851563,
+          "div_f32": 0.4012025604248047,
+          "exp_fwd_f32": 0.0012800140380859375,
+          "cos_fwd_f32": 0.001920013427734375,
+          "sin_fwd_f32": 0.00208001708984375,
+          "n_ad": 24.57128096008301,
+          "tanh_fwd_bf16": 0.004120025634765625,
+          "add_bf16": 4.264204193115234,
+          "mult_fwd_bf16": 4.275172378540039,
+          "abs_fwd_bf16": 7.785108688354492,
+          "reciprocal_fwd_f32": 0.23318655395507812,
+          "neg_fwd_f32": 0.10848471069335938,
+          "bmm": 6.0368420562744145,
+          "softmax_fwd_bf16": 11.85008561706543,
+          "bmm_1": 6.028629974365234,
+          "fusedTPCNode_0_0": 17.92637190246582,
+          "fusedTPCNode_0_1_bundle_6/op_0": 0.9975866088867188,
+          "gate_up": 61.09780647277832,
+          "fusedTPCNode_0_2_bundle_6/op_2": 0.14372793579101562,
+          "fusedTPCNode_0_2_bundle_6/op_4": 0.11878482055664062,
+          "fusedTPCNode_0_2_bundle_6/op_6": 0.11870480346679688,
+          "fusedTPCNode_0_2_bundle_6/op_8": 0.11870469665527343,
+          "fusedTPCNode_0_2_bundle_6/op_10": 0.11886479187011718,
+          "fusedTPCNode_0_2_bundle_6/op_12": 0.11893284606933593,
+          "fusedTPCNode_0_2_bundle_6/op_14": 0.11882278442382813,
+          "fusedTPCNode_0_2_bundle_6/op_16": 0.11902479553222656,
+          "fusedTPCNode_0_2_bundle_6/op_18": 0.118997802734375,
+          "fusedTPCNode_0_2_bundle_6/op_20": 0.1187047576904297,
+          "fusedTPCNode_0_2_bundle_6/op_22": 0.11885269165039063,
+          "fusedTPCNode_0_2_bundle_6/op_24": 0.11910482788085938,
+          "fusedTPCNode_0_2_bundle_6/op_26": 0.11902479553222656,
+          "fusedTPCNode_0_2_bundle_6/op_28": 0.11902482604980469,
+          "fusedTPCNode_0_2_bundle_6/op_30": 0.11870480346679688,
+          "fusedTPCNode_0_2_bundle_6/op_32": 0.11910481262207032,
+          "fusedTPCNode_0_2_bundle_6/op_34": 0.11885275268554688,
+          "fusedTPCNode_0_2_bundle_6/op_36": 0.11885279846191406,
+          "fusedTPCNode_0_2_bundle_6/op_38": 0.11894483947753906,
+          "fusedTPCNode_0_2_bundle_6/op_40": 0.1187047576904297,
+          "fusedTPCNode_0_2_bundle_6/op_42": 0.11894480895996094,
+          "fusedTPCNode_0_2_bundle_6/op_44": 0.11875779724121094,
+          "fusedTPCNode_0_2_bundle_6/op_46": 0.1189207763671875,
+          "fusedTPCNode_0_2_bundle_6/op_48": 0.11900970458984375,
+          "fusedTPCNode_0_2_bundle_6/op_50": 0.11878485107421875,
+          "fusedTPCNode_0_2_bundle_6/op_52": 0.11854478454589844,
+          "fusedTPCNode_0_2_bundle_6/op_54": 0.11854483032226562,
+          "fusedTPCNode_0_2_bundle_6/op_56": 0.11902479553222656,
+          "fusedTPCNode_0_2_bundle_6/op_58": 0.11907780456542968,
+          "fusedTPCNode_0_2_bundle_6/op_60": 0.11909274291992188,
+          "fusedTPCNode_0_2_bundle_6/op_62": 0.11884976196289063,
+          "fusedTPCNode_0_2_bundle_6/op_64": 0.11876983642578125,
+          "fusedTPCNode_0_2_bundle_6/op_66": 0.11885276794433594,
+          "fusedTPCNode_0_2_bundle_6/op_68": 0.11893284606933593,
+          "fusedTPCNode_0_2_bundle_6/op_70": 0.11902479553222656,
+          "fusedTPCNode_0_2_bundle_6/op_72": 0.11870478820800781,
+          "fusedTPCNode_0_2_bundle_6/op_74": 0.11854469299316406,
+          "fusedTPCNode_0_2_bundle_6/op_76": 0.11902484130859375,
+          "fusedTPCNode_0_2_bundle_6/op_78": 0.11894479370117188,
+          "fusedTPCNode_0_2_bundle_6/op_80": 0.11893283081054687,
+          "fusedTPCNode_0_2_bundle_6/op_82": 0.11870478820800781,
+          "fusedTPCNode_0_2_bundle_6/op_84": 0.11867475891113281,
+          "fusedTPCNode_0_2_bundle_6/op_86": 0.11876968383789062,
+          "fusedTPCNode_0_2_bundle_6/op_88": 0.11892074584960938,
+          "fusedTPCNode_0_2_bundle_6/op_90": 0.119142822265625,
+          "fusedTPCNode_0_2_bundle_6/op_92": 0.11893281555175782,
+          "fusedTPCNode_0_2_bundle_6/op_94": 0.11862484741210938,
+          "fusedTPCNode_0_2_bundle_6/op_96": 0.11860978698730469,
+          "fusedTPCNode_0_2_bundle_6/op_98": 0.11878477478027344,
+          "fusedTPCNode_0_2_bundle_6/op_100": 0.11893267822265625,
+          "fusedTPCNode_0_2_bundle_6/op_102": 0.11884085083007813,
+          "fusedTPCNode_0_2_bundle_6/op_104": 0.11918479919433594,
+          "fusedTPCNode_0_2_bundle_6/op_106": 0.11902479553222656,
+          "fusedTPCNode_0_2_bundle_6/op_108": 0.11886483764648438,
+          "fusedTPCNode_0_2_bundle_6/op_110": 0.11893280029296875,
+          "fusedTPCNode_0_2_bundle_6/op_112": 0.11882569885253906,
+          "fusedTPCNode_0_2_bundle_6/op_114": 0.11870474243164063,
+          "fusedTPCNode_0_2_bundle_6/op_116": 0.11878483581542969,
+          "fusedTPCNode_0_2_bundle_6/op_118": 0.11846478271484374,
+          "fusedTPCNode_0_2_bundle_6/op_120": 0.1186898193359375,
+          "fusedTPCNode_0_2_bundle_6/op_122": 0.11870478820800781,
+          "fusedTPCNode_0_2_bundle_6/op_124": 0.11900077819824219,
+          "fusedTPCNode_0_2_bundle_6/op_126": 0.11917266845703126,
+          "fusedTPCNode_0_2_bundle_6/op_128": 0.11880482482910157,
+          "fusedTPCNode_0_2_bundle_6/op_130": 0.11846479797363281,
+          "fusedTPCNode_0_2_bundle_6/op_132": 0.11886479187011718,
+          "fusedTPCNode_0_2_bundle_6/op_134": 0.11909281921386719,
+          "fusedTPCNode_0_2_bundle_6/op_136": 0.11886477661132812,
+          "fusedTPCNode_0_2_bundle_6/op_138": 0.11862472534179687,
+          "fusedTPCNode_0_2_bundle_6/op_140": 0.11894474792480468,
+          "fusedTPCNode_0_2_bundle_6/op_142": 0.11878482055664062,
+          "fusedTPCNode_0_2_bundle_6/op_144": 0.11876980590820313,
+          "fusedTPCNode_0_2_bundle_6/op_146": 0.11869282531738282,
+          "fusedTPCNode_0_2_bundle_6/op_148": 0.11894480895996094,
+          "fusedTPCNode_0_2_bundle_6/op_150": 0.11885281372070312,
+          "fusedTPCNode_0_2_bundle_6/op_152": 0.11859469604492187,
+          "fusedTPCNode_0_2_bundle_6/op_154": 0.11893280029296875,
+          "fusedTPCNode_0_2_bundle_6/op_156": 0.119080810546875,
+          "fusedTPCNode_0_2_bundle_6/op_158": 0.11910481262207032,
+          "fusedTPCNode_0_2_bundle_6/op_160": 0.11862480163574218,
+          "fusedTPCNode_0_2_bundle_6/op_162": 0.1185447998046875,
+          "fusedTPCNode_0_2_bundle_6/op_164": 0.11902473449707031,
+          "fusedTPCNode_0_2_bundle_6/op_166": 0.11909271240234375,
+          "fusedTPCNode_0_2_bundle_6/op_168": 0.118932861328125,
+          "fusedTPCNode_0_2_bundle_6/op_170": 0.11878480529785156,
+          "fusedTPCNode_0_2_bundle_6/op_172": 0.11846482849121094,
+          "fusedTPCNode_0_2_bundle_6/op_174": 0.11878480529785156,
+          "fusedTPCNode_0_2_bundle_6/op_176": 0.11870478820800781,
+          "fusedTPCNode_0_2_bundle_6/op_178": 0.11892073059082031,
+          "fusedTPCNode_0_2_bundle_6/op_180": 0.11917283630371094,
+          "fusedTPCNode_0_2_bundle_6/op_182": 0.11886480712890625,
+          "fusedTPCNode_0_2_bundle_6/op_184": 0.1183048095703125,
+          "fusedTPCNode_0_2_bundle_6/op_186": 0.11876982116699218,
+          "fusedTPCNode_0_2_bundle_6/op_188": 0.119009765625,
+          "fusedTPCNode_0_2_bundle_6/op_190": 0.1187047576904297,
+          "fusedTPCNode_0_2_bundle_6/op_192": 0.13505780029296874,
+          "fusedTPCNode_0_0_bundle_7/op_0": 0.5447666473388671,
+          "fusedTPCNode_0_0_bundle_7/op_2": 0.538818603515625,
+          "fusedTPCNode_0_1_bundle_7/op_1": 0.5398535461425781,
+          "fusedTPCNode_0_1_bundle_7/op_3": 0.7633360443115235,
+          "fusedTPCNode_0_0_bundle_7/op_5": 0.8904869537353516,
+          "fusedTPCNode_0_0_bundle_7/op_8": 0.8879898986816406,
+          "fp8_gemm_bf16": 32.47761346435547,
+          "fusedTPCNode_0_1_bundle_7/op_6": 0.7610720825195313,
+          "fusedTPCNode_0_1_bundle_7/op_9": 0.7619380950927734,
+          "fusedTPCNode_0_0_bundle_7/op_11": 0.8508406829833984,
+          "fusedTPCNode_0_0_bundle_7/op_14": 0.34922433471679687,
+          "fusedTPCNode_0_1_bundle_7/op_12": 0.765383071899414,
+          "fusedTPCNode_0_1_bundle_7/op_15": 0.229301513671875,
+          "fusedTPCNode_0_2": 2.377248809814453,
+          "constant_i64": 0.039540252685546874,
+          "fusedTPCNode_0_1": 2.0199683837890623,
+          "fusedTPCNode_0_2_bundle_82/op_0": 0.1020467529296875,
+          "sdpa_recomp_fwd_bf16": 264.1675643768311,
+          "fusedTPCNode_0_3_bundle_84/op_0": 0.2276456298828125,
+          "fusedTPCNode_0_4_bundle_86/op_0": 0.24023780822753907,
+          "fusedTPCNode_0_5_bundle_88/op_0": 0.20446142578125,
+          "fusedTPCNode_0_6_bundle_90/op_0": 0.23918760681152343,
+          "fusedTPCNode_0_7_bundle_92/op_0": 0.2065924072265625,
+          "fusedTPCNode_0_8_bundle_94/op_0": 0.2385247039794922,
+          "fusedTPCNode_0_9_bundle_96/op_0": 0.22130143737792968,
+          "fusedTPCNode_0_10_bundle_98/op_0": 0.233822509765625,
+          "fusedTPCNode_0_11_bundle_100/op_0": 0.20166928100585937,
+          "fusedTPCNode_0_12_bundle_102/op_0": 0.23750749206542968,
+          "fusedTPCNode_0_13_bundle_104/op_0": 0.21128945922851564,
+          "fusedTPCNode_0_14_bundle_106/op_0": 0.23968048095703126,
+          "fusedTPCNode_0_15_bundle_108/op_0": 0.20266220092773438,
+          "fusedTPCNode_0_16_bundle_110/op_0": 0.24117366027832032,
+          "fusedTPCNode_0_17_bundle_112/op_0": 0.2128714904785156,
+          "fusedTPCNode_0_18_bundle_114/op_0": 0.23453054809570312,
+          "fusedTPCNode_0_19_bundle_116/op_0": 0.21522537231445313,
+          "fusedTPCNode_0_20_bundle_118/op_0": 0.2351645812988281,
+          "fusedTPCNode_0_21_bundle_120/op_0": 0.20560037231445313,
+          "fusedTPCNode_0_22_bundle_122/op_0": 0.23691351318359374,
+          "fusedTPCNode_0_23_bundle_124/op_0": 0.21127633666992188,
+          "fusedTPCNode_0_24_bundle_126/op_0": 0.24018955993652344,
+          "fusedTPCNode_0_25_bundle_128/op_0": 0.2135844268798828,
+          "fusedTPCNode_0_26_bundle_130/op_0": 0.2364775390625,
+          "fusedTPCNode_0_27_bundle_132/op_0": 0.20966650390625,
+          "fusedTPCNode_0_28_bundle_134/op_0": 0.23537548828125,
+          "fusedTPCNode_0_29_bundle_136/op_0": 0.21520240783691405,
+          "fusedTPCNode_0_30_bundle_138/op_0": 0.2432716064453125,
+          "fusedTPCNode_0_31_bundle_140/op_0": 0.20638832092285156,
+          "fusedTPCNode_0_32_bundle_142/op_0": 0.23726657104492188,
+          "fusedTPCNode_0_33_bundle_144/op_0": 0.2137513122558594,
+          "fusedTPCNode_0_34_bundle_146/op_0": 0.3881605224609375,
+          "fusedTPCNode_0_34_bundle_146/op_1": 0.2892568817138672,
+          "fusedTPCNode_0_34_bundle_146/op_3": 0.2838699188232422,
+          "fusedTPCNode_0_34_bundle_146/op_5": 0.29360987854003906,
+          "fusedTPCNode_0_35": 0.23925758361816407,
+          "fusedTPCNode_0_36": 10.239019958496094
+        },
+        "unmatched_ends": 0,
+        "unmatched_starts": 0,
+        "excluded_hardware_markers": 160
+      }
+    }
+  },
+  "prefix": [
+    {
+      "input": "forward-07-layer-15-part-1.pt",
+      "prefix": 1285,
+      "cat_seconds": 0.0001682733400957659,
+      "stable_buffer_bytes": 154746880,
+      "candidates": {
+        "original": {
+          "seconds": 0.010030898900004104,
+          "samples": [
+            0.010085683400393463,
+            0.010030898900004104,
+            0.010027983599866275,
+            0.010032646000036038,
+            0.01003021430078661
+          ],
+          "rrmse": 0.0,
+          "finite": true
+        },
+        "stable": {
+          "seconds": 0.010006142700149212,
+          "samples": [
+            0.010006142700149212,
+            0.010011151600338053,
+            0.009977221499138978,
+            0.01002031359967077,
+            0.0100032785005169
+          ],
+          "rrmse": 0.0,
+          "finite": true
+        },
+        "fused_cat": {
+          "seconds": 0.009997292701154948,
+          "samples": [
+            0.009992621900164523,
+            0.009991740000259597,
+            0.009997546499653254,
+            0.009997645299881697,
+            0.009997292701154948
+          ],
+          "rrmse": 0.0,
+          "finite": true
+        },
+        "segmented": {
+          "seconds": 0.01166870330052916,
+          "samples": [
+            0.011667122099606787,
+            0.011693318199831992,
+            0.011667627100541722,
+            0.011685967499215622,
+            0.01166870330052916
+          ],
+          "rrmse": 0.010302255861461163,
+          "finite": true
+        }
+      }
+    },
+    {
+      "input": "forward-08-layer-15-part-1.pt",
+      "prefix": 447,
+      "cat_seconds": 0.00019189190003089608,
+      "stable_buffer_bytes": 141017088,
+      "candidates": {
+        "original": {
+          "seconds": 0.009481576700636651,
+          "samples": [
+            0.009524270301335491,
+            0.009496855598990805,
+            0.009474097100610378,
+            0.009481576700636651,
+            0.009462196899403353
+          ],
+          "rrmse": 0.0,
+          "finite": true
+        },
+        "stable": {
+          "seconds": 0.009470562898786738,
+          "samples": [
+            0.009470562898786738,
+            0.009479073500551749,
+            0.009466929899645038,
+            0.009472131601069123,
+            0.00945623519946821
+          ],
+          "rrmse": 0.0,
+          "finite": true
+        },
+        "fused_cat": {
+          "seconds": 0.009475293300056364,
+          "samples": [
+            0.009505762900516856,
+            0.009464939699682873,
+            0.009478631299862173,
+            0.009473949400126002,
+            0.009475293300056364
+          ],
+          "rrmse": 0.0,
+          "finite": true
+        },
+        "segmented": {
+          "seconds": 0.010754086800443475,
+          "samples": [
+            0.010776699800044299,
+            0.01077930369938258,
+            0.01075082610041136,
+            0.010754086800443475,
+            0.010751527399406768
+          ],
+          "rrmse": 0.01029001735150814,
+          "finite": true
+        }
+      }
+    }
+  ],
+  "deployment": {
+    "identity": "a5308be1+staged.319d9026b5e9",
+    "baseline_commit": "a5308be1c7dd56d8ebb694a8a9a630a072089a77",
+    "staged_tree": "9d01642e8deff0c4cb461a34b808115968ba8729",
+    "staged_diff_sha256": "319d9026b5e99d0c6828d164197e6fe3c7658df1a4018813ce1afe7275fd232e",
+    "file_sha256": {
+      "comfy/ldm/modules/attention.py": "8dbaeae6e6f8bfc7d9cb1c103179776da2bb6f596b4e1ff3c042cfcbe6ae5291",
+      "comfy/ldm/qwen_image21/model.py": "77bf24be554ad19afe0d3cad1550acedb77d2a43ee0396534d337cd056dde915",
+      "tests-unit/comfy_test/hpu_fast_attention_test.py": "2cab97bd73c9535f20bc4075c104087114f0c583fa37055086eef5f0f3bf3730"
+    },
+    "status": "accepted_committed",
+    "human_acceptance": true,
+    "created_at": "2026-11-17T14:13:19.759898+08:00",
+    "validation_roots": [
+      "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d1-2026-11-17/product3",
+      "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d1-2026-11-17/followup"
+    ],
+    "runs": [
+      {
+        "label": "d1-cold",
+        "prompt_id": "e7e87896-16ac-439d-8971-9a12801bc25d",
+        "seconds": 139.686,
+        "cached_nodes": [],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/d1-cold_00001.png"
+      },
+      {
+        "label": "d1-warm",
+        "prompt_id": "757152e0-e0cf-42e8-a3ca-c5ba30791cff",
+        "seconds": 34.175,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:488",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/d1-warm_00001.png"
+      },
+      {
+        "label": "d1-blue",
+        "prompt_id": "a45ec750-0225-4192-80a5-ff2c80aa2ea9",
+        "seconds": 34.985,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:488",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/d1-blue_00001.png"
+      },
+      {
+        "label": "d1-red",
+        "prompt_id": "13dd7460-0f11-4439-97f8-aef8afef3203",
+        "seconds": 28.008,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:488",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/d1-red_00001.png"
+      },
+      {
+        "label": "d1-blue-return",
+        "prompt_id": "fe00612d-7f65-4c50-a639-517641705a9e",
+        "seconds": 33.362,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:488",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/d1-blue-return_00001.png"
+      },
+      {
+        "label": "d1-original",
+        "prompt_id": "8014dc83-f1a5-40e8-a701-ca78dad37a98",
+        "seconds": 34.568,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:488",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/d1-original_00001.png"
+      },
+      {
+        "label": "d1-reload",
+        "prompt_id": "6261aff1-7cc0-42cb-a71e-51a2ba7963a2",
+        "seconds": 118.747,
+        "cached_nodes": [],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/d1-reload_00001.png"
+      },
+      {
+        "label": "d1-recovery-off",
+        "prompt_id": "482bc7b2-e81b-40fc-a09c-fc8a6ccf55cb",
+        "seconds": 34.264,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:488",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/d1-recovery-off_00001.png"
+      },
+      {
+        "label": "d1-recovery-auto",
+        "prompt_id": "b4c1ddf7-1943-45e3-b4eb-2bbd8618c460",
+        "seconds": 34.399,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:488",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/d1-recovery-auto_00001.png"
+      }
+    ],
+    "deployed_sha256": {
+      "comfy/ldm/modules/attention.py": "8dbaeae6e6f8bfc7d9cb1c103179776da2bb6f596b4e1ff3c042cfcbe6ae5291",
+      "comfy/ldm/qwen_image21/model.py": "77bf24be554ad19afe0d3cad1550acedb77d2a43ee0396534d337cd056dde915",
+      "tests-unit/comfy_test/hpu_fast_attention_test.py": "2cab97bd73c9535f20bc4075c104087114f0c583fa37055086eef5f0f3bf3730"
+    },
+    "queue": {
+      "queue_running": [],
+      "queue_pending": []
+    },
+    "batch_as_strided_warnings": 0,
+    "recompile_limit_warnings": 0,
+    "source_verification": {
+      "files": 1070,
+      "mismatches": []
+    },
+    "connection_recovery": {
+      "http_ssh_recovered": true,
+      "post_recovery_full_generations": 2,
+      "root_cause": "unresolved",
+      "queue": {
+        "queue_running": [],
+        "queue_pending": []
+      }
+    },
+    "human_acceptance_message": "验证通过，提交代码",
+    "human_acceptance_at": "2026-11-17T15:21:11.324861+08:00",
+    "commit": "22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4",
+    "committed_identity": "22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4",
+    "commit_tree": "9d01642e8deff0c4cb461a34b808115968ba8729"
+  },
+  "ordinary_unload_bytes": 9866979200,
+  "baseline_ordinary_unload_bytes": 9866979200,
+  "human_acceptance": true,
+  "human_acceptance_message": "验证通过，提交代码",
+  "human_acceptance_at": "2026-11-17T15:21:11.324861+08:00",
+  "commit": "22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4",
+  "committed_identity": "22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4",
+  "commit_tree": "9d01642e8deff0c4cb461a34b808115968ba8729"
+}

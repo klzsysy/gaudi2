@@ -2,6 +2,12 @@
 
 本篇合并2026-11-10的官方接口调查及JChen补充审查，并标出后续本机验证。外部结论绑定以下源码快照，后续升级应重新核对schema、shape与ABI。目录检索仅证明已审查文件的内容。
 
+## 2026-11-17 D1补充核查
+
+1Cat HEAD仍为`e2266e0efa381e6649e0f25b789cbb61b21b0e1f`，其diffusion attention提供BHND连续布局和显式FusedSDPA模式参考。用户提供的JChen地址404，按既有记录定位到`JChen-318/gaudi2-single-card-vllm`，本轮固定新版`72fafcf21430eda364fe45290908860e37b11a31`。
+
+已将JChen的128对齐KV主体/尾段及归一化统计合并方法作为独立候选实测，并结合K中心化和首层精度保留进入D1产品实现。直接MME/TPC的私有SCAL资源和约38K key bucket继续作为D2设计参考。固定文件SHA256、源码永久链接和本机结果见[D1记录](QWEN_D1_ATTENTION_2026-11-17.md)及[审计清单](../evidence/qwen-d1-external-2026-11-17.json)。
+
 ## 2026-11-14 INT8硬件前提复核
 
 后续实测已确认当前Gaudi2/Synapse栈的原生INT8 MME能力为阴性。安装库HAL的`getSupportedMmeTypes()`返回`0x7906`，INT8位为零。直接Synapse的9组INT8 GEMM在节点创建阶段失败，3组BF16对照编译成功，开发已按用户条件停止并放弃。[完整验证](INT8_NATIVE_MME.md)

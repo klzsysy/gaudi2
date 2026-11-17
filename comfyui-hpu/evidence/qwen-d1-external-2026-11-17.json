@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-17",
+  "supplied_jchen_repository": "jchen-38/gaudi2-single-card-vllm",
+  "supplied_address_result": "HTTP 404 and git ls-remote failed",
+  "resolved_from_prior_repository_audit": true,
+  "method": "Read-only pinned source review, no external runtime installed",
+  "sources": [
+    {
+      "repository": "1CatAI/1Cat-vLLM-Gaudi",
+      "commit": "e2266e0efa381e6649e0f25b789cbb61b21b0e1f",
+      "files": [
+        {
+          "path": "vllm_gaudi/omni/attention.py",
+          "sha256": "b593b1c29576c09b4cf7faf31abf410545456ab5fb8eb26fdc0751cab3e51e86",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/vllm_gaudi/omni/attention.py"
+        },
+        {
+          "path": "flashinfer_gaudi/mla.py",
+          "sha256": "cfc75508b97d60ee596907fa73f95727c8c83023203fdd123239f990fcfd12fd",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/flashinfer_gaudi/mla.py"
+        },
+        {
+          "path": "tools/minimax_h3/benchmark_attention_modes.py",
+          "sha256": "eab1c7d39f960907d99a2daf7c00fab950960176fc23a7185e1f91efdd219d85",
+          "url": "https://github.com/1CatAI/1Cat-vLLM-Gaudi/blob/e2266e0efa381e6649e0f25b789cbb61b21b0e1f/tools/minimax_h3/benchmark_attention_modes.py"
+        }
+      ]
+    },
+    {
+      "repository": "JChen-318/gaudi2-single-card-vllm",
+      "commit": "72fafcf21430eda364fe45290908860e37b11a31",
+      "files": [
+        {
+          "path": "vllm-gaudi/vllm_gaudi/omni/attention.py",
+          "sha256": "b5092b0e86a1611b523e366b2202f8c87d62bd2a058106d534cd5df9aa5a87ed",
+          "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/72fafcf21430eda364fe45290908860e37b11a31/vllm-gaudi/vllm_gaudi/omni/attention.py"
+        },
+        {
+          "path": "native/mme-direct-attention/attention/h3_direct_attention.py",
+          "sha256": "523f8b895b9f11dd3affb36f82e112463d5f46b9ef558cbf5511dcdf858724ad",
+          "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/72fafcf21430eda364fe45290908860e37b11a31/native/mme-direct-attention/attention/h3_direct_attention.py"
+        },
+        {
+          "path": "native/mme-direct-attention/attention/runtime_quad.hpp",
+          "sha256": "0e61e2e0b7cbaa49c7261b92d2f4fd23efea93d25c82bdee7bd7c159e6afef7b",
+          "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/72fafcf21430eda364fe45290908860e37b11a31/native/mme-direct-attention/attention/runtime_quad.hpp"
+        },
+        {
+          "path": "docs/OPTIMIZATION.md",
+          "sha256": "e6e5a9541f400fe9d6a53e7d9aa95550401df1fe58131990d12a4f9bc8f619ba",
+          "url": "https://github.com/JChen-318/gaudi2-single-card-vllm/blob/72fafcf21430eda364fe45290908860e37b11a31/docs/OPTIMIZATION.md"
+        }
+      ]
+    }
+  ]
+}
