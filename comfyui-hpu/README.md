@@ -1,6 +1,6 @@
 # ComfyUI Gaudi2优化与适配记录
 
-更新于2026-11-16（Asia/Shanghai）。产品版本为`07fedda`，已按用户明确指示提交并关联现有部署，单卡Gaudi2、Habana1.24.2、eager＋区域编译及符合条件的Qwen整步编译。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
+更新于2026-11-17（Asia/Shanghai）。当前产品提交与部署为`a5308be1`，已人工验收并提交。单卡Gaudi2、Habana1.24.2、eager＋区域编译及符合条件的Qwen整步编译、四token回读、原生FP8 Qwen旋转和动态KV容量图复用。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
 
 ## 默认优化交付流程
 
@@ -10,6 +10,11 @@
 
 | 主题 | 内容 |
 |---|---|
+| [扩写首个decode长等待修复](optimization/QWEN_DECODE_STARTUP_2026-11-17.md) | 新容量等待约53秒→0.6秒，输出逐元素一致，缓存隔离回归已固化，已验收提交 |
+| [P1/P2/P3执行与验收](optimization/QWEN80_PE_EXECUTION_2026-11-16.md) | 完整token图、FP8/GDN/布局、attention逐项实测；固定整图44.370→36.593秒，HBM峰值36.4%，已并入验收版本 |
+| [硬件80%计划首批执行](optimization/QWEN80_FIRST_DELIVERY_2026-11-16.md) | 低扰动文本trace、四token回读、整图45.139→43.819秒、RoPE候选取舍及部署验收 |
+| [Qwen21硬件80%深度优化计划](optimization/QWEN21_HARDWARE_80_PLAN.md) | 理论资源/关键路径口径、PE完整token图与GDN融合、DiT片上attention、阶段预算及验收 |
+| [最后一次FP8生成的瓶颈调查](QWEN21_LATEST_BOTTLENECKS_2026-11-16.md) | 原图45.465秒、thinking开启扩写1909 tokens、PE占60.9%、DiT attention及HBM计数、普通服务恢复 |
 | [优化方向与重启条件](optimization/STRATEGY.md) | FP8/BF16投入顺序、剩余机会、何时值得重测失败候选 |
 | [测量与质量方法](optimization/MEASUREMENT.md) | 固定caption/MTP、cold/warm、A/A、logits、生命周期和测量陷阱 |
 | [性能预算与硬件计数](optimization/BOTTLENECKS.md) | 节点/设备费用、AIP功率公式、HBM/BMON、理论下界与5090快照 |

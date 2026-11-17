@@ -1,0 +1,3313 @@
+{
+  "date": "2026-11-16",
+  "timezone": "Asia/Shanghai",
+  "status": "Investigation complete; records staged for review; ordinary service restored",
+  "product_commit": "07fedda3278b5c4be8c036fe245dc6991b91dd4a",
+  "original": {
+    "prompt_id": "3b17fc44-fda6-4009-b813-2199c4e13653",
+    "filename": "Qwen_image_2.1_00062.png",
+    "started": "2026-11-16T13:54:50.177+08:00",
+    "finished": "2026-11-16T13:55:35.642+08:00",
+    "seconds": 45.465
+  },
+  "workflow": "comfyui-hpu/workflows/qwen21-latest-2026-11-16-api.json",
+  "workflow_sha256": "a7146e4bdd8936b0a8f1292e09b1df76f89644baa77a72ef7d7bbfc0183cfa5f",
+  "measurements": {
+    "cold_seconds": 146.057880999,
+    "warm_seconds": {
+      "mean": 44.86258731833333,
+      "median": 44.772745357,
+      "minimum": 44.553461371,
+      "maximum": 45.261555227,
+      "samples": 3
+    },
+    "stage_medians": {
+      "TextGenerate": 27.266820647,
+      "SwitchNode": 0.000180871,
+      "PreviewAny": 6.4356e-05,
+      "TextEncodeQwenImage21": 0.488447499,
+      "CFGGuider": 0.000199558,
+      "SamplerCustomAdvanced": 15.143851088,
+      "VAEDecode": 1.098619852,
+      "SaveImageAdvanced": 0.756791586
+    },
+    "cached_seconds": {
+      "mean": 17.022655188,
+      "median": 17.022655188,
+      "minimum": 17.022655188,
+      "maximum": 17.022655188,
+      "samples": 1
+    }
+  },
+  "runs": {
+    "cached-0": {
+      "stages": {
+        "TextGenerate": 27.708317085,
+        "SwitchNode": 0.000181892,
+        "PreviewAny": 6.5398e-05,
+        "TextEncodeQwenImage21": 0.519974449,
+        "CFGGuider": 0.000213189,
+        "SamplerCustomAdvanced": 15.153554468,
+        "VAEDecode": 1.098900679,
+        "SaveImageAdvanced": 0.75680855
+      },
+      "executed": [
+        "TextGenerate",
+        "SwitchNode",
+        "PreviewAny",
+        "TextEncodeQwenImage21",
+        "CFGGuider",
+        "SamplerCustomAdvanced",
+        "VAEDecode",
+        "SaveImageAdvanced"
+      ],
+      "start_ns": 1794809301995411905,
+      "input_tokens": {
+        "qwen35_9b": 2803
+      },
+      "generate_start_ns": 1794809302011277032,
+      "output_tokens": 1909,
+      "first_token_seconds": 0.433052982,
+      "thinking": {
+        "tokens_including_close": 812,
+        "following_tokens": 1097,
+        "seconds": 11.852003737,
+        "following_seconds": 15.847085879
+      },
+      "end_ns": 1794809347250182699,
+      "seconds": 45.254770794,
+      "fallback_counts": {},
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53639054080,
+        "NumAllocs": 2426863,
+        "NumFrees": 2424170,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 2426864,
+        "TotalSystemFrees": 2424170,
+        "TotalActiveAllocs": 2694
+      },
+      "hardware": {
+        "TextGenerate": {
+          "power.draw": {
+            "mean": 150.86486486486487,
+            "median": 150.0,
+            "minimum": 103.0,
+            "maximum": 306.0,
+            "samples": 111
+          },
+          "utilization.aip": {
+            "mean": 19.62162162162162,
+            "median": 24.0,
+            "minimum": 0.0,
+            "maximum": 48.0,
+            "samples": 111
+          },
+          "memory.used": {
+            "mean": 38352.585585585584,
+            "median": 38364.0,
+            "minimum": 38054.0,
+            "maximum": 38365.0,
+            "samples": 111
+          },
+          "temperature.aip": {
+            "mean": 50.432432432432435,
+            "median": 50.0,
+            "minimum": 49.0,
+            "maximum": 53.0,
+            "samples": 111
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 111
+          },
+          "cpu_cores": {
+            "mean": 3.835490934419459,
+            "median": 3.638503570804832,
+            "minimum": 2.3989290988584733,
+            "maximum": 17.95272936004288,
+            "samples": 111
+          },
+          "busiest_thread_cores": {
+            "mean": 0.6451302480221125,
+            "median": 0.6397449362528821,
+            "minimum": 0.4398295044909337,
+            "maximum": 0.7596935244383619,
+            "samples": 111
+          },
+          "rss": {
+            "mean": 9629170494.27027,
+            "median": 9629216768,
+            "minimum": 9624080384,
+            "maximum": 9629216768,
+            "samples": 111
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "SwitchNode": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "PreviewAny": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "TextEncodeQwenImage21": {
+          "power.draw": {
+            "mean": 190.0,
+            "median": 190.0,
+            "minimum": 150.0,
+            "maximum": 230.0,
+            "samples": 2
+          },
+          "utilization.aip": {
+            "mean": 32.0,
+            "median": 32.0,
+            "minimum": 26.0,
+            "maximum": 38.0,
+            "samples": 2
+          },
+          "memory.used": {
+            "mean": 38406.0,
+            "median": 38406.0,
+            "minimum": 38363.0,
+            "maximum": 38449.0,
+            "samples": 2
+          },
+          "temperature.aip": {
+            "mean": 50.0,
+            "median": 50.0,
+            "minimum": 50.0,
+            "maximum": 50.0,
+            "samples": 2
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 2
+          },
+          "cpu_cores": {
+            "mean": 6.037505275563195,
+            "median": 6.037505275563195,
+            "minimum": 5.917496118032656,
+            "maximum": 6.157514433093734,
+            "samples": 2
+          },
+          "busiest_thread_cores": {
+            "mean": 0.9196198310881823,
+            "median": 0.9196198310881823,
+            "minimum": 0.9196108832077255,
+            "maximum": 0.9196287789686391,
+            "samples": 2
+          },
+          "rss": {
+            "mean": 9630728192,
+            "median": 9630728192.0,
+            "minimum": 9630728192,
+            "maximum": 9630728192,
+            "samples": 2
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "CFGGuider": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "SamplerCustomAdvanced": {
+          "power.draw": {
+            "mean": 360.78688524590166,
+            "median": 366.0,
+            "minimum": 186.0,
+            "maximum": 400.0,
+            "samples": 61
+          },
+          "utilization.aip": {
+            "mean": 59.540983606557376,
+            "median": 61.0,
+            "minimum": 0.0,
+            "maximum": 67.0,
+            "samples": 61
+          },
+          "memory.used": {
+            "mean": 48370.60655737705,
+            "median": 51131.0,
+            "minimum": 38449.0,
+            "maximum": 51457.0,
+            "samples": 61
+          },
+          "temperature.aip": {
+            "mean": 53.885245901639344,
+            "median": 54.0,
+            "minimum": 51.0,
+            "maximum": 55.0,
+            "samples": 61
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 61
+          },
+          "cpu_cores": {
+            "mean": 1.9473299030500404,
+            "median": 0.4797265769595753,
+            "minimum": 0.199897895353238,
+            "maximum": 8.71648634948592,
+            "samples": 61
+          },
+          "busiest_thread_cores": {
+            "mean": 0.28446318958903094,
+            "median": 0.19991323205970424,
+            "minimum": 0.07995865242137,
+            "maximum": 0.7596937644047274,
+            "samples": 61
+          },
+          "rss": {
+            "mean": 9630728192,
+            "median": 9630728192,
+            "minimum": 9630728192,
+            "maximum": 9630728192,
+            "samples": 61
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "VAEDecode": {
+          "power.draw": {
+            "mean": 241.25,
+            "median": 242.5,
+            "minimum": 155.0,
+            "maximum": 325.0,
+            "samples": 4
+          },
+          "utilization.aip": {
+            "mean": 37.25,
+            "median": 39.5,
+            "minimum": 25.0,
+            "maximum": 45.0,
+            "samples": 4
+          },
+          "memory.used": {
+            "mean": 45937.0,
+            "median": 44118.0,
+            "minimum": 44118.0,
+            "maximum": 51394.0,
+            "samples": 4
+          },
+          "temperature.aip": {
+            "mean": 53.0,
+            "median": 53.0,
+            "minimum": 52.0,
+            "maximum": 54.0,
+            "samples": 4
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 4
+          },
+          "cpu_cores": {
+            "mean": 0.5171197287787882,
+            "median": 0.5144546134422894,
+            "minimum": 0.15993583054592284,
+            "maximum": 0.8796338576846511,
+            "samples": 4
+          },
+          "busiest_thread_cores": {
+            "mean": 0.18494388272610734,
+            "median": 0.17695467327655331,
+            "minimum": 0.06599932701149616,
+            "maximum": 0.3198668573398266,
+            "samples": 4
+          },
+          "rss": {
+            "mean": 9630728192,
+            "median": 9630728192.0,
+            "minimum": 9630728192,
+            "maximum": 9630728192,
+            "samples": 4
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "SaveImageAdvanced": {
+          "power.draw": {
+            "mean": 82.33333333333333,
+            "median": 82.0,
+            "minimum": 82.0,
+            "maximum": 83.0,
+            "samples": 3
+          },
+          "utilization.aip": {
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0.0,
+            "maximum": 0.0,
+            "samples": 3
+          },
+          "memory.used": {
+            "mean": 42096.666666666664,
+            "median": 44118.0,
+            "minimum": 38054.0,
+            "maximum": 44118.0,
+            "samples": 3
+          },
+          "temperature.aip": {
+            "mean": 51.333333333333336,
+            "median": 51.0,
+            "minimum": 51.0,
+            "maximum": 52.0,
+            "samples": 3
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 3
+          },
+          "cpu_cores": {
+            "mean": 1.7591269408741579,
+            "median": 1.0395196255067816,
+            "minimum": 0.9595413622578698,
+            "maximum": 3.278319834857822,
+            "samples": 3
+          },
+          "busiest_thread_cores": {
+            "mean": 0.9861888614242522,
+            "median": 0.9994877545299015,
+            "minimum": 0.9595565773909452,
+            "maximum": 0.9995222523519098,
+            "samples": 3
+          },
+          "rss": {
+            "mean": 9630728192,
+            "median": 9630728192,
+            "minimum": 9630728192,
+            "maximum": 9630728192,
+            "samples": 3
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        }
+      },
+      "token_sha256": "0946b2d016b1b65960de945eace2addb9a5c3dfc92adfa2266f9b6ab83559da7"
+    },
+    "cached-1": {
+      "stages": {
+        "SamplerCustomAdvanced": 15.158660508,
+        "VAEDecode": 1.099004523,
+        "SaveImageAdvanced": 0.75635999
+      },
+      "executed": [
+        "SamplerCustomAdvanced",
+        "VAEDecode",
+        "SaveImageAdvanced"
+      ],
+      "start_ns": 1794809347818944179,
+      "end_ns": 1794809364841599367,
+      "seconds": 17.022655188,
+      "fallback_counts": {},
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53766614400,
+        "NumAllocs": 2474723,
+        "NumFrees": 2472030,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 2474724,
+        "TotalSystemFrees": 2472030,
+        "TotalActiveAllocs": 2694
+      },
+      "hardware": {
+        "SamplerCustomAdvanced": {
+          "power.draw": {
+            "mean": 362.7,
+            "median": 366.0,
+            "minimum": 100.0,
+            "maximum": 404.0,
+            "samples": 60
+          },
+          "utilization.aip": {
+            "mean": 59.55,
+            "median": 61.0,
+            "minimum": 0.0,
+            "maximum": 67.0,
+            "samples": 60
+          },
+          "memory.used": {
+            "mean": 49087.46666666667,
+            "median": 51412.0,
+            "minimum": 38054.0,
+            "maximum": 51542.0,
+            "samples": 60
+          },
+          "temperature.aip": {
+            "mean": 55.3,
+            "median": 55.0,
+            "minimum": 51.0,
+            "maximum": 56.0,
+            "samples": 60
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 60
+          },
+          "cpu_cores": {
+            "mean": 1.8761741328168475,
+            "median": 0.4398085742161385,
+            "minimum": 0.14406216213187625,
+            "maximum": 7.756328402337061,
+            "samples": 60
+          },
+          "busiest_thread_cores": {
+            "mean": 0.28938462374101565,
+            "median": 0.19991120703959453,
+            "minimum": 0.0720310810657334,
+            "maximum": 0.7996214847770623,
+            "samples": 60
+          },
+          "rss": {
+            "mean": 9630728192,
+            "median": 9630728192.0,
+            "minimum": 9630728192,
+            "maximum": 9630728192,
+            "samples": 60
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "VAEDecode": {
+          "power.draw": {
+            "mean": 251.4,
+            "median": 273.0,
+            "minimum": 146.0,
+            "maximum": 344.0,
+            "samples": 5
+          },
+          "utilization.aip": {
+            "mean": 41.4,
+            "median": 45.0,
+            "minimum": 24.0,
+            "maximum": 59.0,
+            "samples": 5
+          },
+          "memory.used": {
+            "mean": 49036.8,
+            "median": 50427.0,
+            "minimum": 43476.0,
+            "maximum": 50427.0,
+            "samples": 5
+          },
+          "temperature.aip": {
+            "mean": 54.6,
+            "median": 54.0,
+            "minimum": 54.0,
+            "maximum": 56.0,
+            "samples": 5
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 5
+          },
+          "cpu_cores": {
+            "mean": 2.1110092973527976,
+            "median": 0.4798030523627512,
+            "minimum": 0.2398915949071759,
+            "maximum": 6.35693176331479,
+            "samples": 5
+          },
+          "busiest_thread_cores": {
+            "mean": 0.3678315378882759,
+            "median": 0.23990152618120517,
+            "minimum": 0.1599277299382309,
+            "maximum": 0.6397091754145457,
+            "samples": 5
+          },
+          "rss": {
+            "mean": 9630728192,
+            "median": 9630728192,
+            "minimum": 9630728192,
+            "maximum": 9630728192,
+            "samples": 5
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "SaveImageAdvanced": {
+          "power.draw": {
+            "mean": 83.33333333333333,
+            "median": 84.0,
+            "minimum": 82.0,
+            "maximum": 84.0,
+            "samples": 3
+          },
+          "utilization.aip": {
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0.0,
+            "maximum": 0.0,
+            "samples": 3
+          },
+          "memory.used": {
+            "mean": 43476.0,
+            "median": 43476.0,
+            "minimum": 43476.0,
+            "maximum": 43476.0,
+            "samples": 3
+          },
+          "temperature.aip": {
+            "mean": 52.333333333333336,
+            "median": 52.0,
+            "minimum": 52.0,
+            "maximum": 53.0,
+            "samples": 3
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 3
+          },
+          "cpu_cores": {
+            "mean": 0.999498068918322,
+            "median": 0.9995250936432071,
+            "minimum": 0.9195705237826454,
+            "maximum": 1.0793985893291136,
+            "samples": 3
+          },
+          "busiest_thread_cores": {
+            "mean": 0.9994992694484501,
+            "median": 0.9995250936432071,
+            "minimum": 0.9595518509034767,
+            "maximum": 1.0394208637986666,
+            "samples": 3
+          },
+          "rss": {
+            "mean": 9630728192,
+            "median": 9630728192,
+            "minimum": 9630728192,
+            "maximum": 9630728192,
+            "samples": 3
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        }
+      },
+      "token_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "full-0": {
+      "stages": {
+        "VAELoader": 0.310157423,
+        "ResolutionSelector": 0.000166319,
+        "EmptyLatentImage": 0.00073614,
+        "ManualSigmas": 0.000311746,
+        "KSamplerSelect": 0.000119979,
+        "CLIPLoader": 22.845885469000002,
+        "UNETLoader": 5.986682091,
+        "QwenImage21Cache": 0.004203031,
+        "RandomNoise": 0.00014055,
+        "StringMultiline": 0.000130145,
+        "TextGenerate": 95.242574485,
+        "SwitchNode": 0.000119028,
+        "PreviewAny": 6.9173e-05,
+        "TextEncodeQwenImage21": 0.509700469,
+        "CFGGuider": 0.000244616,
+        "SamplerCustomAdvanced": 19.099808846,
+        "VAEDecode": 1.266990733,
+        "SaveImageAdvanced": 0.756896817
+      },
+      "executed": [
+        "VAELoader",
+        "ResolutionSelector",
+        "EmptyLatentImage",
+        "ManualSigmas",
+        "KSamplerSelect",
+        "CLIPLoader",
+        "UNETLoader",
+        "QwenImage21Cache",
+        "RandomNoise",
+        "StringMultiline",
+        "CLIPLoader",
+        "TextGenerate",
+        "SwitchNode",
+        "PreviewAny",
+        "TextEncodeQwenImage21",
+        "CFGGuider",
+        "SamplerCustomAdvanced",
+        "VAEDecode",
+        "SaveImageAdvanced"
+      ],
+      "start_ns": 1794809019029527071,
+      "input_tokens": {
+        "qwen35_9b": 2803
+      },
+      "generate_start_ns": 1794809048209685321,
+      "output_tokens": 1909,
+      "first_token_seconds": 14.814332753,
+      "thinking": {
+        "tokens_including_close": 812,
+        "following_tokens": 1097,
+        "seconds": 80.095018922,
+        "following_seconds": 15.137610202
+      },
+      "end_ns": 1794809165087408070,
+      "seconds": 146.057880999,
+      "fallback_counts": {},
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 52855532160,
+        "NumAllocs": 489123,
+        "NumFrees": 486430,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 489124,
+        "TotalSystemFrees": 486430,
+        "TotalActiveAllocs": 2694
+      },
+      "hardware": {
+        "VAELoader": {
+          "power.draw": {
+            "mean": 82.0,
+            "median": 82.0,
+            "minimum": 82.0,
+            "maximum": 82.0,
+            "samples": 1
+          },
+          "utilization.aip": {
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0.0,
+            "maximum": 0.0,
+            "samples": 1
+          },
+          "memory.used": {
+            "mean": 773.0,
+            "median": 773.0,
+            "minimum": 773.0,
+            "maximum": 773.0,
+            "samples": 1
+          },
+          "temperature.aip": {
+            "mean": 40.0,
+            "median": 40.0,
+            "minimum": 40.0,
+            "maximum": 40.0,
+            "samples": 1
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 1
+          },
+          "cpu_cores": {
+            "mean": 30.98773790420941,
+            "median": 30.98773790420941,
+            "minimum": 30.98773790420941,
+            "maximum": 30.98773790420941,
+            "samples": 1
+          },
+          "busiest_thread_cores": {
+            "mean": 1.0395886264637992,
+            "median": 1.0395886264637992,
+            "minimum": 1.0395886264637992,
+            "maximum": 1.0395886264637992,
+            "samples": 1
+          },
+          "rss": {
+            "mean": 2905382912,
+            "median": 2905382912,
+            "minimum": 2905382912,
+            "maximum": 2905382912,
+            "samples": 1
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "ResolutionSelector": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "EmptyLatentImage": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "ManualSigmas": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "KSamplerSelect": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "CLIPLoader": {
+          "power.draw": {
+            "mean": 82.99122807017544,
+            "median": 83.0,
+            "minimum": 80.0,
+            "maximum": 87.0,
+            "samples": 114
+          },
+          "utilization.aip": {
+            "mean": 0.9649122807017544,
+            "median": 0.0,
+            "minimum": 0.0,
+            "maximum": 14.0,
+            "samples": 114
+          },
+          "memory.used": {
+            "mean": 9960.38596491228,
+            "median": 10871.0,
+            "minimum": 773.0,
+            "maximum": 21257.0,
+            "samples": 114
+          },
+          "temperature.aip": {
+            "mean": 40.01754385964912,
+            "median": 40.0,
+            "minimum": 40.0,
+            "maximum": 41.0,
+            "samples": 114
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 114
+          },
+          "cpu_cores": {
+            "mean": 15.560706894954238,
+            "median": 17.75145530165627,
+            "minimum": 0.42336530421580665,
+            "maximum": 34.70262855819614,
+            "samples": 114
+          },
+          "busiest_thread_cores": {
+            "mean": 0.905147841052649,
+            "median": 0.9194348859349668,
+            "minimum": 0.29122310919828875,
+            "maximum": 2.078988688426447,
+            "samples": 114
+          },
+          "rss": {
+            "mean": 12664424196.491228,
+            "median": 11190247424.0,
+            "minimum": 2832633856,
+            "maximum": 31646117888,
+            "samples": 114
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "UNETLoader": {
+          "power.draw": {
+            "mean": 82.58333333333333,
+            "median": 83.0,
+            "minimum": 80.0,
+            "maximum": 84.0,
+            "samples": 24
+          },
+          "utilization.aip": {
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0.0,
+            "maximum": 0.0,
+            "samples": 24
+          },
+          "memory.used": {
+            "mean": 10775.75,
+            "median": 10871.0,
+            "minimum": 8585.0,
+            "maximum": 10871.0,
+            "samples": 24
+          },
+          "temperature.aip": {
+            "mean": 40.041666666666664,
+            "median": 40.0,
+            "minimum": 40.0,
+            "maximum": 41.0,
+            "samples": 24
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 24
+          },
+          "cpu_cores": {
+            "mean": 19.529972440194047,
+            "median": 20.10776882370951,
+            "minimum": 12.514162243426835,
+            "maximum": 23.148743229142386,
+            "samples": 24
+          },
+          "busiest_thread_cores": {
+            "mean": 1.0011543411088655,
+            "median": 0.9995297032839567,
+            "minimum": 0.9195609758424272,
+            "maximum": 1.079473644333127,
+            "samples": 24
+          },
+          "rss": {
+            "mean": 8368731648,
+            "median": 8555626496.0,
+            "minimum": 4803072000,
+            "maximum": 11738075136,
+            "samples": 24
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "QwenImage21Cache": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "RandomNoise": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "StringMultiline": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "TextGenerate": {
+          "power.draw": {
+            "mean": 103.10290237467018,
+            "median": 84.0,
+            "minimum": 80.0,
+            "maximum": 278.0,
+            "samples": 379
+          },
+          "utilization.aip": {
+            "mean": 5.598944591029023,
+            "median": 0.0,
+            "minimum": 0.0,
+            "maximum": 50.0,
+            "samples": 379
+          },
+          "memory.used": {
+            "mean": 21987.736147757256,
+            "median": 21978.0,
+            "minimum": 21257.0,
+            "maximum": 23220.0,
+            "samples": 379
+          },
+          "temperature.aip": {
+            "mean": 41.16358839050132,
+            "median": 41.0,
+            "minimum": 40.0,
+            "maximum": 44.0,
+            "samples": 379
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 379
+          },
+          "cpu_cores": {
+            "mean": 1.8791900683402087,
+            "median": 1.0395229005695181,
+            "minimum": 0.5913783797598765,
+            "maximum": 18.552082193944557,
+            "samples": 379
+          },
+          "busiest_thread_cores": {
+            "mean": 0.894014380494368,
+            "median": 0.9595467331523599,
+            "minimum": 0.2804022517231689,
+            "maximum": 1.9991111631910665,
+            "samples": 379
+          },
+          "rss": {
+            "mean": 15271780060.200527,
+            "median": 15843704832,
+            "minimum": 13713334272,
+            "maximum": 15966117888,
+            "samples": 379
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "SwitchNode": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "PreviewAny": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "TextEncodeQwenImage21": {
+          "power.draw": {
+            "mean": 148.0,
+            "median": 148.0,
+            "minimum": 148.0,
+            "maximum": 148.0,
+            "samples": 1
+          },
+          "utilization.aip": {
+            "mean": 24.0,
+            "median": 24.0,
+            "minimum": 24.0,
+            "maximum": 24.0,
+            "samples": 1
+          },
+          "memory.used": {
+            "mean": 21980.0,
+            "median": 21980.0,
+            "minimum": 21980.0,
+            "maximum": 21980.0,
+            "samples": 1
+          },
+          "temperature.aip": {
+            "mean": 44.0,
+            "median": 44.0,
+            "minimum": 44.0,
+            "maximum": 44.0,
+            "samples": 1
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 1
+          },
+          "cpu_cores": {
+            "mean": 2.237064489326264,
+            "median": 2.237064489326264,
+            "minimum": 2.237064489326264,
+            "maximum": 2.237064489326264,
+            "samples": 1
+          },
+          "busiest_thread_cores": {
+            "mean": 0.35697837595632936,
+            "median": 0.35697837595632936,
+            "minimum": 0.35697837595632936,
+            "maximum": 0.35697837595632936,
+            "samples": 1
+          },
+          "rss": {
+            "mean": 15966117888,
+            "median": 15966117888,
+            "minimum": 15966117888,
+            "maximum": 15966117888,
+            "samples": 1
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "CFGGuider": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "SamplerCustomAdvanced": {
+          "power.draw": {
+            "mean": 308.6,
+            "median": 363.0,
+            "minimum": 83.0,
+            "maximum": 401.0,
+            "samples": 75
+          },
+          "utilization.aip": {
+            "mean": 50.413333333333334,
+            "median": 61.0,
+            "minimum": 0.0,
+            "maximum": 66.0,
+            "samples": 75
+          },
+          "memory.used": {
+            "mean": 44549.18666666667,
+            "median": 49811.0,
+            "minimum": 21961.0,
+            "maximum": 50877.0,
+            "samples": 75
+          },
+          "temperature.aip": {
+            "mean": 47.70666666666666,
+            "median": 49.0,
+            "minimum": 43.0,
+            "maximum": 51.0,
+            "samples": 75
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 75
+          },
+          "cpu_cores": {
+            "mean": 1.8534692124303114,
+            "median": 0.679690368411887,
+            "minimum": 0.19990802711479,
+            "maximum": 10.47537147806318,
+            "samples": 75
+          },
+          "busiest_thread_cores": {
+            "mean": 0.4120344471756943,
+            "median": 0.2399103052140051,
+            "minimum": 0.07996289721569376,
+            "maximum": 1.4793463537722826,
+            "samples": 75
+          },
+          "rss": {
+            "mean": 9786183024.64,
+            "median": 9363075072,
+            "minimum": 8989376512,
+            "maximum": 16235175936,
+            "samples": 75
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "VAEDecode": {
+          "power.draw": {
+            "mean": 250.6,
+            "median": 273.0,
+            "minimum": 148.0,
+            "maximum": 350.0,
+            "samples": 5
+          },
+          "utilization.aip": {
+            "mean": 43.2,
+            "median": 45.0,
+            "minimum": 24.0,
+            "maximum": 58.0,
+            "samples": 5
+          },
+          "memory.used": {
+            "mean": 48378.2,
+            "median": 50813.0,
+            "minimum": 44726.0,
+            "maximum": 50813.0,
+            "samples": 5
+          },
+          "temperature.aip": {
+            "mean": 48.4,
+            "median": 48.0,
+            "minimum": 48.0,
+            "maximum": 49.0,
+            "samples": 5
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 5
+          },
+          "cpu_cores": {
+            "mean": 1.991071864917737,
+            "median": 2.638843015113409,
+            "minimum": 0.319859169845536,
+            "maximum": 3.558304752449783,
+            "samples": 5
+          },
+          "busiest_thread_cores": {
+            "mean": 0.3358454118780675,
+            "median": 0.2798772894816916,
+            "minimum": 0.15992958492292425,
+            "maximum": 0.639695236395477,
+            "samples": 5
+          },
+          "rss": {
+            "mean": 9418887987.2,
+            "median": 9431666688,
+            "minimum": 9365061632,
+            "maximum": 9434378240,
+            "samples": 5
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "SaveImageAdvanced": {
+          "power.draw": {
+            "mean": 83.66666666666667,
+            "median": 83.0,
+            "minimum": 83.0,
+            "maximum": 85.0,
+            "samples": 3
+          },
+          "utilization.aip": {
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0.0,
+            "maximum": 0.0,
+            "samples": 3
+          },
+          "memory.used": {
+            "mean": 42502.0,
+            "median": 44726.0,
+            "minimum": 38054.0,
+            "maximum": 44726.0,
+            "samples": 3
+          },
+          "temperature.aip": {
+            "mean": 47.0,
+            "median": 47.0,
+            "minimum": 47.0,
+            "maximum": 47.0,
+            "samples": 3
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 3
+          },
+          "cpu_cores": {
+            "mean": 1.0395541637073864,
+            "median": 0.9996050200707892,
+            "minimum": 0.9995896884246954,
+            "maximum": 1.1194677826266746,
+            "samples": 3
+          },
+          "busiest_thread_cores": {
+            "mean": 1.0395539592854763,
+            "median": 1.0395732759617038,
+            "minimum": 0.9596208192679372,
+            "maximum": 1.1194677826267883,
+            "samples": 3
+          },
+          "rss": {
+            "mean": 9434378240,
+            "median": 9434378240,
+            "minimum": 9434378240,
+            "maximum": 9434378240,
+            "samples": 3
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        }
+      },
+      "token_sha256": "0946b2d016b1b65960de945eace2addb9a5c3dfc92adfa2266f9b6ab83559da7"
+    },
+    "full-1": {
+      "stages": {
+        "TextGenerate": 27.746775638,
+        "SwitchNode": 0.00018692,
+        "PreviewAny": 0.00010695,
+        "TextEncodeQwenImage21": 0.501005205,
+        "CFGGuider": 0.000197264,
+        "SamplerCustomAdvanced": 15.143851088,
+        "VAEDecode": 1.098397032,
+        "SaveImageAdvanced": 0.754187717
+      },
+      "executed": [
+        "TextGenerate",
+        "SwitchNode",
+        "PreviewAny",
+        "TextEncodeQwenImage21",
+        "CFGGuider",
+        "SamplerCustomAdvanced",
+        "VAEDecode",
+        "SaveImageAdvanced"
+      ],
+      "start_ns": 1794809165678321136,
+      "input_tokens": {
+        "qwen35_9b": 2803
+      },
+      "generate_start_ns": 1794809165695398725,
+      "output_tokens": 1909,
+      "first_token_seconds": 0.454055509,
+      "thinking": {
+        "tokens_including_close": 812,
+        "following_tokens": 1097,
+        "seconds": 11.935383389,
+        "following_seconds": 15.80090651
+      },
+      "end_ns": 1794809210939876363,
+      "seconds": 45.261555227,
+      "fallback_counts": {},
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53487536512,
+        "NumAllocs": 973558,
+        "NumFrees": 970865,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 973559,
+        "TotalSystemFrees": 970865,
+        "TotalActiveAllocs": 2694
+      },
+      "hardware": {
+        "TextGenerate": {
+          "power.draw": {
+            "mean": 152.9189189189189,
+            "median": 152.0,
+            "minimum": 134.0,
+            "maximum": 282.0,
+            "samples": 111
+          },
+          "utilization.aip": {
+            "mean": 19.135135135135137,
+            "median": 24.0,
+            "minimum": 0.0,
+            "maximum": 51.0,
+            "samples": 111
+          },
+          "memory.used": {
+            "mean": 38448.954954954956,
+            "median": 38363.0,
+            "minimum": 38054.0,
+            "maximum": 40816.0,
+            "samples": 111
+          },
+          "temperature.aip": {
+            "mean": 47.01801801801802,
+            "median": 47.0,
+            "minimum": 47.0,
+            "maximum": 48.0,
+            "samples": 111
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 111
+          },
+          "cpu_cores": {
+            "mean": 3.890546954347724,
+            "median": 3.678139067607415,
+            "minimum": 1.7785103838629857,
+            "maximum": 17.192392503856457,
+            "samples": 111
+          },
+          "busiest_thread_cores": {
+            "mean": 0.6517181114666607,
+            "median": 0.679594909784548,
+            "minimum": 0.3355679969553024,
+            "maximum": 0.9595748239104313,
+            "samples": 111
+          },
+          "rss": {
+            "mean": 9497700185.945946,
+            "median": 9497833472,
+            "minimum": 9483038720,
+            "maximum": 9497833472,
+            "samples": 111
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "SwitchNode": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "PreviewAny": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "TextEncodeQwenImage21": {
+          "power.draw": {
+            "mean": 202.5,
+            "median": 202.5,
+            "minimum": 153.0,
+            "maximum": 252.0,
+            "samples": 2
+          },
+          "utilization.aip": {
+            "mean": 22.0,
+            "median": 22.0,
+            "minimum": 0.0,
+            "maximum": 44.0,
+            "samples": 2
+          },
+          "memory.used": {
+            "mean": 38232.0,
+            "median": 38232.0,
+            "minimum": 38100.0,
+            "maximum": 38364.0,
+            "samples": 2
+          },
+          "temperature.aip": {
+            "mean": 48.0,
+            "median": 48.0,
+            "minimum": 48.0,
+            "maximum": 48.0,
+            "samples": 2
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 2
+          },
+          "cpu_cores": {
+            "mean": 11.07522081691802,
+            "median": 11.07522081691802,
+            "minimum": 5.597461752603726,
+            "maximum": 16.552979881232314,
+            "samples": 2
+          },
+          "busiest_thread_cores": {
+            "mean": 1.2594517781694203,
+            "median": 1.2594517781694203,
+            "minimum": 0.9595648718749197,
+            "maximum": 1.559338684463921,
+            "samples": 2
+          },
+          "rss": {
+            "mean": 9514864640,
+            "median": 9514864640.0,
+            "minimum": 9497833472,
+            "maximum": 9531895808,
+            "samples": 2
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "CFGGuider": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "SamplerCustomAdvanced": {
+          "power.draw": {
+            "mean": 361.2413793103448,
+            "median": 366.5,
+            "minimum": 208.0,
+            "maximum": 398.0,
+            "samples": 58
+          },
+          "utilization.aip": {
+            "mean": 60.08620689655172,
+            "median": 61.0,
+            "minimum": 0.0,
+            "maximum": 67.0,
+            "samples": 58
+          },
+          "memory.used": {
+            "mean": 48820.56896551724,
+            "median": 51403.0,
+            "minimum": 38100.0,
+            "maximum": 51609.0,
+            "samples": 58
+          },
+          "temperature.aip": {
+            "mean": 51.93103448275862,
+            "median": 52.0,
+            "minimum": 50.0,
+            "maximum": 53.0,
+            "samples": 58
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 58
+          },
+          "cpu_cores": {
+            "mean": 1.7205871740367384,
+            "median": 0.4598022545206459,
+            "minimum": 0.1317964638475972,
+            "maximum": 6.076852919409568,
+            "samples": 58
+          },
+          "busiest_thread_cores": {
+            "mean": 0.27893197183499957,
+            "median": 0.19990917246723705,
+            "minimum": 0.04393215461590475,
+            "maximum": 0.6797167728962662,
+            "samples": 58
+          },
+          "rss": {
+            "mean": 9540350799.448277,
+            "median": 9541087232.0,
+            "minimum": 9531895808,
+            "maximum": 9541087232,
+            "samples": 58
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "VAEDecode": {
+          "power.draw": {
+            "mean": 211.75,
+            "median": 189.5,
+            "minimum": 146.0,
+            "maximum": 322.0,
+            "samples": 4
+          },
+          "utilization.aip": {
+            "mean": 36.0,
+            "median": 32.5,
+            "minimum": 24.0,
+            "maximum": 55.0,
+            "samples": 4
+          },
+          "memory.used": {
+            "mean": 50059.75,
+            "median": 51403.0,
+            "minimum": 46030.0,
+            "maximum": 51403.0,
+            "samples": 4
+          },
+          "temperature.aip": {
+            "mean": 52.0,
+            "median": 52.0,
+            "minimum": 51.0,
+            "maximum": 53.0,
+            "samples": 4
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 4
+          },
+          "cpu_cores": {
+            "mean": 1.319434396634871,
+            "median": 0.5997254110568402,
+            "minimum": 0.11994280886976558,
+            "maximum": 3.958343955556038,
+            "samples": 4
+          },
+          "busiest_thread_cores": {
+            "mean": 0.31985878609828317,
+            "median": 0.3198537299581966,
+            "minimum": 0.07996187257992894,
+            "maximum": 0.5597658118968106,
+            "samples": 4
+          },
+          "rss": {
+            "mean": 9552982016,
+            "median": 9552982016.0,
+            "minimum": 9552982016,
+            "maximum": 9552982016,
+            "samples": 4
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "SaveImageAdvanced": {
+          "power.draw": {
+            "mean": 85.0,
+            "median": 85.0,
+            "minimum": 84.0,
+            "maximum": 86.0,
+            "samples": 3
+          },
+          "utilization.aip": {
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0.0,
+            "maximum": 0.0,
+            "samples": 3
+          },
+          "memory.used": {
+            "mean": 46030.0,
+            "median": 46030.0,
+            "minimum": 46030.0,
+            "maximum": 46030.0,
+            "samples": 3
+          },
+          "temperature.aip": {
+            "mean": 50.333333333333336,
+            "median": 50.0,
+            "minimum": 50.0,
+            "maximum": 51.0,
+            "samples": 3
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 3
+          },
+          "cpu_cores": {
+            "mean": 1.6791665416676942,
+            "median": 1.0795063762782593,
+            "minimum": 0.9995636305014682,
+            "maximum": 2.958429618223355,
+            "samples": 3
+          },
+          "busiest_thread_cores": {
+            "mean": 0.9862010455073276,
+            "median": 0.9995636305014682,
+            "minimum": 0.8795331297421983,
+            "maximum": 1.0795063762783161,
+            "samples": 3
+          },
+          "rss": {
+            "mean": 9552982016,
+            "median": 9552982016,
+            "minimum": 9552982016,
+            "maximum": 9552982016,
+            "samples": 3
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        }
+      },
+      "token_sha256": "0946b2d016b1b65960de945eace2addb9a5c3dfc92adfa2266f9b6ab83559da7"
+    },
+    "full-2": {
+      "stages": {
+        "TextGenerate": 27.101719508,
+        "SwitchNode": 0.000180871,
+        "PreviewAny": 6.4196e-05,
+        "TextEncodeQwenImage21": 0.428750603,
+        "CFGGuider": 0.000213139,
+        "SamplerCustomAdvanced": 15.150355682,
+        "VAEDecode": 1.098619852,
+        "SaveImageAdvanced": 0.756791586
+      },
+      "executed": [
+        "TextGenerate",
+        "SwitchNode",
+        "PreviewAny",
+        "TextEncodeQwenImage21",
+        "CFGGuider",
+        "SamplerCustomAdvanced",
+        "VAEDecode",
+        "SaveImageAdvanced"
+      ],
+      "start_ns": 1794809211509429950,
+      "input_tokens": {
+        "qwen35_9b": 2803
+      },
+      "generate_start_ns": 1794809211526383424,
+      "output_tokens": 1909,
+      "first_token_seconds": 0.432806696,
+      "thinking": {
+        "tokens_including_close": 812,
+        "following_tokens": 1097,
+        "seconds": 11.900478149,
+        "following_seconds": 15.191012895
+      },
+      "end_ns": 1794809256062891321,
+      "seconds": 44.553461371,
+      "fallback_counts": {},
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53514320256,
+        "NumAllocs": 1457993,
+        "NumFrees": 1455300,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 1457994,
+        "TotalSystemFrees": 1455300,
+        "TotalActiveAllocs": 2694
+      },
+      "hardware": {
+        "TextGenerate": {
+          "power.draw": {
+            "mean": 153.40740740740742,
+            "median": 152.5,
+            "minimum": 137.0,
+            "maximum": 275.0,
+            "samples": 108
+          },
+          "utilization.aip": {
+            "mean": 20.12037037037037,
+            "median": 25.0,
+            "minimum": 0.0,
+            "maximum": 51.0,
+            "samples": 108
+          },
+          "memory.used": {
+            "mean": 38478.12037037037,
+            "median": 38363.0,
+            "minimum": 38054.0,
+            "maximum": 41534.0,
+            "samples": 108
+          },
+          "temperature.aip": {
+            "mean": 49.361111111111114,
+            "median": 49.0,
+            "minimum": 49.0,
+            "maximum": 51.0,
+            "samples": 108
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 108
+          },
+          "cpu_cores": {
+            "mean": 3.7569574497232834,
+            "median": 3.5785177577470413,
+            "minimum": 2.083540756129193,
+            "maximum": 20.831001257428948,
+            "samples": 108
+          },
+          "busiest_thread_cores": {
+            "mean": 0.6213729725414212,
+            "median": 0.5997616799031935,
+            "minimum": 0.41670815122587096,
+            "maximum": 0.9195866494793931,
+            "samples": 108
+          },
+          "rss": {
+            "mean": 9585692672,
+            "median": 9585692672.0,
+            "minimum": 9585692672,
+            "maximum": 9585692672,
+            "samples": 108
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "SwitchNode": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "PreviewAny": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "TextEncodeQwenImage21": {
+          "power.draw": {
+            "mean": 241.5,
+            "median": 241.5,
+            "minimum": 170.0,
+            "maximum": 313.0,
+            "samples": 2
+          },
+          "utilization.aip": {
+            "mean": 39.5,
+            "median": 39.5,
+            "minimum": 27.0,
+            "maximum": 52.0,
+            "samples": 2
+          },
+          "memory.used": {
+            "mean": 38247.5,
+            "median": 38247.5,
+            "minimum": 38130.0,
+            "maximum": 38365.0,
+            "samples": 2
+          },
+          "temperature.aip": {
+            "mean": 49.5,
+            "median": 49.5,
+            "minimum": 49.0,
+            "maximum": 50.0,
+            "samples": 2
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 2
+          },
+          "cpu_cores": {
+            "mean": 8.736034379222822,
+            "median": 8.736034379222822,
+            "minimum": 7.91621592212984,
+            "maximum": 9.555852836315806,
+            "samples": 2
+          },
+          "busiest_thread_cores": {
+            "mean": 0.8596066962063954,
+            "median": 0.8596066962063954,
+            "minimum": 0.7996529570138625,
+            "maximum": 0.9195604353989283,
+            "samples": 2
+          },
+          "rss": {
+            "mean": 9585692672,
+            "median": 9585692672.0,
+            "minimum": 9585692672,
+            "maximum": 9585692672,
+            "samples": 2
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "CFGGuider": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "SamplerCustomAdvanced": {
+          "power.draw": {
+            "mean": 369.2881355932203,
+            "median": 369.0,
+            "minimum": 308.0,
+            "maximum": 399.0,
+            "samples": 59
+          },
+          "utilization.aip": {
+            "mean": 61.20338983050848,
+            "median": 61.0,
+            "minimum": 54.0,
+            "maximum": 67.0,
+            "samples": 59
+          },
+          "memory.used": {
+            "mean": 48654.86440677966,
+            "median": 51289.0,
+            "minimum": 38130.0,
+            "maximum": 51492.0,
+            "samples": 59
+          },
+          "temperature.aip": {
+            "mean": 53.40677966101695,
+            "median": 53.0,
+            "minimum": 51.0,
+            "maximum": 55.0,
+            "samples": 59
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 59
+          },
+          "cpu_cores": {
+            "mean": 1.8344226977299252,
+            "median": 0.4398099370153932,
+            "minimum": 0.11470904736944702,
+            "maximum": 8.196699123689116,
+            "samples": 59
+          },
+          "busiest_thread_cores": {
+            "mean": 0.28858360170267516,
+            "median": 0.19991438386629654,
+            "minimum": 0.05735452368478464,
+            "maximum": 0.9196296577797624,
+            "samples": 59
+          },
+          "rss": {
+            "mean": 9596822267.661016,
+            "median": 9597046784,
+            "minimum": 9592991744,
+            "maximum": 9597317120,
+            "samples": 59
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "VAEDecode": {
+          "power.draw": {
+            "mean": 248.2,
+            "median": 272.0,
+            "minimum": 148.0,
+            "maximum": 318.0,
+            "samples": 5
+          },
+          "utilization.aip": {
+            "mean": 41.2,
+            "median": 44.0,
+            "minimum": 24.0,
+            "maximum": 49.0,
+            "samples": 5
+          },
+          "memory.used": {
+            "mean": 49014.2,
+            "median": 51405.0,
+            "minimum": 45428.0,
+            "maximum": 51405.0,
+            "samples": 5
+          },
+          "temperature.aip": {
+            "mean": 52.8,
+            "median": 53.0,
+            "minimum": 52.0,
+            "maximum": 54.0,
+            "samples": 5
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 5
+          },
+          "cpu_cores": {
+            "mean": 2.1590532714490696,
+            "median": 0.5597524975970526,
+            "minimum": 0.3198384368121924,
+            "maximum": 6.197365499926255,
+            "samples": 5
+          },
+          "busiest_thread_cores": {
+            "mean": 0.35184129230361394,
+            "median": 0.23988542592287979,
+            "minimum": 0.15992928502761164,
+            "maximum": 0.599745048379928,
+            "samples": 5
+          },
+          "rss": {
+            "mean": 9597587456,
+            "median": 9597587456,
+            "minimum": 9597587456,
+            "maximum": 9597587456,
+            "samples": 5
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "SaveImageAdvanced": {
+          "power.draw": {
+            "mean": 84.33333333333333,
+            "median": 84.0,
+            "minimum": 83.0,
+            "maximum": 86.0,
+            "samples": 3
+          },
+          "utilization.aip": {
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0.0,
+            "maximum": 0.0,
+            "samples": 3
+          },
+          "memory.used": {
+            "mean": 42970.0,
+            "median": 45428.0,
+            "minimum": 38054.0,
+            "maximum": 45428.0,
+            "samples": 3
+          },
+          "temperature.aip": {
+            "mean": 51.0,
+            "median": 51.0,
+            "minimum": 51.0,
+            "maximum": 51.0,
+            "samples": 3
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 3
+          },
+          "cpu_cores": {
+            "mean": 0.9993879225047164,
+            "median": 0.9994866716413385,
+            "minimum": 0.9991899407280128,
+            "maximum": 0.9994871551447979,
+            "samples": 3
+          },
+          "busiest_thread_cores": {
+            "mean": 0.9860653899616884,
+            "median": 0.9994866716413385,
+            "minimum": 0.9592223430989286,
+            "maximum": 0.9994871551447979,
+            "samples": 3
+          },
+          "rss": {
+            "mean": 9597587456,
+            "median": 9597587456,
+            "minimum": 9597587456,
+            "maximum": 9597587456,
+            "samples": 3
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        }
+      },
+      "token_sha256": "0946b2d016b1b65960de945eace2addb9a5c3dfc92adfa2266f9b6ab83559da7"
+    },
+    "full-3": {
+      "stages": {
+        "TextGenerate": 27.266820647,
+        "SwitchNode": 0.00011318,
+        "PreviewAny": 6.4356e-05,
+        "TextEncodeQwenImage21": 0.488447499,
+        "CFGGuider": 0.000199558,
+        "SamplerCustomAdvanced": 15.143747585,
+        "VAEDecode": 1.09957046,
+        "SaveImageAdvanced": 0.757503039
+      },
+      "executed": [
+        "TextGenerate",
+        "SwitchNode",
+        "PreviewAny",
+        "TextEncodeQwenImage21",
+        "CFGGuider",
+        "SamplerCustomAdvanced",
+        "VAEDecode",
+        "SaveImageAdvanced"
+      ],
+      "start_ns": 1794809256636088132,
+      "input_tokens": {
+        "qwen35_9b": 2803
+      },
+      "generate_start_ns": 1794809256654157523,
+      "output_tokens": 1909,
+      "first_token_seconds": 0.43129126,
+      "thinking": {
+        "tokens_including_close": 812,
+        "following_tokens": 1097,
+        "seconds": 11.81506732,
+        "following_seconds": 15.440206572
+      },
+      "end_ns": 1794809301408833489,
+      "seconds": 44.772745357,
+      "fallback_counts": {},
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53639054080,
+        "NumAllocs": 1942428,
+        "NumFrees": 1939735,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 1942429,
+        "TotalSystemFrees": 1939735,
+        "TotalActiveAllocs": 2694
+      },
+      "hardware": {
+        "TextGenerate": {
+          "power.draw": {
+            "mean": 154.954128440367,
+            "median": 153.0,
+            "minimum": 130.0,
+            "maximum": 298.0,
+            "samples": 109
+          },
+          "utilization.aip": {
+            "mean": 21.174311926605505,
+            "median": 25.0,
+            "minimum": 0.0,
+            "maximum": 50.0,
+            "samples": 109
+          },
+          "memory.used": {
+            "mean": 38465.55963302752,
+            "median": 38363.0,
+            "minimum": 38054.0,
+            "maximum": 41221.0,
+            "samples": 109
+          },
+          "temperature.aip": {
+            "mean": 50.25688073394495,
+            "median": 50.0,
+            "minimum": 50.0,
+            "maximum": 52.0,
+            "samples": 109
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 109
+          },
+          "cpu_cores": {
+            "mean": 3.8665692156688496,
+            "median": 3.678305066452111,
+            "minimum": 2.155191049084046,
+            "maximum": 21.071321986752903,
+            "samples": 109
+          },
+          "busiest_thread_cores": {
+            "mean": 0.6489783915206478,
+            "median": 0.6397561300812483,
+            "minimum": 0.4087431299986947,
+            "maximum": 0.8796450948714383,
+            "samples": 109
+          },
+          "rss": {
+            "mean": 9616997084.770641,
+            "median": 9617051648,
+            "minimum": 9611104256,
+            "maximum": 9617051648,
+            "samples": 109
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "SwitchNode": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "PreviewAny": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "TextEncodeQwenImage21": {
+          "power.draw": {
+            "mean": 214.5,
+            "median": 214.5,
+            "minimum": 157.0,
+            "maximum": 272.0,
+            "samples": 2
+          },
+          "utilization.aip": {
+            "mean": 35.0,
+            "median": 35.0,
+            "minimum": 25.0,
+            "maximum": 45.0,
+            "samples": 2
+          },
+          "memory.used": {
+            "mean": 38364.0,
+            "median": 38364.0,
+            "minimum": 38364.0,
+            "maximum": 38364.0,
+            "samples": 2
+          },
+          "temperature.aip": {
+            "mean": 50.5,
+            "median": 50.5,
+            "minimum": 50.0,
+            "maximum": 51.0,
+            "samples": 2
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 2
+          },
+          "cpu_cores": {
+            "mean": 5.977638001622447,
+            "median": 5.977638001622447,
+            "minimum": 5.6375255772739505,
+            "maximum": 6.317750425970942,
+            "samples": 2
+          },
+          "busiest_thread_cores": {
+            "mean": 0.8596607742078677,
+            "median": 0.8596607742078677,
+            "minimum": 0.7996490180530076,
+            "maximum": 0.9196725303627278,
+            "samples": 2
+          },
+          "rss": {
+            "mean": 9617051648,
+            "median": 9617051648.0,
+            "minimum": 9617051648,
+            "maximum": 9617051648,
+            "samples": 2
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "CFGGuider": {
+          "power.draw": {},
+          "utilization.aip": {},
+          "memory.used": {},
+          "temperature.aip": {},
+          "clocks.current.soc": {},
+          "cpu_cores": {},
+          "busiest_thread_cores": {},
+          "rss": {},
+          "violation_counters": {
+            "stats.violation.power": [],
+            "stats.violation.thermal": []
+          }
+        },
+        "SamplerCustomAdvanced": {
+          "power.draw": {
+            "mean": 365.28333333333336,
+            "median": 369.0,
+            "minimum": 178.0,
+            "maximum": 399.0,
+            "samples": 60
+          },
+          "utilization.aip": {
+            "mean": 60.266666666666666,
+            "median": 61.0,
+            "minimum": 36.0,
+            "maximum": 67.0,
+            "samples": 60
+          },
+          "memory.used": {
+            "mean": 48840.28333333333,
+            "median": 51194.0,
+            "minimum": 38364.0,
+            "maximum": 51452.0,
+            "samples": 60
+          },
+          "temperature.aip": {
+            "mean": 54.266666666666666,
+            "median": 54.5,
+            "minimum": 52.0,
+            "maximum": 55.0,
+            "samples": 60
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 60
+          },
+          "cpu_cores": {
+            "mean": 1.8786840280630968,
+            "median": 0.4282318603409335,
+            "minimum": 0.11222921335391735,
+            "maximum": 7.236890279300114,
+            "samples": 60
+          },
+          "busiest_thread_cores": {
+            "mean": 0.2869558518226872,
+            "median": 0.1999075959126078,
+            "minimum": 0.056114606676998545,
+            "maximum": 0.7996563844529864,
+            "samples": 60
+          },
+          "rss": {
+            "mean": 9619628851.2,
+            "median": 9619755008.0,
+            "minimum": 9618673664,
+            "maximum": 9619755008,
+            "samples": 60
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "VAEDecode": {
+          "power.draw": {
+            "mean": 185.5,
+            "median": 161.5,
+            "minimum": 147.0,
+            "maximum": 272.0,
+            "samples": 4
+          },
+          "utilization.aip": {
+            "mean": 35.5,
+            "median": 35.0,
+            "minimum": 24.0,
+            "maximum": 48.0,
+            "samples": 4
+          },
+          "memory.used": {
+            "mean": 46315.5,
+            "median": 44618.0,
+            "minimum": 44618.0,
+            "maximum": 51408.0,
+            "samples": 4
+          },
+          "temperature.aip": {
+            "mean": 53.25,
+            "median": 53.0,
+            "minimum": 53.0,
+            "maximum": 54.0,
+            "samples": 4
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 4
+          },
+          "cpu_cores": {
+            "mean": 1.7960870827003088,
+            "median": 1.8391249540240984,
+            "minimum": 0.3094031631938925,
+            "maximum": 3.1966952595591462,
+            "samples": 4
+          },
+          "busiest_thread_cores": {
+            "mean": 0.35502148683542367,
+            "median": 0.35980356315408085,
+            "minimum": 0.15470158159661648,
+            "maximum": 0.5457772394369166,
+            "samples": 4
+          },
+          "rss": {
+            "mean": 9619755008,
+            "median": 9619755008.0,
+            "minimum": 9619755008,
+            "maximum": 9619755008,
+            "samples": 4
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        },
+        "SaveImageAdvanced": {
+          "power.draw": {
+            "mean": 83.66666666666667,
+            "median": 84.0,
+            "minimum": 83.0,
+            "maximum": 84.0,
+            "samples": 3
+          },
+          "utilization.aip": {
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0.0,
+            "maximum": 0.0,
+            "samples": 3
+          },
+          "memory.used": {
+            "mean": 40242.0,
+            "median": 38054.0,
+            "minimum": 38054.0,
+            "maximum": 44618.0,
+            "samples": 3
+          },
+          "temperature.aip": {
+            "mean": 52.0,
+            "median": 52.0,
+            "minimum": 52.0,
+            "maximum": 52.0,
+            "samples": 3
+          },
+          "clocks.current.soc": {
+            "mean": 1650.0,
+            "median": 1650.0,
+            "minimum": 1650.0,
+            "maximum": 1650.0,
+            "samples": 3
+          },
+          "cpu_cores": {
+            "mean": 0.8634384610750881,
+            "median": 0.9994192894207208,
+            "minimum": 0.5789556007628843,
+            "maximum": 1.0119404930416593,
+            "samples": 3
+          },
+          "busiest_thread_cores": {
+            "mean": 0.8896297316178583,
+            "median": 1.01194049304177,
+            "minimum": 0.6175526408142918,
+            "maximum": 1.0393960609975132,
+            "samples": 3
+          },
+          "rss": {
+            "mean": 9619755008,
+            "median": 9619755008,
+            "minimum": 9619755008,
+            "maximum": 9619755008,
+            "samples": 3
+          },
+          "violation_counters": {
+            "stats.violation.power": [
+              "0"
+            ],
+            "stats.violation.thermal": [
+              "0"
+            ]
+          }
+        }
+      },
+      "token_sha256": "0946b2d016b1b65960de945eace2addb9a5c3dfc92adfa2266f9b6ab83559da7"
+    }
+  },
+  "hardware": {
+    "text": {
+      "read_bytes": 135593385984.0,
+      "write_bytes": 4085850112.0,
+      "ports": {
+        "[D0] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28534,
+          "bytes": 251748352.0,
+          "rounding_envelope": 93364224.0
+        },
+        "[D0] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28539,
+          "bytes": 8483119104.0,
+          "rounding_envelope": 100179968.0
+        },
+        "[D0] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28529,
+          "bytes": 258949120.0,
+          "rounding_envelope": 97255424.0
+        },
+        "[D0] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28535,
+          "bytes": 8470085632.0,
+          "rounding_envelope": 95584256.0
+        },
+        "[D0] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28525,
+          "bytes": 248545280.0,
+          "rounding_envelope": 95780864.0
+        },
+        "[D0] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28531,
+          "bytes": 8470036480.0,
+          "rounding_envelope": 96862208.0
+        },
+        "[D0] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28521,
+          "bytes": 262029312.0,
+          "rounding_envelope": 98394112.0
+        },
+        "[D0] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28527,
+          "bytes": 8480514048.0,
+          "rounding_envelope": 98000896.0
+        },
+        "[D1] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28522,
+          "bytes": 260677632.0,
+          "rounding_envelope": 95297536.0
+        },
+        "[D1] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28523,
+          "bytes": 8479997952.0,
+          "rounding_envelope": 95330304.0
+        },
+        "[D1] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28520,
+          "bytes": 252436480.0,
+          "rounding_envelope": 93945856.0
+        },
+        "[D1] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28521,
+          "bytes": 8461631488.0,
+          "rounding_envelope": 94437376.0
+        },
+        "[D1] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28515,
+          "bytes": 252313600.0,
+          "rounding_envelope": 93995008.0
+        },
+        "[D1] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28518,
+          "bytes": 8463360000.0,
+          "rounding_envelope": 125771776.0
+        },
+        "[D1] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28513,
+          "bytes": 250765312.0,
+          "rounding_envelope": 96927744.0
+        },
+        "[D1] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28516,
+          "bytes": 8497430528.0,
+          "rounding_envelope": 95158272.0
+        },
+        "[D2] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28505,
+          "bytes": 252911616.0,
+          "rounding_envelope": 92839936.0
+        },
+        "[D2] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28507,
+          "bytes": 8478523392.0,
+          "rounding_envelope": 97992704.0
+        },
+        "[D2] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28505,
+          "bytes": 8474378240.0,
+          "rounding_envelope": 94076928.0
+        },
+        "[D2] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28502,
+          "bytes": 263446528.0,
+          "rounding_envelope": 91119616.0
+        },
+        "[D2] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28501,
+          "bytes": 8470405120.0,
+          "rounding_envelope": 96722944.0
+        },
+        "[D2] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28497,
+          "bytes": 254967808.0,
+          "rounding_envelope": 91422720.0
+        },
+        "[D2] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28498,
+          "bytes": 8478392320.0,
+          "rounding_envelope": 94560256.0
+        },
+        "[D2] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28494,
+          "bytes": 249692160.0,
+          "rounding_envelope": 92512256.0
+        },
+        "[D3] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28492,
+          "bytes": 255713280.0,
+          "rounding_envelope": 91832320.0
+        },
+        "[D3] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28495,
+          "bytes": 8476286976.0,
+          "rounding_envelope": 97558528.0
+        },
+        "[D3] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28490,
+          "bytes": 253370368.0,
+          "rounding_envelope": 96649216.0
+        },
+        "[D3] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28493,
+          "bytes": 8467783680.0,
+          "rounding_envelope": 94543872.0
+        },
+        "[D3] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28492,
+          "bytes": 8469250048.0,
+          "rounding_envelope": 94838784.0
+        },
+        "[D3] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28488,
+          "bytes": 265773056.0,
+          "rounding_envelope": 90816512.0
+        },
+        "[D3] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28490,
+          "bytes": 8472190976.0,
+          "rounding_envelope": 94175232.0
+        },
+        "[D3] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 28486,
+          "bytes": 252510208.0,
+          "rounding_envelope": 91234304.0
+        }
+      },
+      "profiled_seconds": 0.3806028419985523,
+      "plain_seconds": 0.2216640169999664,
+      "profiler_slowdown": 0.7170258265174811,
+      "profiled_TBps": 0.3669947270034607,
+      "plain_estimated_TBps": 0.6301394244606746,
+      "bandwidth_fraction": 0.25719976508598963,
+      "bytes_per_token": 8729952256.0,
+      "fp8_linear_flops": 253738614784,
+      "useful_fp8_TFps": 1.144699163256788,
+      "fp8_peak_fraction": 0.0013233516338228763
+    },
+    "dit": {
+      "read_bytes": 790296190976.0,
+      "write_bytes": 596147511296.0,
+      "ports": {
+        "[D0] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67679,
+          "bytes": 49346084864.0,
+          "rounding_envelope": 535150592.0
+        },
+        "[D0] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67673,
+          "bytes": 37260353536.0,
+          "rounding_envelope": 523542528.0
+        },
+        "[D0] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67675,
+          "bytes": 49345601536.0,
+          "rounding_envelope": 534306816.0
+        },
+        "[D0] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67669,
+          "bytes": 37260206080.0,
+          "rounding_envelope": 523452416.0
+        },
+        "[D0] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67666,
+          "bytes": 37264932864.0,
+          "rounding_envelope": 523870208.0
+        },
+        "[D0] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67671,
+          "bytes": 49556455424.0,
+          "rounding_envelope": 534487040.0
+        },
+        "[D0] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67661,
+          "bytes": 37242257408.0,
+          "rounding_envelope": 523485184.0
+        },
+        "[D0] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67667,
+          "bytes": 49228406784.0,
+          "rounding_envelope": 534724608.0
+        },
+        "[D1] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67663,
+          "bytes": 49396809728.0,
+          "rounding_envelope": 534478848.0
+        },
+        "[D1] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67661,
+          "bytes": 37248425984.0,
+          "rounding_envelope": 523935744.0
+        },
+        "[D1] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67661,
+          "bytes": 49348493312.0,
+          "rounding_envelope": 534716416.0
+        },
+        "[D1] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67658,
+          "bytes": 37246697472.0,
+          "rounding_envelope": 523460608.0
+        },
+        "[D1] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67658,
+          "bytes": 49272233984.0,
+          "rounding_envelope": 538599424.0
+        },
+        "[D1] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67654,
+          "bytes": 37247803392.0,
+          "rounding_envelope": 523304960.0
+        },
+        "[D1] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67656,
+          "bytes": 49405509632.0,
+          "rounding_envelope": 534937600.0
+        },
+        "[D1] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67652,
+          "bytes": 37264367616.0,
+          "rounding_envelope": 523747328.0
+        },
+        "[D2] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67644,
+          "bytes": 37271584768.0,
+          "rounding_envelope": 523501568.0
+        },
+        "[D2] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67646,
+          "bytes": 49477697536.0,
+          "rounding_envelope": 534470656.0
+        },
+        "[D2] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67643,
+          "bytes": 49471627264.0,
+          "rounding_envelope": 534487040.0
+        },
+        "[D2] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67640,
+          "bytes": 37272788992.0,
+          "rounding_envelope": 523501568.0
+        },
+        "[D2] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67640,
+          "bytes": 49436377088.0,
+          "rounding_envelope": 534675456.0
+        },
+        "[D2] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67635,
+          "bytes": 37263089664.0,
+          "rounding_envelope": 523796480.0
+        },
+        "[D2] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67637,
+          "bytes": 49278337024.0,
+          "rounding_envelope": 533954560.0
+        },
+        "[D2] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67632,
+          "bytes": 37241839616.0,
+          "rounding_envelope": 523386880.0
+        },
+        "[D3] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67633,
+          "bytes": 49388535808.0,
+          "rounding_envelope": 533831680.0
+        },
+        "[D3] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67630,
+          "bytes": 37259919360.0,
+          "rounding_envelope": 523894784.0
+        },
+        "[D3] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67631,
+          "bytes": 49434042368.0,
+          "rounding_envelope": 534208512.0
+        },
+        "[D3] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67628,
+          "bytes": 37268086784.0,
+          "rounding_envelope": 523878400.0
+        },
+        "[D3] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67627,
+          "bytes": 37265022976.0,
+          "rounding_envelope": 523845632.0
+        },
+        "[D3] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67629,
+          "bytes": 49433198592.0,
+          "rounding_envelope": 534380544.0
+        },
+        "[D3] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67625,
+          "bytes": 37270134784.0,
+          "rounding_envelope": 524083200.0
+        },
+        "[D3] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 67627,
+          "bytes": 49476780032.0,
+          "rounding_envelope": 534855680.0
+        }
+      },
+      "profiled_seconds": 0.9138311900005647,
+      "plain_seconds": 0.912191243000052,
+      "profiler_slowdown": 0.001797810506401154,
+      "profiled_TBps": 1.5171770425904847,
+      "plain_estimated_TBps": 1.5199046394177245,
+      "bandwidth_fraction": 0.620369240578663,
+      "fp8_linear_flops": 113902532689920,
+      "useful_fp8_TFps": 124.8669438168609,
+      "fp8_peak_fraction": 0.1443548483431918
+    }
+  },
+  "dit_trace": {
+    "source": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen21-latest-2026-11-16/workflow/37d98416-ef8c-4115-a5c7-d2bfaaf77685-dit.trace.json",
+    "fp8_linear_flops": 113902532689920,
+    "host_visible_fp8_linear_flops": 35046933135360,
+    "flops_method": "weight elements times target rows",
+    "fp8_shapes": [
+      {
+        "input": [
+          8160,
+          4096
+        ],
+        "weight": [
+          4096,
+          4096
+        ],
+        "count": 128
+      }
+    ],
+    "kernel_names": {
+      "cast_bf16_to_f32": 5241,
+      "add_f32": 1557,
+      "mult_f32": 3608,
+      "reduce_mean_fwd_f32": 1559,
+      "rsqrt_fwd_f32": 1539,
+      "mult_fwd_f32": 3125,
+      "cast_f32_to_bf16": 7226,
+      "MMEH_WB1_MON_TS_BIT1": 32,
+      "gelu_fwd_bf16": 24,
+      "range_f32": 5,
+      "constant_i8": 23,
+      "cast_i8_to_bf16": 47,
+      "matrix_band_part_bf16": 23,
+      "cast_bf16_to_i8": 24,
+      "cast_i64_to_f32": 4,
+      "sub_f32": 2,
+      "constant_f32": 2128,
+      "broadcast_nd_fwd_f32": 71,
+      "transpose_dma": 1005,
+      "memcpy_f32": 6467,
+      "memcpy_bf16": 3154,
+      "cast_i64_to_i32": 66,
+      "cast_i32_to_bf16": 66,
+      "div_bf16": 41,
+      "constant_bf16": 17,
+      "div_f32": 2049,
+      "exp_fwd_f32": 1,
+      "cos_fwd_f32": 1,
+      "sin_fwd_f32": 1,
+      "neg_bf16": 40,
+      "exp_bf16": 40,
+      "add_bf16": 3656,
+      "tanh_fwd_bf16": 32,
+      "equal_f32": 24,
+      "reduce_prod_bf16": 1,
+      "layer_norm_fwd_bf16": 1560,
+      "mult_fwd_bf16": 7704,
+      "abs_fwd_bf16": 3072,
+      "reduce_max_fwd_bf16": 3072,
+      "clamp_fwd_f32": 2048,
+      "reciprocal_fwd_f32": 2048,
+      "mult_bf16": 6144,
+      "cast_bf16_to_hf8": 3072,
+      "gemm": 512,
+      "neg_fwd_f32": 768,
+      "rope_st2_fwd_f32": 1536,
+      "DmaTranspose": 4320,
+      "BatchGemm": 2048,
+      "softmax_fwd_bf16": 3072,
+      "fused_kernel_0xFD624487_A8_f32": 2304,
+      "fused_kernel_0x4DAA7F3D_A9_f32": 2304,
+      "GEMM": 13056,
+      "fused_kernel_0x6A47446D_AA_f32": 75264,
+      "fused_kernel_0x243629A9_AB_bf16": 2304,
+      "fused_kernel_0x788C7728_AC_f32": 6144,
+      "fused_kernel_0xCFC72009_AD_f32": 6144,
+      "fused_kernel_0xE6FCAC59_AE_f32": 4608
+    },
+    "device_span_ms": 916.4707387695313,
+    "device_active_ms": 887.2295424804687,
+    "group_union_ms": {
+      "other_kernel": 207.5031923828125,
+      "other_gemm": 450.36533056640627,
+      "softmax": 379.6371860351563,
+      "fp8_gemm": 93.55072216796874
+    },
+    "runtime_counts": {
+      "run": 4682,
+      "launch": 2405,
+      "Launch": 2405,
+      "launch_recipe": 128,
+      "LaunchRecipe": 128
+    },
+    "fp8_cpu_events": 128,
+    "exclusive_ms": {
+      "fp8_gemm": 93.55072216796874,
+      "other_gemm": 450.36533056640627,
+      "softmax": 156.5722197265625,
+      "other_kernel": 186.74127001953124
+    },
+    "device_gap_ms": 29.2411962890626,
+    "gemm_name_union_ms": {
+      "BatchGemm": 386.535984375,
+      "GEMM": 93.55072216796874,
+      "gemm": 63.82934619140625
+    }
+  },
+  "model_headers": {
+    "459:451": {
+      "filename": "qwen_image_2.1_turbo_fp8.safetensors",
+      "bytes": 7250993016,
+      "tensor_count": 457,
+      "fp8_matrix_elements": 6979321856,
+      "fp8_matrix_count": 192,
+      "mtp_keys": [],
+      "dtypes": [
+        "BF16",
+        "F32",
+        "F8_E4M3"
+      ]
+    },
+    "459:473": {
+      "filename": "qwen3.5_9b_qwen_image_2.1_pe_t2i.fp8_from_int8_fp32.safetensors",
+      "bytes": 10890431404,
+      "tensor_count": 961,
+      "fp8_matrix_elements": 7929331712,
+      "fp8_matrix_count": 201,
+      "mtp_keys": [],
+      "dtypes": [
+        "BF16",
+        "F32",
+        "F8_E4M3"
+      ]
+    },
+    "459:453": {
+      "filename": "qwen3vl_8b_fp8_scaled.safetensors",
+      "bytes": 10588637512,
+      "tensor_count": 1254,
+      "fp8_matrix_elements": 6945767424,
+      "fp8_matrix_count": 252,
+      "mtp_keys": [],
+      "dtypes": [
+        "BF16",
+        "F32",
+        "F8_E4M3",
+        "U8"
+      ]
+    },
+    "459:454": {
+      "filename": "qwen_image_2.1_vae_bf16.safetensors",
+      "bytes": 675509688,
+      "tensor_count": 238,
+      "fp8_matrix_elements": 0,
+      "fp8_matrix_count": 0,
+      "mtp_keys": [],
+      "dtypes": [
+        "BF16"
+      ]
+    }
+  },
+  "equivalence": {
+    "workflow/full-0.json": {
+      "caption_equal": true,
+      "rgba_equal": true
+    },
+    "workflow/full-1.json": {
+      "caption_equal": true,
+      "rgba_equal": true
+    },
+    "workflow/full-2.json": {
+      "caption_equal": true,
+      "rgba_equal": true
+    },
+    "workflow/full-3.json": {
+      "caption_equal": true,
+      "rgba_equal": true
+    },
+    "native-dit/full-0.json": {
+      "caption_equal": true,
+      "rgba_equal": true
+    },
+    "native-dit/native_dit-0.json": {
+      "caption_equal": true,
+      "rgba_equal": true
+    },
+    "native-dit/window_dit-0.json": {
+      "caption_equal": true,
+      "rgba_equal": true
+    },
+    "native-text/warm-tokens.json": {
+      "prefix_equal": true,
+      "tokens": 1568,
+      "forced_final_token": 248044
+    },
+    "native-text/plain-tokens.json": {
+      "prefix_equal": true,
+      "tokens": 1568,
+      "forced_final_token": 248044
+    },
+    "native-text/profile-tokens.json": {
+      "prefix_equal": true,
+      "tokens": 1568,
+      "forced_final_token": 248044
+    }
+  },
+  "source_verification": {
+    "all_source_hashes_match": true,
+    "files": 1067,
+    "deployed_version": "07fedda3278b5c4be8c036fe245dc6991b91dd4a"
+  },
+  "source_local_comparison": {
+    "files": 1067,
+    "different": [],
+    "commit": "07fedda3278b5c4be8c036fe245dc6991b91dd4a"
+  },
+  "source_hash_manifest_sha256": "fd2cbbd42eacd2296faba2e0d9581080b85b84763ac866b78bbf6e4e196f3fd0",
+  "restoration": {
+    "prompt_id": "2a707eda-d9f6-41f0-a63b-ca559e59b2c7",
+    "seconds": 147.813,
+    "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen21_latest/normal_00001.png",
+    "caption_equal": true,
+    "rgba_equal": true,
+    "png_sha256": "c28f7ad5f36096189781be477fe7fa20e88a301aecfd0ea4d2d39a4795067b69",
+    "status": "success"
+  },
+  "queue_after_restoration": {
+    "queue_running": [],
+    "queue_pending": []
+  },
+  "measurement_limits": {
+    "text_trace_rejected": {
+      "plain_seconds": 0.21975775300052192,
+      "profile_seconds": 53.53539041900149,
+      "reason": "Instrumentation branch triggered recompilation"
+    },
+    "text_native_profiler_slowdown": 0.7170258265174811,
+    "cache_transition_excluded": "cached-0",
+    "native_dit_exit": "Segmentation fault in prompt_worker after successful history, capture export and output verification",
+    "hardware_scope": "16 late PE token intervals and one cached-prefix negative DiT forward"
+  },
+  "validation": {
+    "probe_py_compile": "passed",
+    "trace_parser_constructed_case": "passed",
+    "normal_api": "passed"
+  },
+  "raw_root": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen21-latest-2026-11-16"
+}

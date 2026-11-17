@@ -1,0 +1,215 @@
+{
+  "investigation_date": "2026-11-17",
+  "raw_root": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-startup-2026-11-16",
+  "deployed_version": "07fedda3+staged.87ea451fce53",
+  "status": "diagnosed_fix_unvalidated",
+  "requests": [
+    {
+      "prompt_id": "a3b16111-aa4f-4a2b-8361-24998f375fb5",
+      "prompt_sha256": "8e262bfd7863d19d7156caf563deb95b1feb90ec962167d79d5969adccc2fd7c",
+      "thinking": true,
+      "input_tokens": 2803,
+      "kv_capacity": 6899,
+      "full_seconds": 141.564,
+      "text_cached": false,
+      "first_progress": [
+        "Generating tokens:   0%|          | 0/4096 [00:00<?, ?it/s]",
+        "Generating tokens:   0%|          | 1/4096 [00:14<16:13:08, 14.26s/it]",
+        "Generating tokens:   0%|          | 2/4096 [01:09<43:39:18, 38.39s/it]",
+        "Generating tokens:   0%|          | 12/4096 [01:09<4:38:29,  4.09s/it]"
+      ],
+      "last_progress": "Generating tokens:  51%|█████     | 2095/4096 [01:29<01:25, 23.33it/s] ",
+      "alias_warning_count": 2,
+      "paused_before_decode": false
+    },
+    {
+      "prompt_id": "074e7c8f-75e0-4b4a-a693-5a7777153830",
+      "prompt_sha256": "8e262bfd7863d19d7156caf563deb95b1feb90ec962167d79d5969adccc2fd7c",
+      "thinking": true,
+      "input_tokens": 2803,
+      "kv_capacity": 6899,
+      "full_seconds": 38.635,
+      "text_cached": false,
+      "first_progress": [
+        "Generating tokens:   0%|          | 0/4096 [00:00<?, ?it/s]",
+        "Generating tokens:   0%|          | 1/4096 [00:00<27:53,  2.45it/s]",
+        "Generating tokens:   0%|          | 8/4096 [00:00<03:26, 19.82it/s]",
+        "Generating tokens:   0%|          | 18/4096 [00:00<01:39, 40.81it/s]"
+      ],
+      "last_progress": "Generating tokens:  51%|█████     | 2095/4096 [00:20<00:20, 100.04it/s]",
+      "alias_warning_count": 0,
+      "paused_before_decode": false
+    },
+    {
+      "prompt_id": "0918a280-f6ed-45b9-8c5f-09bebc958ecb",
+      "prompt_sha256": "8e262bfd7863d19d7156caf563deb95b1feb90ec962167d79d5969adccc2fd7c",
+      "thinking": true,
+      "input_tokens": 2803,
+      "kv_capacity": 6899,
+      "full_seconds": 38.316,
+      "text_cached": false,
+      "first_progress": [
+        "Generating tokens:   0%|          | 0/4096 [00:00<?, ?it/s]",
+        "Generating tokens:   0%|          | 1/4096 [00:00<27:45,  2.46it/s]",
+        "Generating tokens:   0%|          | 9/4096 [00:00<03:00, 22.61it/s]",
+        "Generating tokens:   0%|          | 20/4096 [00:00<01:29, 45.55it/s]"
+      ],
+      "last_progress": "Generating tokens:  51%|█████     | 2095/4096 [00:20<00:19, 101.38it/s]",
+      "alias_warning_count": 0,
+      "paused_before_decode": false
+    },
+    {
+      "prompt_id": "f55601c7-1e78-4cfb-af6f-abcd5e0cc746",
+      "prompt_sha256": "8e262bfd7863d19d7156caf563deb95b1feb90ec962167d79d5969adccc2fd7c",
+      "thinking": true,
+      "input_tokens": 2803,
+      "kv_capacity": 6899,
+      "full_seconds": 121.408,
+      "text_cached": false,
+      "first_progress": [
+        "Generating tokens:   0%|          | 0/4096 [00:00<?, ?it/s]",
+        "Generating tokens:   0%|          | 1/4096 [00:00<26:55,  2.53it/s]",
+        "Generating tokens:   0%|          | 2/4096 [00:53<35:51:23, 31.53s/it]",
+        "Generating tokens:   0%|          | 12/4096 [00:53<3:48:52,  3.36s/it]"
+      ],
+      "last_progress": "Generating tokens:  51%|█████     | 2095/4096 [01:13<01:10, 28.33it/s] ",
+      "alias_warning_count": 1,
+      "paused_before_decode": true
+    },
+    {
+      "prompt_id": "0b691aeb-76b1-4e15-8f0b-c441e3973637",
+      "prompt_sha256": "8e262bfd7863d19d7156caf563deb95b1feb90ec962167d79d5969adccc2fd7c",
+      "thinking": true,
+      "input_tokens": 2803,
+      "kv_capacity": 6899,
+      "full_seconds": 17.138,
+      "text_cached": true,
+      "first_progress": [],
+      "last_progress": null,
+      "alias_warning_count": 0,
+      "paused_before_decode": false
+    },
+    {
+      "prompt_id": "517bba2b-4b4d-45f5-9e8d-9d866ab31cc6",
+      "prompt_sha256": "8e262bfd7863d19d7156caf563deb95b1feb90ec962167d79d5969adccc2fd7c",
+      "thinking": false,
+      "input_tokens": 2805,
+      "kv_capacity": 6901,
+      "full_seconds": 80.401,
+      "text_cached": false,
+      "first_progress": [
+        "Generating tokens:   0%|          | 0/4096 [00:00<?, ?it/s]",
+        "Generating tokens:   0%|          | 1/4096 [00:00<55:34,  1.23it/s]",
+        "Generating tokens:   0%|          | 2/4096 [00:54<36:22:23, 31.98s/it]",
+        "Generating tokens:   0%|          | 11/4096 [00:54<4:15:01,  3.75s/it]"
+      ],
+      "last_progress": "Generating tokens:  20%|█▉        | 815/4096 [01:02<04:12, 13.01it/s]",
+      "alias_warning_count": 2,
+      "paused_before_decode": true
+    },
+    {
+      "prompt_id": "1a82f620-0973-4ee0-b688-4ccf35f26be1",
+      "prompt_sha256": "55f1a673e44d902dba8b5103ba6ec6cd757b378c2ff9d8f6dc2e9ef9a7539c91",
+      "thinking": false,
+      "input_tokens": 2804,
+      "kv_capacity": 6900,
+      "full_seconds": 78.394,
+      "text_cached": false,
+      "first_progress": [
+        "Generating tokens:   0%|          | 0/4096 [00:00<?, ?it/s]",
+        "Generating tokens:   0%|          | 1/4096 [00:00<48:35,  1.40it/s]",
+        "Generating tokens:   0%|          | 2/4096 [00:54<36:30:14, 32.10s/it]",
+        "Generating tokens:   0%|          | 10/4096 [00:54<4:43:48,  4.17s/it]"
+      ],
+      "last_progress": "Generating tokens:  15%|█▍        | 611/4096 [01:00<05:47, 10.04it/s] ",
+      "alias_warning_count": 2,
+      "paused_before_decode": true
+    },
+    {
+      "prompt_id": "870e7e07-2452-4ba3-8023-d57287a3bb48",
+      "prompt_sha256": "a81e6e53e96e664c4012666d61f3ac923008cfb77fc2540736d36836d2aec45a",
+      "thinking": false,
+      "input_tokens": 2803,
+      "kv_capacity": 6899,
+      "full_seconds": 26.433,
+      "text_cached": false,
+      "first_progress": [
+        "Generating tokens:   0%|          | 0/4096 [00:00<?, ?it/s]",
+        "Generating tokens:   0%|          | 1/4096 [00:00<33:00,  2.07it/s]",
+        "Generating tokens:   0%|          | 9/4096 [00:00<03:28, 19.60it/s]",
+        "Generating tokens:   0%|          | 19/4096 [00:00<01:44, 39.15it/s]"
+      ],
+      "last_progress": "Generating tokens:  21%|██        | 843/4096 [00:08<00:33, 96.15it/s]",
+      "alias_warning_count": 0,
+      "paused_before_decode": false
+    },
+    {
+      "prompt_id": "77b26db1-62ed-42ef-bde8-64cda539ccb9",
+      "prompt_sha256": "8e262bfd7863d19d7156caf563deb95b1feb90ec962167d79d5969adccc2fd7c",
+      "thinking": false,
+      "input_tokens": 2805,
+      "kv_capacity": 6901,
+      "full_seconds": 25.926,
+      "text_cached": false,
+      "first_progress": [
+        "Generating tokens:   0%|          | 0/4096 [00:00<?, ?it/s]",
+        "Generating tokens:   0%|          | 1/4096 [00:00<27:06,  2.52it/s]",
+        "Generating tokens:   0%|          | 9/4096 [00:00<03:00, 22.69it/s]",
+        "Generating tokens:   0%|          | 19/4096 [00:00<01:33, 43.55it/s]"
+      ],
+      "last_progress": "Generating tokens:  20%|█▉        | 815/4096 [00:08<00:34, 96.47it/s] ",
+      "alias_warning_count": 0,
+      "paused_before_decode": false
+    },
+    {
+      "prompt_id": "bda3ab20-78c1-4506-a8fd-c9eba114ea9c",
+      "prompt_sha256": "8e262bfd7863d19d7156caf563deb95b1feb90ec962167d79d5969adccc2fd7c",
+      "thinking": true,
+      "input_tokens": 2803,
+      "kv_capacity": 6899,
+      "full_seconds": 38.689,
+      "text_cached": false,
+      "first_progress": [
+        "Generating tokens:   0%|          | 0/4096 [00:00<?, ?it/s]",
+        "Generating tokens:   0%|          | 1/4096 [00:00<27:02,  2.52it/s]",
+        "Generating tokens:   0%|          | 9/4096 [00:00<02:58, 22.87it/s]",
+        "Generating tokens:   0%|          | 20/4096 [00:00<01:29, 45.55it/s]"
+      ],
+      "last_progress": "Generating tokens:  51%|█████     | 2095/4096 [00:21<00:20, 99.67it/s]",
+      "alias_warning_count": 0,
+      "paused_before_decode": false
+    },
+    {
+      "prompt_id": "c1f4339f-ecd9-497b-9d0f-63c38d0462c3",
+      "prompt_sha256": "a81e6e53e96e664c4012666d61f3ac923008cfb77fc2540736d36836d2aec45a",
+      "thinking": true,
+      "input_tokens": 2801,
+      "kv_capacity": 6897,
+      "full_seconds": 90.924,
+      "text_cached": false,
+      "first_progress": [
+        "Generating tokens:   0%|          | 0/4096 [00:00<?, ?it/s]",
+        "Generating tokens:   0%|          | 1/4096 [00:00<48:05,  1.42it/s]",
+        "Generating tokens:   0%|          | 2/4096 [00:56<37:50:41, 33.28s/it]",
+        "Generating tokens:   0%|          | 12/4096 [00:56<4:01:29,  3.55s/it]"
+      ],
+      "last_progress": "Generating tokens:  41%|████▏     | 1691/4096 [01:13<01:44, 23.12it/s] ",
+      "alias_warning_count": 2,
+      "paused_before_decode": true
+    }
+  ],
+  "source_sha256": {
+    "comfy/text_encoders/qwen35.py": "ef4098f21e5544c61bf89e6a511b8630576347caa28cff17388c3c7425300179",
+    "comfy/text_encoders/llama.py": "26aa2b22f61d5ded6e3c65adc1fdb9e09a92cbc0defaca3513426f7f59b8a261",
+    "comfy/text_encoders/hpu_kv_attention.py": "bf38eb27381ba635c658394fb3d45394607133435db25bfb7aea041c46192e8b"
+  },
+  "queue": {
+    "queue_running": [],
+    "queue_pending": []
+  },
+  "limits": [
+    "No compiler guard trace was enabled for the original requests. The trigger is identified by production input shapes, static compilation code, and repeated-capacity timing.",
+    "The alias warning identifies a vendor compiler operator contract issue. It does not measure compilation duration or establish output corruption.",
+    "The change in cold latency attributable specifically to the latest native RoPE patch has not been measured in a same-shape cold A/B."
+  ]
+}

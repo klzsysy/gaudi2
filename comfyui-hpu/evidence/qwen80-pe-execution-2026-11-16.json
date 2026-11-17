@@ -1,0 +1,1522 @@
+{
+  "date": "2026-11-16",
+  "status": "deployed_awaiting_human_acceptance",
+  "comparison_baseline": "07fedda3+staged.d39241e049d0",
+  "deployment": {
+    "identity": "07fedda3+staged.87ea451fce53",
+    "baseline_commit": "07fedda3278b5c4be8c036fe245dc6991b91dd4a",
+    "staged_tree": "7f6b735fa3cd5350e9d6cbfdebb9fe8b79d9eb2d",
+    "staged_patch_sha256": "87ea451fce5358377e83f3836aeda430420fef2206e600251b33d0a1387268be",
+    "file_sha256": {
+      "comfy/text_encoders/llama.py": "26aa2b22f61d5ded6e3c65adc1fdb9e09a92cbc0defaca3513426f7f59b8a261",
+      "comfy/text_encoders/qwen35.py": "ef4098f21e5544c61bf89e6a511b8630576347caa28cff17388c3c7425300179",
+      "comfy/text_encoders/hpu_kv_attention.py": "bf38eb27381ba635c658394fb3d45394607133435db25bfb7aea041c46192e8b",
+      "tests-unit/comfy_test/generation_readback_test.py": "bb1bbbdc46f5a62747d2733745d9a82380072e517886109d4a2e325f53cbe3e2",
+      "tests-unit/comfy_test/hpu_qwen_generation_test.py": "13b7ef89741831d66b2701a8a9344b31523dc6315d3f414ff23e1b4ae8632133",
+      "tests-unit/comfy_test/hpu_rope_test.py": "71fb14ace9cf309390994f2b06abcbbc3ff0b91123fd28f8da6af145236f0ff9"
+    },
+    "previous_deployment": "07fedda3+staged.d39241e049d0",
+    "status": "deployed_awaiting_human_acceptance",
+    "quality_reference": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen80-pe-2026-11-16/product-validation4/api/natural-product.json",
+    "validation_summary": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen80-pe-2026-11-16/product-validation4/summary.json",
+    "tests": {
+      "passed": 191,
+      "skipped": 1
+    },
+    "human_acceptance": false,
+    "runs": [
+      {
+        "label": "cold",
+        "prompt_id": "a3b16111-aa4f-4a2b-8361-24998f375fb5",
+        "seconds": 141.564,
+        "cached_nodes": [],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/cold_00002.png"
+      },
+      {
+        "label": "warm-off",
+        "prompt_id": "074e7c8f-75e0-4b4a-a693-5a7777153830",
+        "seconds": 38.635,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:488",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/warm-off_00002.png"
+      },
+      {
+        "label": "warm-auto",
+        "prompt_id": "0918a280-f6ed-45b9-8c5f-09bebc958ecb",
+        "seconds": 38.316,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:488",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/warm-auto_00002.png"
+      },
+      {
+        "label": "reload",
+        "prompt_id": "f55601c7-1e78-4cfb-af6f-abcd5e0cc746",
+        "seconds": 121.408,
+        "cached_nodes": [],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/reload_00002.png"
+      }
+    ],
+    "deployed_sha256": {
+      "comfy/text_encoders/llama.py": "26aa2b22f61d5ded6e3c65adc1fdb9e09a92cbc0defaca3513426f7f59b8a261",
+      "comfy/text_encoders/qwen35.py": "ef4098f21e5544c61bf89e6a511b8630576347caa28cff17388c3c7425300179",
+      "comfy/text_encoders/hpu_kv_attention.py": "bf38eb27381ba635c658394fb3d45394607133435db25bfb7aea041c46192e8b",
+      "tests-unit/comfy_test/generation_readback_test.py": "bb1bbbdc46f5a62747d2733745d9a82380072e517886109d4a2e325f53cbe3e2",
+      "tests-unit/comfy_test/hpu_qwen_generation_test.py": "13b7ef89741831d66b2701a8a9344b31523dc6315d3f414ff23e1b4ae8632133",
+      "tests-unit/comfy_test/hpu_rope_test.py": "71fb14ace9cf309390994f2b06abcbbc3ff0b91123fd28f8da6af145236f0ff9"
+    },
+    "queue": {
+      "queue_running": [],
+      "queue_pending": []
+    }
+  },
+  "workflow": "comfyui-hpu/workflows/qwen21-latest-2026-11-16-api.json",
+  "original_prompt_id": "3b17fc44-fda6-4009-b813-2199c4e13653",
+  "fixed": {
+    "baseline": {
+      "runs": 5,
+      "median_seconds": 44.37,
+      "range_seconds": [
+        43.188,
+        44.506
+      ],
+      "stages": {
+        "TextGenerate": 26.842655756,
+        "TextEncodeQwenImage21": 0.509220472,
+        "SamplerCustomAdvanced": 15.159390065,
+        "VAEDecode": 1.098316,
+        "SaveImageAdvanced": 0.755068978
+      }
+    },
+    "product": {
+      "runs": 5,
+      "median_seconds": 36.593,
+      "range_seconds": [
+        36.468,
+        36.744
+      ],
+      "stages": {
+        "TextGenerate": 19.069948009,
+        "TextEncodeQwenImage21": 0.499672648,
+        "SamplerCustomAdvanced": 15.160681072,
+        "VAEDecode": 1.097137237,
+        "SaveImageAdvanced": 0.755777243
+      }
+    },
+    "full_reduction": 0.17527608744647272,
+    "pe_reduction": 0.28956552651324774
+  },
+  "requests": [
+    {
+      "label": "cold-baseline",
+      "baseline": true,
+      "fixed": true,
+      "prompt_id": "75d9800b-c2eb-4bac-89d3-b07c5035e97c",
+      "seconds": 180.94,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/cold-baseline_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "VAELoader": 1.44585232,
+        "ResolutionSelector": 0.000170837,
+        "EmptyLatentImage": 0.000837748,
+        "ManualSigmas": 0.00031957,
+        "KSamplerSelect": 0.000127091,
+        "CLIPLoader": 56.11473714900001,
+        "UNETLoader": 6.658094103,
+        "QwenImage21Cache": 0.004750248,
+        "RandomNoise": 0.000135924,
+        "StringMultiline": 0.000121322,
+        "TextGenerate": 94.921759343,
+        "SwitchNode": 0.000115383,
+        "PreviewAny": 6.6099e-05,
+        "TextEncodeQwenImage21": 0.49808528,
+        "CFGGuider": 0.000201312,
+        "SamplerCustomAdvanced": 19.242864447,
+        "VAEDecode": 1.261484791,
+        "SaveImageAdvanced": 0.757616461
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 52910083328,
+        "NumAllocs": 494097,
+        "NumFrees": 491404,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 494098,
+        "TotalSystemFrees": 491404,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "cold-product",
+      "baseline": false,
+      "fixed": true,
+      "prompt_id": "f6c3eea5-5763-438a-b532-336e679fcbda",
+      "seconds": 89.671,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/cold-product_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 72.130101679,
+        "SwitchNode": 0.00011358,
+        "PreviewAny": 0.000100511,
+        "TextEncodeQwenImage21": 0.512048396,
+        "CFGGuider": 0.000197727,
+        "SamplerCustomAdvanced": 15.151340285,
+        "VAEDecode": 1.098252388,
+        "SaveImageAdvanced": 0.763434204
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39375032320,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 866949,
+        "NumFrees": 864142,
+        "ActiveAllocs": 2807,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 866950,
+        "TotalSystemFrees": 864142,
+        "TotalActiveAllocs": 2808
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "fixed-0",
+      "baseline": true,
+      "fixed": true,
+      "prompt_id": "19438107-0ad2-4593-a5a5-9236ffb6c054",
+      "seconds": 43.402,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/fixed-0_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 25.86058243,
+        "SwitchNode": 0.000117246,
+        "PreviewAny": 6.2103e-05,
+        "TextEncodeQwenImage21": 0.501157658,
+        "CFGGuider": 0.000207292,
+        "SamplerCustomAdvanced": 15.171097287,
+        "VAEDecode": 1.097489272,
+        "SaveImageAdvanced": 0.754767551
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 1356358,
+        "NumFrees": 1353665,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 1356359,
+        "TotalSystemFrees": 1353665,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "fixed-1",
+      "baseline": false,
+      "fixed": true,
+      "prompt_id": "26ef32be-d4e3-4ff6-90bb-c961fe6b2b9a",
+      "seconds": 36.472,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/fixed-1_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 18.91463068,
+        "SwitchNode": 0.000238008,
+        "PreviewAny": 6.2293e-05,
+        "TextEncodeQwenImage21": 0.519774615,
+        "CFGGuider": 0.000214342,
+        "SamplerCustomAdvanced": 15.169134846,
+        "VAEDecode": 1.096948048,
+        "SaveImageAdvanced": 0.754837653
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 1729210,
+        "NumFrees": 1726517,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 1729211,
+        "TotalSystemFrees": 1726517,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "fixed-2",
+      "baseline": false,
+      "fixed": true,
+      "prompt_id": "df13c927-3011-4acb-bad2-57acc9daa1c4",
+      "seconds": 36.744,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/fixed-2_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 19.223648261,
+        "SwitchNode": 0.000184427,
+        "PreviewAny": 6.3145e-05,
+        "TextEncodeQwenImage21": 0.514132211,
+        "CFGGuider": 0.000209104,
+        "SamplerCustomAdvanced": 15.138452772,
+        "VAEDecode": 1.096269351,
+        "SaveImageAdvanced": 0.754771324
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 2102062,
+        "NumFrees": 2099369,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 2102063,
+        "TotalSystemFrees": 2099369,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "fixed-3",
+      "baseline": true,
+      "fixed": true,
+      "prompt_id": "40bb1953-30c3-47af-8f00-61936c4fb79b",
+      "seconds": 43.188,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/fixed-3_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 25.634026195,
+        "SwitchNode": 0.000235685,
+        "PreviewAny": 6.3695e-05,
+        "TextEncodeQwenImage21": 0.525168108,
+        "CFGGuider": 0.000209295,
+        "SamplerCustomAdvanced": 15.158488247,
+        "VAEDecode": 1.099007902,
+        "SaveImageAdvanced": 0.754474977
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 2591471,
+        "NumFrees": 2588778,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 2591472,
+        "TotalSystemFrees": 2588778,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "fixed-4",
+      "baseline": true,
+      "fixed": true,
+      "prompt_id": "0e023f74-7f82-4f9d-951c-2cc861ccc9a6",
+      "seconds": 44.37,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/fixed-4_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 26.842655756,
+        "SwitchNode": 0.000168002,
+        "PreviewAny": 6.2234e-05,
+        "TextEncodeQwenImage21": 0.503443149,
+        "CFGGuider": 0.000210816,
+        "SamplerCustomAdvanced": 15.152373903,
+        "VAEDecode": 1.099350588,
+        "SaveImageAdvanced": 0.755477383
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 3080880,
+        "NumFrees": 3078187,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 3080881,
+        "TotalSystemFrees": 3078187,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "fixed-5",
+      "baseline": false,
+      "fixed": true,
+      "prompt_id": "c435444c-6991-454c-8f46-96064dac4cce",
+      "seconds": 36.593,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/fixed-5_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 19.069948009,
+        "SwitchNode": 0.000140301,
+        "PreviewAny": 0.000147582,
+        "TextEncodeQwenImage21": 0.49036289,
+        "CFGGuider": 0.000214062,
+        "SamplerCustomAdvanced": 15.160681072,
+        "VAEDecode": 1.098739956,
+        "SaveImageAdvanced": 0.756685126
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 3453732,
+        "NumFrees": 3451039,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 3453733,
+        "TotalSystemFrees": 3451039,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "fixed-6",
+      "baseline": false,
+      "fixed": true,
+      "prompt_id": "01aad864-7794-48f7-ad97-d22ceca97508",
+      "seconds": 36.635,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/fixed-6_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 19.12027104,
+        "SwitchNode": 0.000117826,
+        "PreviewAny": 6.9745e-05,
+        "TextEncodeQwenImage21": 0.484453716,
+        "CFGGuider": 0.000195573,
+        "SamplerCustomAdvanced": 15.160093085,
+        "VAEDecode": 1.098042117,
+        "SaveImageAdvanced": 0.755777243
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 3826584,
+        "NumFrees": 3823891,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 3826585,
+        "TotalSystemFrees": 3823891,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "fixed-7",
+      "baseline": true,
+      "fixed": true,
+      "prompt_id": "8c7f91f1-2595-4c96-91da-3a6065af283d",
+      "seconds": 44.5,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/fixed-7_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 26.950204598,
+        "SwitchNode": 0.000128123,
+        "PreviewAny": 6.3806e-05,
+        "TextEncodeQwenImage21": 0.509220472,
+        "CFGGuider": 0.000218528,
+        "SamplerCustomAdvanced": 15.170768769,
+        "VAEDecode": 1.097863623,
+        "SaveImageAdvanced": 0.755068978
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 4315993,
+        "NumFrees": 4313300,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 4315994,
+        "TotalSystemFrees": 4313300,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "fixed-8",
+      "baseline": true,
+      "fixed": true,
+      "prompt_id": "3ea1c6cc-3715-44b4-b729-7e2aaa848764",
+      "seconds": 44.506,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/fixed-8_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 26.962311117,
+        "SwitchNode": 0.0001128,
+        "PreviewAny": 6.4697e-05,
+        "TextEncodeQwenImage21": 0.513375572,
+        "CFGGuider": 0.0002067,
+        "SamplerCustomAdvanced": 15.159390065,
+        "VAEDecode": 1.098316,
+        "SaveImageAdvanced": 0.755128488
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 4805402,
+        "NumFrees": 4802709,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 4805403,
+        "TotalSystemFrees": 4802709,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "fixed-9",
+      "baseline": false,
+      "fixed": true,
+      "prompt_id": "4e619922-de18-41f8-b170-4ebef8aa7aa5",
+      "seconds": 36.468,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/fixed-9_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 18.930413261,
+        "SwitchNode": 0.000185318,
+        "PreviewAny": 6.5799e-05,
+        "TextEncodeQwenImage21": 0.499672648,
+        "CFGGuider": 0.000201713,
+        "SamplerCustomAdvanced": 15.167650168,
+        "VAEDecode": 1.097137237,
+        "SaveImageAdvanced": 0.756267526
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 5178254,
+        "NumFrees": 5175561,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 5178255,
+        "TotalSystemFrees": 5175561,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "natural-baseline",
+      "baseline": true,
+      "fixed": false,
+      "prompt_id": "ba5d73a6-4150-4040-b372-591f3f48d200",
+      "seconds": 44.449,
+      "tokens": 1909,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/natural-baseline_00001.png",
+      "caption_equal": true,
+      "rgba_equal": true,
+      "stage_seconds": {
+        "TextGenerate": 26.962436306,
+        "SwitchNode": 0.00012011,
+        "PreviewAny": 6.1742e-05,
+        "TextEncodeQwenImage21": 0.45544519,
+        "CFGGuider": 0.000198118,
+        "SamplerCustomAdvanced": 15.149160865,
+        "VAEDecode": 1.096817771,
+        "SaveImageAdvanced": 0.76911723
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39097454592,
+        "MaxInUse": 53783343616,
+        "NumAllocs": 5665751,
+        "NumFrees": 5663058,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 5665752,
+        "TotalSystemFrees": 5663058,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "natural-product",
+      "baseline": false,
+      "fixed": false,
+      "prompt_id": "b8afecdb-48f9-446d-9984-cd91bbdfb21d",
+      "seconds": 38.576,
+      "tokens": 2094,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/natural-product_00001.png",
+      "caption_equal": false,
+      "rgba_equal": false,
+      "stage_seconds": {
+        "TextGenerate": 20.718187463,
+        "SwitchNode": 0.0001134,
+        "PreviewAny": 6.2384e-05,
+        "TextEncodeQwenImage21": 0.488047178,
+        "CFGGuider": 0.000210076,
+        "SamplerCustomAdvanced": 15.421542771,
+        "VAEDecode": 1.097978786,
+        "SaveImageAdvanced": 0.833913997
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 53786008832,
+        "NumAllocs": 6066914,
+        "NumFrees": 6064220,
+        "ActiveAllocs": 2694,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 6066915,
+        "TotalSystemFrees": 6064220,
+        "TotalActiveAllocs": 2695
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "seed-baseline",
+      "baseline": true,
+      "fixed": false,
+      "prompt_id": "6e358f68-1a30-4a77-be62-31d10cfb6c8e",
+      "seconds": 38.284,
+      "tokens": 1481,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/seed-baseline_00001.png",
+      "caption_equal": false,
+      "rgba_equal": false,
+      "stage_seconds": {
+        "TextGenerate": 20.790373976,
+        "SwitchNode": 0.00018615,
+        "PreviewAny": 6.2985e-05,
+        "TextEncodeQwenImage21": 0.48992128,
+        "CFGGuider": 0.000377157,
+        "RandomNoise": 0.000193611,
+        "SamplerCustomAdvanced": 15.131061626,
+        "VAEDecode": 1.097902695,
+        "SaveImageAdvanced": 0.755232259
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 53786008832,
+        "NumAllocs": 6458004,
+        "NumFrees": 6455310,
+        "ActiveAllocs": 2694,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 6458005,
+        "TotalSystemFrees": 6455310,
+        "TotalActiveAllocs": 2695
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "seed-product",
+      "baseline": false,
+      "fixed": false,
+      "prompt_id": "e720e23d-5e48-48ab-a370-5dcdfa0caa05",
+      "seconds": 34.354,
+      "tokens": 1692,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/seed-product_00001.png",
+      "caption_equal": false,
+      "rgba_equal": false,
+      "stage_seconds": {
+        "TextGenerate": 16.807989958,
+        "SwitchNode": 0.000195714,
+        "PreviewAny": 6.4156e-05,
+        "TextEncodeQwenImage21": 0.500357502,
+        "CFGGuider": 0.000194051,
+        "SamplerCustomAdvanced": 15.184573288,
+        "VAEDecode": 1.096002964,
+        "SaveImageAdvanced": 0.748394916
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 53786008832,
+        "NumAllocs": 6792809,
+        "NumFrees": 6790115,
+        "ActiveAllocs": 2694,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 6792810,
+        "TotalSystemFrees": 6790115,
+        "TotalActiveAllocs": 2695
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "small",
+      "baseline": false,
+      "fixed": false,
+      "prompt_id": "060c2ade-bb9c-4c40-a42a-7e4461746aa6",
+      "seconds": 21.16,
+      "tokens": 1692,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/small_00001.png",
+      "caption_equal": false,
+      "rgba_equal": false,
+      "stage_seconds": {
+        "TextGenerate": 16.906530979,
+        "SwitchNode": 0.000118697,
+        "PreviewAny": 6.4075e-05,
+        "ResolutionSelector": 0.000124766,
+        "EmptyLatentImage": 9.1205e-05,
+        "TextEncodeQwenImage21": 0.474643812,
+        "CFGGuider": 0.000196983,
+        "SamplerCustomAdvanced": 3.512867568,
+        "VAEDecode": 0.146071352,
+        "SaveImageAdvanced": 0.100563091
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 53786008832,
+        "NumAllocs": 7125249,
+        "NumFrees": 7122554,
+        "ActiveAllocs": 2695,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 7125250,
+        "TotalSystemFrees": 7122554,
+        "TotalActiveAllocs": 2696
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "square",
+      "baseline": false,
+      "fixed": false,
+      "prompt_id": "97b09520-5397-4a6e-a95e-befca3e01c30",
+      "seconds": 68.778,
+      "tokens": 816,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/square_00001.png",
+      "caption_equal": false,
+      "rgba_equal": false,
+      "stage_seconds": {
+        "TextGenerate": 61.28988746,
+        "SwitchNode": 0.000160419,
+        "PreviewAny": 6.6619e-05,
+        "ResolutionSelector": 0.000134921,
+        "EmptyLatentImage": 0.000577349,
+        "TextEncodeQwenImage21": 0.414634219,
+        "CFGGuider": 0.000200598,
+        "RandomNoise": 0.000122042,
+        "SamplerCustomAdvanced": 6.13156451,
+        "VAEDecode": 0.534069948,
+        "SaveImageAdvanced": 0.388113643
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39551019520,
+        "MaxInUse": 53786008832,
+        "NumAllocs": 7314813,
+        "NumFrees": 7312003,
+        "ActiveAllocs": 2810,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 7314814,
+        "TotalSystemFrees": 7312003,
+        "TotalActiveAllocs": 2811
+      },
+      "fallback_counts": {}
+    },
+    {
+      "label": "reload",
+      "baseline": false,
+      "fixed": false,
+      "prompt_id": "a9b292b2-3033-4296-a170-58740cc17067",
+      "seconds": 122.551,
+      "tokens": 2094,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_pe/reload_00001.png",
+      "caption_equal": false,
+      "rgba_equal": false,
+      "stage_seconds": {
+        "VAELoader": 0.132425028,
+        "ResolutionSelector": 0.000170444,
+        "EmptyLatentImage": 0.000203503,
+        "ManualSigmas": 0.000173769,
+        "KSamplerSelect": 0.000128581,
+        "CLIPLoader": 21.905184557,
+        "UNETLoader": 6.29320305,
+        "QwenImage21Cache": 0.004376019,
+        "RandomNoise": 0.000147049,
+        "StringMultiline": 0.000115723,
+        "TextGenerate": 74.208379556,
+        "SwitchNode": 0.000112177,
+        "PreviewAny": 6.5738e-05,
+        "TextEncodeQwenImage21": 0.491786599,
+        "CFGGuider": 0.000196814,
+        "SamplerCustomAdvanced": 17.455848561,
+        "VAEDecode": 1.223565473,
+        "SaveImageAdvanced": 0.809690289
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39561069056,
+        "MaxInUse": 53786008832,
+        "NumAllocs": 7720633,
+        "NumFrees": 7717822,
+        "ActiveAllocs": 2811,
+        "MaxAllocSize": 9253269760,
+        "TotalSystemAllocs": 7720634,
+        "TotalSystemFrees": 7717822,
+        "TotalActiveAllocs": 2812
+      },
+      "fallback_counts": {}
+    }
+  ],
+  "quality": [
+    {
+      "path": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen80-pe-2026-11-16/product-validation4/product-logits/logits.pt",
+      "shape": [
+        1909,
+        248320
+      ],
+      "exact": false,
+      "rrmse": 0.051792928864241194,
+      "max_abs": 3.3125,
+      "top1_matches": 1835,
+      "tokens": 1909,
+      "mean_kl": 0.006207418330930927
+    }
+  ],
+  "reload": {
+    "caption_equal": true,
+    "rgba_equal": true
+  },
+  "unload": [
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 72369811456,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 80962038528,
+          "torch_vram_total": 20639958272,
+          "torch_vram_free": 0
+        }
+      ]
+    },
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 83415748608,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 91735017600,
+          "torch_vram_total": 9866979200,
+          "torch_vram_free": 0
+        }
+      ]
+    },
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 83411570688,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 91735017600,
+          "torch_vram_total": 9866979200,
+          "torch_vram_free": 0
+        }
+      ]
+    },
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 83408130048,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 91735017600,
+          "torch_vram_total": 9866979200,
+          "torch_vram_free": 0
+        }
+      ]
+    },
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 83412152320,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 91735017600,
+          "torch_vram_total": 9866979200,
+          "torch_vram_free": 0
+        }
+      ]
+    },
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 83422130176,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 91735017600,
+          "torch_vram_total": 9866979200,
+          "torch_vram_free": 0
+        }
+      ]
+    }
+  ],
+  "hardware": {
+    "text": {
+      "read_bytes": 540778086400.0,
+      "write_bytes": 16386826240.0,
+      "ports": {
+        "[D0] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46038,
+          "bytes": 1009688576.0,
+          "rounding_envelope": 313958400.0
+        },
+        "[D0] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46044,
+          "bytes": 33823694848.0,
+          "rounding_envelope": 326475776.0
+        },
+        "[D0] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46034,
+          "bytes": 1026867200.0,
+          "rounding_envelope": 314597376.0
+        },
+        "[D0] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46039,
+          "bytes": 33788100608.0,
+          "rounding_envelope": 324444160.0
+        },
+        "[D0] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46030,
+          "bytes": 997801984.0,
+          "rounding_envelope": 315695104.0
+        },
+        "[D0] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46035,
+          "bytes": 33776836608.0,
+          "rounding_envelope": 324534272.0
+        },
+        "[D0] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46026,
+          "bytes": 1062567936.0,
+          "rounding_envelope": 318111744.0
+        },
+        "[D0] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46032,
+          "bytes": 33818034176.0,
+          "rounding_envelope": 324894720.0
+        },
+        "[D1] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46026,
+          "bytes": 1049280512.0,
+          "rounding_envelope": 316022784.0
+        },
+        "[D1] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46027,
+          "bytes": 33807720448.0,
+          "rounding_envelope": 324157440.0
+        },
+        "[D1] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46023,
+          "bytes": 999178240.0,
+          "rounding_envelope": 315342848.0
+        },
+        "[D1] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46024,
+          "bytes": 33755193344.0,
+          "rounding_envelope": 323854336.0
+        },
+        "[D1] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46019,
+          "bytes": 1036804096.0,
+          "rounding_envelope": 314318848.0
+        },
+        "[D1] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46022,
+          "bytes": 33738817536.0,
+          "rounding_envelope": 335765504.0
+        },
+        "[D1] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46016,
+          "bytes": 1007583232.0,
+          "rounding_envelope": 317915136.0
+        },
+        "[D1] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46019,
+          "bytes": 33884413952.0,
+          "rounding_envelope": 324558848.0
+        },
+        "[D2] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46011,
+          "bytes": 33815904256.0,
+          "rounding_envelope": 325738496.0
+        },
+        "[D2] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46008,
+          "bytes": 1001119744.0,
+          "rounding_envelope": 315088896.0
+        },
+        "[D2] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46008,
+          "bytes": 33808556032.0,
+          "rounding_envelope": 324313088.0
+        },
+        "[D2] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46005,
+          "bytes": 1041432576.0,
+          "rounding_envelope": 311197696.0
+        },
+        "[D2] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46005,
+          "bytes": 33776771072.0,
+          "rounding_envelope": 324411392.0
+        },
+        "[D2] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46001,
+          "bytes": 1021403136.0,
+          "rounding_envelope": 312049664.0
+        },
+        "[D2] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 46001,
+          "bytes": 33817600000.0,
+          "rounding_envelope": 323895296.0
+        },
+        "[D2] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 45998,
+          "bytes": 1014194176.0,
+          "rounding_envelope": 314843136.0
+        },
+        "[D3] DDR MMU 0 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 45995,
+          "bytes": 1044283392.0,
+          "rounding_envelope": 313098240.0
+        },
+        "[D3] DDR MMU 0 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 45997,
+          "bytes": 33792098304.0,
+          "rounding_envelope": 324583424.0
+        },
+        "[D3] DDR MMU 1 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 45993,
+          "bytes": 1005142016.0,
+          "rounding_envelope": 318005248.0
+        },
+        "[D3] DDR MMU 1 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 45995,
+          "bytes": 33782251520.0,
+          "rounding_envelope": 323706880.0
+        },
+        "[D3] DDR MMU 2 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 45994,
+          "bytes": 33783930880.0,
+          "rounding_envelope": 324534272.0
+        },
+        "[D3] DDR MMU 2 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 45991,
+          "bytes": 1061797888.0,
+          "rounding_envelope": 313851904.0
+        },
+        "[D3] DDR MMU 3 Input Read Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 45992,
+          "bytes": 33808162816.0,
+          "rounding_envelope": 323829760.0
+        },
+        "[D3] DDR MMU 3 Input Write Reponse Bandwidth (Number of AXI beats)": {
+          "samples": 45988,
+          "bytes": 1007681536.0,
+          "rounding_envelope": 313786368.0
+        }
+      },
+      "profiled_seconds": 0.6196605750010349,
+      "plain_seconds": 0.6240441485024348,
+      "profiler_slowdown": -0.007024460548055056,
+      "profiled_TBps": 0.899145330714431,
+      "plain_estimated_TBps": 0.8928293198118596,
+      "bandwidth_fraction": 0.3644201305354529,
+      "inter_token_intervals": 64,
+      "bytes_per_token": 8705701760.0,
+      "fp8_linear_flops": 1014954459136,
+      "useful_fp8_TFps": 1.6264145118124442,
+      "fp8_peak_fraction": 0.0018802479905346177
+    }
+  },
+  "trace": {
+    "source": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen80-pe-2026-11-16/product-validation4/trace/text.trace.json",
+    "fp8_linear_flops": null,
+    "host_visible_fp8_linear_flops": null,
+    "flops_method": "input shape metadata unavailable",
+    "device_span_ms": 643.1099741210937,
+    "device_active_ms": 399.88988671875,
+    "group_union_ms": {
+      "other_kernel": 154.9111611328125,
+      "fp8_gemm": 202.74133349609374,
+      "other_gemm": 45.43750244140625,
+      "softmax": 5.93434326171875
+    },
+    "runtime_counts": {
+      "run": 3872,
+      "launch": 2512,
+      "Launch": 2512,
+      "launch_recipe": 1152,
+      "LaunchRecipe": 1152
+    },
+    "fp8_cpu_events": 128,
+    "exclusive_ms": {
+      "fp8_gemm": 202.74133349609374,
+      "other_gemm": 45.43750244140625,
+      "softmax": 5.93434326171875,
+      "other_kernel": 145.77670751953124
+    },
+    "device_gap_ms": 243.22008740234372,
+    "gemm_name_union_ms": {
+      "BatchGemm": 8.55474267578125,
+      "GEMM": 211.802625,
+      "gemm": 27.82146826171875
+    },
+    "plain_window_seconds": 0.6139466364984401,
+    "profiled_window_seconds": 0.6449077020006371,
+    "profiler_overhead": 0.05042957101089307,
+    "kernel_coverage": 0.6218063827501036,
+    "tokens": 64,
+    "recipes_per_token": 18.0,
+    "launches_per_token": 39.25,
+    "main_thread_ms_per_token": 6.758430921875003
+  },
+  "validation": {
+    "tests_passed": 191,
+    "tests_skipped": 1,
+    "validated_sha256": {
+      "comfy/text_encoders/llama.py": "26aa2b22f61d5ded6e3c65adc1fdb9e09a92cbc0defaca3513426f7f59b8a261",
+      "comfy/text_encoders/qwen35.py": "ef4098f21e5544c61bf89e6a511b8630576347caa28cff17388c3c7425300179",
+      "comfy/text_encoders/hpu_kv_attention.py": "bf38eb27381ba635c658394fb3d45394607133435db25bfb7aea041c46192e8b",
+      "tests-unit/comfy_test/generation_readback_test.py": "bb1bbbdc46f5a62747d2733745d9a82380072e517886109d4a2e325f53cbe3e2",
+      "tests-unit/comfy_test/hpu_qwen_generation_test.py": "13b7ef89741831d66b2701a8a9344b31523dc6315d3f414ff23e1b4ae8632133",
+      "tests-unit/comfy_test/hpu_rope_test.py": "71fb14ace9cf309390994f2b06abcbbc3ff0b91123fd28f8da6af145236f0ff9"
+    },
+    "supplemental_telemetry_discarded_records": 1
+  },
+  "scope": {
+    "batch": 1,
+    "execution_dtype": "BF16",
+    "linear_weights": "native HPU FP8",
+    "mtp_head": false,
+    "rotary_width": 64,
+    "frequency_function": "built-in Qwen35Transformer.compute_freqs_cis"
+  },
+  "hardware_goal": {
+    "target_bandwidth_TBps": 1.96,
+    "target_ms_per_token": 4.4416845714285715,
+    "actual_ms_per_token": 9.750689820350544,
+    "achieved": false
+  },
+  "raw_root": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen80-pe-2026-11-16",
+  "deployment_telemetry": {
+    "sample_count": 1663,
+    "active_samples": 1350,
+    "request_windows_ms": [
+      [
+        1794838116042,
+        1794838237450
+      ],
+      [
+        1794838016337,
+        1794838054653
+      ],
+      [
+        1794837976979,
+        1794838015614
+      ],
+      [
+        1794837834386,
+        1794837975950
+      ]
+    ],
+    "ranges": {
+      "power.draw": [
+        80.0,
+        404.0
+      ],
+      "temperature.aip": [
+        43.0,
+        55.0
+      ],
+      "clocks.current.soc": [
+        1650.0,
+        1650.0
+      ],
+      "stats.violation.power": [
+        0.0,
+        0.0
+      ],
+      "stats.violation.thermal": [
+        0.0,
+        0.0
+      ]
+    }
+  }
+}

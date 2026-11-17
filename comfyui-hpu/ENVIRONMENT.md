@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署提交为`07fedda`，已按用户明确指示提交，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+当前部署为`a5308be1c7dd56d8ebb694a8a9a630a072089a77`，已人工验收并提交，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 后续优化默认在验证后暂存两个仓库的相关改动，再部署环境并交付人工验收。验收前以基线提交、暂存差异或快照及部署文件SHA256标识运行版本，记录“已部署，待人工验收”，用户明确验收通过后提交并关联最终commit。用户特别说明优先。[交付流程](optimization/MEASUREMENT.md#默认交付与人工验收)
 
@@ -142,3 +142,29 @@ UI已安装`user/default/workflows/Qwen-Image-2.1-Turbo-FP8-HPU.json`。主模�
 ## 2026-11-16 提交关联
 
 用户明确授权提交代码，最终产品提交为`07fedda3278b5c4be8c036fe245dc6991b91dd4a`。该提交的tree与已验证暂存树`d4264962aec7a96f7318ceca52263edf9b6ee5b7`相同，服务器源文件哈希再次核对通过。`.run/deployed-version`使用最终产品commit，`.run/deployed-staged.json`及调查目录的`deployment.json`保留原暂存身份并补充commit关联。
+
+## 2026-11-16 硬件80%计划首批部署
+
+普通8189已运行`07fedda3+staged.d39241e049d0`，待人工验收。符合现有Qwen整步生成准入条件的请求采用四token回读，普通工作流自动进入该路径。源码快照、五轮交错与部署验证见[首批报告](optimization/QWEN80_FIRST_DELIVERY_2026-11-16.md)。服务器资料位于`performance-qwen80-2026-11-16`，部署、回退源文件及普通history位于其`deployment/`目录。
+
+普通冷图145.016秒、两次完整warm43.856/43.957秒、卸载重载125.588秒通过，扩写和RGBA均与原图一致。最后保留原MTP auto参数、队列为空，四个部署文件SHA256匹配产品暂存树`0f4df163a296fd3829d2344ab7385158510797dd`。
+
+## 2026-11-16 P1/P2/P3产品部署
+
+普通8189已运行`07fedda3+staged.87ea451fce53`，待人工验收。产品tree为`7f6b735fa3cd5350e9d6cbfdebb9fe8b79d9eb2d`，六个源文件/测试文件哈希与验证快照一致。原始试验、191项回归、普通节点A/B、跨shape及重载记录位于`/home/sonny/gaudi2/comfyui-hpu/performance-qwen80-pe-2026-11-16/product-validation4`。部署身份、回退源文件与普通8189验收记录进入同根目录的`deployment`。
+
+符合准入条件的原生FP8 Qwen生成采用调用级紧凑RoPE表和专用标准旋转入口。自然扩写与图片会改变，固定1909-token整图中位44.370→36.593秒。当前HBM0.893TB/s、峰值36.44%，80%目标尚未达成。[执行与质量记录](optimization/QWEN80_PE_EXECUTION_2026-11-16.md)
+
+普通首图141.564秒，两次完整warm38.635/38.316秒，卸载重载121.408秒。四次扩写及RGBA匹配验证候选，六个文件哈希匹配，验收时队列为空。部署标记保留baseline、暂存tree/patch及文件SHA256，代码与记录均保持暂存。
+
+## 2026-11-17 扩写编译复用修复
+
+普通8189当前运行`07fedda3+staged.c8ad74f79c7e`，产品暂存tree为`cfdce5bf049c851dd042a84ab7b85248f535b3cd`，已部署、待人工验收。符合准入条件的Qwen整步解码采用动态KV容量标注及规范RoPE步长。提示词变化或thinking切换后的新容量首个decode约0.6秒，首次加载模型仍有初始图编译成本。
+
+源码快照、193项回归、22次普通节点对照、1909-token logits逐元素一致检查及普通服务六次验收位于`/home/sonny/gaudi2/comfyui-hpu/performance-qwen-startup-fix-2026-11-17`。`deployment`保存manifest、暂存patch、回退源文件、实际部署哈希和普通history，状态为`deployed_awaiting_human_acceptance`。普通服务cold142.963秒，四个编辑变体27.236/24.754/26.232/36.046秒，warm38.330秒。六个文件哈希匹配、队列为空。[完整记录](optimization/QWEN_DECODE_STARTUP_2026-11-17.md)
+
+## 2026-11-17 验收与提交关联
+
+用户验收后，缓存case已固化为节点输入签名回归和BF16/FP8实际生成入口回归。完整相关集207项通过、1项跳过，普通服务恢复出图142.826秒、caption/RGBA匹配已验版本。七个代码/测试文件哈希与产品提交`a5308be1c7dd56d8ebb694a8a9a630a072089a77`一致，提交tree为`f68d0361edcc01559eacb4f68345c30e9349ccfe`。
+
+`.run/deployed-version`使用正式commit，`.run/deployed-staged.json`保留`07fedda3+staged.44b0b24b6fca`快照、验收指令与commit关联，状态为`accepted_committed`。原始回归日志、验证哈希、恢复图和部署记录位于`/home/sonny/gaudi2/comfyui-hpu/performance-qwen-cache-regression-2026-11-17`。独立补验入口为`probes/qwen_cache_regression_jobs.py`。

@@ -1,0 +1,91 @@
+{
+  "source": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-cache-regression-2026-11-17",
+  "product": {
+    "identity": "07fedda3+staged.44b0b24b6fca",
+    "baseline_commit": "07fedda3278b5c4be8c036fe245dc6991b91dd4a",
+    "staged_tree": "f68d0361edcc01559eacb4f68345c30e9349ccfe",
+    "staged_patch_sha256": "44b0b24b6fcabcd90c1484074d1864050add755a10240af296320093932c53e8",
+    "previous_deployment": "07fedda3+staged.c8ad74f79c7e",
+    "file_sha256": {
+      "comfy/text_encoders/hpu_kv_attention.py": "bf38eb27381ba635c658394fb3d45394607133435db25bfb7aea041c46192e8b",
+      "comfy/text_encoders/llama.py": "26aa2b22f61d5ded6e3c65adc1fdb9e09a92cbc0defaca3513426f7f59b8a261",
+      "comfy/text_encoders/qwen35.py": "39a89367647bca284564513d38a23afed4ba7437ea9054211e1ade63cbc41771",
+      "tests-unit/comfy_test/generation_readback_test.py": "bb1bbbdc46f5a62747d2733745d9a82380072e517886109d4a2e325f53cbe3e2",
+      "tests-unit/comfy_test/hpu_qwen_generation_test.py": "b130eb7e6ae1ba7199d84d5331ef8fa761d2c639e7b45af67506eeb548dcecf5",
+      "tests-unit/comfy_test/hpu_rope_test.py": "71fb14ace9cf309390994f2b06abcbbc3ff0b91123fd28f8da6af145236f0ff9",
+      "tests-unit/execution_test/test_text_generation_cache.py": "5d14957c55355033799a99b42575fc3e8b16b0258f28c2e116e9cebdd60efd88"
+    },
+    "human_acceptance": true,
+    "acceptance_date": "2026-11-17",
+    "acceptance_instruction": "ok，注意这些验证缓存的case已经加入到回归测试中，然后提交代码",
+    "status": "accepted_committed",
+    "test_summary": {
+      "cache_regression": {
+        "passed": 14,
+        "deselected": 40
+      },
+      "suite": {
+        "passed": 207,
+        "skipped": 1,
+        "warnings": 32
+      }
+    },
+    "deployed_sha256": {
+      "comfy/text_encoders/hpu_kv_attention.py": "bf38eb27381ba635c658394fb3d45394607133435db25bfb7aea041c46192e8b",
+      "comfy/text_encoders/llama.py": "26aa2b22f61d5ded6e3c65adc1fdb9e09a92cbc0defaca3513426f7f59b8a261",
+      "comfy/text_encoders/qwen35.py": "39a89367647bca284564513d38a23afed4ba7437ea9054211e1ade63cbc41771",
+      "tests-unit/comfy_test/generation_readback_test.py": "bb1bbbdc46f5a62747d2733745d9a82380072e517886109d4a2e325f53cbe3e2",
+      "tests-unit/comfy_test/hpu_qwen_generation_test.py": "b130eb7e6ae1ba7199d84d5331ef8fa761d2c639e7b45af67506eeb548dcecf5",
+      "tests-unit/comfy_test/hpu_rope_test.py": "71fb14ace9cf309390994f2b06abcbbc3ff0b91123fd28f8da6af145236f0ff9",
+      "tests-unit/execution_test/test_text_generation_cache.py": "5d14957c55355033799a99b42575fc3e8b16b0258f28c2e116e9cebdd60efd88"
+    },
+    "queue": {
+      "queue_running": [],
+      "queue_pending": []
+    },
+    "normal_verification": {
+      "label": "cache-regression-restored",
+      "prompt_id": "6d641804-d833-4f45-8bfc-c677320db3f1",
+      "seconds": 142.826,
+      "cached_nodes": [],
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/cache-regression-restored_00001.png"
+    },
+    "cpu_cache_tests": {
+      "passed": 12,
+      "seconds": 4.66
+    },
+    "commit": "a5308be1c7dd56d8ebb694a8a9a630a072089a77",
+    "commit_tree": "f68d0361edcc01559eacb4f68345c30e9349ccfe",
+    "committed_identity": "a5308be1c7dd56d8ebb694a8a9a630a072089a77"
+  },
+  "tests": {
+    "cache_regression": {
+      "passed": 14,
+      "deselected": 40,
+      "warnings": 19,
+      "seconds": 32.77
+    },
+    "related_suite": {
+      "passed": 207,
+      "skipped": 1,
+      "warnings": 32,
+      "seconds": 151.86
+    },
+    "cpu_cache": {
+      "passed": 12,
+      "warnings": 15,
+      "seconds": 4.66
+    }
+  },
+  "warnings_note": "BF16 synthetic generation also emits the vendor batch_as_strided alias warning; its request/recompile comparisons are exact. Accepted FP8 ordinary API checks had zero occurrences.",
+  "validated_test_sha256": {
+    "tests-unit/comfy_test/hpu_qwen_generation_test.py": "b130eb7e6ae1ba7199d84d5331ef8fa761d2c639e7b45af67506eeb548dcecf5",
+    "tests-unit/execution_test/test_text_generation_cache.py": "5d14957c55355033799a99b42575fc3e8b16b0258f28c2e116e9cebdd60efd88"
+  },
+  "queue": {
+    "queue_running": [],
+    "queue_pending": []
+  }
+}

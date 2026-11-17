@@ -1,0 +1,2038 @@
+{
+  "source": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-startup-fix-2026-11-17",
+  "tests": "193 passed, 1 skipped, 28 warnings in 125.52s",
+  "warm": {
+    "baseline": {
+      "runs": 5,
+      "median_seconds": 38.503,
+      "range_seconds": [
+        38.397,
+        38.645
+      ],
+      "stages": {
+        "TextGenerate": 20.828947736,
+        "TextEncodeQwenImage21": 0.508152092,
+        "SamplerCustomAdvanced": 15.245329056,
+        "VAEDecode": 1.099012545,
+        "SaveImageAdvanced": 0.816907681
+      }
+    },
+    "product": {
+      "runs": 5,
+      "median_seconds": 38.629,
+      "range_seconds": [
+        38.293,
+        38.826
+      ],
+      "stages": {
+        "TextGenerate": 20.969915108,
+        "TextEncodeQwenImage21": 0.513651875,
+        "SamplerCustomAdvanced": 15.225736238,
+        "VAEDecode": 1.098625918,
+        "SaveImageAdvanced": 0.815768073
+      }
+    },
+    "full_change_fraction": 0.0032724722748875834
+  },
+  "requests": [
+    {
+      "label": "cold-baseline",
+      "baseline": true,
+      "graph_index": 0,
+      "prompt_id": "701a47c7-9e67-4f85-a1d9-6f4b34184e27",
+      "seconds": 140.02,
+      "text_seconds": 88.61285984799906,
+      "sample_times": [
+        14.21654712199961,
+        67.96174120000069,
+        67.97625493999658,
+        67.98866630999692
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967
+        ],
+        "product": []
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/cold-baseline_00001.png",
+      "stage_seconds": {
+        "VAELoader": 0.310413241,
+        "ResolutionSelector": 0.000176334,
+        "EmptyLatentImage": 0.000747196,
+        "ManualSigmas": 0.000311398,
+        "KSamplerSelect": 0.00011762,
+        "CLIPLoader": 23.285992272,
+        "UNETLoader": 5.985562819,
+        "QwenImage21Cache": 0.004524155,
+        "RandomNoise": 0.000128355,
+        "StringMultiline": 0.000119162,
+        "TextGenerate": 88.631585633,
+        "SwitchNode": 0.000245063,
+        "PreviewAny": 6.4934e-05,
+        "TextEncodeQwenImage21": 0.510208141,
+        "CFGGuider": 0.000190344,
+        "SamplerCustomAdvanced": 19.169208308,
+        "VAEDecode": 1.260809788,
+        "SaveImageAdvanced": 0.822503942
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 53042026752,
+        "NumAllocs": 405850,
+        "NumFrees": 403157,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 405851,
+        "TotalSystemFrees": 403157,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 2,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 53.74519407800108
+    },
+    {
+      "label": "cold-product",
+      "baseline": false,
+      "graph_index": 0,
+      "prompt_id": "2300dff8-f83f-4415-9c7a-061611a77df5",
+      "seconds": 93.069,
+      "text_seconds": 75.42847492100555,
+      "sample_times": [
+        0.44657511900004465,
+        55.0928076610071,
+        55.107473933006986,
+        55.12348449300043
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/cold-product_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 75.449174153,
+        "SwitchNode": 0.000158538,
+        "PreviewAny": 6.3311e-05,
+        "TextEncodeQwenImage21": 0.455816317,
+        "CFGGuider": 0.000210474,
+        "SamplerCustomAdvanced": 15.223508783,
+        "VAEDecode": 1.09867129,
+        "SaveImageAdvanced": 0.8259428
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39550951936,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 807012,
+        "NumFrees": 804205,
+        "ActiveAllocs": 2807,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 807013,
+        "TotalSystemFrees": 804205,
+        "TotalActiveAllocs": 2808
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 54.646232542007056
+    },
+    {
+      "label": "edit-0-baseline",
+      "baseline": true,
+      "graph_index": -6,
+      "prompt_id": "a182440b-7514-47ae-b005-b1fae9ea6562",
+      "seconds": 78.872,
+      "text_seconds": 61.1727885979999,
+      "sample_times": [
+        0.840826701001788,
+        53.23819880200608,
+        53.25298829700478,
+        53.26514565099933
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 816,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/edit-0-baseline_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 61.192809016,
+        "SwitchNode": 0.000234869,
+        "PreviewAny": 6.6376e-05,
+        "TextEncodeQwenImage21": 0.421817324,
+        "CFGGuider": 0.000211656,
+        "RandomNoise": 0.000129166,
+        "SamplerCustomAdvanced": 15.350593551,
+        "VAEDecode": 1.097367813,
+        "SaveImageAdvanced": 0.791663865
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39551019520,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 997934,
+        "NumFrees": 995127,
+        "ActiveAllocs": 2807,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 997935,
+        "TotalSystemFrees": 995127,
+        "TotalActiveAllocs": 2808
+      },
+      "fallback_counts": {},
+      "alias_warnings": 2,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 52.397372101004294
+    },
+    {
+      "label": "edit-0-product",
+      "baseline": false,
+      "graph_index": -6,
+      "prompt_id": "a0525dc8-531c-4da9-8b23-7fc99037a120",
+      "seconds": 26.47,
+      "text_seconds": 8.928871782001806,
+      "sample_times": [
+        0.42804655500367517,
+        0.9878550860012183,
+        1.0034542749999673,
+        1.018836299997929
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 816,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/edit-0-product_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 8.948675613,
+        "SwitchNode": 0.000233567,
+        "PreviewAny": 6.2781e-05,
+        "TextEncodeQwenImage21": 0.504533015,
+        "CFGGuider": 0.000215351,
+        "SamplerCustomAdvanced": 15.10228518,
+        "VAEDecode": 1.099545845,
+        "SaveImageAdvanced": 0.798923672
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 1188856,
+        "NumFrees": 1186163,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 1188857,
+        "TotalSystemFrees": 1186163,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 0.5598085309975431
+    },
+    {
+      "label": "edit-1-baseline",
+      "baseline": true,
+      "graph_index": -5,
+      "prompt_id": "33a5bcc3-b1a8-49c7-8ce2-3db257f5644d",
+      "seconds": 76.789,
+      "text_seconds": 59.182908237002266,
+      "sample_times": [
+        0.746735130000161,
+        53.22579021399724,
+        53.24180600699765,
+        53.25614003899682
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 610,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/edit-1-baseline_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 59.20158725,
+        "SwitchNode": 0.000112953,
+        "PreviewAny": 6.7598e-05,
+        "TextEncodeQwenImage21": 0.495471289,
+        "CFGGuider": 0.000199418,
+        "RandomNoise": 0.000119022,
+        "SamplerCustomAdvanced": 15.203018328,
+        "VAEDecode": 1.096521395,
+        "SaveImageAdvanced": 0.77495623
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39550984704,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 1346271,
+        "NumFrees": 1343464,
+        "ActiveAllocs": 2807,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 1346272,
+        "TotalSystemFrees": 1343464,
+        "TotalActiveAllocs": 2808
+      },
+      "fallback_counts": {},
+      "alias_warnings": 2,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 52.47905508399708
+    },
+    {
+      "label": "edit-1-product",
+      "baseline": false,
+      "graph_index": -5,
+      "prompt_id": "249b8421-74e5-44a1-95cd-12ff050dda77",
+      "seconds": 24.531,
+      "text_seconds": 7.1711590260019875,
+      "sample_times": [
+        0.431602404001751,
+        1.0559577910025837,
+        1.0734687779986416,
+        1.088840602998971
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 610,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/edit-1-product_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 7.191060298,
+        "SwitchNode": 0.000184126,
+        "PreviewAny": 6.1208e-05,
+        "TextEncodeQwenImage21": 0.493220918,
+        "CFGGuider": 0.000223394,
+        "SamplerCustomAdvanced": 14.95055926,
+        "VAEDecode": 1.099292964,
+        "SaveImageAdvanced": 0.780569498
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 1503686,
+        "NumFrees": 1500993,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 1503687,
+        "TotalSystemFrees": 1500993,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 0.6243553870008327
+    },
+    {
+      "label": "edit-2-baseline",
+      "baseline": true,
+      "graph_index": -4,
+      "prompt_id": "5082b1d3-931b-471f-b9e7-8cde2b351a8b",
+      "seconds": 26.372,
+      "text_seconds": 8.703159117998439,
+      "sample_times": [
+        0.5225396390014794,
+        0.539967880002223,
+        0.5540634839999257,
+        0.567999888000486
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 843,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/edit-2-baseline_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 8.723285229,
+        "SwitchNode": 0.000116378,
+        "PreviewAny": 6.914e-05,
+        "TextEncodeQwenImage21": 0.52362292,
+        "CFGGuider": 0.000192628,
+        "RandomNoise": 0.000163727,
+        "SamplerCustomAdvanced": 15.211535642,
+        "VAEDecode": 1.098193831,
+        "SaveImageAdvanced": 0.798235434
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 1699207,
+        "NumFrees": 1696514,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 1699208,
+        "TotalSystemFrees": 1696514,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 0.017428241000743583
+    },
+    {
+      "label": "edit-2-product",
+      "baseline": false,
+      "graph_index": -4,
+      "prompt_id": "4f5a1669-8fdc-4c5a-aff3-32cea796a454",
+      "seconds": 26.081,
+      "text_seconds": 8.710901319005643,
+      "sample_times": [
+        0.42592250700545264,
+        0.44359757900383556,
+        0.4576533580038813,
+        0.47161776600114536
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 843,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/edit-2-product_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 8.729142249,
+        "SwitchNode": 0.000178157,
+        "PreviewAny": 6.0568e-05,
+        "TextEncodeQwenImage21": 0.478449853,
+        "CFGGuider": 0.000195402,
+        "SamplerCustomAdvanced": 14.959799176,
+        "VAEDecode": 1.09799744,
+        "SaveImageAdvanced": 0.800207275
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 1894728,
+        "NumFrees": 1892035,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 1894729,
+        "TotalSystemFrees": 1892035,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 0.01767507199838292
+    },
+    {
+      "label": "edit-3-baseline",
+      "baseline": true,
+      "graph_index": -1,
+      "prompt_id": "6ecbdf94-4e9b-45aa-8d57-ba523c876ef4",
+      "seconds": 89.024,
+      "text_seconds": 71.17745087400544,
+      "sample_times": [
+        0.7387656630016863,
+        54.365047999002854,
+        54.37982671300415,
+        54.39457382900582
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 1692,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/edit-3-baseline_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 71.19733229,
+        "SwitchNode": 0.000185238,
+        "PreviewAny": 6.4794e-05,
+        "TextEncodeQwenImage21": 0.494236258,
+        "CFGGuider": 0.000212397,
+        "RandomNoise": 0.000126843,
+        "SamplerCustomAdvanced": 15.434807454,
+        "VAEDecode": 1.098064641,
+        "SaveImageAdvanced": 0.782650378
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39550888448,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 2229533,
+        "NumFrees": 2226726,
+        "ActiveAllocs": 2807,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 2229534,
+        "TotalSystemFrees": 2226726,
+        "TotalActiveAllocs": 2808
+      },
+      "fallback_counts": {},
+      "alias_warnings": 2,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 53.62628233600117
+    },
+    {
+      "label": "edit-3-product",
+      "baseline": false,
+      "graph_index": -1,
+      "prompt_id": "7527b776-5b94-45f0-9ebc-0657c4b9bb22",
+      "seconds": 35.288,
+      "text_seconds": 17.68338723100169,
+      "sample_times": [
+        0.4253603109973483,
+        1.0545694999964326,
+        1.0715446530011832,
+        1.0877350719965762
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 1692,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/edit-3-product_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 17.701438302,
+        "SwitchNode": 0.000180912,
+        "PreviewAny": 6.9e-05,
+        "TextEncodeQwenImage21": 0.520572455,
+        "CFGGuider": 0.000209223,
+        "SamplerCustomAdvanced": 15.174466356,
+        "VAEDecode": 1.097799073,
+        "SaveImageAdvanced": 0.777645194
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 2564338,
+        "NumFrees": 2561645,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 2564339,
+        "TotalSystemFrees": 2561645,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 0.6292091889990843
+    },
+    {
+      "label": "warm-0",
+      "baseline": true,
+      "graph_index": 0,
+      "prompt_id": "3556fe6a-46f4-45f8-be8d-bf0d2f086975",
+      "seconds": 38.471,
+      "text_seconds": 20.807910903000447,
+      "sample_times": [
+        0.4020921530027408,
+        0.4164255380019313,
+        0.4272501570012537,
+        0.4375478850051877
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/warm-0_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 20.828947736,
+        "SwitchNode": 0.000180802,
+        "PreviewAny": 0.000122047,
+        "TextEncodeQwenImage21": 0.469338037,
+        "CFGGuider": 0.000280556,
+        "RandomNoise": 0.00012404,
+        "SamplerCustomAdvanced": 15.235357149,
+        "VAEDecode": 1.101238495,
+        "SaveImageAdvanced": 0.819167579
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 2965500,
+        "NumFrees": 2962807,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 2965501,
+        "TotalSystemFrees": 2962807,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": false
+    },
+    {
+      "label": "warm-1",
+      "baseline": false,
+      "graph_index": 0,
+      "prompt_id": "273766f5-98ca-4516-9933-8ef7281141ec",
+      "seconds": 38.826,
+      "text_seconds": 21.138068366999505,
+      "sample_times": [
+        0.40212154100299813,
+        0.4170248939990415,
+        0.42818720400100574,
+        0.4390108549996512
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/warm-1_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 21.15675147,
+        "SwitchNode": 0.000175925,
+        "PreviewAny": 6.1438e-05,
+        "TextEncodeQwenImage21": 0.513651875,
+        "CFGGuider": 0.000214541,
+        "SamplerCustomAdvanced": 15.229740084,
+        "VAEDecode": 1.098646435,
+        "SaveImageAdvanced": 0.81085902
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 3366662,
+        "NumFrees": 3363969,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 3366663,
+        "TotalSystemFrees": 3363969,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": false
+    },
+    {
+      "label": "warm-2",
+      "baseline": false,
+      "graph_index": 0,
+      "prompt_id": "c4c76e62-fd98-4b47-8c7f-3d7a3a549b83",
+      "seconds": 38.293,
+      "text_seconds": 20.645263985999918,
+      "sample_times": [
+        0.4011662900011288,
+        0.41105533999507315,
+        0.41765910599497147,
+        0.4241829169986886
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/warm-2_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 20.665184341,
+        "SwitchNode": 0.000109458,
+        "PreviewAny": 6.7678e-05,
+        "TextEncodeQwenImage21": 0.470479756,
+        "CFGGuider": 0.000204066,
+        "SamplerCustomAdvanced": 15.225736238,
+        "VAEDecode": 1.097582848,
+        "SaveImageAdvanced": 0.817510524
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 3767824,
+        "NumFrees": 3765131,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 3767825,
+        "TotalSystemFrees": 3765131,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": false
+    },
+    {
+      "label": "warm-3",
+      "baseline": true,
+      "graph_index": 0,
+      "prompt_id": "4f02f120-5582-48b6-9396-fb0c4c928ec1",
+      "seconds": 38.503,
+      "text_seconds": 20.798535461995925,
+      "sample_times": [
+        0.40187299600074766,
+        0.4180021790016326,
+        0.43050950999895576,
+        0.44304006500169635
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/warm-3_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 20.81729443,
+        "SwitchNode": 0.000120865,
+        "PreviewAny": 6.8419e-05,
+        "TextEncodeQwenImage21": 0.508152092,
+        "CFGGuider": 0.000212057,
+        "SamplerCustomAdvanced": 15.249751569,
+        "VAEDecode": 1.099940928,
+        "SaveImageAdvanced": 0.811323428
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 4168986,
+        "NumFrees": 4166293,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 4168987,
+        "TotalSystemFrees": 4166293,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": false
+    },
+    {
+      "label": "warm-4",
+      "baseline": true,
+      "graph_index": 0,
+      "prompt_id": "cde899ec-49be-4a95-a88b-9860cabba5ca",
+      "seconds": 38.596,
+      "text_seconds": 20.932168641003955,
+      "sample_times": [
+        0.4021598290055408,
+        0.4156811290013138,
+        0.4254008780044387,
+        0.43503786700603087
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/warm-4_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 20.950678793,
+        "SwitchNode": 0.000178498,
+        "PreviewAny": 6.2561e-05,
+        "TextEncodeQwenImage21": 0.470960871,
+        "CFGGuider": 0.000210735,
+        "SamplerCustomAdvanced": 15.245329056,
+        "VAEDecode": 1.098954204,
+        "SaveImageAdvanced": 0.813543219
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 4570148,
+        "NumFrees": 4567455,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 4570149,
+        "TotalSystemFrees": 4567455,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": false
+    },
+    {
+      "label": "warm-5",
+      "baseline": false,
+      "graph_index": 0,
+      "prompt_id": "5eee425c-786c-4c79-a06b-e8d93fe85f29",
+      "seconds": 38.367,
+      "text_seconds": 20.71623011000338,
+      "sample_times": [
+        0.40184852200036403,
+        0.4146104660030687,
+        0.4240654419991188,
+        0.43338285999925574
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/warm-5_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 20.735318401,
+        "SwitchNode": 0.000178108,
+        "PreviewAny": 6.25e-05,
+        "TextEncodeQwenImage21": 0.482863583,
+        "CFGGuider": 0.000207571,
+        "SamplerCustomAdvanced": 15.224191213,
+        "VAEDecode": 1.098625918,
+        "SaveImageAdvanced": 0.809497542
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 4971310,
+        "NumFrees": 4968617,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 4971311,
+        "TotalSystemFrees": 4968617,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": false
+    },
+    {
+      "label": "warm-6",
+      "baseline": false,
+      "graph_index": 0,
+      "prompt_id": "bf3578d2-9a0a-469a-a816-c8866bc5c089",
+      "seconds": 38.75,
+      "text_seconds": 21.047547526002745,
+      "sample_times": [
+        0.40640095999697223,
+        0.42307930599781685,
+        0.43570912999712164,
+        0.448247241001809
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/warm-6_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 21.066727453,
+        "SwitchNode": 0.000180001,
+        "PreviewAny": 7.1093e-05,
+        "TextEncodeQwenImage21": 0.515173038,
+        "CFGGuider": 0.000193149,
+        "SamplerCustomAdvanced": 15.234969481,
+        "VAEDecode": 1.098657795,
+        "SaveImageAdvanced": 0.817566493
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 5372472,
+        "NumFrees": 5369779,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 5372473,
+        "TotalSystemFrees": 5369779,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": false
+    },
+    {
+      "label": "warm-7",
+      "baseline": true,
+      "graph_index": 0,
+      "prompt_id": "a71d43e1-4fc3-49f1-9fef-8d627e9d2aa7",
+      "seconds": 38.397,
+      "text_seconds": 20.703084214001137,
+      "sample_times": [
+        0.4016462110012071,
+        0.4170619110009284,
+        0.42908911400445504,
+        0.4413929280053708
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/warm-7_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 20.724318608,
+        "SwitchNode": 0.000177607,
+        "PreviewAny": 6.19e-05,
+        "TextEncodeQwenImage21": 0.516331381,
+        "CFGGuider": 0.000209624,
+        "SamplerCustomAdvanced": 15.224592686,
+        "VAEDecode": 1.099012545,
+        "SaveImageAdvanced": 0.816907681
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 5773634,
+        "NumFrees": 5770941,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 5773635,
+        "TotalSystemFrees": 5770941,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": false
+    },
+    {
+      "label": "warm-8",
+      "baseline": true,
+      "graph_index": 0,
+      "prompt_id": "7d4d9b12-6a42-48c2-873f-e9fb8387f659",
+      "seconds": 38.645,
+      "text_seconds": 20.93096676999994,
+      "sample_times": [
+        0.4004318430015701,
+        0.41335945099854143,
+        0.4226608600001782,
+        0.4318785560026299
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/warm-8_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 20.950077842,
+        "SwitchNode": 0.000228882,
+        "PreviewAny": 6.0688e-05,
+        "TextEncodeQwenImage21": 0.512818647,
+        "CFGGuider": 0.000209403,
+        "SamplerCustomAdvanced": 15.247345037,
+        "VAEDecode": 1.098614667,
+        "SaveImageAdvanced": 0.818840075
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 6174796,
+        "NumFrees": 6172103,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 6174797,
+        "TotalSystemFrees": 6172103,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": false
+    },
+    {
+      "label": "warm-9",
+      "baseline": false,
+      "graph_index": 0,
+      "prompt_id": "a16461d5-eb53-4ff7-8c8f-5cf1d1d0f085",
+      "seconds": 38.629,
+      "text_seconds": 20.951046585003496,
+      "sample_times": [
+        0.40189217300212476,
+        0.41602501799934544,
+        0.42654996999772266,
+        0.4370513160029077
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/warm-9_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 20.969915108,
+        "SwitchNode": 0.000183086,
+        "PreviewAny": 6.5475e-05,
+        "TextEncodeQwenImage21": 0.514714218,
+        "CFGGuider": 0.000198417,
+        "SamplerCustomAdvanced": 15.214130711,
+        "VAEDecode": 1.098248985,
+        "SaveImageAdvanced": 0.815768073
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39273374208,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 6575958,
+        "NumFrees": 6573265,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 6575959,
+        "TotalSystemFrees": 6573265,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": false
+    },
+    {
+      "label": "reload",
+      "baseline": false,
+      "graph_index": 0,
+      "prompt_id": "e6b84f6d-784f-494b-ab93-42a5364f355e",
+      "seconds": 121.725,
+      "text_seconds": 75.44124310000188,
+      "sample_times": [
+        0.42518470600043656,
+        54.92338695700164,
+        54.937972665000416,
+        54.95064691299922
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105,
+          45.54372979699838
+        ]
+      },
+      "tokens": 2094,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/reload_00001.png",
+      "stage_seconds": {
+        "VAELoader": 0.098354049,
+        "ResolutionSelector": 0.000164819,
+        "EmptyLatentImage": 0.000194212,
+        "ManualSigmas": 0.000160242,
+        "KSamplerSelect": 0.000115918,
+        "CLIPLoader": 20.670171566999997,
+        "UNETLoader": 5.822377699,
+        "QwenImage21Cache": 0.00425997,
+        "RandomNoise": 0.000128876,
+        "StringMultiline": 0.000112222,
+        "TextGenerate": 75.460138379,
+        "SwitchNode": 0.000185308,
+        "PreviewAny": 6.5765e-05,
+        "TextEncodeQwenImage21": 0.485165335,
+        "CFGGuider": 0.00022128,
+        "SamplerCustomAdvanced": 17.095356619,
+        "VAEDecode": 1.25090105,
+        "SaveImageAdvanced": 0.81168384
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39561082624,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 6981778,
+        "NumFrees": 6978970,
+        "ActiveAllocs": 2808,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 6981779,
+        "TotalSystemFrees": 6978970,
+        "TotalActiveAllocs": 2809
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 54.4982022510012
+    },
+    {
+      "label": "reload-edit",
+      "baseline": false,
+      "graph_index": -1,
+      "prompt_id": "4b540c58-d456-48c6-9cfe-028ce7378dda",
+      "seconds": 34.662,
+      "text_seconds": 17.086484109000594,
+      "sample_times": [
+        0.42790301499917405,
+        0.6094904499987024,
+        0.6241079840037855,
+        0.6366966700006742
+      ],
+      "compilations": {
+        "baseline": [
+          43.93630147899967,
+          43.39377270899422,
+          43.51944726199872,
+          44.576249028003076
+        ],
+        "product": [
+          44.468572586993105,
+          45.54372979699838
+        ]
+      },
+      "tokens": 1692,
+      "tokens_equal": true,
+      "caption_equal": true,
+      "rgba_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_startup/reload-edit_00001.png",
+      "stage_seconds": {
+        "TextGenerate": 17.106887024,
+        "SwitchNode": 0.000123028,
+        "PreviewAny": 6.8349e-05,
+        "TextEncodeQwenImage21": 0.479884329,
+        "CFGGuider": 0.000222282,
+        "RandomNoise": 0.000127274,
+        "SamplerCustomAdvanced": 15.179818609,
+        "VAEDecode": 1.100349123,
+        "SaveImageAdvanced": 0.777408689
+      },
+      "memory_stats": {
+        "Limit": 101601996800,
+        "InUse": 39272978176,
+        "MaxInUse": 54021947520,
+        "NumAllocs": 7316583,
+        "NumFrees": 7313890,
+        "ActiveAllocs": 2693,
+        "MaxAllocSize": 9429189376,
+        "TotalSystemAllocs": 7316584,
+        "TotalSystemFrees": 7313890,
+        "TotalActiveAllocs": 2694
+      },
+      "fallback_counts": {},
+      "alias_warnings": 0,
+      "synchronized_first_samples": true,
+      "first_decode_iteration_seconds": 0.18158743499952834
+    }
+  ],
+  "capacity_screen": [
+    {
+      "label": "original",
+      "seconds": 71.2192858999988,
+      "first_samples": [
+        14.158734363001713,
+        70.54582296800072,
+        70.62686802900134,
+        70.64108881200082
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 56.38708860499901
+    },
+    {
+      "label": "0",
+      "seconds": 2.0413757619971875,
+      "first_samples": [
+        0.8532015219971072,
+        1.4327861700003268,
+        1.447251443998539,
+        1.4597041069937404
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.5795846480032196
+    },
+    {
+      "label": "1",
+      "seconds": 2.011791256998549,
+      "first_samples": [
+        0.7297580929953256,
+        1.354771817997971,
+        1.3719151679979404,
+        1.3879258169981767
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.6250137250026455
+    },
+    {
+      "label": "2",
+      "seconds": 1.1551180879978347,
+      "first_samples": [
+        0.5258398890000535,
+        0.5429052879990195,
+        0.5572320459978073,
+        0.5712209999983315
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.017065398998965975
+    },
+    {
+      "label": "3",
+      "seconds": 1.0611308869993081,
+      "first_samples": [
+        0.4278718029963784,
+        0.4449948859983124,
+        0.4591439699943294,
+        0.4733101469973917
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.017123083001933992
+    },
+    {
+      "label": "4",
+      "seconds": 1.060041425000236,
+      "first_samples": [
+        0.4289810269983718,
+        0.4464800479981932,
+        0.46082732600189047,
+        0.4750856870014104
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.01749902099982137
+    },
+    {
+      "label": "5",
+      "seconds": 2.0238572119997116,
+      "first_samples": [
+        0.7315893689956283,
+        1.394612509997387,
+        1.410749662994931,
+        1.4268568719999166
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.6630231410017586
+    },
+    {
+      "label": "capacity-4095",
+      "seconds": 1.6721056099995621,
+      "first_samples": [
+        0.4290289789933013,
+        1.040954485994007,
+        1.0588729409937514,
+        1.0745694329962134
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.6119255070007057
+    },
+    {
+      "label": "capacity-4097",
+      "seconds": 1.0677088790034759,
+      "first_samples": [
+        0.43208191099984106,
+        0.44963442200241843,
+        0.46396608000213746,
+        0.4788079780046246
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.017552511002577376
+    },
+    {
+      "label": "capacity-8192",
+      "seconds": 1.7006542870003614,
+      "first_samples": [
+        0.42850124499818776,
+        1.0870017819979694,
+        1.1017553150013555,
+        1.1141719209990697
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.6585005369997816
+    },
+    {
+      "label": "capacity-8193",
+      "seconds": 1.6443915050040232,
+      "first_samples": [
+        0.4288731180058676,
+        1.0128323800017824,
+        1.0279113000069628,
+        1.040798761001497
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.5839592619959149
+    },
+    {
+      "label": "capacity-16384",
+      "seconds": 1.7097539370006416,
+      "first_samples": [
+        0.4287107339987415,
+        1.0403339709955617,
+        1.0575887989980401,
+        1.0735131799956434
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.6116232369968202
+    },
+    {
+      "label": "repeat",
+      "seconds": 1.0644611950046965,
+      "first_samples": [
+        0.43070180900394917,
+        0.44824250700185075,
+        0.4629781770054251,
+        0.4774960540016764
+      ],
+      "compilations": [
+        45.739431652997155
+      ],
+      "tokens": 64,
+      "first_decode_iteration_seconds": 0.01754069799790159
+    }
+  ],
+  "logits": [
+    {
+      "path": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-startup-fix-2026-11-17/logits-validation/logits/logits.pt",
+      "shape": [
+        1909,
+        248320
+      ],
+      "exact": true,
+      "rrmse": 0.0,
+      "max_abs": 0.0,
+      "top1_matches": 1909,
+      "tokens": 1909,
+      "mean_kl": 0.0
+    }
+  ],
+  "unload": [
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 71998050304,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 80962038528,
+          "torch_vram_total": 20639958272,
+          "torch_vram_free": 0
+        }
+      ]
+    },
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 84561088512,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 91735017600,
+          "torch_vram_total": 9866979200,
+          "torch_vram_free": 0
+        }
+      ]
+    },
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 84560113664,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 91735017600,
+          "torch_vram_total": 9866979200,
+          "torch_vram_free": 0
+        }
+      ]
+    },
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 84560130048,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 91735017600,
+          "torch_vram_total": 9866979200,
+          "torch_vram_free": 0
+        }
+      ]
+    },
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 84558839808,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 91735017600,
+          "torch_vram_total": 9866979200,
+          "torch_vram_free": 0
+        }
+      ]
+    },
+    {
+      "system": {
+        "os": "linux",
+        "ram_total": 100939313152,
+        "ram_free": 84558598144,
+        "comfyui_version": "0.44.0",
+        "required_frontend_version": "1.58.5",
+        "installed_templates_version": "0.11.102",
+        "required_templates_version": "0.11.102",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.58.5",
+            "required": "1.58.5"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.102",
+            "required": "0.11.102"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.16",
+            "required": "0.5.16"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.6.0",
+            "required": "0.6.0"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.41",
+            "required": "0.2.41"
+          }
+        ],
+        "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+        "pytorch_version": "2.13.0a0+git2469d18",
+        "embedded_python": false,
+        "deploy_environment": "local-git",
+        "argv": [
+          "/home/sonny/ComfyUI-Gaudi/main.py",
+          "--disable-dynamic-vram",
+          "--disable-pinned-memory",
+          "--disable-async-offload",
+          "--disable-xformers",
+          "--use-pytorch-cross-attention",
+          "--disable-all-custom-nodes",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8190"
+        ]
+      },
+      "devices": [
+        {
+          "name": "hpu:0 GAUDI2",
+          "type": "hpu",
+          "index": 0,
+          "vram_total": 101601996800,
+          "vram_free": 91735017600,
+          "torch_vram_total": 9866979200,
+          "torch_vram_free": 0
+        }
+      ]
+    }
+  ],
+  "validated_sha256": {
+    "comfy/text_encoders/qwen35.py": "39a89367647bca284564513d38a23afed4ba7437ea9054211e1ade63cbc41771",
+    "tests-unit/comfy_test/hpu_qwen_generation_test.py": "975b00ced5eb43d5201214086f9bf8269ec0e3092f42c65a9e63056c2ed031ca"
+  },
+  "logits_validated_sha256": {
+    "comfy/text_encoders/qwen35.py": "39a89367647bca284564513d38a23afed4ba7437ea9054211e1ade63cbc41771",
+    "tests-unit/comfy_test/hpu_qwen_generation_test.py": "975b00ced5eb43d5201214086f9bf8269ec0e3092f42c65a9e63056c2ed031ca"
+  },
+  "deployment": {
+    "identity": "07fedda3+staged.c8ad74f79c7e",
+    "baseline_commit": "07fedda3278b5c4be8c036fe245dc6991b91dd4a",
+    "staged_tree": "cfdce5bf049c851dd042a84ab7b85248f535b3cd",
+    "staged_patch_sha256": "c8ad74f79c7e76d7e88f679b24276a051dbd609df441810636e3161db1cc7d96",
+    "previous_deployment": "07fedda3+staged.87ea451fce53",
+    "file_sha256": {
+      "comfy/text_encoders/hpu_kv_attention.py": "bf38eb27381ba635c658394fb3d45394607133435db25bfb7aea041c46192e8b",
+      "comfy/text_encoders/llama.py": "26aa2b22f61d5ded6e3c65adc1fdb9e09a92cbc0defaca3513426f7f59b8a261",
+      "comfy/text_encoders/qwen35.py": "39a89367647bca284564513d38a23afed4ba7437ea9054211e1ade63cbc41771",
+      "tests-unit/comfy_test/generation_readback_test.py": "bb1bbbdc46f5a62747d2733745d9a82380072e517886109d4a2e325f53cbe3e2",
+      "tests-unit/comfy_test/hpu_qwen_generation_test.py": "975b00ced5eb43d5201214086f9bf8269ec0e3092f42c65a9e63056c2ed031ca",
+      "tests-unit/comfy_test/hpu_rope_test.py": "71fb14ace9cf309390994f2b06abcbbc3ff0b91123fd28f8da6af145236f0ff9"
+    },
+    "status": "deployed_awaiting_human_acceptance",
+    "human_acceptance": false,
+    "validation_root": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-startup-fix-2026-11-17/validation",
+    "runs": [
+      {
+        "label": "startup-cold",
+        "prompt_id": "7931dd22-436e-4d9b-b9b9-235c1e81dc63",
+        "seconds": 142.963,
+        "cached_nodes": [],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/startup-cold_00001.png"
+      },
+      {
+        "label": "startup-edit-0",
+        "prompt_id": "6c2b8222-534f-4b14-96ea-57de13f865e8",
+        "seconds": 27.236,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/startup-edit-0_00001.png"
+      },
+      {
+        "label": "startup-edit-1",
+        "prompt_id": "d259249c-7c80-43ba-9af9-b9ce3d454164",
+        "seconds": 24.754,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/startup-edit-1_00001.png"
+      },
+      {
+        "label": "startup-edit-2",
+        "prompt_id": "48f30aa0-591a-4819-afe7-25d482198be6",
+        "seconds": 26.232,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/startup-edit-2_00001.png"
+      },
+      {
+        "label": "startup-edit-3",
+        "prompt_id": "e4a33cee-0f47-4ea2-8926-049552bb1095",
+        "seconds": 36.046,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/startup-edit-3_00001.png"
+      },
+      {
+        "label": "startup-warm",
+        "prompt_id": "e709b171-8231-4bc3-ab01-260bf9c522d2",
+        "seconds": 38.33,
+        "cached_nodes": [
+          "13",
+          "459:451",
+          "459:453",
+          "459:454",
+          "459:456",
+          "459:473",
+          "459:475",
+          "459:484",
+          "459:487",
+          "459:490"
+        ],
+        "caption_equal": true,
+        "rgba_equal": true,
+        "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen80_deployed/startup-warm_00001.png"
+      }
+    ],
+    "deployed_sha256": {
+      "comfy/text_encoders/hpu_kv_attention.py": "bf38eb27381ba635c658394fb3d45394607133435db25bfb7aea041c46192e8b",
+      "comfy/text_encoders/llama.py": "26aa2b22f61d5ded6e3c65adc1fdb9e09a92cbc0defaca3513426f7f59b8a261",
+      "comfy/text_encoders/qwen35.py": "39a89367647bca284564513d38a23afed4ba7437ea9054211e1ade63cbc41771",
+      "tests-unit/comfy_test/generation_readback_test.py": "bb1bbbdc46f5a62747d2733745d9a82380072e517886109d4a2e325f53cbe3e2",
+      "tests-unit/comfy_test/hpu_qwen_generation_test.py": "975b00ced5eb43d5201214086f9bf8269ec0e3092f42c65a9e63056c2ed031ca",
+      "tests-unit/comfy_test/hpu_rope_test.py": "71fb14ace9cf309390994f2b06abcbbc3ff0b91123fd28f8da6af145236f0ff9"
+    },
+    "queue": {
+      "queue_running": [],
+      "queue_pending": []
+    },
+    "batch_as_strided_warnings": 0
+  },
+  "limitations": [
+    "Fresh process or model reload still requires initial decoder compilation.",
+    "This change preserves KV allocation capacity and graph math; hardware utilization was not reprofiled.",
+    "The preliminary dynamic_compact run used an old getter in its copied namespace and is excluded."
+  ]
+}

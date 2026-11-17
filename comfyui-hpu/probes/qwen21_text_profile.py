@@ -27,6 +27,8 @@ p.add_argument('--cpu-profile',action='store_true')
 p.add_argument('--quality-only',action='store_true')
 p.add_argument('--native',action='store_true')
 p.add_argument('--profile-start-token', type=int)
+p.add_argument('--window-steps', type=int, default=16)
+p.add_argument('--no-region-labels', action='store_true')
 a=p.parse_args()
 a.output.mkdir(parents=True,exist_ok=True)
 if a.native:
@@ -47,15 +49,17 @@ counter=0
 mode='warm'
 window_start=0
 window_seconds=None
+window_thread_start=0
+window_thread_seconds=None
 teacher=json.loads(a.teacher.read_text()) if a.teacher else None
 saved_logits=[]
 sample=BaseGenerate.sample_token
 
 def sampled(self,*values,**kwargs):
-    global active,finished,counter,window_start,window_seconds
+    global active,finished,counter,window_start,window_seconds,window_thread_start,window_thread_seconds
     result=sample(self,*values,**kwargs)
     if teacher is not None:
-        result=torch.full_like(result,teacher[counter])
+        result=torch.full_like(result,teacher[min(counter, len(teacher) - 1)])
     counter+=1
     if a.window_tokens and counter == a.window_tokens:
         result = torch.full_like(result, self.model.config.stop_tokens[0])
@@ -67,9 +71,11 @@ def sampled(self,*values,**kwargs):
         if mode=='cpu_profile':
             cpu_profile.enable()
         window_start=time.perf_counter()
-    if counter==(a.profile_start_token if a.profile_start_token is not None else (512 if a.native else 32)) + 16:
+        window_thread_start=time.thread_time()
+    if counter==(a.profile_start_token if a.profile_start_token is not None else (512 if a.native else 32)) + a.window_steps:
         torch.hpu.synchronize()
         window_seconds=time.perf_counter()-window_start
+        window_thread_seconds=time.thread_time()-window_thread_start
         if mode=='cpu_profile':
             cpu_profile.disable()
         if active:
@@ -77,11 +83,13 @@ def sampled(self,*values,**kwargs):
             finished,active=None if a.native else active,None
         if a.native and mode in ('plain','profile'):
             (a.output/('window.json' if mode=='profile' else 'plain-window.json')).write_text(
-                json.dumps(dict(seconds=window_seconds,inter_token_intervals=16,forwards=16)))
+                json.dumps(dict(seconds=window_seconds,inter_token_intervals=a.window_steps,forwards=a.window_steps)))
     return result
 BaseGenerate.sample_token=sampled
 
 def labelled(function,label):
+    if a.no_region_labels:
+        return function
     def call(*values,**kwargs):
         if not a.native and active:
             with torch.profiler.record_function(label):return function(*values,**kwargs)
@@ -98,7 +106,8 @@ def logits(self,*values,**kwargs):
     result=head(self,*values,**kwargs)
     if mode=='logits':saved_logits.append(result[:,-1].detach().cpu().clone())
     return result
-BaseGenerate.logits=logits
+if a.logits or a.quality_only:
+    BaseGenerate.logits=logits
 sequence=['warm','plain','plain','plain','logits'] if a.logits else ['warm','plain','profile','plain']
 if a.plain_only:
     sequence=['warm']+['plain']*a.plain_runs
@@ -115,7 +124,8 @@ for mode in sequence:
     torch.hpu.synchronize();start=time.perf_counter()
     ids=clip.generate(tokens,do_sample=True,max_length=settings['max_length'],temperature=1.0,top_k=20,top_p=.95,min_p=0.,repetition_penalty=1.,presence_penalty=1.5,seed=settings['sampling_mode.seed'],mtp=True)
     torch.hpu.synchronize()
-    result=dict(mode=mode,seconds=time.perf_counter()-start,window_seconds=window_seconds,tokens=len(ids))
+    result=dict(mode=mode,seconds=time.perf_counter()-start,window_seconds=window_seconds,
+                window_thread_seconds=window_thread_seconds,window_steps=a.window_steps,tokens=len(ids))
     with (a.output/'timings.jsonl').open('a') as f:f.write(json.dumps(result)+'\n')
     print(result,flush=True)
     (a.output/f'{mode}-tokens.json').write_text(json.dumps(ids))

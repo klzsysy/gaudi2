@@ -9,6 +9,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('root', type=Path)
 parser.add_argument('--stages', nargs='+', default=['text', 'dit', 'clip'])
 parser.add_argument('--reference-root', type=Path)
+parser.add_argument('--pe-matrix-elements', type=int)
+parser.add_argument('--dit-trace-summary', type=Path)
 a = parser.parse_args()
 report = {}
 reference_root = a.reference_root or a.root
@@ -29,7 +31,8 @@ for stage in a.stages:
         port['rounding_envelope'] += (event['counter_values'][1] > 0) * factor
     read = sum(v['bytes'] for k,v in ports.items() if 'Read' in k)
     write = sum(v['bytes'] for k,v in ports.items() if 'Write' in k)
-    seconds = json.loads((root / 'window.json').read_text())['seconds']
+    window = json.loads((root / 'window.json').read_text())
+    seconds = window['seconds']
     plain = json.loads((root / 'plain-window.json').read_text())['seconds']
     if (root / 'timings.jsonl').exists():
         rows = [json.loads(line) for line in (root / 'timings.jsonl').read_text().splitlines()]
@@ -40,11 +43,17 @@ for stage in a.stages:
                   plain_estimated_TBps=(read+write)/plain/1e12,
                   bandwidth_fraction=(read+write)/plain/2.45e12)
     if stage == 'text':
-        weights = json.loads((reference_root / 'weights-pe.json').read_text())
-        flops = 2 * sum(r['elements'] for r in weights['converted']) * 16
-        record['bytes_per_token'] = (read+write)/16
+        elements = a.pe_matrix_elements
+        if elements is None:
+            weights = json.loads((reference_root / 'weights-pe.json').read_text())
+            elements = sum(r['elements'] for r in weights['converted'])
+        intervals = window.get('inter_token_intervals', window.get('forwards', 16))
+        assert intervals > 0, window
+        flops = 2 * elements * intervals
+        record['inter_token_intervals'] = intervals
+        record['bytes_per_token'] = (read+write)/intervals
     elif stage == 'dit':
-        trace = next((reference_root / 'fp8-off').glob('*dit.trace.fp8-summary.json'))
+        trace = a.dit_trace_summary or next((reference_root / 'fp8-off').glob('*dit.trace.fp8-summary.json'))
         flops = json.loads(trace.read_text())['fp8_linear_flops']
     else:
         flops = json.loads((a.root / 'clip-work.json').read_text())['fp8_linear_flops']

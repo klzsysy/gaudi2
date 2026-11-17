@@ -1,0 +1,201 @@
+{
+  "deployment": "07fedda3+staged.c8ad74f79c7e",
+  "requests": [
+    {
+      "label": "blue-first",
+      "prompt_id": "40874873-cc26-49ed-9366-c0cfc34d8a47",
+      "seconds": 37.902,
+      "prompt_sha256": "149bb3d66717504ec865dcc5289e67335043a8ea0fc1bd74a731d411e34c3e16",
+      "cached_nodes": [
+        "13",
+        "459:451",
+        "459:453",
+        "459:454",
+        "459:456",
+        "459:473",
+        "459:475",
+        "459:484",
+        "459:487",
+        "459:490"
+      ],
+      "caption_sha256": "9fde6a37600d60448950ab06596bb2847d284955fc77cd0ff50d37cee1fa3f6e",
+      "rgba_sha256": "e5f084e2cfa9e84a69a59b74205b4755cc41f6912c73546e729a1319e1bd7dab",
+      "repeat_or_recompute_equal": null,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_cache_audit/blue-first_00001.png"
+    },
+    {
+      "label": "red-first",
+      "prompt_id": "6886ca49-e771-470f-b737-e85efce24b27",
+      "seconds": 31.794,
+      "prompt_sha256": "28f8106ea8dc125070234332fb03fdc03a1af57d9e6e0a95dc93982e2755f0a3",
+      "cached_nodes": [
+        "13",
+        "459:451",
+        "459:453",
+        "459:454",
+        "459:456",
+        "459:473",
+        "459:475",
+        "459:484",
+        "459:487",
+        "459:488",
+        "459:490"
+      ],
+      "caption_sha256": "4eaca7e43729ae2bf27fb47077881de37387fe4d5fd765605e8dc75c6fa979a1",
+      "rgba_sha256": "f34a6ea2f411e2e932ce8a5cbd3d628afee208406711fc0e7d433365fbb82b94",
+      "repeat_or_recompute_equal": null,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_cache_audit/red-first_00001.png"
+    },
+    {
+      "label": "blue-return",
+      "prompt_id": "86b20adc-0518-4871-b9e5-7f482b0f422b",
+      "seconds": 37.805,
+      "prompt_sha256": "149bb3d66717504ec865dcc5289e67335043a8ea0fc1bd74a731d411e34c3e16",
+      "cached_nodes": [
+        "13",
+        "459:451",
+        "459:453",
+        "459:454",
+        "459:456",
+        "459:473",
+        "459:475",
+        "459:484",
+        "459:487",
+        "459:488",
+        "459:490"
+      ],
+      "caption_sha256": "9fde6a37600d60448950ab06596bb2847d284955fc77cd0ff50d37cee1fa3f6e",
+      "rgba_sha256": "e5f084e2cfa9e84a69a59b74205b4755cc41f6912c73546e729a1319e1bd7dab",
+      "repeat_or_recompute_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_cache_audit/blue-return_00001.png"
+    },
+    {
+      "label": "red-recompute",
+      "prompt_id": "7e7b946a-a856-424d-9878-19ab63ab519e",
+      "seconds": 31.54,
+      "prompt_sha256": "28f8106ea8dc125070234332fb03fdc03a1af57d9e6e0a95dc93982e2755f0a3",
+      "cached_nodes": [
+        "13",
+        "459:451",
+        "459:453",
+        "459:454",
+        "459:456",
+        "459:473",
+        "459:475",
+        "459:484",
+        "459:487",
+        "459:488",
+        "459:490"
+      ],
+      "caption_sha256": "4eaca7e43729ae2bf27fb47077881de37387fe4d5fd765605e8dc75c6fa979a1",
+      "rgba_sha256": "f34a6ea2f411e2e932ce8a5cbd3d628afee208406711fc0e7d433365fbb82b94",
+      "repeat_or_recompute_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_cache_audit/red-recompute_00001.png"
+    },
+    {
+      "label": "blue-recompute",
+      "prompt_id": "c0e8e90d-e3ba-4e00-aba9-56591c2109c3",
+      "seconds": 37.758,
+      "prompt_sha256": "149bb3d66717504ec865dcc5289e67335043a8ea0fc1bd74a731d411e34c3e16",
+      "cached_nodes": [
+        "13",
+        "459:451",
+        "459:453",
+        "459:454",
+        "459:456",
+        "459:473",
+        "459:475",
+        "459:484",
+        "459:487",
+        "459:488",
+        "459:490"
+      ],
+      "caption_sha256": "9fde6a37600d60448950ab06596bb2847d284955fc77cd0ff50d37cee1fa3f6e",
+      "rgba_sha256": "e5f084e2cfa9e84a69a59b74205b4755cc41f6912c73546e729a1319e1bd7dab",
+      "repeat_or_recompute_equal": true,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_cache_audit/blue-recompute_00001.png"
+    },
+    {
+      "label": "system-change",
+      "prompt_id": "aa426d2b-e4b0-45a3-aeed-3f52ea110ad0",
+      "seconds": 34.153,
+      "prompt_sha256": "149bb3d66717504ec865dcc5289e67335043a8ea0fc1bd74a731d411e34c3e16",
+      "cached_nodes": [
+        "13",
+        "459:451",
+        "459:453",
+        "459:454",
+        "459:456",
+        "459:473",
+        "459:484",
+        "459:487",
+        "459:488",
+        "459:490"
+      ],
+      "caption_sha256": "1f41c71d18b310f4a8c4716c02eb7ecf113b21301b86608f02b9ae60f976e82b",
+      "rgba_sha256": "43eaceecdcec0387b8e0e27f11b93a100387d60113558d9c0334b390f7deb7ac",
+      "repeat_or_recompute_equal": null,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_cache_audit/system-change_00001.png"
+    },
+    {
+      "label": "original",
+      "prompt_id": "3e95f3f7-ea6b-4ac6-a1eb-738960d63289",
+      "seconds": 38.494,
+      "prompt_sha256": "8e262bfd7863d19d7156caf563deb95b1feb90ec962167d79d5969adccc2fd7c",
+      "cached_nodes": [
+        "13",
+        "459:451",
+        "459:453",
+        "459:454",
+        "459:456",
+        "459:473",
+        "459:484",
+        "459:487",
+        "459:488",
+        "459:490"
+      ],
+      "caption_sha256": "a9681700e1cd6a9a54d0474e019c1ff10ad9ef7a91c2ba6acb92a0fd8f6f470a",
+      "rgba_sha256": "80351183ea57b6fdc4c698fa1762aa48f33227dc7f8a880df65a9230cf674d10",
+      "repeat_or_recompute_equal": null,
+      "image": "/home/sonny/ComfyUI-Gaudi/output/gaudi/qwen_cache_audit/original_00001.png"
+    }
+  ],
+  "blue_red_caption_different": true,
+  "blue_red_rgba_different": true,
+  "source_sha256": {
+    "comfy/text_encoders/hpu_kv_attention.py": "bf38eb27381ba635c658394fb3d45394607133435db25bfb7aea041c46192e8b",
+    "comfy/text_encoders/llama.py": "26aa2b22f61d5ded6e3c65adc1fdb9e09a92cbc0defaca3513426f7f59b8a261",
+    "comfy/text_encoders/qwen35.py": "39a89367647bca284564513d38a23afed4ba7437ea9054211e1ade63cbc41771",
+    "tests-unit/comfy_test/generation_readback_test.py": "bb1bbbdc46f5a62747d2733745d9a82380072e517886109d4a2e325f53cbe3e2",
+    "tests-unit/comfy_test/hpu_qwen_generation_test.py": "975b00ced5eb43d5201214086f9bf8269ec0e3092f42c65a9e63056c2ed031ca",
+    "tests-unit/comfy_test/hpu_rope_test.py": "71fb14ace9cf309390994f2b06abcbbc3ff0b91123fd28f8da6af145236f0ff9"
+  },
+  "queue": {
+    "queue_running": [],
+    "queue_pending": []
+  },
+  "batch_as_strided_warnings": 0,
+  "original_restored_caption_and_rgba_equal": true,
+  "tokenization": [
+    {
+      "color": "灰褐色",
+      "prompt_sha256": "8e262bfd7863d19d7156caf563deb95b1feb90ec962167d79d5969adccc2fd7c",
+      "input_tokens": 2803,
+      "token_ids_sha256": "654916bc36e49eed2ead19111181ea18b10e4bf49385143a25de62115c5c5ff5"
+    },
+    {
+      "color": "深蓝色",
+      "prompt_sha256": "149bb3d66717504ec865dcc5289e67335043a8ea0fc1bd74a731d411e34c3e16",
+      "input_tokens": 2803,
+      "token_ids_sha256": "e114b37407b81c3717ab3377eeab421cb71a9fa54ee728d6fcd1fefdf0e6a420"
+    },
+    {
+      "color": "深红色",
+      "prompt_sha256": "28f8106ea8dc125070234332fb03fdc03a1af57d9e6e0a95dc93982e2755f0a3",
+      "input_tokens": 2803,
+      "token_ids_sha256": "457baf3c85b33e61539e8b790d1e3a584f945cc09c5ce767325bbc22443c9f8d"
+    }
+  ],
+  "source": "/home/sonny/gaudi2/comfyui-hpu/performance-qwen-prompt-cache-2026-11-17",
+  "all_text_nodes_executed": true
+}
