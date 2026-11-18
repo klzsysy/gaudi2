@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前产品提交与部署为`22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4`，D1已人工验收并提交，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+当前产品提交与部署为`0818699bc7bee8c5ff9e3f13eef87c20153f4e66`（D2方案A已人工验收并提交），绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 后续优化默认在验证后暂存两个仓库的相关改动，再部署环境并交付人工验收。验收前以基线提交、暂存差异或快照及部署文件SHA256标识运行版本，记录“已部署，待人工验收”，用户明确验收通过后提交并关联最终commit。用户特别说明优先。[交付流程](optimization/MEASUREMENT.md#默认交付与人工验收)
 
@@ -174,3 +174,23 @@ UI已安装`user/default/workflows/Qwen-Image-2.1-Turbo-FP8-HPU.json`。主模�
 暂存tree为`9d01642e8deff0c4cb461a34b808115968ba8729`，普通`main.py`入口运行Qwen原生FP8 DiT attention优化。显式`transformer_options["hpu_fast_attention"] = False`使用原attention路径。当前验证范围包含1088×1920、512²/1024²、KV auto/off、提示词回切及卸载重载。
 
 资料根目录为`/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d1-2026-11-17`。`product3`保存完整流程、硬件计数及主要回归，`followup`保存最终33项专项和prefix实验，`deployment`保存暂存patch、manifest、回退源文件与七次部署验证及两次恢复后普通history。三份变更文件及1070份Python/shell源码哈希验证通过，普通服务已预热、队列为空。当前status为`accepted_committed`，正式提交为`22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4`，manifest保留暂存身份与人工验收指令。[D1记录](optimization/QWEN_D1_ATTENTION_2026-11-17.md)
+
+## 2026-11-17 D2未暂存快照部署历史
+
+普通`http://192.168.10.21:8189`曾运行`22e3972a+worktree.54b8266a1348`，基线为D1正式提交`22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4`。用户要求本轮先不暂存，manifest明确`staged=false`，当时状态为`deployed_awaiting_human_acceptance`。部署期间两个本地仓库的index保持空差异。用户随后决定撤回D2产品改动，恢复D1，保留调查记录。
+
+原始资料根目录为`/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d2-2026-11-17`。`product-validation2`保存最终共享存储回归、41次成对工作流和独立硬件计数，`deployment`保存未暂存patch、候选源码、manifest、D1回退文件、七次普通history和普通日志。`probe-source.tar`及`probe-source/`保存调查工具快照，`product-source-hashes.json/source-audit.json`核对1071份Python/shell源码。代码与测试的三份部署SHA256均匹配验证快照。
+
+普通cold146.915秒、warm32.028秒、蓝/红/蓝回切32.824/26.298/31.416秒、恢复原图32.243秒、卸载重载122.580秒。全部caption/RGBA匹配验证候选，关键计算节点实际执行。卸载稳定9.273GiB，别名及重编译上限警告0次，服务已预热、队列为空。普通进程沿用原有启动环境，SCAL隔离配置和TPC实验库仅供独立研究进程使用。[D2执行与剩余目标](optimization/QWEN_D2_SRAM_2026-11-17.md)
+
+## 2026-11-17 D2撤回与D1恢复
+
+用户明确决定丢弃D2产品改动并保留调查记录。普通8189已恢复D1正式提交`22e3972af91d44c7af7a6fa3fb371e4b3dd2e3f4`，恢复原有`.run/deployed-version`及已验收manifest。1070份Python/shell源码与本地D1一致，D2新增prefix回归文件已移除。
+
+原D2资料根目录的`rollback/rollback.json`记录状态`withdrawn_restored_d1`，同目录保存冷/热history和普通日志。cold142.828秒、完整warm34.322秒，扩写及RGBA匹配已验D1，别名及重编译上限告警0次，服务已预热、队列为空。本地产品仓库工作区干净，本仓库调查与归档改动保持未暂存。完整撤回补丁保存在`patches/qwen-d2-withdrawn-2026-11-17.patch`。
+
+## 2026-11-18 D2方案A片上SRAM流水部署
+
+普通`http://192.168.10.21:8189`当前运行正式提交`0818699bc7bee8c5ff9e3f13eef87c20153f4e66`（原暂存身份`22e3972a+staged.3161d0925c58`，tree `a6ebfc0a3d59ac8a8fcdddb0b43922d339827e4f`，状态`accepted_committed`）。产品新增`comfy/ldm/modules/hpu_attention.py`并在首次调用时自动编译`/tmp/comfy_hpu_rmw_attn_<hash>.so`（链接系统`/usr/lib/habanalabs/libSynapse.so`），无需修改服务启动环境变量。
+
+验证资料位于`/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d2-2026-11-17/plan-a-validate76`、`plan-a-product-validation`与`plan-a-deployment`。三份部署文件（`comfy/ldm/modules/hpu_attention.py`、`comfy/ldm/modules/attention.py`、`tests-unit/comfy_test/hpu_fast_attention_test.py`）SHA256匹配验证manifest，普通cold 140.809秒、warm 33.724秒、蓝/红/回切33.193/27.269/32.545秒、原图33.301秒、重载118.399秒及热复验34.051/33.450秒全部匹配D1基准，别名及重编译上限告警0次，队列为空。用户已确认验收并提交。

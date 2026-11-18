@@ -1,0 +1,245 @@
+diff --git a/comfy/ldm/modules/attention.py b/comfy/ldm/modules/attention.py
+index 4836f9d2..a93a162d 100644
+--- a/comfy/ldm/modules/attention.py
++++ b/comfy/ldm/modules/attention.py
+@@ -616,6 +616,13 @@ def _hpu_fp8_attention_av(q, k, v):
+ def _hpu_fast_attention(q, k, v):
+     k = (k.float() - k.float().mean(dim=-2, keepdim=True)).to(k.dtype)
+     q = q.contiguous()
++    if q.shape[-2] == 8160:
++        return torch.cat([_hpu_fast_attention_part(q[..., start:start + 2048, :].contiguous(), k, v)
++                          for start in (0, 2048, 4096, 6144)], dim=-2)
++    return _hpu_fast_attention_part(q, k, v)
++
++
++def _hpu_fast_attention_part(q, k, v):
+     split = k.shape[-2] // 128 * 128
+     scale = q.shape[-1] ** -0.5
+     if split == k.shape[-2]:
+diff --git a/comfy/ldm/qwen_image21/model.py b/comfy/ldm/qwen_image21/model.py
+index 2b62f6df..4d92bb4a 100644
+--- a/comfy/ldm/qwen_image21/model.py
++++ b/comfy/ldm/qwen_image21/model.py
+@@ -68,6 +68,8 @@ class SwiGLUFeedForward(nn.Module):
+         if (self.hpu_compile and x.device.type == "hpu" and x.dtype == torch.bfloat16 and not torch.is_grad_enabled()
+                 and not comfy.model_management.args.disable_comfy_compiler and not comfy.model_management.in_training
+                 and not comfy.ops.has_forward_hooks(self)):
++            if torch.compiler.is_compiling():
++                return self._forward(x)
+             return _compiled_ffn()(self, x)
+         return self._forward(x)
+ 
+@@ -167,6 +169,7 @@ def _gated_residual(x, y, gate, prefix_len):
+ class QwenImage21TransformerBlock(nn.Module):
+     def __init__(self, dim, num_attention_heads, attention_head_dim, mlp_ratio=3, eps=1e-6, fused_mlp=True, dtype=None, device=None, operations=None):
+         super().__init__()
++        self.hpu_compile_prefix = getattr(operations, "hpu_fp8", False)
+         self.img_norm1 = operations.LayerNorm(dim, elementwise_affine=False, eps=eps, dtype=dtype, device=device)
+         self.attn = Attention(dim, num_attention_heads, attention_head_dim, eps=eps, dtype=dtype, device=device, operations=operations)
+         self.img_norm2 = operations.LayerNorm(dim, elementwise_affine=False, eps=eps, dtype=dtype, device=device)
+@@ -180,6 +183,31 @@ class QwenImage21TransformerBlock(nn.Module):
+             x.clamp_(-65504, 65504)
+         return x
+ 
++    def _forward_with_prefix(self, x, mod, pe, prefix_k, prefix_v, transformer_options):
++        if (self.hpu_compile_prefix and x.device.type == "hpu" and x.dtype == torch.bfloat16
++                and x.shape[0] == 1 and x.shape[1] == 8160 and not torch.is_grad_enabled()
++                and not torch.compiler.is_compiling() and not comfy.model_management.in_training
++                and not comfy.model_management.args.disable_comfy_compiler and not comfy.ops.has_forward_hooks(self)
++                and self.attn.comfy_attention.method is None and not transformer_options.get("patches")
++                and not transformer_options.get("patches_replace") and "optimized_attention_override" not in transformer_options):
++            torch._dynamo.mark_dynamic(prefix_k, 1)
++            torch._dynamo.mark_dynamic(prefix_v, 1)
++            fast = transformer_options.get("hpu_fast_attention", False) and transformer_options.get("block_index", 0) != 0
++            return _compiled_prefix_block()(self, x, mod, pe, prefix_k, prefix_v, fast)
++        attn_fn = prefix_cached_attention(prefix_k, prefix_v, transformer_options)
++        return self(x, mod, pe, attn_fn, 0, transformer_options)
++
++
++def _prefix_block(block, x, mod, pe, prefix_k, prefix_v, fast):
++    options = {"hpu_fast_attention": fast, "block_index": 1 if fast else 0}
++    attn_fn = prefix_cached_attention(prefix_k, prefix_v, options)
++    return block(x, mod, pe, attn_fn, 0, options)
++
++
++@lru_cache(maxsize=1)
++def _compiled_prefix_block():
++    return torch.compile(_prefix_block, backend="hpu_backend", dynamic=None, options={"force_static_compile": True})
++
+ 
+ class LastLayer(nn.Module):
+     # scale only, no shift
+@@ -246,6 +274,8 @@ def attention(q, k, v, heads, mask=None, transformer_options={}, preferred_atten
+         # The first layer is sensitive to fast softmax late in denoising.
+         transformer_options["hpu_fast_attention"] = (transformer_options.get("hpu_fast_attention", False)
+                                                      and transformer_options.get("block_index", 0) != 0)
++        if torch.compiler.is_compiling():
++            return _attention(q.take(), k.take(), v.take(), heads, mask, transformer_options, preferred_attention)
+         return _compiled_attention()(q.take(), k.take(), v.take(), heads, mask, transformer_options, preferred_attention)
+     return optimized_attention(q, k, v, heads, mask=mask, transformer_options=transformer_options, preferred_attention=preferred_attention)
+ 
+@@ -545,6 +575,8 @@ class QwenImage21Transformer2DModel(nn.Module):
+                         return {"img": block(args["img"], mod, args["pe"], attn_fn, prefix_len, args["transformer_options"])}
+                     args = {"img": hidden_states, "vec": temb, "pe": pe, "mod": mod, "attn_fn": attn_fn, "prefix_len": prefix_len, "transformer_options": transformer_options}
+                     hidden_states = blocks_replace[("single_block", i)](args, {"original_block": block_wrap})["img"]
++                elif cache is not None:
++                    hidden_states = block._forward_with_prefix(hidden_states, mod, pe, prefix_k, prefix_v, transformer_options)
+                 else:
+                     hidden_states = block(hidden_states, mod, pe, attn_fn, prefix_len, transformer_options)
+                 for p in patches.get("single_block", []):
+diff --git a/tests-unit/comfy_test/hpu_qwen21_prefix_test.py b/tests-unit/comfy_test/hpu_qwen21_prefix_test.py
+new file mode 100644
+index 00000000..e0646a8f
+--- /dev/null
++++ b/tests-unit/comfy_test/hpu_qwen21_prefix_test.py
+@@ -0,0 +1,150 @@
++import pytest
++import torch
++from torch._dynamo.backends.registry import lookup_backend
++
++import comfy.model_management
++import comfy.ops
++from comfy.cli_args import args
++from comfy.ldm.modules.attention import attention_pytorch
++from comfy.ldm.qwen_image21 import model as qwen
++
++
++class PrefixOperations(comfy.ops.manual_cast):
++    hpu_fp8 = True
++
++
++@pytest.fixture
++def hpu(monkeypatch):
++    if not hasattr(torch, 'hpu') or not torch.hpu.is_available():
++        pytest.skip('HPU required')
++    monkeypatch.setattr(args, 'disable_comfy_compiler', False)
++    monkeypatch.setattr(comfy.model_management, 'in_training', False)
++    monkeypatch.setattr(qwen, 'optimized_attention', attention_pytorch)
++    prefix_compiler = qwen._compiled_prefix_block
++    torch._dynamo.reset()
++    prefix_compiler.cache_clear()
++    yield
++    torch._dynamo.reset()
++    prefix_compiler.cache_clear()
++
++
++def inputs(device='hpu', length=8160, batch=1):
++    dtype = torch.bfloat16 if device == 'hpu' else torch.float32
++    block = qwen.QwenImage21TransformerBlock(128, 4, 32, dtype=dtype, device=device,
++                                            operations=PrefixOperations)
++    x = torch.zeros(batch, length, 128, device=device, dtype=dtype)
++    prefix = torch.zeros(batch, 5, 4, 32, device=device, dtype=dtype)
++    return block, x, prefix
++
++
++@pytest.mark.parametrize('index,enabled,expected', [(0, True, False), (1, True, True), (31, False, False)])
++def test_prefix_dispatch_preserves_first_layer_and_opt_out(hpu, monkeypatch, index, enabled, expected):
++    block, x, prefix = inputs()
++    calls = []
++
++    def compiled(*values):
++        calls.append(values)
++        return values[1]
++
++    monkeypatch.setattr(qwen, '_compiled_prefix_block', lambda: compiled)
++    options = dict(block_index=index, hpu_fast_attention=enabled)
++    with torch.no_grad():
++        output = block._forward_with_prefix(x, (), x, prefix, prefix, options)
++    assert output is x
++    assert calls[0][-1] is expected
++    assert calls[0][4] is prefix and calls[0][5] is prefix
++    assert options == dict(block_index=index, hpu_fast_attention=enabled)
++
++
++@pytest.mark.parametrize('reason', ['disabled', 'training', 'grad', 'hook', 'operations', 'length',
++                                   'batch', 'preferred', 'patch', 'replace', 'override', 'dtype'])
++def test_prefix_dispatch_bypasses_unsupported_context(hpu, monkeypatch, reason):
++    block, x, prefix = inputs(length=4096 if reason == 'length' else 8160,
++                              batch=2 if reason == 'batch' else 1)
++    options = {}
++    if reason == 'operations':
++        block.hpu_compile_prefix = False
++    if reason == 'preferred':
++        block.attn.comfy_attention.method = 'custom'
++    if reason == 'dtype':
++        x = x.float()
++    if reason == 'patch':
++        options['patches'] = {'attn1_patch': [object()]}
++    if reason == 'replace':
++        options['patches_replace'] = {'dit': {('single_block', 1): object()}}
++    if reason == 'override':
++        options['optimized_attention_override'] = object()
++    if reason == 'hook':
++        block.register_forward_hook(lambda *values: None)
++    monkeypatch.setattr(args, 'disable_comfy_compiler', reason == 'disabled')
++    monkeypatch.setattr(comfy.model_management, 'in_training', reason == 'training')
++    monkeypatch.setattr(qwen, '_compiled_prefix_block', lambda: pytest.fail('prefix compiler must be bypassed'))
++    received = []
++
++    def forward(*values):
++        received.append(values)
++        return values[0]
++
++    monkeypatch.setattr(block, 'forward', forward)
++    with torch.set_grad_enabled(reason == 'grad'):
++        output = block._forward_with_prefix(x, (), x, prefix, prefix, options)
++    assert output is x
++    assert received[0][-1] is options
++    assert received[0][-2] == 0
++
++
++def test_cpu_prefix_keeps_normal_entry(monkeypatch):
++    block, x, prefix = inputs(device='cpu', length=17)
++    monkeypatch.setattr(qwen, '_compiled_prefix_block', lambda: pytest.fail('HPU compiler on CPU'))
++    monkeypatch.setattr(block, 'forward', lambda x, *values: x)
++    with torch.no_grad():
++        assert block._forward_with_prefix(x, (), x, prefix, prefix, {}) is x
++
++
++def test_prefix_graph_reuses_lengths_and_recomputes_values_and_weights(hpu, monkeypatch):
++    torch.manual_seed(552)
++    backend = lookup_backend('hpu_backend')
++    graphs = []
++
++    def counted(graph, values, **kwargs):
++        graphs.append(graph)
++        return backend(graph, values, **kwargs)
++
++    compiled = torch.compile(qwen._prefix_block, backend=counted, dynamic=None,
++                             options={'force_static_compile': True})
++    monkeypatch.setattr(qwen, '_compiled_prefix_block', lambda: compiled)
++    with torch.no_grad():
++        block, x, _ = inputs()
++        for name, parameter in block.named_parameters():
++            parameter.copy_(torch.randn_like(parameter) * .03 + (1 if 'norm' in name else 0))
++        x.normal_()
++        mod = tuple((torch.randn(1, 1, 128, device='hpu', dtype=x.dtype) * .1,
++                     torch.randn(1, 1, 128, device='hpu', dtype=x.dtype) * .1) for _ in range(4))
++        mod += (torch.zeros(1, 1, 128, device='hpu', dtype=x.dtype),)
++        angle = torch.randn(1, 8160, 1, 16)
++        pe = torch.stack((angle.cos(), -angle.sin(), angle.sin(), angle.cos()), -1).reshape(1, 8160, 1, 16, 2, 2).to('hpu')
++        options = dict(hpu_fast_attention=True, block_index=1)
++        prefix_a = torch.randn(1, 5, 4, 32, device='hpu', dtype=x.dtype)
++
++        def run(prefix, value):
++            length = prefix.shape[1]
++            working = torch.cat([torch.zeros_like(x[:, :length]), x], dim=1)[:, length:]
++            positions = torch.cat([torch.zeros_like(pe[:, :length]), pe], dim=1)[:, length:]
++            key, value = torch.stack([prefix, value], dim=1).unbind(1)
++            output = block._forward_with_prefix(working, mod, positions, key, value, options)
++            assert output.data_ptr() == working.data_ptr()
++            return output.cpu()
++
++        original = run(prefix_a, prefix_a * .5)
++        changed = run(prefix_a * -.5, prefix_a * -2)
++        assert not torch.equal(original, changed)
++        for length in (7, 31, 32, 33, 63, 64, 65):
++            prefix = torch.randn(1, length, 4, 32, device='hpu', dtype=x.dtype)
++            assert run(prefix, prefix * .25).isfinite().all()
++        torch.testing.assert_close(run(prefix_a, prefix_a * .5), original, rtol=0, atol=0)
++        weight = block.attn.to_out[0].weight.clone()
++        block.attn.to_out[0].weight.mul_(.5)
++        assert not torch.equal(run(prefix_a, prefix_a * .5), original)
++        block.attn.to_out[0].weight.copy_(weight)
++        torch.testing.assert_close(run(prefix_a, prefix_a * .5), original, rtol=0, atol=0)
++    assert len(graphs) <= 6

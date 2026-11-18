@@ -27,8 +27,9 @@ def measure(root, environment, history):
         env = dict(environment, QWEN_D1_ROOT=str(directory), QWEN_D1_PRODUCT='1',
                    MOSS_EVENTS=str(directory / 'events.jsonl'), HABANA_PROFILE='1',
                    HABANA_PROF_CONFIG=str(directory / 'profiler.json'))
+        server_module = environment.get('QWEN_VALIDATION_SERVER', 'qwen_d1_server')
         with (directory / 'server.log').open('w') as log:
-            server = subprocess.Popen([sys.executable, '-c', 'import qwen_d1_server; qwen_d1_server.main()',
+            server = subprocess.Popen([sys.executable, '-c', f'import {server_module}; {server_module}.main()',
                 '--disable-dynamic-vram', '--disable-pinned-memory', '--disable-async-offload',
                 '--disable-xformers', '--use-pytorch-cross-attention', '--disable-all-custom-nodes',
                 '--listen', '127.0.0.1', '--port', '8190'], cwd=lifecycle.PRODUCT,

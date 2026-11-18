@@ -19,8 +19,9 @@ def workflows(root, environment, names):
     environment = dict(environment, QWEN_D1_ROOT=str(root), MOSS_EVENTS=str(root / 'events.jsonl'),
                        QWEN_D1_CANDIDATES=','.join(names))
     results = []
+    server_module = environment.get('QWEN_VALIDATION_SERVER', 'qwen_d1_server')
     with (root / 'server.log').open('w') as log:
-        server = subprocess.Popen([sys.executable, '-c', 'import qwen_d1_server; qwen_d1_server.main()',
+        server = subprocess.Popen([sys.executable, '-c', f'import {server_module}; {server_module}.main()',
             '--disable-dynamic-vram', '--disable-pinned-memory', '--disable-async-offload',
             '--disable-xformers', '--use-pytorch-cross-attention', '--disable-all-custom-nodes',
             '--listen', '127.0.0.1', '--port', '8190'], cwd=lifecycle.PRODUCT,
