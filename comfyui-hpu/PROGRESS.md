@@ -1,6 +1,12 @@
 # 当前状态与未决问题
 
-截至2026-11-18，产品分支`codex/gaudi2-hpu`，产品HEAD为`0818699bc7bee8c5ff9e3f13eef87c20153f4e66`（tree `a6ebfc0a3d59ac8a8fcdddb0b43922d339827e4f`）。用户确认“接受方案A 然后推进方案B”，D2方案A（公共Synapse RMW片上SRAM attention流水）已正式提交并关联普通8189部署（状态`accepted_committed`），现以`0818699b`为基线继续推进方案B。本文件提供交接快照，测试过程和候选取舍集中于 [主题索引](README.md)。
+截至 2026-11-18，产品分支 `codex/gaudi2-hpu`，HEAD 为已验收的方案 B `26a170f97b360a61cc597c0908df294eea03dfa5`。普通 8189 已关联此提交，状态为 `accepted_committed`。
+
+## 2026-11-18 D2 方案 B 分段融合部署
+
+在 A 的 RMW attention 上共享 QKV 激活量化，保留 FP32 行尺度与 BF16 投影舍入，以及独立 FFN。在途 block 限制为两个。五轮交错固定 caption DiT 中位 10.375→8.909 秒（−14.14%），完整自然整图 33.497→32.077 秒（−4.24%）。独立进程负条件 TPC-other 独占 191.28→112.20 ms，HBM 731.43→492.09 GB，峰值 40.35→35.25 GiB。8.3–8.6 秒的 DiT 预估仍有差距。
+
+41 次验证请求，20 组配对图像逐像素相同，16 次去噪输出逐位相同。294 项回归通过、1 项跳过，普通服务七次出图匹配验证版，1072 份 Python/shell 源文件与暂存树匹配，普通队列为空。用户确认“验证通过，提交代码”，产品代码及调查记录已提交。[执行记录](optimization/QWEN_D2_SRAM_2026-11-17.md) · [部署证据](evidence/qwen-d2-plan-b-2026-11-18.json)
 
 ## 2026-11-18 D2方案A（公共Synapse RMW片上SRAM流水）验证与部署
 

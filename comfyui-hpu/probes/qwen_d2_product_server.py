@@ -40,11 +40,11 @@ dit._compiled_attention = lambda: compilers['baseline' if baseline else 'product
 
 
 if product_prefix is not None:
-    def prefix(self, x, mod, pe, prefix_k, prefix_v, options):
+    def prefix(self, x, mod, pe, prefix_k, prefix_v, options, *args):
         if baseline:
             attn_fn = dit.prefix_cached_attention(prefix_k, prefix_v, options)
             return self(x, mod, pe, attn_fn, 0, options)
-        return product_prefix(self, x, mod, pe, prefix_k, prefix_v, options)
+        return product_prefix(self, x, mod, pe, prefix_k, prefix_v, options, *args)
 
     dit.QwenImage21TransformerBlock._forward_with_prefix = prefix
 

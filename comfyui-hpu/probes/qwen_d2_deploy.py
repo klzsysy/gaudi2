@@ -1,4 +1,4 @@
-"""Deploy the validated unstaged D2 snapshot and verify ordinary generations."""
+"""Deploy a validated D2 snapshot and verify ordinary generations."""
 import argparse
 import copy
 import fcntl
@@ -27,7 +27,9 @@ def main():
     lock = (lifecycle.BASE / '.qwen80-pe.lock').open('a')
     fcntl.flock(lock, fcntl.LOCK_EX)
     manifest = json.loads((root / 'manifest.json').read_text())
-    assert manifest['staged'] is False
+    if manifest['staged']:
+        assert manifest['staged_tree'] and manifest['staged_patch_sha256']
+        assert hashlib.sha256((root / 'staged.patch').read_bytes()).hexdigest() == manifest['staged_patch_sha256']
     assert json.loads((args.validation / 'validated-hashes.json').read_text()) == manifest['file_sha256']
     queue = deployment.request('/queue')
     assert not queue['queue_running'] and not queue['queue_pending'], queue
@@ -91,13 +93,13 @@ def main():
         alias_warnings = logs.count(b'UserWarning: hpu::batch_as_strided')
         recompile_limits = logs.count(b'hit config.recompile_limit')
         assert alias_warnings == recompile_limits == 0, (alias_warnings, recompile_limits)
-        manifest.update(staged=True, status='deployed_awaiting_human_acceptance', human_acceptance=False,
+        manifest.update(status='deployed_awaiting_human_acceptance', human_acceptance=False,
                         runs=runs, deployed_sha256=actual, queue=queue,
                         batch_as_strided_warnings=alias_warnings, recompile_limits=recompile_limits)
         (root / 'deployment.json').write_text(json.dumps(manifest, indent=2))
         (product / '.run/deployed-staged.json').write_text(json.dumps(manifest, indent=2))
         success = True
-        print('D2 unstaged snapshot deployed and ordinary validation passed', flush=True)
+        print('D2 snapshot deployed and ordinary validation passed', flush=True)
     finally:
         if not success:
             subprocess.run(['./stop-hpu.sh'], cwd=product, check=True)

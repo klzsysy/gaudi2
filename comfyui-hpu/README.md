@@ -1,6 +1,6 @@
 # ComfyUI Gaudi2优化与适配记录
 
-更新于2026-11-18（Asia/Shanghai）。当前产品提交与部署为`0818699b`（D2方案A已人工验收并提交）。单卡Gaudi2、Habana1.24.2、eager，运行Qwen DiT公共Synapse RMW片上SRAM attention流水、区域与整步PE编译、四token回读、原生FP8 Qwen旋转和动态KV容量图复用。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
+更新于2026-11-18（Asia/Shanghai）。普通 8189 运行已验收的 D2 方案 B `26a170f9`。单卡Gaudi2、Habana1.24.2、eager，运行Qwen DiT公共Synapse RMW片上SRAM attention流水、区域与整步PE编译、四token回读、原生FP8 Qwen旋转和动态KV容量图复用。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
 
 ## 默认优化交付流程
 
@@ -10,7 +10,7 @@
 
 | 主题 | 内容 |
 |---|---|
-| [D2片上数据流优化](optimization/QWEN_D2_SRAM_2026-11-17.md) | 撤回根因复盘与方案A/B/C；方案A公共Synapse RMW片上SRAM流水HBM写减41.26%、MME/softmax重叠+106.37%、DiT 11.001→10.386秒、与D1 100%逐位/逐像素一致，已验收提交`0818699b` |
+| [D2片上数据流优化](optimization/QWEN_D2_SRAM_2026-11-17.md) | 方案 A 已验收；A+B 固定 caption DiT 10.375→8.909 秒、负条件 HBM 731.43→492.09 GB、峰值 40.35→35.25 GiB。20 组图像和 16 次 forward 相同，已验收并提交 |
 | [D1 Qwen DiT attention](optimization/QWEN_D1_ATTENTION_2026-11-17.md) | 整图38.508→34.138秒、DiT15.243→10.995秒、HBM流量减少37%；283项回归、KV边界与提示词回切验证 |
 | [扩写首个decode长等待修复](optimization/QWEN_DECODE_STARTUP_2026-11-17.md) | 新容量等待约53秒→0.6秒，输出逐元素一致，缓存隔离回归已固化，已验收提交 |
 | [P1/P2/P3执行与验收](optimization/QWEN80_PE_EXECUTION_2026-11-16.md) | 完整token图、FP8/GDN/布局、attention逐项实测；固定整图44.370→36.593秒，HBM峰值36.4%，已并入验收版本 |

@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前产品提交与部署为`0818699bc7bee8c5ff9e3f13eef87c20153f4e66`（D2方案A已人工验收并提交），绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+当前部署为已验收的方案 B `26a170f97b360a61cc597c0908df294eea03dfa5`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 后续优化默认在验证后暂存两个仓库的相关改动，再部署环境并交付人工验收。验收前以基线提交、暂存差异或快照及部署文件SHA256标识运行版本，记录“已部署，待人工验收”，用户明确验收通过后提交并关联最终commit。用户特别说明优先。[交付流程](optimization/MEASUREMENT.md#默认交付与人工验收)
 
@@ -191,6 +191,10 @@ UI已安装`user/default/workflows/Qwen-Image-2.1-Turbo-FP8-HPU.json`。主模�
 
 ## 2026-11-18 D2方案A片上SRAM流水部署
 
-普通`http://192.168.10.21:8189`当前运行正式提交`0818699bc7bee8c5ff9e3f13eef87c20153f4e66`（原暂存身份`22e3972a+staged.3161d0925c58`，tree `a6ebfc0a3d59ac8a8fcdddb0b43922d339827e4f`，状态`accepted_committed`）。产品新增`comfy/ldm/modules/hpu_attention.py`并在首次调用时自动编译`/tmp/comfy_hpu_rmw_attn_<hash>.so`（链接系统`/usr/lib/habanalabs/libSynapse.so`），无需修改服务启动环境变量。
+普通`http://192.168.10.21:8189`曾运行方案 A 正式提交`0818699bc7bee8c5ff9e3f13eef87c20153f4e66`（原暂存身份`22e3972a+staged.3161d0925c58`，tree `a6ebfc0a3d59ac8a8fcdddb0b43922d339827e4f`，状态`accepted_committed`）。产品新增`comfy/ldm/modules/hpu_attention.py`并在首次调用时自动编译`/tmp/comfy_hpu_rmw_attn_<hash>.so`（链接系统`/usr/lib/habanalabs/libSynapse.so`），无需修改服务启动环境变量。
 
 验证资料位于`/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d2-2026-11-17/plan-a-validate76`、`plan-a-product-validation`与`plan-a-deployment`。三份部署文件（`comfy/ldm/modules/hpu_attention.py`、`comfy/ldm/modules/attention.py`、`tests-unit/comfy_test/hpu_fast_attention_test.py`）SHA256匹配验证manifest，普通cold 140.809秒、warm 33.724秒、蓝/红/回切33.193/27.269/32.545秒、原图33.301秒、重载118.399秒及热复验34.051/33.450秒全部匹配D1基准，别名及重编译上限告警0次，队列为空。用户已确认验收并提交。
+
+## 2026-11-18 D2 方案 B 部署
+
+普通服务 `http://192.168.10.21:8189` 运行已验收的 `26a170f97b360a61cc597c0908df294eea03dfa5`（原暂存身份 `0818699b+staged.8183faca48ab`，tree `58081bb0060c43c3ee670fc8a017d23d204565f5`）。服务器资料根目录为 `/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d2-2026-11-17/plan-b-resume`，其中 `final/` 保存交错工作流、原生 trace 和回归日志，`deployment/` 保存普通 history、源码核对、暂存 patch、manifest 及回退文件。部署标记与 manifest 已关联正式提交，状态为 `accepted_committed`。[方案 B 记录](optimization/QWEN_D2_SRAM_2026-11-17.md)
