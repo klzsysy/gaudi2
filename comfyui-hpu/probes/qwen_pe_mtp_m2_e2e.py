@@ -142,6 +142,7 @@ def main():
     p.add_argument("--mtp-pe", required=True)
     p.add_argument("--mtp-mode", default="auto")
     p.add_argument("--warm-runs", type=int, default=5)
+    p.add_argument("--prefix-base", default="gaudi/qwen_pe_mtp_m2")
     p.add_argument("--skip-baseline", action="store_true")
     args = p.parse_args()
     args.out_dir.mkdir(parents=True, exist_ok=True)
@@ -150,6 +151,9 @@ def main():
 
     q = request_json(args.url, "/queue")
     assert not q["queue_running"] and not q["queue_pending"], f"Queue not empty: {q}"
+
+    def run_p(g, label, **kw):
+        return run_prompt(args.url, g, args.product, args.out_dir, label, prefix_base=args.prefix_base, **kw)
 
     results = {
         "cold_mtp": None,
@@ -165,24 +169,24 @@ def main():
 
     # 1. Cold run with MTP PE + target mode (loads UNET, CLIP, VAE, PE+MTP and compiles MTP graphs)
     g_mtp = make_variant(base_wf, args.mtp_pe, args.mtp_mode)
-    results["cold_mtp"] = run_prompt(args.url, g_mtp, args.product, args.out_dir, f"cold-{args.mtp_mode}")
+    results["cold_mtp"] = run_p(g_mtp, f"cold-{args.mtp_mode}")
 
     # 2. Warm-up single-token mtp="off" path on the exact same resident PE+MTP checkpoint (compiles single-token decode once)
     g_off = make_variant(base_wf, args.mtp_pe, "off")
-    results["cold_off"] = run_prompt(
-        args.url, g_off, args.product, args.out_dir, "cold-off",
+    results["cold_off"] = run_p(
+        g_off, "cold-off",
         require_loaders_cached=True,
     )
 
     # 3. True interleaved 5x warm A/B (mtp_mode vs off) with ALL 4 loaders kept 100% cached & ALL compute nodes re-executed
     for i in range(args.warm_runs):
-        r_mtp = run_prompt(
-            args.url, g_mtp, args.product, args.out_dir, f"warm-{args.mtp_mode}-{i}",
+        r_mtp = run_p(
+            g_mtp, f"warm-{args.mtp_mode}-{i}",
             require_loaders_cached=True,
         )
         results["warm_mtp"].append(r_mtp)
-        r_off = run_prompt(
-            args.url, g_off, args.product, args.out_dir, f"warm-off-{i}",
+        r_off = run_p(
+            g_off, f"warm-off-{i}",
             require_loaders_cached=True,
         )
         results["warm_off"].append(r_off)
@@ -190,17 +194,17 @@ def main():
     # 4. Also verify fixed tree3s1 warm timing on the same prompt (alternating with auto keeps loaders cached)
     if args.mtp_mode != "tree3s1":
         g_t3 = make_variant(base_wf, args.mtp_pe, "tree3s1")
-        results["warm_tree3s1"].append(run_prompt(
-            args.url, g_t3, args.product, args.out_dir, "tree3s1-0",
+        results["warm_tree3s1"].append(run_p(
+            g_t3, "tree3s1-0",
             require_loaders_cached=True,
         ))
         # One more after bouncing via auto to measure warm tree3s1 (after 3-step draft compiles once)
-        results["matrix"].append(run_prompt(
-            args.url, g_mtp, args.product, args.out_dir, f"bounce-{args.mtp_mode}",
+        results["matrix"].append(run_p(
+            g_mtp, f"bounce-{args.mtp_mode}",
             require_loaders_cached=True,
         ))
-        results["warm_tree3s1"].append(run_prompt(
-            args.url, g_t3, args.product, args.out_dir, "tree3s1-1",
+        results["warm_tree3s1"].append(run_p(
+            g_t3, "tree3s1-1",
             require_loaders_cached=True,
         ))
 
@@ -219,7 +223,7 @@ def main():
         ("sq1024", make_variant(base_wf, args.mtp_pe, args.mtp_mode, seed_delta=2, aspect="1:1 (Square)", megapixels=1.048576)),
     ]
     for cname, cg in cases:
-        row = run_prompt(args.url, cg, args.product, args.out_dir, cname, require_loaders_cached=True)
+        row = run_p(cg, cname, require_loaders_cached=True)
         results["matrix"].append(row)
 
     # Verify blue-tree3s1 == blue-return-tree3s1 EXACT caption AND pixel RGBA isolation!
@@ -241,8 +245,8 @@ def main():
     if not args.skip_baseline:
         g_base_auto = make_variant(base_wf, args.baseline_pe, "auto")
         g_base_off = make_variant(base_wf, args.baseline_pe, "off")
-        r_b0 = run_prompt(args.url, g_base_auto, args.product, args.out_dir, "baseline-nonmtp-auto")
-        r_b1 = run_prompt(args.url, g_base_off, args.product, args.out_dir, "baseline-nonmtp-off", require_loaders_cached=True)
+        r_b0 = run_p(g_base_auto, "baseline-nonmtp-auto")
+        r_b1 = run_p(g_base_off, "baseline-nonmtp-off", require_loaders_cached=True)
         results["baseline_nonmtp"].extend([r_b0, r_b1])
         # Verify exact match with warm_off on MTP checkpoint (non-MTP weights are byte-for-byte identical!)
         off_cap = (args.out_dir / "warm-off-0-caption.txt").read_text()
@@ -257,7 +261,7 @@ def main():
     for _ in range(6):
         time.sleep(10)
         results["unload"].append(request_json(args.url, "/system_stats"))
-    results["reload"] = run_prompt(args.url, g_mtp, args.product, args.out_dir, f"reload-{args.mtp_mode}")
+    results["reload"] = run_p(g_mtp, f"reload-{args.mtp_mode}")
 
     # Summarize
     warm_mtp_exec = [r["exec_s"] for r in results["warm_mtp"] if r["exec_s"] is not None]
@@ -267,14 +271,14 @@ def main():
     results["summary"] = {
         "cold_mtp_exec_s": results["cold_mtp"]["exec_s"],
         "cold_mtp_pe_s": results["cold_mtp"]["pe_s"],
-        "warm_mtp_exec_median_s": round(statistics.median(warm_mtp_exec), 4),
-        "warm_mtp_exec_range_s": [min(warm_mtp_exec), max(warm_mtp_exec)],
-        "warm_mtp_pe_median_s": round(statistics.median(warm_mtp_pe), 4),
-        "warm_mtp_pe_range_s": [min(warm_mtp_pe), max(warm_mtp_pe)],
-        "warm_off_exec_median_s": round(statistics.median(warm_off_exec), 4),
-        "warm_off_exec_range_s": [min(warm_off_exec), max(warm_off_exec)],
-        "warm_off_pe_median_s": round(statistics.median(warm_off_pe), 4),
-        "warm_off_pe_range_s": [min(warm_off_pe), max(warm_off_pe)],
+        "warm_mtp_exec_median_s": round(statistics.median(warm_mtp_exec), 4) if warm_mtp_exec else None,
+        "warm_mtp_exec_range_s": [min(warm_mtp_exec), max(warm_mtp_exec)] if warm_mtp_exec else None,
+        "warm_mtp_pe_median_s": round(statistics.median(warm_mtp_pe), 4) if warm_mtp_pe else None,
+        "warm_mtp_pe_range_s": [min(warm_mtp_pe), max(warm_mtp_pe)] if warm_mtp_pe else None,
+        "warm_off_exec_median_s": round(statistics.median(warm_off_exec), 4) if warm_off_exec else None,
+        "warm_off_exec_range_s": [min(warm_off_exec), max(warm_off_exec)] if warm_off_exec else None,
+        "warm_off_pe_median_s": round(statistics.median(warm_off_pe), 4) if warm_off_pe else None,
+        "warm_off_pe_range_s": [min(warm_off_pe), max(warm_off_pe)] if warm_off_pe else None,
         "warm_tree3s1_exec_s": results["warm_tree3s1"][-1]["exec_s"] if results["warm_tree3s1"] else None,
         "warm_tree3s1_pe_s": results["warm_tree3s1"][-1]["pe_s"] if results["warm_tree3s1"] else None,
         "reload_exec_s": results["reload"]["exec_s"],

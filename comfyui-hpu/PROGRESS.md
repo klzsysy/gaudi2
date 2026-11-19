@@ -1,6 +1,16 @@
 # 当前状态与未决问题
 
-截至 2026-11-19，产品分支 `codex/gaudi2-hpu`，HEAD 为已验收的 PE+MTP M2 `96a337d58b3674593c252d804755a6cb7c5d8d36`（原暂存身份 `26a170f9+staged.dfe536e987e3`，tree `0848de81178693597c3ba5542d4b272693489166`）。普通 8189 已关联此提交，状态为 **`accepted_committed`**。用户确认“验证通过，提交代码并推进M3”，两仓已完成提交并启动 M3。
+截至 2026-11-19，产品分支 `codex/gaudi2-hpu`，HEAD 为已验收的 PE+MTP M3 `ca0d82e0d91da9f73d43dfb79a39d6d8e7bde84f`（原暂存身份 `96a337d5+staged.be6bf7119839`，tree `fd2d6036a94cd1093d09392f99d2827f31eaad98`）。普通 8189（PID `348388`）已关联此提交，状态为 **`accepted_committed`**。用户明确指示“提交代码，不推进M4”，本阶段 PE+MTP 优化已在 M3 正式收口。
+
+## 2026-11-19 Qwen PE+MTP M3 验收与提交
+
+产品新增根目录 `init-hpu.sh`（自动发现 `/opt/gaudi-install/venv-*` 创建 `.venv` 与 `gaudi-base.pth`、安装非 torch 依赖并校验 Habana PyTorch 未被遮蔽、调用 `scripts/gaudi/build_qwen35_tpc.py` 并行编译 13 核 Gaudi2 TPC-C 库），与 `start-hpu.sh` / `scripts/gaudi/start.sh` 职责彻底分离——启动脚本固定执行 `.venv/bin/python` 且不做编译，若未执行 `./init-hpu.sh` 导致 `.venv` 或 `build/hpu/*.so` 缺失/过期则直接报错提示先运行 `./init-hpu.sh`（支持 `COMFY_HPU_DISABLE_QWEN35_TPC=1` 显式回退）。13 核 TPC-C 套件覆盖 4×16 打包 FP32 乒乓状态 + 融合 `in_proj_ab` 门控的 GDN 递推（`33.5–42.5 µs/L`，对 CPU FP64 `out_rrmse=1.77e-7`）、因果树卷积+SiLU、`rmsnorm_quant`（含 GDN3 层间残差融合）、`gated_rmsnorm_quant`、`sig_mul_quant`、24 核 1D 负载均衡两段 `silu_mul_quant`、`qk_norm_rope`（`1.8–2.2 µs`，提速 15–21×）、MTP `dual_rmsnorm_cat_quant`、3 段精确罚分 Top-K 与单核向量化采样接受核 `sample_tree_accept`（`14.9 µs`），并接入纯 `int32` 片上 `state_i32[19]` 与默认 `batch_steps=8` 单次回读投机执行环。
+
+独立 9B 完整 4096 自然扩写（`thinking=True`）：`auto` 热中位从 M0 `20.924 s`、M2 `14.426 s` 降至 **`5.968 s`**（`236.6 tok/s`，稳态 `280.4 tok/s`，**较 M0 `3.51×`、较 M2 −58.6%**，冷启 `25.49 s`，`MaxInUse=14.425 GiB`，`0/0` 告警，平均功耗 `180.6→233.6 W` / 峰值 `299 W` / `44°C` / `1650 MHz`）；`tree3s1` **`7.215 s`**（`222.4 tok/s`）；`thinking=False` **`2.744 s`**（`201.9 tok/s`）。新 KV 容量编辑 64-tok 耗时 `1.563 s`（首 decode `<0.9 s`）。96-tok 固定轨迹（M3 TPC vs M2 PyTorch）`lm_head` logits RRMSE `5.90%`、top-1 一致 `94/96`，`tree3s1` `batch_steps=1` vs `8` `256/256` 逐位一致。
+
+真实 4096 窗口低扰动 BMON + 原生时间线（扰动 `+0.357%`，32 verify / 77 tokens）：稳态 **`8.582 ms/verify`** 达到同 shape MME+SDPA 下界（`7.16 ms/verify`）的 **`83.43%`**（突破 80% 线）；持续 HBM 带宽从 M2 `0.802 TB/s` (`32.72%`) 升至 **`1.323 TB/s`（`54.00%` 峰值，MME 突发 `2.273 TB/s` = `92.8%`）**；每接受 token HBM 流量降至 **`4.719 GB/tok`**（较 M0 **−45.8%**）；设备计算覆盖率 **`86.83%`**（空档 `5.03 → 1.125 ms/verify`，−77.6%），EDMA `0.97 → 0.054 ms/verify`（−94.4%），`20.25 recipes/verify`（recipe 间空档 `1.3–3.5 µs`）。
+
+普通 8189 端到端 1088×1920（5 轮交错热态全重算）：`warm-off` 中位 `32.192 s` → `warm-auto` 中位 **`17.135 s`**（稳态 `17.076–17.135 s`，**−15.057 s / −46.77%**，较 M2 `25.660 s` 再降 **−33.2%**），`warm-tree3s1` **`18.370 s`**，`cold-auto` **`72.013 s`**，`/free` 60 秒卸载稳态 **`9.189 GiB`**（零泄漏），重载 **`53.267 s`**（二次 `50.182 s`）。`blue→red→blue-return`、原无 MTP 文件兼容、`warm-auto` 复现与重载全部 `MAE=0.0`，6 张目视样张画质正常。全量 25 套回归 **`559 passed, 1 skipped, 0 failed`**，重构 `init-hpu.sh` 后复跑 `hpu_qwen_mtp_test.py` **`45/45 passed`**（合计 `561 passed`），全新隔离目录 `./init-hpu.sh` 与生产目录重建及重启（`9 s`）均实测通过，`tree3s1` 复验 `MAE=0.0`、`warm-auto` `17.502 s`，`1,093/1,093` 份源码哈希一致，线上日志 `batch_as_strided=0`、`recompile_limit=0`，队列为空。[M3 报告](optimization/QWEN_PE_MTP_M3_2026-11-19.md) · [M3 证据](evidence/qwen-pe-mtp-m3-2026-11-19.json)
 
 ## 2026-11-19 Qwen PE+MTP M2 验收与提交
 

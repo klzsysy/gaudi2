@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署为已验收的 PE+MTP M2 `96a337d58b3674593c252d804755a6cb7c5d8d36`（原暂存身份 `26a170f9+staged.dfe536e987e3`，状态 `accepted_committed`），绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+当前部署为已验收的 PE+MTP M3 `ca0d82e0d91da9f73d43dfb79a39d6d8e7bde84f`（原暂存身份 `96a337d5+staged.be6bf7119839`，tree `fd2d6036a94cd1093d09392f99d2827f31eaad98`，状态 `accepted_committed`），绑定`http://192.168.10.21:8189`（PID `348388`）。根目录 `./init-hpu.sh` 统一负责从 `/opt/gaudi-install/venv-*` 创建 `.venv`、`gaudi-base.pth`、安装依赖及编译 13 核 TPC-C 库；`./start-hpu.sh` 与 `scripts/gaudi/start.sh` 固定使用 `.venv/bin/python` 启动且不执行编译，未运行 `./init-hpu.sh` 时直接报错提示。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 后续优化默认在验证后暂存两个仓库的相关改动，再部署环境并交付人工验收。验收前以基线提交、暂存差异或快照及部署文件SHA256标识运行版本，记录“已部署，待人工验收”，用户明确验收通过后提交并关联最终commit。用户特别说明优先。[交付流程](optimization/MEASUREMENT.md#默认交付与人工验收)
 
@@ -214,4 +214,18 @@ UI已安装`user/default/workflows/Qwen-Image-2.1-Turbo-FP8-HPU.json`。主模�
   /home/sonny/ComfyUI-Models/models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i_mtp.fp8_from_int8_fp32.safetensors
 ```
 
-服务器资料根目录为 `/home/sonny/gaudi2/comfyui-hpu/performance-qwen-pe-mtp-2026-11-19`，包含 `m0/`（微基准与未优化 MTP 基线）、`m2_mod/` 与 `m2_v2/`（消融）、`m2_audit/`（完整 4096 自然扩写、遥测、BMON/原生时间线及 454 项回归日志）以及 `deployment/`（暂存 patch、manifest、回退基线备份、`e2e/` 27 次普通服务 history/caption 及日志审计）。1074 份 `.py`/`.sh` 源码核对通过，普通服务已预热、队列为空，两仓改动保持暂存待人工验收。[M2 报告](optimization/QWEN_PE_MTP_M2_2026-11-19.md) · [证据](evidence/qwen-pe-mtp-m2-2026-11-19.json)
+服务器资料根目录为 `/home/sonny/gaudi2/comfyui-hpu/performance-qwen-pe-mtp-2026-11-19`，包含 `m0/`（微基准与未优化 MTP 基线）、`m2_mod/` 与 `m2_v2/`（消融）、`m2_audit/`（完整 4096 自然扩写、遥测、BMON/原生时间线及 454 项回归日志）以及 `deployment/`（暂存 patch、manifest、回退基线备份、`e2e/` 27 次普通服务 history/caption 及日志审计）。1074 份 `.py`/`.sh` 源码核对通过，普通服务已预热、队列为空，已验收提交。[M2 报告](optimization/QWEN_PE_MTP_M2_2026-11-19.md) · [证据](evidence/qwen-pe-mtp-m2-2026-11-19.json)
+
+## 2026-11-19 Qwen PE+MTP M3 验收部署
+
+普通服务 `http://192.168.10.21:8189`（PID `348388`）运行已验收的 `ca0d82e0d91da9f73d43dfb79a39d6d8e7bde84f`（原暂存身份 `96a337d5+staged.be6bf7119839`，基线 `96a337d58b3674593c252d804755a6cb7c5d8d36`，tree `fd2d6036a94cd1093d09392f99d2827f31eaad98`，补丁 SHA256 `be6bf7119839c2f972e77f1ef3e622c7d3081faa51418f793fb9d4aff451a640`），状态为 **`accepted_committed`**（按用户指令“提交代码，不推进M4”在 M3 收口）。
+
+环境准备与启动已分离：全新 clone 后先执行 `./init-hpu.sh`（自动从 `/opt/gaudi-install/venv-*` 创建 `.venv`、写入 `gaudi-base.pth`、安装非 torch 依赖并编译 13 核 TPC-C 库；已有 `.venv` 仅需重编内核时可加 `--skip-deps`），再执行 `./start-hpu.sh` 或 `bash scripts/gaudi/start.sh`（固定 `.venv/bin/python`，不做编译；未执行 `./init-hpu.sh` 时直接报错提示；设置 `COMFY_HPU_DISABLE_QWEN35_TPC=1` 可显式回退 PyTorch）：
+
+```bash
+cd /home/sonny/ComfyUI-Gaudi
+./init-hpu.sh          # 全新 clone：创建 .venv + 装依赖 + 编译 build/hpu/*.so
+./start-hpu.sh         # 启动服务（固定 .venv/bin/python）
+```
+
+服务器资料根目录为 `/home/sonny/gaudi2/comfyui-hpu/performance-qwen-pe-mtp-m3-2026-11-19`，包含 `audit/`（4096 自然扩写、遥测、固定轨迹 logits 一致性）、`native-m33-4096/`（真实 4096 窗口低扰动 BMON 与原生时间线）及 `deployment/`（暂存 patch、manifest、M2 基线回退备份、`source-audit.json` `1,093/1,093` 核对、`regression.log` `559 passed, 1 skipped`、`mtp-45-test.log` `45 passed`、`rev3-verify.json` `init-hpu.sh`/`start-hpu.sh` 分离实测、`e2e/` 27+1 次普通服务 history/caption 与 `free-vram-audit.json`）。服务已热态留存、队列为空。[M3 报告](optimization/QWEN_PE_MTP_M3_2026-11-19.md) · [M3 证据](evidence/qwen-pe-mtp-m3-2026-11-19.json)

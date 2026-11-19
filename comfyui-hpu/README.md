@@ -1,6 +1,6 @@
 # ComfyUI Gaudi2优化与适配记录
 
-更新于2026-11-19（Asia/Shanghai）。普通 8189 运行已验收的 PE+MTP M2 `96a337d5`（原暂存身份 `26a170f9+staged.dfe536e987e3`，状态 `accepted_committed`）。单卡Gaudi2、Habana1.24.2、eager，运行Qwen DiT公共Synapse RMW片上SRAM attention流水、模块化HPU MTP编译与通道末维GDN、区域与整步PE编译、四token回读、原生FP8 Qwen旋转和动态KV容量图复用。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
+更新于2026-11-19（Asia/Shanghai）。普通 8189 运行已验收的 PE+MTP M3 `ca0d82e0`（原暂存身份 `96a337d5+staged.be6bf7119839`，状态 `accepted_committed`，按用户指令不推进 M4）。单卡Gaudi2、Habana1.24.2、eager，运行Qwen DiT公共Synapse RMW片上SRAM attention流水、13 核自研 Gaudi2 TPC-C 融合套件（根目录 `init-hpu.sh` 统一初始化环境与内核编译）与片上 8 步批量投机解码、模块化HPU MTP编译、原生FP8 Qwen旋转和动态KV容量图复用。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
 
 ## 默认优化交付流程
 
@@ -10,6 +10,7 @@
 
 | 主题 | 内容 |
 |---|---|
+| [PE+MTP M3 执行与验收提交](optimization/QWEN_PE_MTP_M3_2026-11-19.md) | `init-hpu.sh` 初始化 + 13 核 Gaudi2 TPC-C 融合套件 + 纯 `int32` 8 步片上批量投机解码（`ca0d82e0`）；4096 PE 14.43→5.97 秒（237–280 tok/s，较 M0 3.51×）、8189 整图 32.19→17.14 秒（−46.8%）、同 shape 下界效率 83.4%、持续 HBM 54.0%（MME 突发 92.8%）、每 tok 流量 4.72 GB、559+2 项回归通过，已验收并提交 |
 | [PE+MTP M2 执行与验收提交](optimization/QWEN_PE_MTP_M2_2026-11-19.md) | 独立 FP8 PE+MTP 模型与模块化 HPU 编译（`96a337d5`）；4096 PE 20.92→13.80–14.43 秒、8189 整图 32.35→25.17–25.66 秒、冷启 141→81 秒、每 token HBM 8.71→5.32 GB（−38.9%）；454+8 回归通过，已验收并提交 |
 | [PE+MTP 80% 硬件上限优化计划](optimization/QWEN_PE_MTP_80_PLAN.md) | 基于最后一次生成耗时与功耗诊断制定 M0–M5 分阶段计划，含硬件下界账本与 M3/M4 冲击 ≥80% 路线 |
 | [D2片上数据流优化](optimization/QWEN_D2_SRAM_2026-11-17.md) | 方案 A 已验收；A+B 固定 caption DiT 10.375→8.909 秒、负条件 HBM 731.43→492.09 GB、峰值 40.35→35.25 GiB。20 组图像和 16 次 forward 相同，已验收并提交 |
