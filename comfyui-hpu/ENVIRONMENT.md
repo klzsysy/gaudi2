@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署为已验收的方案 B `26a170f97b360a61cc597c0908df294eea03dfa5`，绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+当前部署为已验收的 PE+MTP M2 `96a337d58b3674593c252d804755a6cb7c5d8d36`（原暂存身份 `26a170f9+staged.dfe536e987e3`，状态 `accepted_committed`），绑定`http://192.168.10.21:8189`。根目录脚本校验PID、端口和同目录进程，`scripts/gaudi/start.sh`为前台入口。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 后续优化默认在验证后暂存两个仓库的相关改动，再部署环境并交付人工验收。验收前以基线提交、暂存差异或快照及部署文件SHA256标识运行版本，记录“已部署，待人工验收”，用户明确验收通过后提交并关联最终commit。用户特别说明优先。[交付流程](optimization/MEASUREMENT.md#默认交付与人工验收)
 
@@ -197,4 +197,21 @@ UI已安装`user/default/workflows/Qwen-Image-2.1-Turbo-FP8-HPU.json`。主模�
 
 ## 2026-11-18 D2 方案 B 部署
 
-普通服务 `http://192.168.10.21:8189` 运行已验收的 `26a170f97b360a61cc597c0908df294eea03dfa5`（原暂存身份 `0818699b+staged.8183faca48ab`，tree `58081bb0060c43c3ee670fc8a017d23d204565f5`）。服务器资料根目录为 `/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d2-2026-11-17/plan-b-resume`，其中 `final/` 保存交错工作流、原生 trace 和回归日志，`deployment/` 保存普通 history、源码核对、暂存 patch、manifest 及回退文件。部署标记与 manifest 已关联正式提交，状态为 `accepted_committed`。[方案 B 记录](optimization/QWEN_D2_SRAM_2026-11-17.md)
+普通服务 `http://192.168.10.21:8189` 曾运行已验收的 `26a170f97b360a61cc597c0908df294eea03dfa5`（原暂存身份 `0818699b+staged.8183faca48ab`，tree `58081bb0060c43c3ee670fc8a017d23d204565f5`）。服务器资料根目录为 `/home/sonny/gaudi2/comfyui-hpu/performance-qwen-d2-2026-11-17/plan-b-resume`，其中 `final/` 保存交错工作流、原生 trace 和回归日志，`deployment/` 保存普通 history、源码核对、暂存 patch、manifest 及回退文件。部署标记与 manifest 已关联正式提交，状态为 `accepted_committed`。[方案 B 记录](optimization/QWEN_D2_SRAM_2026-11-17.md)
+
+## 2026-11-19 Qwen PE+MTP M2 验收部署
+
+普通服务 `http://192.168.10.21:8189`（PID `145830`）运行已验收的 `96a337d58b3674593c252d804755a6cb7c5d8d36`（原暂存身份 `26a170f9+staged.dfe536e987e3`，基线 `26a170f97b360a61cc597c0908df294eea03dfa5`，暂存 tree `0848de81178693597c3ba5542d4b272693489166`，patch SHA256 `dfe536e987e3b92a68d0b91f0d5aa2a233b20ce1523871dc8a43c806dd325b34`），状态为 `accepted_committed`。
+
+新增独立共享模型 `/home/sonny/ComfyUI-Models/models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i_mtp.fp8_from_int8_fp32.safetensors`（`11,133,746,108` bytes，SHA256 `468cdb77ae8ba0bc0ad906af4282755f90bf12358f1113e935cce36fc4c864bd`）与独立 UI 工作流 `user/default/workflows/Qwen-Image-2.1-Turbo-FP8-PE-MTP-HPU.json`（保留原无 MTP 模型及原工作流不覆盖）。复现转换命令：
+
+```bash
+.venv/bin/python -m scripts.gaudi.convert_qwen35_fp8 \
+  --from-int8-convrot \
+  --attach-mtp /home/sonny/ComfyUI-Models/models/text_encoders/qwen3.5_9b_int8_convrot.safetensors \
+  --quantize-mtp \
+  /home/sonny/ComfyUI-Models/models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors \
+  /home/sonny/ComfyUI-Models/models/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i_mtp.fp8_from_int8_fp32.safetensors
+```
+
+服务器资料根目录为 `/home/sonny/gaudi2/comfyui-hpu/performance-qwen-pe-mtp-2026-11-19`，包含 `m0/`（微基准与未优化 MTP 基线）、`m2_mod/` 与 `m2_v2/`（消融）、`m2_audit/`（完整 4096 自然扩写、遥测、BMON/原生时间线及 454 项回归日志）以及 `deployment/`（暂存 patch、manifest、回退基线备份、`e2e/` 27 次普通服务 history/caption 及日志审计）。1074 份 `.py`/`.sh` 源码核对通过，普通服务已预热、队列为空，两仓改动保持暂存待人工验收。[M2 报告](optimization/QWEN_PE_MTP_M2_2026-11-19.md) · [证据](evidence/qwen-pe-mtp-m2-2026-11-19.json)

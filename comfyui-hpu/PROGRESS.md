@@ -1,6 +1,18 @@
 # 当前状态与未决问题
 
-截至 2026-11-18，产品分支 `codex/gaudi2-hpu`，HEAD 为已验收的方案 B `26a170f97b360a61cc597c0908df294eea03dfa5`。普通 8189 已关联此提交，状态为 `accepted_committed`。
+截至 2026-11-19，产品分支 `codex/gaudi2-hpu`，HEAD 为已验收的 PE+MTP M2 `96a337d58b3674593c252d804755a6cb7c5d8d36`（原暂存身份 `26a170f9+staged.dfe536e987e3`，tree `0848de81178693597c3ba5542d4b272693489166`）。普通 8189 已关联此提交，状态为 **`accepted_committed`**。用户确认“验证通过，提交代码并推进M3”，两仓已完成提交并启动 M3。
+
+## 2026-11-19 Qwen PE+MTP M2 验收与提交
+
+按用户确认执行 [PE+MTP 80% 计划](optimization/QWEN_PE_MTP_80_PLAN.md) 的 M0–M2，新增独立模型文件 `qwen3.5_9b_qwen_image_2.1_pe_t2i_mtp.fp8_from_int8_fp32.safetensors`（`11,133,746,108` bytes，SHA256 `468cdb77...`，209 个 FP8 Linear，保留原无 MTP 文件未动）与独立 UI 工作流 `Qwen-Image-2.1-Turbo-FP8-PE-MTP-HPU.json`。
+
+产品新增 `comfy/text_encoders/hpu_qwen35.py` 及 `tree_decode_sdpa`，实现原始张量元组模块化编译（`8× gdn3 + 8× attn + tree_mask + verify_head + mtp_draft_chain + kv_commit_slot`，规避 Habana 1.24.2 32 层单片退化）、通道末维 `[B, T, C]` 因果卷积与预归一化 FP32 乒乓 GDN 状态、共享 FP8 激活量化、融合逆 CDF 采样、2D 扁平化 RoPE 查表、编译式 8 层 KV sibling 提交以及采样步级 HPU `Event` 计时，同时修复 Habana 1.24.2 采样掩码重叠 `copy_` bug 并支持 MTP 检查点下 `mtp="off"` 单步编译。
+
+独立 9B 完整 4096 自然扩写（`thinking=True`）：基线单步 `20.924 s`（2094 tok，`100.08 tok/s`，冷启 `89.66 s`）→ M2 `auto` **`14.426 s`**（稳态 `14.210 s`，1909 tok，`132.3–134.3 tok/s`，冷启 `33.60 s`）、`tree2s2` **`13.820 s`**（1943 tok，`140.60 tok/s`）、`tree3s1` **`13.795 s`**（1871 tok，`135.63 tok/s`），编辑换新容量首个 decode `<0.9 s`，独立进程 `MaxInUse=14.422 GiB`（基线 `14.402 GiB`）。
+
+普通 8189 端到端 1088×1920（5 轮交错热态全重算）：`warm-off` 中位 `32.354 s` → `warm-auto` 中位 **`25.660 s`**（−6.694 s / **−20.69%**）、`warm-tree3s1` **`25.165 s`**（**−22.22%**），`cold-auto` **`81.034 s`**（历史基线 `~141 s`），`/free` 60 秒卸载稳态 `9.189 GiB`（无泄漏），重载 **`61.379 s`**（快 `1.93×`）。`blue→red→blue-return`（`tree3s1`）及 `warm-off` 对原无 MTP 文件均通过文本与 RGBA 逐像素一致检验（`MAE=0.0`），27 次线上日志 `batch_as_strided=0`、`recompile_limit=0`，454+8 项自动化回归通过（2 项跳过），1074 份 `.py`/`.sh` 源文件哈希与本地暂存树一致，队列为空。
+
+低扰动 BMON 与原生时间线审计（扰动 `+0.78%` / `+1.57%`）：每接受 token HBM 流量从 `8.706 GB` 降至 **`5.324 GB`（−38.9%）**；MME 突发已达 `~2.0 TB/s`，但受限于 24 层 PyTorch 编译态 GDN 的 TPC 开销（`4.48 ms/verify`）和 31 recipes/verify 设备空档（`5.03 ms/verify`），持续 HBM 带宽当前为 `0.802–0.887 TB/s`（`32.7–36.2%` 峰值），尚未达到 80%（`1.96 TB/s`），该差距将在 M2 人工验收通过后由 M3（TPC-C GDN 融合核 + 公共 Synapse `synLaunch` 持久图）和 M4（Draft shortlist）攻克。[执行与部署报告](optimization/QWEN_PE_MTP_M2_2026-11-19.md) · [结构化证据](evidence/qwen-pe-mtp-m2-2026-11-19.json)
 
 ## 2026-11-18 D2 方案 B 分段融合部署
 
