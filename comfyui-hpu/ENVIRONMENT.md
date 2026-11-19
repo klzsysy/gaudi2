@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署为已验收的 PE+MTP M3 `ca0d82e0d91da9f73d43dfb79a39d6d8e7bde84f`（原暂存身份 `96a337d5+staged.be6bf7119839`，tree `fd2d6036a94cd1093d09392f99d2827f31eaad98`，状态 `accepted_committed`），绑定`http://192.168.10.21:8189`（PID `348388`）。根目录 `./init-hpu.sh` 统一负责从 `/opt/gaudi-install/venv-*` 创建 `.venv`、`gaudi-base.pth`、安装依赖及编译 13 核 TPC-C 库；`./start-hpu.sh` 与 `scripts/gaudi/start.sh` 固定使用 `.venv/bin/python` 启动且不执行编译，未运行 `./init-hpu.sh` 时直接报错提示。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+当前部署为已验收并推送的上游 `v0.46.0` rebase 合并版本 `1b096a204dcd04f410801df4148c02584c33197f`（原暂存身份 `c663a324+staged.bca16cb3c3e9`，上游基线 `995456d0`，tree `266cf4c18704b3ecfa1f6489c2acdcd87d92696a`，状态 **`accepted_committed`**），绑定 `http://192.168.10.21:8189`（PID `363207`）。根目录 `./init-hpu.sh` 统一负责从 `/opt/gaudi-install/venv-*` 创建 `.venv`、`gaudi-base.pth`、安装依赖及编译 13 核 TPC-C 库；`./start-hpu.sh` 与 `scripts/gaudi/start.sh` 固定使用 `.venv/bin/python` 启动且不执行编译，未运行 `./init-hpu.sh` 时直接报错提示。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 后续优化默认在验证后暂存两个仓库的相关改动，再部署环境并交付人工验收。验收前以基线提交、暂存差异或快照及部署文件SHA256标识运行版本，记录“已部署，待人工验收”，用户明确验收通过后提交并关联最终commit。用户特别说明优先。[交付流程](optimization/MEASUREMENT.md#默认交付与人工验收)
 

@@ -1,6 +1,13 @@
 # 当前状态与未决问题
 
-截至 2026-11-19，产品分支 `codex/gaudi2-hpu`，HEAD 为已验收的 PE+MTP M3 `ca0d82e0d91da9f73d43dfb79a39d6d8e7bde84f`（原暂存身份 `96a337d5+staged.be6bf7119839`，tree `fd2d6036a94cd1093d09392f99d2827f31eaad98`）。普通 8189（PID `348388`）已关联此提交，状态为 **`accepted_committed`**。用户明确指示“提交代码，不推进M4”，本阶段 PE+MTP 优化已在 M3 正式收口。
+截至 2026-11-20，产品分支 `master`（由 `codex/gaudi2-hpu` rebase 至上游 ComfyUI `v0.46.0` / `995456d0` 合并）已验收提交并推送，HEAD 为 `1b096a204dcd04f410801df4148c02584c33197f`（原暂存身份 `c663a324+staged.bca16cb3c3e9`，tree `266cf4c18704b3ecfa1f6489c2acdcd87d92696a`）。普通 8189（PID `363207`）已关联此提交，状态为 **`accepted_committed`**。上一已验收提交为 PE+MTP M3 `ca0d82e0d91da9f73d43dfb79a39d6d8e7bde84f`。
+
+## 2026-11-20 上游 v0.46.0 Rebase 合并与 README 更新（已验收提交）
+
+- 将 `ComfyUI-Gaudi` 的 `master` 快进同步至 `upstream/master`（`995456d0`，ComfyUI `v0.46.0`，较原基线新增 88 个上游提交），将 `codex/gaudi2-hpu` 的 45 个提交完整 rebase 合并至 `master`（`c663a324`），适配上游 `c5751c81`（移除 DirectML）、`6f90ac4f`（greedy penalty 重构，`llama.py`/`qwen35.py`/`hpu_qwen35.py` 及 `hpu_textgen_test.py`）与 `4a9636ac`（`Qwen35ClipModel` 嵌入 tokenizer 导致 `hpu_fp8_linear_test.py` 测试桩补齐 `self.transformer`）。
+- 更新 `README.md` 新增 `Intel Gaudi2 (HPU) Support` 章节（非原厂机头推荐 `gaudi2-single-card-driver`、已验证模型列表及 `./init-hpu.sh` / `./start-hpu.sh` 初始化启动说明），与 `hpu_fp8_linear_test.py` 修复一同提交为 `1b096a20` 并推送至 `origin/master`。
+- 部署至 `/home/sonny/ComfyUI-Gaudi` 后核对全部 **`1,418/1,418`** 份跟踪文件 SHA256 一致；`./init-hpu.sh` 升级 `comfyui-frontend-package==1.59.6`、`comfyui-workflow-templates==0.11.111`、`comfyui-embedded-docs==0.5.17`（默认 SUSTech 镜像缺 `comfyui-workflow-templates-media-assets-02==0.1.34`，使用服务器已有 `http_proxy_enable` + PyPI 完成）并验证 Habana PyTorch 未被遮蔽与 `build/hpu/*.so` 有效。
+- 自动验证：`scripts.gaudi.smoke` `PASS`，27 套 HPU/核心回归 **`564 passed, 2 skipped, 0 failed`**。普通 8189（PID `363207`）端到端 Qwen-Image-2.1 Turbo FP8 PE+MTP：`cold-auto` **`73.439 s`**、`tree3s1` **`21.197 s`**、`warm-auto` **`17.523 s`**，`tree3s1` 与 `warm-auto` 扩写文本及 RGBA 像素相对 M3 基准均 **`MAE=0.0`（逐像素一致）**；日志 `batch_as_strided=0`、`recompile_limit=0`、`Traceback=0`，队列为空。回退备份与部署记录位于 `/home/sonny/gaudi2/comfyui-hpu/deploy-rebase-2026-11-19`。
 
 ## 2026-11-19 Qwen PE+MTP M3 验收与提交
 
