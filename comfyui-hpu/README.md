@@ -1,6 +1,6 @@
 # ComfyUI Gaudi2优化与适配记录
 
-更新于2026-11-20（Asia/Shanghai）。普通 8189 运行已验收并推送至 `master` 的上游 ComfyUI `v0.46.0` rebase 版本 `1b096a20`（原暂存身份 `c663a324+staged.bca16cb3c3e9`，状态 `accepted_committed`，包含 PE+MTP M3 `ca0d82e0` 全量优化与新版 Gaudi2 README）。单卡Gaudi2、Habana1.24.2、eager，运行Qwen DiT公共Synapse RMW片上SRAM attention流水、13 核自研 Gaudi2 TPC-C 融合套件（根目录 `init-hpu.sh` 统一初始化环境与内核编译）与片上 8 步批量投机解码、模块化HPU MTP编译、原生FP8 Qwen旋转和动态KV容量图复用。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
+更新于2026-11-20（Asia/Shanghai）。普通 8189 运行已验收并推送至 `master` 的版本 `33cf2d55`（基于上游 ComfyUI `v0.46.0` rebase 版本 `1b096a20`，新增根目录 `uv.toml` 保护 Habana PyTorch、`init-hpu.sh` 自动安装 ComfyUI-Manager 及 `start.sh` 默认开启自定义节点与 Manager，状态 `accepted_committed`，包含 PE+MTP M3 `ca0d82e0` 全量优化与新版 Gaudi2 README）。单卡Gaudi2、Habana1.24.2、eager，运行Qwen DiT公共Synapse RMW片上SRAM attention流水、13 核自研 Gaudi2 TPC-C 融合套件（根目录 `init-hpu.sh` 统一初始化环境与内核编译）与片上 8 步批量投机解码、模块化HPU MTP编译、原生FP8 Qwen旋转和动态KV容量图复用。当前验收与未决问题见 [状态](PROGRESS.md)，环境与复现命令见 [ENVIRONMENT](ENVIRONMENT.md)。
 
 ## 默认优化交付流程
 

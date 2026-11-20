@@ -48,7 +48,7 @@ tail -f logs/hpu.log
 cat .run/deployed-version
 ```
 
-当前部署为已验收并推送的上游 `v0.46.0` rebase 合并版本 `1b096a204dcd04f410801df4148c02584c33197f`（原暂存身份 `c663a324+staged.bca16cb3c3e9`，上游基线 `995456d0`，tree `266cf4c18704b3ecfa1f6489c2acdcd87d92696a`，状态 **`accepted_committed`**），绑定 `http://192.168.10.21:8189`（PID `363207`）。根目录 `./init-hpu.sh` 统一负责从 `/opt/gaudi-install/venv-*` 创建 `.venv`、`gaudi-base.pth`、安装依赖及编译 13 核 TPC-C 库；`./start-hpu.sh` 与 `scripts/gaudi/start.sh` 固定使用 `.venv/bin/python` 启动且不执行编译，未运行 `./init-hpu.sh` 时直接报错提示。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
+当前部署为已验收并推送的提交 `33cf2d550b9f42cb403b06e70a083958572574ea`（原暂存身份 `1b096a20+staged.f49c05ef719d`，tree `b2237ab224c2b9d271d5a4e9e74c1905ecbec373`，状态 **`accepted_committed`**），绑定 `http://192.168.10.21:8189`（PID `407231`）。根目录新增 `uv.toml` 排除上游 CUDA PyTorch 栈；`init-hpu.sh` 自动安装 `manager_requirements.txt`（ComfyUI-Manager 及 `uv`）；`scripts/gaudi/start.sh` 默认移除 `--disable-all-custom-nodes`、启用 `--enable-manager` 并导出 `UV_CONFIG_FILE="$root/uv.toml"`。根目录 `./init-hpu.sh` 统一负责从 `/opt/gaudi-install/venv-*` 创建 `.venv`、`gaudi-base.pth`、安装依赖及编译 13 核 TPC-C 库；`./start-hpu.sh` 与 `scripts/gaudi/start.sh` 固定使用 `.venv/bin/python` 启动且不执行编译，未运行 `./init-hpu.sh` 时直接报错提示。停止会终止正在执行的请求。独立probe、smoke和服务串行占卡，等待持卡进程实际退出再启动下一项。
 
 后续优化默认在验证后暂存两个仓库的相关改动，再部署环境并交付人工验收。验收前以基线提交、暂存差异或快照及部署文件SHA256标识运行版本，记录“已部署，待人工验收”，用户明确验收通过后提交并关联最终commit。用户特别说明优先。[交付流程](optimization/MEASUREMENT.md#默认交付与人工验收)
 

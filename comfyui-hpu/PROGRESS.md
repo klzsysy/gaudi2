@@ -1,6 +1,22 @@
 # 当前状态与未决问题
 
-截至 2026-11-20，产品分支 `master`（由 `codex/gaudi2-hpu` rebase 至上游 ComfyUI `v0.46.0` / `995456d0` 合并）已验收提交并推送，HEAD 为 `1b096a204dcd04f410801df4148c02584c33197f`（原暂存身份 `c663a324+staged.bca16cb3c3e9`，tree `266cf4c18704b3ecfa1f6489c2acdcd87d92696a`）。普通 8189（PID `363207`）已关联此提交，状态为 **`accepted_committed`**。上一已验收提交为 PE+MTP M3 `ca0d82e0d91da9f73d43dfb79a39d6d8e7bde84f`。
+截至 2026-11-20，产品分支 `master` 已验收提交并推送，HEAD 为 `33cf2d550b9f42cb403b06e70a083958572574ea`（原暂存身份 `1b096a20+staged.f49c05ef719d`，tree `b2237ab224c2b9d271d5a4e9e74c1905ecbec373`）。普通 8189（PID `407231`）已关联此提交，状态为 **`accepted_committed`**（精简方案：根目录 `uv.toml` 排除 CUDA PyTorch 栈、`init-hpu.sh` 自动安装 `manager_requirements.txt`、`scripts/gaudi/start.sh` 默认开启 `--enable-manager`、移除 `--disable-all-custom-nodes` 并导出 `UV_CONFIG_FILE`）。上一已验收提交为上游 ComfyUI `v0.46.0` rebase 合并版本 `1b096a204dcd04f410801df4148c02584c33197f`。
+
+## 2026-11-20 修复自定义节点未加载与 ComfyUI-Manager 更新重启覆盖 Habana PyTorch（已验收提交）
+
+- **问题 1（`girl1-moodyKrea2Minimal_v30` 缺失节点与找不到包）**：
+  1. `user/default/workflows/krea2/girl1-moodyKrea2Minimal_v30.json`（及 `moodyKrea2Minimal_v30.json`）唯一缺失的是 4 个 `Label (rgthree)`（`rgthree-comfy` 的 `web/comfyui/label.js` 纯前端虚拟节点）；`rgthree-comfy 1.0.2610300006` 已安装，但 `scripts/gaudi/start.sh` 默认带 `--disable-all-custom-nodes` 跳过了自定义节点加载。
+  2. 该节点在工作流中无 `cnr_id`/`aux_id` 且非 Python 节点，前端 `1.59.6` 查询 `https://api.comfy.org/comfy-nodes/Label%20(rgthree)/node` 返回 `HTTP 404`；且 `/v2/customnode/installed` 显示 `rgthree-comfy` 已启用而被 `filterMissingPacks` 过滤。
+- **问题 2（ComfyUI-Manager 更新节点后重启失败）**：
+  1. ComfyUI-Manager 默认 `use_uv = True`，更新 `comfyui-easy-use` 时调用 `.venv/bin/python -m uv pip install clip_interrogator`。因 `uv` 原生不解析 `.pth` 文件（忽略 `gaudi-base.pth` 且忽略软链 `.dist-info`），同时即便可见也会因 Habana `torchvision 0.16.2` 声明 `Requires-Dist: torch==2.1.2` 而尝试降级/替换为 PyPI CUDA `torch`，最终将 CUDA `torch==2.14.1+cu130`、`torchvision==0.29.2`、`triton==3.8.0` 及 18 个 `nvidia-*`/`cuda-*` 包装入 `.venv`，重启后 `habana_frameworks.autoload` 抛出 `AssertionError`。
+  2. 实测确认 Gaudi2 `/dev/accel/accel0` 与 `/dev/accel/accel_controlD0` 已设 `FD_CLOEXEC=True`，`os.execv` 重启本身在 HPU 上完全正常。
+- **精简修复与验证**（按用户意见保持简洁）：
+  - 新增根目录 `uv.toml`（3 行）：`exclude-dependencies = ["torch", "torchvision", "torchaudio", "triton", "xformers"]`，让 `uv` 在依赖解析与安装中直接跳过上游 CUDA PyTorch 栈、保留 `gaudi-base.pth` 中的 Habana 厂商 PyTorch。
+  - `init-hpu.sh` 自动安装 `manager_requirements.txt`（随 `comfyui_manager` 一并安装 `uv`），开箱即用无需手动安装。
+  - `scripts/gaudi/start.sh` 移除 `--disable-all-custom-nodes`、默认加入 `--enable-manager`，并导出 `UV_CONFIG_FILE="$root/uv.toml"`（确保子目录自定义节点与 Manager `os.execv` 重启均持续生效）。
+  - `tests-unit/comfy_test/hpu_qwen_mtp_test.py` 补齐 `uv.toml`、`UV_CONFIG_FILE`、`--enable-manager`、不带 `--disable-all-custom-nodes` 及 `manager_requirements.txt` 断言。
+  - 验证：清除旧临时防护文件并恢复纯 1 行 `gaudi-base.pth` 与默认 `.gaudi.env` 后，仅靠 `uv.toml` 在仓库根目录及 `custom_nodes/comfyui-easy-use/` 实测 `uv pip install --dry-run clip-interrogator torch==2.14.1 torchvision>=0.18 torchaudio triton` 均不引入任何 CUDA/torch 包；`test_hpu_init_and_start_scripts_separation` `PASSED`、`scripts.gaudi.smoke` `PASS`；4 份改动文件本地/服务器 SHA256 一致；实测 `POST /v2/manager/reboot` 原地重启成功（`UV_CONFIG_FILE` 保留，`hpu:0 GAUDI2`、`torch 2.13.0a0+git2469d18`，`/extensions/rgthree-comfy/label.js` 正常）。
+  - 全新 clone 端到端验证：从精确暂存树 `b2237ab2` 导出至隔离目录 `/tmp/comfyui-gaudi-fresh-clone-test`，经官方 PyPI（服务器默认 SUSTech 镜像缺 `comfyui-workflow-templates-media-assets-02==0.1.34`）完成 `./init-hpu.sh`（自动安装 `comfyui_manager==4.2.2` + `uv`、验证 Habana `torch 2.13.0a0+git2469d18` 未被遮蔽、编译 13 核 TPC-C 库）→ `uv.toml` 防护校验 → `scripts.gaudi.smoke` `PASS` → `COMFYUI_PORT=8191 ./start-hpu.sh` 启动（`/v2/manager/version` 返回 `V4.2.2`、`UV_CONFIG_FILE` 已注入）→ 实测 `POST /v2/manager/reboot` 原地恢复成功 → 清理临时目录并恢复线上 8189（PID `407231`，队列为空）。已提交并推送为 `33cf2d55`。回退备份与清单位于 `/home/sonny/gaudi2/comfyui-hpu/deploy-custom-nodes-fix-2026-11-20`。
 
 ## 2026-11-20 上游 v0.46.0 Rebase 合并与 README 更新（已验收提交）
 

@@ -37,7 +37,7 @@
 ## 驱动和依赖恢复
 
 - 重启进入内核5.15.0-202时只有186安装Habana DKMS，内核自带模块缺Gaudi2 PCI alias，`hl-smi`无设备。修复安装脚本枚举当前及全部有效`/boot/vmlinuz-*`，检查五个模块、vermagic、路径、alias、补丁字符串并刷新initramfs。19项模拟回归、186/202双内核verify、重启、HPU matmul及HTTP通过。[脚本补丁](../patches/install-gaudi2-all-boot-kernels.patch)
-- 测试venv曾被CUDA torch2.14.1遮蔽，原服务仍持有旧环境，重启probe才暴露。移走冲突包备份后恢复`gaudi-base.pth`引用的Habana2.13.0a0，HPU smoke、266项回归和普通服务通过。安装来源未知，备份位置见环境。
+- 测试venv曾被CUDA torch2.14.1遮蔽，原服务仍持有旧环境，重启probe才暴露。2026-11-20 复现并定位根因：ComfyUI-Manager 默认启用 `uv`（`use_uv = True`），而 `uv` 原生不解析 `.pth` 文件（且即便可见也会因 Habana `torchvision 0.16.2` 声明 `Requires-Dist: torch==2.1.2` 而尝试替换厂商 `torch`），在更新 `comfyui-easy-use` 时将 PyPI CUDA `torch==2.14.1+cu130` 等装入 `.venv`，重启后 `habana_frameworks.autoload` 抛出 `AssertionError`。现通过在仓库根目录新增 3 行 `uv.toml`（`exclude-dependencies = ["torch", "torchvision", "torchaudio", "triton", "xformers"]`）、`init-hpu.sh` 自动安装 `manager_requirements.txt`、`scripts/gaudi/start.sh` 启用 `--enable-manager` 并导出 `UV_CONFIG_FILE` 简洁解决，并实测 `/v2/manager/reboot` 在 HPU 上可原地 `os.execv` 正常恢复。
 - 普通pip resolver可能替换定制torch，独立venv继承厂商site-packages，按已有兼容依赖安装。启动成功后仍需核实实际torch路径、版本和HPU算子。
 
 ## 复用与证据
